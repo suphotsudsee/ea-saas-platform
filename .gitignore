@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+
+# Build output
+.next/
+dist/
+build/
+
+# Environment
+.env
+.env.local
+.env.production.local
+.env.development.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+docker/nginx/ssl/*.pem
+docker/nginx/ssl/*.key
+docker/nginx/ssl/*.crt
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Backups
+backups/
+
+# Testing
+coverage/
+test-results/
+playwright-report/
+
+# Prisma
+prisma/migrations/*_*/
+
+# Misc
+*.tgz
+.cache/

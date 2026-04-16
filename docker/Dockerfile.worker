@@ -1,0 +1,41 @@
+# ─── EA SaaS Platform — Dockerfile (Background Worker) ────────────────────────
+# Processes Redis streams: heartbeats, trade events, notifications
+# ─────────────────────────────────────────────────────────────────────────────
+
+FROM node:20-alpine AS deps
+WORKDIR /app
+
+COPY package.json package-lock.json* yarn.lock* pnpm-lock.yaml* ./
+RUN \
+  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+  elif [ -f package-lock.json ]; then npm ci; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
+  else npm i; \
+  fi
+
+FROM node:20-alpine AS builder
+WORKDIR /app
+
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+
+RUN npx prisma generate
+
+FROM node:20-alpine AS runner
+WORKDIR /app
+
+ENV NODE_ENV=production
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 worker
+
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/src ./src
+COPY --from=builder /app/package.json ./
+COPY --from=builder /app/tsconfig.json ./
+
+USER worker
+
+# The worker runs a background process script
+CMD ["node", "--import", "tsx", "src/worker/index.ts"]

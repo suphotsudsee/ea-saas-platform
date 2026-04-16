@@ -1,0 +1,217 @@
+# ─── EA SaaS Platform — Docker Compose ────────────────────────────────────────
+# Full stack: MySQL, Redis, Next.js app, Worker, Nginx, Adminer, Monitoring
+# ─────────────────────────────────────────────────────────────────────────────
+
+version: "3.9"
+
+services:
+  # ─── Nginx Reverse Proxy ────────────────────────────────────────────────────
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: ea-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - nginx_ssl:/etc/nginx/ssl:ro
+      - nginx_logs:/var/log/nginx
+    depends_on:
+      web:
+        condition: service_healthy
+    networks:
+      - ea-network
+
+  # ─── MySQL Database ────────────────────────────────────────────────────────
+  mysql:
+    image: mysql:8.0
+    container_name: ea-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword123}
+      MYSQL_DATABASE: ea_saas
+      MYSQL_USER: ea_user
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-ea_password123}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: >
+      --default-authentication-plugin=mysql_native_password
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --max-connections=200
+      --innodb-buffer-pool-size=256M
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "ea_user", "-p${MYSQL_PASSWORD:-ea_password123}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    networks:
+      - ea-network
+
+  # ─── Redis Cache & Queue ────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: ea-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+      - ../redis/redis.conf:/usr/local/etc/redis/redis.conf
+    command: redis-server /usr/local/etc/redis/redis.conf --requirepass ${REDIS_PASSWORD:-redis123}
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-redis123}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ea-network
+
+  # ─── Next.js Application (Web + API) ───────────────────────────────────────
+  web:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: ea-web
+    restart: unless-stopped
+    # Internal port only — Nginx handles external traffic
+    expose:
+      - "3000"
+    environment:
+      # Database
+      DATABASE_URL: mysql://ea_user:${MYSQL_PASSWORD:-ea_password123}@mysql:3306/ea_saas
+      # Redis
+      REDIS_URL: redis://:${REDIS_PASSWORD:-redis123}@redis:6379
+      # Auth
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:-change-me-to-a-32-char-secret-key-at-least}
+      NEXTAUTH_URL: ${APP_URL:-http://localhost:3000}
+      # Stripe
+      STRIPE_PUBLIC_KEY: ${STRIPE_PUBLIC_KEY:-pk_test_placeholder}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-sk_test_placeholder}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-whsec_placeholder}
+      # Email
+      RESEND_API_KEY: ${RESEND_API_KEY:-re_placeholder}
+      EMAIL_FROM: ${EMAIL_FROM:-noreply@ea-saas.com}
+      # App
+      APP_URL: ${APP_URL:-http://localhost:3000}
+      API_URL: ${API_URL:-http://localhost:3000}
+      NODE_ENV: ${NODE_ENV:-production}
+      # Rate Limiting
+      RATE_LIMIT_EA_RPM: ${RATE_LIMIT_EA_RPM:-60}
+      RATE_LIMIT_WEB_RPM: ${RATE_LIMIT_WEB_RPM:-120}
+      # Heartbeat
+      HEARTBEAT_INTERVAL_SEC: ${HEARTBEAT_INTERVAL_SEC:-60}
+      HEARTBEAT_STALE_FACTOR: ${HEARTBEAT_STALE_FACTOR:-3}
+      # License
+      LICENSE_CACHE_TTL_SEC: ${LICENSE_CACHE_TTL_SEC:-300}
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - ea-network
+
+  # ─── Background Worker ──────────────────────────────────────────────────────
+  worker:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.worker
+    container_name: ea-worker
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: mysql://ea_user:${MYSQL_PASSWORD:-ea_password123}@mysql:3306/ea_saas
+      REDIS_URL: redis://:${REDIS_PASSWORD:-redis123}@redis:6379
+      NODE_ENV: ${NODE_ENV:-production}
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - ea-network
+
+  # ─── Adminer (Database UI — Dev Only) ───────────────────────────────────────
+  adminer:
+    image: adminer:latest
+    container_name: ea-adminer
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      ADMINER_DEFAULT_SERVER: mysql
+      ADMINER_DESIGN: nette
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - ea-network
+
+  # ─── Prometheus (Metrics Collection) ────────────────────────────────────────
+  prometheus:
+    image: prom/prometheus:v2.48.0
+    container_name: ea-prometheus
+    restart: unless-stopped
+    ports:
+      - "${PROMETHEUS_PORT:-9090}:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--storage.tsdb.retention.time=30d"
+      - "--web.enable-lifecycle"
+    networks:
+      - ea-network
+
+  # ─── Grafana (Dashboards & Visualization) ──────────────────────────────────
+  grafana:
+    image: grafana/grafana:10.2.0
+    container_name: ea-grafana
+    restart: unless-stopped
+    ports:
+      - "${GRAFANA_PORT:-3001}:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-admin}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_SERVER_ROOT_URL: "${APP_URL:-http://localhost:3000}/grafana"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards/providers:ro
+    depends_on:
+      - prometheus
+    networks:
+      - ea-network
+
+volumes:
+  mysql_data:
+    driver: local
+  redis_data:
+    driver: local
+  nginx_ssl:
+    driver: local
+  nginx_logs:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+
+networks:
+  ea-network:
+    driver: bridge
