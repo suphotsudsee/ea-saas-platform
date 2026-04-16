@@ -41,7 +41,6 @@ test-results/
 playwright-report/
 
 # Prisma
-prisma/migrations/*_*/
 
 # Misc
 *.tgz

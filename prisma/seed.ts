@@ -1,4 +1,4 @@
-import { PrismaClient, UserRole, UserStatus, BillingCycle, AdminRole } from '@prisma/client';
+import { Prisma, PrismaClient, UserRole, UserStatus, BillingCycle, AdminRole } from '@prisma/client';
 import * as crypto from 'crypto';
 
 const prisma = new PrismaClient();
@@ -289,7 +289,7 @@ async function main() {
       create: {
         strategyId: strategy.id,
         configHash,
-        configJson: strategy.defaultConfig,
+        configJson: strategy.defaultConfig as Prisma.InputJsonValue,
         changeReason: 'Initial seed',
       },
     });

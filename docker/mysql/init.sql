@@ -7,6 +7,8 @@ CREATE DATABASE IF NOT EXISTS ea_saas CHARACTER SET utf8mb4 COLLATE utf8mb4_unic
 
 -- Grant privileges to application user
 GRANT ALL PRIVILEGES ON ea_saas.* TO 'ea_user'@'%';
+-- Prisma migrate dev creates and drops a shadow database during local development.
+GRANT CREATE, ALTER, DROP, REFERENCES ON *.* TO 'ea_user'@'%';
 FLUSH PRIVILEGES;
 
 -- Set default character set for the database

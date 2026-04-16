@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
 export const config = {
   matcher: [
@@ -14,7 +15,7 @@ export default async function middleware(request: NextRequest) {
   const token = request.cookies.get('auth_token');
   
   if (!token) {
-    return Response.redirect(new URL('/login', request.url));
+    return NextResponse.redirect(new URL('/login', request.url));
   }
 
   return NextResponse.next();

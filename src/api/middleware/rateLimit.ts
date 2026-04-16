@@ -72,16 +72,16 @@ export function rateLimit(options: RateLimitOptions) {
       const multi = redis.multi();
       
       // Remove old entries outside the window
-      multi.zremrangebyscore(key, 0, windowStart);
+      multi.zRemRangeByScore(key, 0, windowStart);
       
       // Add current request
-      multi.zadd(key, { score: now, member: `${now}:${Math.random().toString(36).slice(2)}` });
+      multi.zAdd(key, { score: now, value: `${now}:${Math.random().toString(36).slice(2)}` });
       
       // Count requests in window
-      multi.zcard(key);
+      multi.zCard(key);
       
       // Set expiry on the key
-      multi.pexpire(key, windowMs * 2);
+      multi.pExpire(key, windowMs * 2);
       
       const results = await multi.exec();
       

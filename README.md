@@ -15,7 +15,7 @@ Full-stack Expert Advisor licensing and management SaaS platform.
 
 ```bash
 # Start infrastructure
-docker compose -f docker/docker-compose.dev.yml up -d mysql redis
+docker compose -f docker/docker-compose.yml up -d mysql redis
 
 # Install dependencies
 npm install
@@ -52,7 +52,7 @@ scripts/        # Utility scripts
 
 ## Environment Setup
 
-Copy `.env.example` to `.env.local` and fill in your values.
+Copy `.env.example` to `.env` for Prisma and other local CLI commands. If you also want Next.js-specific local overrides, add `.env.local` as needed.
 
 ## License
 
