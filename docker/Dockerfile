@@ -57,6 +57,6 @@ ENV HOSTNAME="0.0.0.0"
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-  CMD curl -f http://localhost:3000/api/health || exit 1
+  CMD wget -qO- http://localhost:3000/api/health >/dev/null 2>&1 || exit 1
 
 CMD ["node", "server.js"]

@@ -14,8 +14,8 @@ Full-stack Expert Advisor licensing and management SaaS platform.
 ## Quick Start
 
 ```bash
-# Start infrastructure
-docker compose -f docker/docker-compose.yml up -d mysql redis
+# Start project-specific infrastructure
+docker compose -f docker/docker-compose.project.yml up -d mysql redis
 
 # Install dependencies
 npm install
@@ -29,6 +29,8 @@ npm run dev
 # Run tests
 npm run test
 ```
+
+For a project-only Docker stack, use `docker/docker-compose.project.yml`. The existing `docker/docker-compose.yml` is still available for the full stack with reverse proxy and monitoring.
 
 ## Documentation
 
