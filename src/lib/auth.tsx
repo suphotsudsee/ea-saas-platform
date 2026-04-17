@@ -14,7 +14,7 @@ interface User {
 interface AuthContextType {
   user: User | null;
   isLoading: boolean;
-  login: (token: string, refreshToken: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   isAuthenticated: boolean;
   isAdmin: boolean;
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const initAuth = async () => {
       try {
         const { data } = await api.get('/auth/me');
-        setUser(data);
+        setUser(data.user ?? data);
       } catch (e) {
         setUser(null);
       } finally {
@@ -41,11 +41,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     initAuth();
   }, []);
 
-  const login = async (token: string, refreshToken: string) => {
-    localStorage.setItem('auth_token', token);
-    localStorage.setItem('refresh_token', refreshToken);
+  const login = async (email: string, password: string) => {
+    await api.post('/auth/login', { email, password });
     const { data } = await api.get('/auth/me');
-    setUser(data);
+    setUser(data.user ?? data);
     router.push('/dashboard');
   };
 

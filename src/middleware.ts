@@ -9,11 +9,8 @@ export const config = {
 };
 
 export default async function middleware(request: NextRequest) {
-  // In a real implementation, this would check for the session cookie
-  // and verify the role for /admin paths.
-  
-  const token = request.cookies.get('auth_token');
-  
+  const token = request.cookies.get('session-token');
+
   if (!token) {
     return NextResponse.redirect(new URL('/login', request.url));
   }

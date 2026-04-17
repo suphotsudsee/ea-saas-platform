@@ -15,29 +15,36 @@ export function RecentTrades() {
     <div className="space-y-4">
       <Table>
         <TableHeader>
-          <TableRow className="border-slate-800">
+          <TableRow className="border-white/8">
             <TableHead className="text-slate-500">Event</TableHead>
-            <TableHead className="text-slate-500">Value</TableHead>
+            <TableHead className="text-slate-500">Signal</TableHead>
             <TableHead className="text-right text-slate-500">Time</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {MOCK_ACTIVITY.map((act) => (
-            <TableRow key={act.id} className="border-slate-800 hover:bg-slate-800/50 transition-colors">
+            <TableRow key={act.id} className="border-white/8 transition-colors hover:bg-white/[0.03]">
               <TableCell>
                 <div className="flex flex-col">
-                  <span className="text-sm text-white font-medium">{act.event}</span>
+                  <span className="text-sm font-medium text-white">{act.event}</span>
                   <span className="text-xs text-slate-500">{act.symbol}</span>
                 </div>
               </TableCell>
               <TableCell>
-                <span className={cn(
-                  act.type === 'profit' ? 'text-green-400' : act.type === 'warning' ? 'text-yellow-400' : 'text-slate-300'
-                )}>
+                <span
+                  className={cn(
+                    'inline-flex rounded-full px-2.5 py-1 text-xs font-semibold',
+                    act.type === 'profit'
+                      ? 'bg-emerald-500/10 text-emerald-300'
+                      : act.type === 'warning'
+                        ? 'bg-amber-500/10 text-amber-300'
+                        : 'bg-white/[0.05] text-slate-300'
+                  )}
+                >
                   {act.profit}
                 </span>
               </TableCell>
-              <TableCell className="text-right text-slate-500 text-xs">{act.time}</TableCell>
+              <TableCell className="text-right text-xs text-slate-500">{act.time}</TableCell>
             </TableRow>
           ))}
         </TableBody>

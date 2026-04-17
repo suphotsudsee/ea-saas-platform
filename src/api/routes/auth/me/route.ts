@@ -3,13 +3,13 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server';
-import { authMiddleware } from '../../middleware/auth';
+import { authMiddleware } from '../../../middleware/auth';
 
 export async function GET(request: NextRequest) {
   const authResult = await authMiddleware(request);
 
-  if ('response' in authResult || !authResult.user) {
-    return authResult.response || NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  if (authResult instanceof NextResponse) {
+    return authResult;
   }
 
   return NextResponse.json({

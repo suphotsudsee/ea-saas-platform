@@ -1,5 +1,4 @@
-import { createClient } from '@tanstack/react-query';
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
 
@@ -9,6 +8,10 @@ const api = axios.create({
     'Content-Type': 'application/json',
   },
 });
+
+interface RetryableAxiosRequestConfig extends AxiosRequestConfig {
+  _retry?: boolean;
+}
 
 // Auth Interceptor
 api.interceptors.request.use((config) => {
@@ -23,27 +26,27 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
-    const originalRequest = error.config as AxiosRequestConfig;
-    
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    const originalRequest = (error.config ?? {}) as RetryableAxiosRequestConfig;
+    const requestUrl = originalRequest.url ?? '';
+    const isAuthRoute = requestUrl.includes('/auth/login') || requestUrl.includes('/auth/register') || requestUrl.includes('/auth/me');
+
+    if (error.response?.status === 401 && !originalRequest._retry && !isAuthRoute) {
       originalRequest._retry = true;
       try {
-        // Attempt to refresh token
-        const { data } = await axios.post(`${API_BASE_URL}/auth/refresh`, {
-          refreshToken: localStorage.getItem('refresh_token'),
-        });
-        
-        localStorage.setItem('auth_token', data.accessToken);
-        api.defaults.headers.common['Authorization'] = `Bearer ${data.accessToken}`;
-        
+        await axios.post(`${API_BASE_URL}/auth/refresh`);
         return api(originalRequest);
       } catch (refreshError) {
         localStorage.clear();
-        window.location.href = '/login';
+        if (typeof window !== 'undefined') {
+          const authPages = ['/login', '/register', '/forgot-password'];
+          if (!authPages.includes(window.location.pathname)) {
+            window.location.href = '/login';
+          }
+        }
         return Promise.reject(refreshError);
       }
     }
-    
+
     return Promise.reject(error);
   }
 );

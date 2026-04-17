@@ -3,8 +3,8 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextResponse } from 'next/server';
-import { prisma } from '../lib/prisma';
-import { redis } from '../utils/redis';
+import { prisma } from '../../lib/prisma';
+import { redis } from '../../utils/redis';
 
 export async function GET() {
   const checks: Record<string, 'ok' | 'error'> = {};

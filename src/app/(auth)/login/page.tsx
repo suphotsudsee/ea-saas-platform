@@ -17,9 +17,7 @@ export default function LoginPage() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      // Mock API call - in real app use api.post('/auth/login')
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      await login('mock_access_token', 'mock_refresh_token');
+      await login(email, password);
     } catch (err) {
       alert('Invalid credentials');
     } finally {
