@@ -45,3 +45,5 @@ playwright-report/
 # Misc
 *.tgz
 .cache/
+
+license_test/

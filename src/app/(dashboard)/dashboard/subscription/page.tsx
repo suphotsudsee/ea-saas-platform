@@ -51,6 +51,10 @@ export default function SubscriptionPage() {
   const [packages, setPackages] = useState<SubscriptionPackage[]>([]);
   const [upgrading, setUpgrading] = useState(false);
   const [upgradeError, setUpgradeError] = useState<string | null>(null);
+  const checkoutConfigured = Boolean(
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY &&
+      !process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY.includes('REPLACE_WITH_YOUR_KEY')
+  );
 
   useEffect(() => {
     let mounted = true;
@@ -193,14 +197,25 @@ export default function SubscriptionPage() {
                 variant="outline"
                 className="rounded-2xl border-white/10 bg-white/[0.02] text-slate-200 hover:bg-white/[0.06]"
                 onClick={handleUpgradePlan}
-                disabled={upgrading}
+                disabled={upgrading || !checkoutConfigured}
               >
-                {upgrading ? 'Starting checkout...' : upgradePackage ? `Upgrade to ${upgradePackage.name}` : 'No higher plan'}
+                {upgrading
+                  ? 'Starting checkout...'
+                  : !checkoutConfigured
+                    ? 'Stripe checkout unavailable'
+                    : upgradePackage
+                      ? `Upgrade to ${upgradePackage.name}`
+                      : 'No higher plan'}
               </Button>
               <Button variant="outline" className="rounded-2xl border-rose-500/20 bg-rose-500/5 text-rose-300 hover:bg-rose-500/10">
                 Cancel plan
               </Button>
             </div>
+            {!checkoutConfigured && (
+              <div className="text-sm text-amber-300">
+                Stripe checkout is temporarily disabled until a real test publishable key is configured.
+              </div>
+            )}
             {upgradeError && <div className="text-sm text-rose-300">{upgradeError}</div>}
           </CardContent>
         </Card>

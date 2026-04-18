@@ -116,7 +116,7 @@ export async function validateLicenseMiddleware(
 
   // ─── Validate License Key ────────────────────────────────────────────
   // Check Redis cache first
-  const cacheKey = `license:validate:${licenseKeyHeader}`;
+  const cacheKey = `license:auth:${licenseKeyHeader}`;
   let licenseData = await redis.get(cacheKey);
 
   if (licenseData) {

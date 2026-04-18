@@ -328,7 +328,7 @@ export async function acknowledgeKillSwitch(licenseId: string, tradingAccountId:
   // Create audit entry
   await prisma.auditLog.create({
     data: {
-      actorId: licenseId,
+      actorId: null,
       actorType: 'ea',
       action: 'KILL_SWITCH_ACKNOWLEDGED',
       resourceType: 'license',

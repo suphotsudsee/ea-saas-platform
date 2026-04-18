@@ -87,6 +87,7 @@ int OnInit()
    Print("========================================");
    Print("  EA SaaS Platform Starter v1.0.0 (MT5)");
    Print("  License: ", InpLicenseKey != "" ? InpLicenseKey : "(not set)");
+   Print("  API Key: ", InpApiKey != "" ? InpApiKey : "(not set)");
    Print("  Account: ", IntegerToString(AccountInfoInteger(ACCOUNT_LOGIN)));
    Print("  Server:  ", InpServerUrl);
    Print("========================================");
@@ -130,6 +131,10 @@ int OnInit()
    // 5. Validate License
    LogInfo("Validating license with SaaS platform...");
    long accountNumber = AccountInfoInteger(ACCOUNT_LOGIN);
+   LogInfo("Init config: license=" + InpLicenseKey +
+      " apiKey=" + InpApiKey +
+      " account=" + IntegerToString(accountNumber) +
+      " server=" + InpServerUrl);
 
    if(!ValidateLicenseWithRetry(InpServerUrl, IntegerToString(accountNumber)))
    {
@@ -355,133 +360,113 @@ void ExecuteStrategy()
    if(!CheckRiskRules(_Symbol, InpMagicNumber))
       return;
 
-   // Forex Swing Master refined swing logic:
-   // 1. Align current timeframe with higher-timeframe trend (H4 50/200 EMA)
-   // 2. Require a pullback into the trend area
-   // 3. Confirm break of structure on the signal candle
-   // 4. Size stops dynamically with ATR
-   const int trendFastPeriod = 50;
-   const int trendSlowPeriod = 200;
-   const int rsiPeriod = 14;
-   const int atrPeriod = 14;
-   const int swingLookback = 6;
-   const ENUM_TIMEFRAMES trendTimeframe = PERIOD_H4;
-
-   double emaFast_1 = GetEMAValue(trendFastPeriod, 1);
-   double emaFast_2 = GetEMAValue(trendFastPeriod, 2);
-   double emaSlow_1 = GetEMAValue(trendSlowPeriod, 1);
-   double emaSlow_2 = GetEMAValue(trendSlowPeriod, 2);
-   double emaFastHTF_1 = GetEMAValueForTimeframe(trendFastPeriod, 1, trendTimeframe);
-   double emaFastHTF_2 = GetEMAValueForTimeframe(trendFastPeriod, 2, trendTimeframe);
-   double emaSlowHTF_1 = GetEMAValueForTimeframe(trendSlowPeriod, 1, trendTimeframe);
-   double emaSlowHTF_2 = GetEMAValueForTimeframe(trendSlowPeriod, 2, trendTimeframe);
-   double rsi_1 = GetRSIValue(rsiPeriod, 1);
-   double atrPips = GetATRPips(atrPeriod, 1, PERIOD_CURRENT);
-
-   if(emaFast_1 == EMPTY_VALUE || emaFast_2 == EMPTY_VALUE ||
-      emaSlow_1 == EMPTY_VALUE || emaSlow_2 == EMPTY_VALUE ||
-      emaFastHTF_1 == EMPTY_VALUE || emaFastHTF_2 == EMPTY_VALUE ||
-      emaSlowHTF_1 == EMPTY_VALUE || emaSlowHTF_2 == EMPTY_VALUE ||
-      rsi_1 == EMPTY_VALUE || atrPips == EMPTY_VALUE)
+   string configuredSymbol = GetConfigValue("symbol", _Symbol);
+   if(configuredSymbol != "" && configuredSymbol != _Symbol)
    {
-      LogWarn("Forex Swing Master: indicator data not ready yet");
+      LogDebug("Grid strategy waiting for configured symbol: " + configuredSymbol);
       return;
    }
 
-   bool bullishTrend = emaFast_1 > emaSlow_1 &&
-                       emaFast_2 >= emaSlow_2 &&
-                       emaFastHTF_1 > emaSlowHTF_1 &&
-                       emaFastHTF_2 >= emaSlowHTF_2;
-   bool bearishTrend = emaFast_1 < emaSlow_1 &&
-                       emaFast_2 <= emaSlow_2 &&
-                       emaFastHTF_1 < emaSlowHTF_1 &&
-                       emaFastHTF_2 <= emaSlowHTF_2;
+   int gridSizePips = GetConfigValueInt("gridSizePips", 3000);
+   int gridTakeProfitPips = GetConfigValueInt("gridTakeProfitPips", 1200);
+   int maxOrders = GetConfigValueInt("maxOrders", 6);
+   double startLot = GetConfigValueNum("startLot", 0.01);
+   double maxLot = GetConfigValueNum("maxLot", 0.10);
+   string lotSizingMethod = GetConfigValue("lotSizingMethod", "fixed");
 
-   double close_1 = iClose(_Symbol, PERIOD_CURRENT, 1);
-   double open_1 = iOpen(_Symbol, PERIOD_CURRENT, 1);
-   double high_1 = iHigh(_Symbol, PERIOD_CURRENT, 1);
-   double low_1 = iLow(_Symbol, PERIOD_CURRENT, 1);
-   double htfClose_1 = iClose(_Symbol, trendTimeframe, 1);
-   double htfOpen_1 = iOpen(_Symbol, trendTimeframe, 1);
+   int buyCount = CountSymbolPositionsByTypeMT5(POSITION_TYPE_BUY);
+   int sellCount = CountSymbolPositionsByTypeMT5(POSITION_TYPE_SELL);
+   int totalPositions = buyCount + sellCount;
 
-   double swingHigh = GetRecentSwingHigh(swingLookback, 2);
-   double swingLow = GetRecentSwingLow(swingLookback, 2);
+   // Close the basket when price has mean-reverted enough from the average entry.
+   ManageGridBasketExit(gridTakeProfitPips);
 
-   bool bullishBreakOfStructure = close_1 > swingHigh;
-   bool bearishBreakOfStructure = close_1 < swingLow;
-   bool htfBullishClose = htfClose_1 > htfOpen_1;
-   bool htfBearishClose = htfClose_1 < htfOpen_1;
-   bool inOverlapSession = IsInLondonNewYorkOverlap();
-
-   bool bullishPullback = bullishTrend &&
-                          inOverlapSession &&
-                          htfBullishClose &&
-                          low_1 <= emaFast_1 &&
-                          low_1 > emaSlow_1 &&
-                          close_1 > open_1 &&
-                          rsi_1 >= 50.0 && rsi_1 <= 68.0 &&
-                          bullishBreakOfStructure;
-
-   bool bearishPullback = bearishTrend &&
-                          inOverlapSession &&
-                          htfBearishClose &&
-                          high_1 >= emaFast_1 &&
-                          high_1 < emaSlow_1 &&
-                          close_1 < open_1 &&
-                          rsi_1 >= 32.0 && rsi_1 <= 50.0 &&
-                          bearishBreakOfStructure;
-
-   int dynamicStopLossPips = (int)MathMax((double)g_stop_loss_pips, MathCeil(atrPips * 1.5));
-   int dynamicTakeProfitPips = (int)MathMax((double)g_take_profit_pips, (double)(dynamicStopLossPips * 2));
-
-   if(bullishPullback)
+   if(totalPositions >= maxOrders)
    {
-      if(HasPositionMT5(POSITION_TYPE_BUY))
-         return;
+      LogDebug("Grid strategy: max orders reached");
+      return;
+   }
 
-      ClosePositionsByTypeMT5(POSITION_TYPE_SELL);
+   double emaFast = GetEMAValue(21, 1);
+   double emaSlow = GetEMAValue(55, 1);
+   if(emaFast == EMPTY_VALUE || emaSlow == EMPTY_VALUE)
+   {
+      LogWarn("Grid strategy: EMA data not ready yet");
+      return;
+   }
 
-      double lots = CalculateLotSize(_Symbol, g_risk_percent, g_stop_loss_pips);
-      TradeResult result = OpenBuy(
-         _Symbol,
-         lots,
-         dynamicStopLossPips,
-         dynamicTakeProfitPips,
-         InpMagicNumber,
-         InpTradeComment + "_FSM_BUY"
-      );
+   bool bullishBias = emaFast > emaSlow;
+   bool bearishBias = emaFast < emaSlow;
 
-      if(result.success)
+   if(totalPositions == 0)
+   {
+      double initialLots = ResolveGridLotSize(0, startLot, maxLot, lotSizingMethod);
+      TradeResult result;
+
+      if(bullishBias)
       {
-         g_trade_count++;
-         LogInfo("Forex Swing Master: bullish swing entry opened");
+         result = OpenBuy(_Symbol, initialLots, 0, 0, InpMagicNumber, InpTradeComment + "_GRID_BUY");
+         if(result.success)
+         {
+            g_trade_count++;
+            LogInfo("Grid Trader Elite: initial BUY basket opened");
+         }
+      }
+      else if(bearishBias)
+      {
+         result = OpenSell(_Symbol, initialLots, 0, 0, InpMagicNumber, InpTradeComment + "_GRID_SELL");
+         if(result.success)
+         {
+            g_trade_count++;
+            LogInfo("Grid Trader Elite: initial SELL basket opened");
+         }
+      }
+      else
+      {
+         LogDebug("Grid strategy: no directional bias yet");
       }
       return;
    }
 
-   if(bearishPullback)
+   double point = SymbolInfoDouble(_Symbol, SYMBOL_POINT);
+   int digits = (int)SymbolInfoInteger(_Symbol, SYMBOL_DIGITS);
+   double gridDistance = GridPipsToPriceDistance(gridSizePips, point, digits);
+   double ask = SymbolInfoDouble(_Symbol, SYMBOL_ASK);
+   double bid = SymbolInfoDouble(_Symbol, SYMBOL_BID);
+
+   if(buyCount > 0 && sellCount == 0)
    {
-      if(HasPositionMT5(POSITION_TYPE_SELL))
-         return;
-
-      ClosePositionsByTypeMT5(POSITION_TYPE_BUY);
-
-      double lots = CalculateLotSize(_Symbol, g_risk_percent, g_stop_loss_pips);
-      TradeResult result = OpenSell(
-         _Symbol,
-         lots,
-         dynamicStopLossPips,
-         dynamicTakeProfitPips,
-         InpMagicNumber,
-         InpTradeComment + "_FSM_SELL"
-      );
-
-      if(result.success)
+      double lowestBuyOpen = GetExtremeOpenPriceByTypeMT5(POSITION_TYPE_BUY, true);
+      if(lowestBuyOpen > 0 && bid <= (lowestBuyOpen - gridDistance))
       {
-         g_trade_count++;
-         LogInfo("Forex Swing Master: bearish swing entry opened");
+         double buyLots = ResolveGridLotSize(buyCount, startLot, maxLot, lotSizingMethod);
+         TradeResult buyResult = OpenBuy(_Symbol, buyLots, 0, 0, InpMagicNumber, InpTradeComment + "_GRID_BUY");
+         if(buyResult.success)
+         {
+            g_trade_count++;
+            LogInfo("Grid Trader Elite: additional BUY layer opened");
+         }
       }
+      return;
    }
+
+   if(sellCount > 0 && buyCount == 0)
+   {
+      double highestSellOpen = GetExtremeOpenPriceByTypeMT5(POSITION_TYPE_SELL, false);
+      if(highestSellOpen > 0 && ask >= (highestSellOpen + gridDistance))
+      {
+         double sellLots = ResolveGridLotSize(sellCount, startLot, maxLot, lotSizingMethod);
+         TradeResult sellResult = OpenSell(_Symbol, sellLots, 0, 0, InpMagicNumber, InpTradeComment + "_GRID_SELL");
+         if(sellResult.success)
+         {
+            g_trade_count++;
+            LogInfo("Grid Trader Elite: additional SELL layer opened");
+         }
+      }
+      return;
+   }
+
+   LogWarn("Grid strategy: mixed long/short basket detected, no new order opened");
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -502,6 +487,146 @@ bool HasPositionMT5(ENUM_POSITION_TYPE posType)
       }
    }
    return false;
+}
+
+int CountSymbolPositionsByTypeMT5(ENUM_POSITION_TYPE posType)
+{
+   int count = 0;
+   for(int i = PositionsTotal() - 1; i >= 0; i--)
+   {
+      ulong ticket = PositionGetTicket(i);
+      if(ticket > 0 &&
+         PositionGetInteger(POSITION_MAGIC) == InpMagicNumber &&
+         PositionGetString(POSITION_SYMBOL) == _Symbol &&
+         PositionGetInteger(POSITION_TYPE) == posType)
+      {
+         count++;
+      }
+   }
+   return count;
+}
+
+double GetExtremeOpenPriceByTypeMT5(ENUM_POSITION_TYPE posType, bool lowest)
+{
+   double extreme = 0.0;
+   bool found = false;
+
+   for(int i = PositionsTotal() - 1; i >= 0; i--)
+   {
+      ulong ticket = PositionGetTicket(i);
+      if(ticket <= 0 ||
+         PositionGetInteger(POSITION_MAGIC) != InpMagicNumber ||
+         PositionGetString(POSITION_SYMBOL) != _Symbol ||
+         PositionGetInteger(POSITION_TYPE) != posType)
+      {
+         continue;
+      }
+
+      double openPrice = PositionGetDouble(POSITION_PRICE_OPEN);
+      if(!found)
+      {
+         extreme = openPrice;
+         found = true;
+         continue;
+      }
+
+      if(lowest && openPrice < extreme)
+         extreme = openPrice;
+      if(!lowest && openPrice > extreme)
+         extreme = openPrice;
+   }
+
+   return found ? extreme : 0.0;
+}
+
+double GetBasketAverageOpenPriceMT5(ENUM_POSITION_TYPE posType)
+{
+   double weightedSum = 0.0;
+   double totalVolume = 0.0;
+
+   for(int i = PositionsTotal() - 1; i >= 0; i--)
+   {
+      ulong ticket = PositionGetTicket(i);
+      if(ticket <= 0 ||
+         PositionGetInteger(POSITION_MAGIC) != InpMagicNumber ||
+         PositionGetString(POSITION_SYMBOL) != _Symbol ||
+         PositionGetInteger(POSITION_TYPE) != posType)
+      {
+         continue;
+      }
+
+      double volume = PositionGetDouble(POSITION_VOLUME);
+      double openPrice = PositionGetDouble(POSITION_PRICE_OPEN);
+      weightedSum += openPrice * volume;
+      totalVolume += volume;
+   }
+
+   if(totalVolume <= 0.0)
+      return 0.0;
+
+   return weightedSum / totalVolume;
+}
+
+double GridPipsToPriceDistance(int pips, double point, int digits)
+{
+   if(point <= 0.0 || pips <= 0)
+      return 0.0;
+
+   double pipMultiplier = (digits == 3 || digits == 5) ? 10.0 : 1.0;
+   return pips * pipMultiplier * point;
+}
+
+double ResolveGridLotSize(int layerIndex, double startLot, double maxLot, string lotSizingMethod)
+{
+   double lots = startLot > 0.0 ? startLot : 0.01;
+   string normalizedLotSizingMethod = lotSizingMethod;
+   StringToLower(normalizedLotSizingMethod);
+
+   if(StringFind(normalizedLotSizingMethod, "martingale") >= 0)
+      lots = startLot * MathPow(2.0, layerIndex);
+
+   if(maxLot > 0.0 && lots > maxLot)
+      lots = maxLot;
+
+   return NormalizeLotSize(_Symbol, lots);
+}
+
+void ManageGridBasketExit(int gridTakeProfitPips)
+{
+   if(gridTakeProfitPips <= 0)
+      return;
+
+   double point = SymbolInfoDouble(_Symbol, SYMBOL_POINT);
+   int digits = (int)SymbolInfoInteger(_Symbol, SYMBOL_DIGITS);
+   double targetDistance = GridPipsToPriceDistance(gridTakeProfitPips, point, digits);
+   if(targetDistance <= 0.0)
+      return;
+
+   int buyCount = CountSymbolPositionsByTypeMT5(POSITION_TYPE_BUY);
+   if(buyCount > 0)
+   {
+      double avgBuy = GetBasketAverageOpenPriceMT5(POSITION_TYPE_BUY);
+      double bid = SymbolInfoDouble(_Symbol, SYMBOL_BID);
+      if(avgBuy > 0.0 && bid >= (avgBuy + targetDistance))
+      {
+         int closedBuys = ClosePositionsByTypeCountMT5(POSITION_TYPE_BUY);
+         if(closedBuys > 0)
+            LogInfo("Grid Trader Elite: BUY basket closed at target");
+      }
+   }
+
+   int sellCount = CountSymbolPositionsByTypeMT5(POSITION_TYPE_SELL);
+   if(sellCount > 0)
+   {
+      double avgSell = GetBasketAverageOpenPriceMT5(POSITION_TYPE_SELL);
+      double ask = SymbolInfoDouble(_Symbol, SYMBOL_ASK);
+      if(avgSell > 0.0 && ask <= (avgSell - targetDistance))
+      {
+         int closedSells = ClosePositionsByTypeCountMT5(POSITION_TYPE_SELL);
+         if(closedSells > 0)
+            LogInfo("Grid Trader Elite: SELL basket closed at target");
+      }
+   }
 }
 
 double GetEMAValue(int period, int shift)
@@ -604,8 +729,9 @@ double GetRecentSwingLow(int bars, int startShift)
    return lowest;
 }
 
-void ClosePositionsByTypeMT5(ENUM_POSITION_TYPE posType)
+int ClosePositionsByTypeCountMT5(ENUM_POSITION_TYPE posType)
 {
+   int closed = 0;
    for(int i = PositionsTotal() - 1; i >= 0; i--)
    {
       ulong ticket = PositionGetTicket(i);
@@ -614,9 +740,16 @@ void ClosePositionsByTypeMT5(ENUM_POSITION_TYPE posType)
          PositionGetString(POSITION_SYMBOL) == _Symbol &&
          PositionGetInteger(POSITION_TYPE) == posType)
       {
-         ClosePosition(ticket);
+         if(ClosePosition(ticket))
+            closed++;
       }
    }
+   return closed;
+}
+
+void ClosePositionsByTypeMT5(ENUM_POSITION_TYPE posType)
+{
+   ClosePositionsByTypeCountMT5(posType);
 }
 
 void ManageTrailingStops()

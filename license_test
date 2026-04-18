@@ -1,5 +1,6 @@
-License created: ea-45144a7a-f449-486d-beae-9b659c6b6ab8
+InpLicenseKey = ea-f0a9e33f-6a08-491e-8777-a9357317fd1e
+InpApiKey = ea_demo_trader_local_2026
+InpServerUrl = http://127.0.0.1:3000
 
-ea_demo_trader_local_2026
-
-http://127.0.0.1:3000/api/health
+หน้า user login /login ใช้ trader@demo.com / Trader@2026!Demo ตาม seed.ts (line 30) และ seed.ts (line 365)
+หน้า admin login /admin/login ใช้ admin@ea-saas.com / Admin@2026!Secure ตาม seed.ts (line 10) และ seed.ts (line 364)

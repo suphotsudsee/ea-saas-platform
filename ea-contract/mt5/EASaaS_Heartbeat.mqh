@@ -96,6 +96,9 @@ HeartbeatResult SendHeartbeat(string serverUrl, long accountNumber)
    body += JsonField("serverTime", CurrentTimeISO8601());
    body += "}";
 
+   LogInfo("Heartbeat request: license=" + g_license_key +
+      " account=" + IntegerToString(accountNumber) +
+      " url=" + url);
    LogTrace("Sending heartbeat: equity=" + DoubleToString(equity, 2) +
       " balance=" + DoubleToString(AccountInfoDouble(ACCOUNT_BALANCE), 2));
 
@@ -118,6 +121,7 @@ HeartbeatResult SendHeartbeat(string serverUrl, long accountNumber)
    result.killSwitch = JsonGetBool(resp.body, "kill");
    result.killReason = JsonGetString(resp.body, "killReason");
    result.configHash = JsonGetString(resp.body, "configHash");
+   LogInfo("Heartbeat response: " + resp.body);
 
    if(result.killSwitch)
    {
@@ -152,7 +156,7 @@ void HandleHeartbeatResponse(HeartbeatResult &result, string serverUrl)
    if(result.killSwitch)
    {
       SetLicenseKilled(result.killReason);
-      AcknowledgeKillSwitch(serverUrl, IntegerToString(result.killSwitch ? 1 : 0), result.killReason);
+      AcknowledgeKillSwitch(serverUrl, IntegerToString(AccountInfoInteger(ACCOUNT_LOGIN)), result.killReason);
    }
 
    if(result.configUpdate && result.configHash != "")

@@ -40,6 +40,7 @@ export default function LicensesPage() {
   const router = useRouter();
   const [licenses, setLicenses] = useState<LicenseItem[]>([]);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [notice, setNotice] = useState('');
 
   useEffect(() => {
     api
@@ -52,6 +53,10 @@ export default function LicensesPage() {
     await navigator.clipboard.writeText(key);
     setCopiedId(id);
     setTimeout(() => setCopiedId(null), 1800);
+  };
+
+  const handleDeleteClick = () => {
+    setNotice('License deletion is not available from the trader dashboard. Use admin controls or contact support.');
   };
 
   const activeLicenses = useMemo(() => licenses.filter((license) => license.status === 'ACTIVE'), [licenses]);
@@ -112,6 +117,12 @@ export default function LicensesPage() {
       </section>
 
       <section className="grid gap-5 xl:grid-cols-3">
+        {notice ? (
+          <Card className="rounded-[30px] border-amber-500/20 bg-amber-500/5 xl:col-span-3">
+            <CardContent className="p-6 text-sm text-amber-100">{notice}</CardContent>
+          </Card>
+        ) : null}
+
         {licenses.length === 0 && (
           <Card className="rounded-[30px] border-white/8 bg-white/[0.03] xl:col-span-3">
             <CardContent className="p-8 text-sm text-slate-400">No license records found for this account yet.</CardContent>
@@ -162,7 +173,12 @@ export default function LicensesPage() {
                 <Button asChild variant="outline" className="flex-1 rounded-2xl border-white/10 bg-white/[0.02] text-slate-200 hover:bg-white/[0.06]">
                   <Link href={`/dashboard/licenses/${lic.id}`}>View details</Link>
                 </Button>
-                <Button variant="outline" className="rounded-2xl border-rose-500/20 bg-rose-500/5 text-rose-300 hover:bg-rose-500/10">
+                <Button
+                  variant="outline"
+                  className="rounded-2xl border-rose-500/20 bg-rose-500/5 text-rose-300 hover:bg-rose-500/10"
+                  onClick={handleDeleteClick}
+                  title="Admin-only action"
+                >
                   <Trash2 className="h-4 w-4" />
                 </Button>
               </div>

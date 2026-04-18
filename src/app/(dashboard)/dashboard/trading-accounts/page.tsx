@@ -1,27 +1,126 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Activity, Link as LinkIcon, Plus, Unlink, WalletCards, X } from 'lucide-react';
+import { Activity, Plus, Unlink, WalletCards } from 'lucide-react';
+import api from '@/lib/api';
 
-const MOCK_ACCOUNTS = [
-  { id: 'ta1', number: '84729103', broker: 'IC Markets', platform: 'MT4', status: 'ACTIVE', lastHeartbeat: '2 mins ago', equity: '$12,400.00' },
-  { id: 'ta2', number: '10293847', broker: 'Pepperstone', platform: 'MT5', status: 'STALE', lastHeartbeat: '15 mins ago', equity: '$5,200.00' },
-  { id: 'ta3', number: '55667788', broker: 'RoboForex', platform: 'MT4', status: 'OFFLINE', lastHeartbeat: '2 hours ago', equity: '$25,000.00' },
-];
+type AccountState = 'online' | 'stale' | 'offline';
 
-function statusClass(status: string) {
-  if (status === 'ACTIVE') return 'bg-emerald-500/10 text-emerald-300 border-emerald-500/20';
-  if (status === 'STALE') return 'bg-amber-500/10 text-amber-300 border-amber-500/20';
-  return 'bg-rose-500/10 text-rose-300 border-rose-500/20';
+interface TradingAccountStatusItem {
+  id: string;
+  accountNumber: string;
+  brokerName: string;
+  platform: 'MT4' | 'MT5';
+  status: AccountState;
+  lastHeartbeat: string | null;
+  equity: number | null;
+  balance: number | null;
+  openPositions: number | null;
+  killSwitch: boolean;
+  strategy: {
+    name: string;
+    version: string;
+  };
+}
+
+interface TradingAccountsStatusResponse {
+  accounts: TradingAccountStatusItem[];
+}
+
+function statusClass(status: AccountState) {
+  if (status === 'online') return 'border-emerald-500/20 bg-emerald-500/10 text-emerald-300';
+  if (status === 'stale') return 'border-amber-500/20 bg-amber-500/10 text-amber-300';
+  return 'border-rose-500/20 bg-rose-500/10 text-rose-300';
+}
+
+function statusLabel(status: AccountState) {
+  if (status === 'online') return 'ACTIVE';
+  if (status === 'stale') return 'STALE';
+  return 'OFFLINE';
+}
+
+function formatRelativeTime(value: string | null) {
+  if (!value) return 'No heartbeat yet';
+
+  const diffMs = Date.now() - new Date(value).getTime();
+  const mins = Math.max(1, Math.round(diffMs / 60000));
+
+  if (mins < 60) return `${mins} min${mins === 1 ? '' : 's'} ago`;
+  const hours = Math.round(mins / 60);
+  if (hours < 24) return `${hours} hour${hours === 1 ? '' : 's'} ago`;
+  const days = Math.round(hours / 24);
+  return `${days} day${days === 1 ? '' : 's'} ago`;
+}
+
+function formatCurrency(value: number | null) {
+  if (value === null || value === undefined) return 'No equity data';
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 2,
+  }).format(value);
 }
 
 export default function TradingAccountsPage() {
-  const [isLinking, setIsLinking] = useState(false);
-  const [platform, setPlatform] = useState<'MT4' | 'MT5'>('MT4');
+  const [accounts, setAccounts] = useState<TradingAccountStatusItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [unlinkingId, setUnlinkingId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadAccounts = async () => {
+      setIsLoading(true);
+      setError('');
+
+      try {
+        const response = await api.get<TradingAccountsStatusResponse>('/trading-accounts/status');
+        setAccounts(response.data.accounts ?? []);
+      } catch {
+        setAccounts([]);
+        setError('Failed to load connected accounts.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadAccounts();
+  }, []);
+
+  const handleUnlink = async (accountId: string) => {
+    setUnlinkingId(accountId);
+
+    try {
+      await api.delete('/trading-accounts/unlink', {
+        data: { accountId },
+      });
+      setAccounts((current) => current.filter((account) => account.id !== accountId));
+    } catch {
+      setError('Failed to unlink account.');
+    } finally {
+      setUnlinkingId(null);
+    }
+  };
+
+  const onlineAccounts = useMemo(() => accounts.filter((account) => account.status === 'online'), [accounts]);
+  const staleAccounts = useMemo(() => accounts.filter((account) => account.status === 'stale'), [accounts]);
+  const mt4Count = useMemo(() => accounts.filter((account) => account.platform === 'MT4').length, [accounts]);
+  const mt5Count = useMemo(() => accounts.filter((account) => account.platform === 'MT5').length, [accounts]);
+
+  const connectionSummary = useMemo(() => {
+    if (staleAccounts.length > 0) {
+      return staleAccounts.length === 1 ? 'One stale feed' : `${staleAccounts.length} stale feeds`;
+    }
+
+    const offlineCount = accounts.filter((account) => account.status === 'offline').length;
+    if (offlineCount > 0) {
+      return offlineCount === 1 ? 'One offline feed' : `${offlineCount} offline feeds`;
+    }
+
+    return accounts.length > 0 ? 'All feeds healthy' : 'No connected feeds';
+  }, [accounts, staleAccounts.length]);
 
   return (
     <div className="space-y-6 lg:space-y-8">
@@ -30,63 +129,23 @@ export default function TradingAccountsPage() {
           <Badge className="border-[#8cc9c2]/20 bg-[#112129] text-[#8cc9c2] hover:bg-[#112129]">Account linking</Badge>
           <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white">Connect brokerage accounts and watch live heartbeat state.</h2>
           <p className="mt-3 text-sm leading-7 text-slate-400 sm:text-base">
-            This page keeps platform, broker, and license relationships visible so support and ops can react quickly.
+            This page now reflects actual heartbeat and account status data from the backend instead of placeholder rows.
           </p>
         </div>
-        <Button className="rounded-full bg-[#e3a84f] px-5 text-[#14110c] hover:bg-[#efb65d]" onClick={() => setIsLinking(true)}>
+        <Button className="rounded-full bg-[#e3a84f] px-5 text-[#14110c] hover:bg-[#efb65d]" disabled>
           <Plus className="mr-2 h-4 w-4" />
           Link new account
         </Button>
       </section>
 
-      {isLinking && (
-        <Card className="rounded-[32px] border-[#8cc9c2]/20 bg-[#10252a]/35">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0">
-            <div>
-              <CardTitle className="text-xl text-white">Link trading account</CardTitle>
-              <p className="mt-1 text-sm text-slate-400">Attach a new broker account to the platform and choose the MetaTrader version.</p>
-            </div>
-            <Button variant="ghost" size="sm" className="rounded-full border border-white/10" onClick={() => setIsLinking(false)}>
-              <X className="h-4 w-4" />
-            </Button>
-          </CardHeader>
-          <CardContent className="space-y-5">
-            <div className="grid gap-4 md:grid-cols-3">
-              <Input placeholder="Account number" className="rounded-2xl border-white/10 bg-[#081118] text-white" />
-              <Input placeholder="Broker name" className="rounded-2xl border-white/10 bg-[#081118] text-white" />
-              <div className="grid grid-cols-2 gap-2">
-                <Button
-                  variant="outline"
-                  className={`rounded-2xl border-white/10 ${platform === 'MT4' ? 'bg-white/[0.08] text-white' : 'bg-transparent text-slate-300'}`}
-                  onClick={() => setPlatform('MT4')}
-                >
-                  MT4
-                </Button>
-                <Button
-                  variant="outline"
-                  className={`rounded-2xl border-white/10 ${platform === 'MT5' ? 'bg-white/[0.08] text-white' : 'bg-transparent text-slate-300'}`}
-                  onClick={() => setPlatform('MT5')}
-                >
-                  MT5
-                </Button>
-              </div>
-            </div>
-            <div className="flex justify-end">
-              <Button className="rounded-full bg-[#e3a84f] px-6 text-[#14110c] hover:bg-[#efb65d]">
-                <LinkIcon className="mr-2 h-4 w-4" />
-                Confirm linking
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
       <section className="grid gap-4 md:grid-cols-3">
         <Card className="rounded-[28px] border-white/8 bg-white/[0.03]">
           <CardContent className="p-6">
             <div className="text-xs uppercase tracking-[0.24em] text-slate-500">Connected accounts</div>
-            <div className="mt-3 text-3xl font-semibold text-white">3</div>
-            <p className="mt-2 text-sm text-slate-400">2 accounts are feeding healthy heartbeats right now.</p>
+            <div className="mt-3 text-3xl font-semibold text-white">{accounts.length}</div>
+            <p className="mt-2 text-sm text-slate-400">
+              {onlineAccounts.length} account{onlineAccounts.length === 1 ? '' : 's'} are feeding healthy heartbeats right now.
+            </p>
           </CardContent>
         </Card>
         <Card className="rounded-[28px] border-white/8 bg-white/[0.03]">
@@ -94,7 +153,7 @@ export default function TradingAccountsPage() {
             <div className="text-xs uppercase tracking-[0.24em] text-slate-500">Platform mix</div>
             <div className="mt-3 flex items-center gap-2 text-xl font-semibold text-white">
               <WalletCards className="h-5 w-5 text-[#f4c77d]" />
-              2 MT4 / 1 MT5
+              {mt4Count} MT4 / {mt5Count} MT5
             </div>
             <p className="mt-2 text-sm text-slate-400">Version visibility matters when debugging deployment issues.</p>
           </CardContent>
@@ -104,43 +163,70 @@ export default function TradingAccountsPage() {
             <div className="text-xs uppercase tracking-[0.24em] text-slate-500">Connection state</div>
             <div className="mt-3 flex items-center gap-2 text-xl font-semibold text-white">
               <Activity className="h-5 w-5 text-[#8cc9c2]" />
-              One stale feed
+              {connectionSummary}
             </div>
             <p className="mt-2 text-sm text-slate-400">Review delayed heartbeat accounts before they drift out of sync.</p>
           </CardContent>
         </Card>
       </section>
 
+      {error ? (
+        <Card className="rounded-[30px] border-rose-500/20 bg-rose-500/5">
+          <CardContent className="p-6 text-sm text-rose-200">{error}</CardContent>
+        </Card>
+      ) : null}
+
       <section className="grid gap-5 xl:grid-cols-3">
-        {MOCK_ACCOUNTS.map((acc) => (
-          <Card key={acc.id} className="rounded-[30px] border-white/8 bg-white/[0.03]">
-            <CardHeader className="pb-4">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <CardTitle className="text-xl text-white">{acc.number}</CardTitle>
-                  <p className="mt-2 text-sm text-slate-400">
-                    {acc.broker} · {acc.platform}
-                  </p>
-                </div>
-                <Badge className={statusClass(acc.status)}>{acc.status}</Badge>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="rounded-2xl border border-white/8 bg-[#0c1720] p-4">
-                <div className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Last heartbeat</div>
-                <div className="mt-2 text-sm font-semibold text-white">{acc.lastHeartbeat}</div>
-              </div>
-              <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
-                <div className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Equity</div>
-                <div className="mt-2 text-sm font-semibold text-white">{acc.equity}</div>
-              </div>
-              <Button variant="outline" className="w-full rounded-2xl border-rose-500/20 bg-rose-500/5 text-rose-300 hover:bg-rose-500/10">
-                <Unlink className="mr-2 h-4 w-4" />
-                Unlink account
-              </Button>
-            </CardContent>
+        {isLoading ? (
+          <Card className="rounded-[30px] border-white/8 bg-white/[0.03] xl:col-span-3">
+            <CardContent className="p-8 text-sm text-slate-400">Loading connected accounts...</CardContent>
           </Card>
-        ))}
+        ) : accounts.length === 0 ? (
+          <Card className="rounded-[30px] border-white/8 bg-white/[0.03] xl:col-span-3">
+            <CardContent className="p-8 text-sm text-slate-400">No connected trading accounts found.</CardContent>
+          </Card>
+        ) : (
+          accounts.map((account) => (
+            <Card key={account.id} className="rounded-[30px] border-white/8 bg-white/[0.03]">
+              <CardHeader className="pb-4">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <CardTitle className="text-xl text-white">{account.accountNumber}</CardTitle>
+                    <p className="mt-2 text-sm text-slate-400">
+                      {account.brokerName} - {account.platform}
+                    </p>
+                  </div>
+                  <Badge className={statusClass(account.status)}>{statusLabel(account.status)}</Badge>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="rounded-2xl border border-white/8 bg-[#0c1720] p-4">
+                  <div className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Last heartbeat</div>
+                  <div className="mt-2 text-sm font-semibold text-white">{formatRelativeTime(account.lastHeartbeat)}</div>
+                </div>
+                <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+                  <div className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Equity</div>
+                  <div className="mt-2 text-sm font-semibold text-white">{formatCurrency(account.equity)}</div>
+                </div>
+                <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+                  <div className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Strategy</div>
+                  <div className="mt-2 text-sm font-semibold text-white">
+                    {account.strategy.name} v{account.strategy.version}
+                  </div>
+                </div>
+                <Button
+                  variant="outline"
+                  className="w-full rounded-2xl border-rose-500/20 bg-rose-500/5 text-rose-300 hover:bg-rose-500/10"
+                  onClick={() => handleUnlink(account.id)}
+                  disabled={unlinkingId === account.id}
+                >
+                  <Unlink className="mr-2 h-4 w-4" />
+                  {unlinkingId === account.id ? 'Unlinking...' : 'Unlink account'}
+                </Button>
+              </CardContent>
+            </Card>
+          ))
+        )}
       </section>
     </div>
   );

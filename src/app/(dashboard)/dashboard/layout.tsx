@@ -49,6 +49,12 @@ const adminItems: NavItem[] = [
   { name: 'Risk Rules', href: '/dashboard/admin/risk-rules', icon: ShieldAlert },
 ];
 
+function isActiveRoute(pathname: string, href: string) {
+  if (pathname === href) return true;
+  if (href === '/dashboard') return false;
+  return pathname.startsWith(`${href}/`);
+}
+
 function SidebarSection({
   title,
   items,
@@ -65,7 +71,7 @@ function SidebarSection({
       <p className="px-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">{title}</p>
       <ul className="mt-4 space-y-1.5">
         {items.map((item) => {
-          const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+          const active = isActiveRoute(pathname, item.href);
           const Icon = item.icon;
 
           return (
@@ -103,7 +109,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
   const pageTitle = useMemo(() => {
     const allItems = [...menuItems, ...adminItems];
-    const current = allItems.find((item) => pathname === item.href || pathname.startsWith(`${item.href}/`));
+    const current = allItems.find((item) => isActiveRoute(pathname, item.href));
     return current?.name ?? 'Dashboard';
   }, [pathname]);
 
