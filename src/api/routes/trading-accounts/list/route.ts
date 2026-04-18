@@ -3,8 +3,8 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server';
-import { authMiddleware } from '../../middleware/auth';
-import { prisma } from '../../lib/prisma';
+import { authMiddleware } from '../../../middleware/auth';
+import { prisma } from '../../../lib/prisma';
 
 export async function GET(request: NextRequest) {
   const authResult = await authMiddleware(request);

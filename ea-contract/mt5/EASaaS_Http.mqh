@@ -7,7 +7,7 @@
 //| retry logic, exponential backoff, and timeout handling            |
 //+------------------------------------------------------------------+
 #property strict
-#include <EASaaS_Utils.mqh>
+#include "EASaaS_Utils.mqh"
 
 // ─── HTTP Response Structure ──────────────────────────────────────────────────
 struct HttpResponse
@@ -57,6 +57,33 @@ string ExtractPath(string url)
    return StringSubstr(afterProtocol, pathStart);
 }
 
+string AppendAuthToUrl(string url)
+{
+   string separator = (StringFind(url, "?") == -1) ? "?" : "&";
+   return url +
+      separator + "apiKey=" + g_api_key +
+      "&licenseKey=" + g_license_key;
+}
+
+string InjectAuthIntoJsonBody(string jsonBody)
+{
+   if(jsonBody == "" || jsonBody == "{}")
+   {
+      return "{" +
+         JsonField("apiKey", g_api_key) + "," +
+         JsonField("licenseKey", g_license_key) +
+      "}";
+   }
+
+   if(StringLen(jsonBody) < 1 || StringSubstr(jsonBody, StringLen(jsonBody) - 1) != "}")
+      return jsonBody;
+
+   return StringSubstr(jsonBody, 0, StringLen(jsonBody) - 1) +
+      "," + JsonField("apiKey", g_api_key) +
+      "," + JsonField("licenseKey", g_license_key) +
+      "}";
+}
+
 // ─── HTTP GET ─────────────────────────────────────────────────────────────────
 
 HttpResponse HttpGet(string url, int timeoutMs = 0)
@@ -70,6 +97,8 @@ HttpResponse HttpGet(string url, int timeoutMs = 0)
 
    if(timeoutMs <= 0) timeoutMs = g_http_timeout_ms;
 
+   url = AppendAuthToUrl(url);
+
    string headers = BuildHeaders("GET");
 
    string timestamp = IntegerToString(CurrentUnixTime());
@@ -82,6 +111,9 @@ HttpResponse HttpGet(string url, int timeoutMs = 0)
    }
 
    int retryDelay = g_http_base_delay_ms;
+   char postData[];
+   char resultBody[];
+   string resultHeaders;
 
    for(int attempt = 0; attempt <= g_http_max_retries; attempt++)
    {
@@ -97,12 +129,11 @@ HttpResponse HttpGet(string url, int timeoutMs = 0)
       response.headers = "";
       response.success = false;
       response.error = "";
+      ArrayFree(postData);
+      ArrayFree(resultBody);
+      resultHeaders = "";
 
-      string resultHeaders[];
-      uchar postData[];
-      uchar resultBody[];
-
-      int res = WebRequest("GET", url, headers, timeoutMs, postData, resultBody, resultHeaders);
+      int res = WebRequest("GET", url, "", "", timeoutMs, postData, 0, resultBody, resultHeaders);
 
       if(res == -1)
       {
@@ -119,9 +150,7 @@ HttpResponse HttpGet(string url, int timeoutMs = 0)
 
       response.statusCode = res;
       response.body = CharArrayToString(resultBody);
-
-      for(int h = 0; h < ArraySize(resultHeaders); h++)
-         response.headers += resultHeaders[h] + "\r\n";
+      response.headers = resultHeaders;
 
       response.success = (res >= 200 && res < 300);
       LogApi("GET", url, res, response.body);
@@ -158,6 +187,8 @@ HttpResponse HttpPost(string url, string jsonBody, int timeoutMs = 0)
 
    if(timeoutMs <= 0) timeoutMs = g_http_timeout_ms;
 
+   jsonBody = InjectAuthIntoJsonBody(jsonBody);
+
    string headers = BuildHeaders("POST");
 
    string timestamp = IntegerToString(CurrentUnixTime());
@@ -169,10 +200,12 @@ HttpResponse HttpPost(string url, string jsonBody, int timeoutMs = 0)
       headers += "X-Signature: " + signature + "\r\n";
    }
 
-   uchar postData[];
-   StringToByteArray(jsonBody, postData, 0, StringLen(jsonBody));
+   char postData[];
+   StringToCharArray(jsonBody, postData, 0, StringLen(jsonBody));
 
    int retryDelay = g_http_base_delay_ms;
+   char resultBody[];
+   string resultHeaders;
 
    for(int attempt = 0; attempt <= g_http_max_retries; attempt++)
    {
@@ -188,11 +221,14 @@ HttpResponse HttpPost(string url, string jsonBody, int timeoutMs = 0)
       response.headers = "";
       response.success = false;
       response.error = "";
+      ArrayFree(resultBody);
+      resultHeaders = "";
 
-      string resultHeaders[];
-      uchar resultBody[];
+      int postDataSize = ArraySize(postData);
+      if(postDataSize > 0)
+         postDataSize--;
 
-      int res = WebRequest("POST", url, headers, timeoutMs, postData, resultBody, resultHeaders);
+      int res = WebRequest("POST", url, "", "", timeoutMs, postData, postDataSize, resultBody, resultHeaders);
 
       if(res == -1)
       {
@@ -209,9 +245,7 @@ HttpResponse HttpPost(string url, string jsonBody, int timeoutMs = 0)
 
       response.statusCode = res;
       response.body = CharArrayToString(resultBody);
-
-      for(int h = 0; h < ArraySize(resultHeaders); h++)
-         response.headers += resultHeaders[h] + "\r\n";
+      response.headers = resultHeaders;
 
       response.success = (res >= 200 && res < 300);
       LogApi("POST", url, res, response.body);

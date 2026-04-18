@@ -4,7 +4,7 @@
 //| Version: 1.0.0                                                    |
 //+------------------------------------------------------------------+
 #property strict
-#include <EASaaS_Http.mqh>
+#include "EASaaS_Http.mqh"
 
 // ─── License States ───────────────────────────────────────────────────────────
 enum LICENSE_STATE
@@ -16,11 +16,11 @@ enum LICENSE_STATE
    LICENSE_REVOKED    = 4,
    LICENSE_KILLED     = 5,
    LICENSE_PAUSED     = 6,
-   LICENSE_ERROR      = 7,
+   LICENSE_STATE_ERROR = 7,
    LICENSE_INVALID    = 8
 };
 
-enum LICENSE_ERROR
+enum LICENSE_ERR
 {
    LIC_ERR_NONE              = 0,
    LIC_ERR_INVALID_KEY       = 1,
@@ -39,7 +39,7 @@ enum LICENSE_ERROR
 struct LicenseInfo
 {
    LICENSE_STATE  state;
-   LICENSE_ERROR  errorCode;
+   LICENSE_ERR   errorCode;
    string         licenseId;
    string         licenseKey;
    string         userId;
@@ -104,7 +104,7 @@ bool ValidateLicense(string serverUrl, string accountNumber)
    if(!resp.success)
    {
       g_license.retryCount++;
-      g_license.state = LICENSE_ERROR;
+      g_license.state = LICENSE_STATE_ERROR;
       g_license.errorCode = LIC_ERR_NETWORK;
       g_license.lastError = "Network error: " + resp.error;
       LogError("License validation failed (network): " + resp.error);
@@ -169,7 +169,7 @@ bool ValidateLicense(string serverUrl, string accountNumber)
       else if(errorCode == "MAX_ACCOUNTS_REACHED") { g_license.state = LICENSE_INVALID; g_license.errorCode = LIC_ERR_MAX_ACCOUNTS; }
       else if(errorCode == "KILLED") { g_license.state = LICENSE_KILLED; g_license.errorCode = LIC_ERR_KILLED; }
       else if(errorCode == "SUBSCRIPTION_INACTIVE") { g_license.state = LICENSE_INVALID; g_license.errorCode = LIC_ERR_SUBSCRIPTION; }
-      else { g_license.state = LICENSE_ERROR; g_license.errorCode = LIC_ERR_SERVER; }
+      else { g_license.state = LICENSE_STATE_ERROR; g_license.errorCode = LIC_ERR_SERVER; }
 
       g_license.lastError = errorMsg != "" ? errorMsg : errorCode;
       LogError("License validation failed: " + errorCode + " - " + g_license.lastError);
@@ -229,7 +229,7 @@ string GetLicenseStateString(LICENSE_STATE state)
       case LICENSE_REVOKED:   return "REVOKED";
       case LICENSE_KILLED:    return "KILLED";
       case LICENSE_PAUSED:    return "PAUSED";
-      case LICENSE_ERROR:     return "ERROR";
+      case LICENSE_STATE_ERROR: return "ERROR";
       case LICENSE_INVALID:   return "INVALID";
       default:                return "UNKNOWN";
    }

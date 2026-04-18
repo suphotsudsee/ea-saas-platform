@@ -26,6 +26,7 @@ export async function POST(request: NextRequest) {
       id: payload.id,
       email: payload.email,
       role: payload.role,
+      actorType: payload.actorType,
     })
       .setProtectedHeader({ alg: 'HS256' })
       .setExpirationTime('24h')
@@ -38,6 +39,7 @@ export async function POST(request: NextRequest) {
         id: payload.id,
         email: payload.email,
         role: payload.role,
+        actorType: payload.actorType,
       },
     });
 

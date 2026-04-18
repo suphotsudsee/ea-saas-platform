@@ -1,635 +1,721 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 import {
   Activity,
-  ArrowRight,
-  BadgeCheck,
+  Shield,
+  Zap,
   BarChart3,
-  ChevronRight,
-  CreditCard,
-  LockKeyhole,
+  Layers,
+  Terminal,
+  CheckCircle,
+  Server,
+  Globe,
+  ArrowRight,
   Menu,
-  Radio,
-  ShieldAlert,
-  Sparkles,
   X,
+  Settings,
+  AlertTriangle,
+  Lock,
+  RefreshCw,
+  Cpu,
 } from 'lucide-react';
+import { useAuth } from '@/lib/auth';
 
-function AnimatedCounter({
-  target,
-  suffix = '',
-  prefix = '',
+type PageId = 'home' | 'features' | 'workflow' | 'pricing' | 'login' | 'register';
+
+function Button({
+  children,
+  variant = 'primary',
+  className = '',
+  onClick,
 }: {
-  target: number;
-  suffix?: string;
-  prefix?: string;
+  children: React.ReactNode;
+  variant?: 'primary' | 'secondary' | 'ghost' | 'outline';
+  className?: string;
+  onClick?: () => void;
 }) {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    const duration = 1400;
-    const steps = 40;
-    const increment = target / steps;
-    let current = 0;
-
-    const timer = setInterval(() => {
-      current += increment;
-
-      if (current >= target) {
-        setCount(target);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(current));
-      }
-    }, duration / steps);
-
-    return () => clearInterval(timer);
-  }, [target]);
+  const baseStyle =
+    'inline-flex items-center justify-center rounded-lg px-5 py-2.5 text-sm font-medium transition-all duration-200';
+  const variants = {
+    primary:
+      'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-900/20 hover:from-blue-500 hover:to-indigo-500',
+    secondary: 'border border-slate-700 bg-slate-800 text-white hover:bg-slate-700',
+    ghost: 'text-slate-300 hover:bg-slate-800/50 hover:text-white',
+    outline: 'border border-blue-500/50 text-blue-400 hover:bg-blue-500/10',
+  };
 
   return (
-    <span>
-      {prefix}
-      {count.toLocaleString()}
-      {suffix}
-    </span>
+    <button onClick={onClick} className={`${baseStyle} ${variants[variant]} ${className}`}>
+      {children}
+    </button>
   );
 }
 
-function SectionHeading({
-  eyebrow,
-  title,
-  description,
-}: {
-  eyebrow: string;
-  title: string;
-  description: string;
-}) {
+function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
   return (
-    <div className="mx-auto max-w-3xl text-center">
-      <div className="mb-4 inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-[#8cc9c2]">
-        {eyebrow}
-      </div>
-      <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">{title}</h2>
-      <p className="mt-4 text-base leading-7 text-slate-400 sm:text-lg">{description}</p>
-    </div>
-  );
-}
+    <div className="animate-in fade-in duration-500">
+      <section className="relative min-h-[92vh] overflow-hidden border-b border-slate-800/50 pt-36">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.08),transparent_50%)]" />
+        <div className="pointer-events-none absolute left-1/2 top-[16%] h-[420px] w-[860px] -translate-x-1/2 rounded-full bg-blue-600/18 blur-[150px]" />
 
-function FeatureCard({
-  icon: Icon,
-  title,
-  description,
-}: {
-  icon: typeof Activity;
-  title: string;
-  description: string;
-}) {
-  return (
-    <div className="group rounded-[28px] border border-white/8 bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#8cc9c2]/30 hover:bg-white/[0.05]">
-      <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#10252a] text-[#8cc9c2]">
-        <Icon className="h-5 w-5" />
-      </div>
-      <h3 className="text-lg font-semibold text-white">{title}</h3>
-      <p className="mt-3 text-sm leading-6 text-slate-400">{description}</p>
-    </div>
-  );
-}
-
-function PricingCard({
-  name,
-  price,
-  period,
-  summary,
-  features,
-  featured = false,
-}: {
-  name: string;
-  price: string;
-  period: string;
-  summary: string;
-  features: string[];
-  featured?: boolean;
-}) {
-  return (
-    <div
-      className={`rounded-[32px] border p-8 transition-all duration-300 ${
-        featured
-          ? 'border-[#e3a84f]/40 bg-[#16130d] shadow-[0_20px_80px_rgba(227,168,79,0.12)]'
-          : 'border-white/8 bg-white/[0.03]'
-      }`}
-    >
-      <div className="flex items-center justify-between">
-        <div>
-          <h3 className="text-xl font-semibold text-white">{name}</h3>
-          <p className="mt-2 text-sm text-slate-400">{summary}</p>
-        </div>
-        {featured && (
-          <span className="rounded-full border border-[#e3a84f]/30 bg-[#e3a84f]/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#f4c77d]">
-            Popular
-          </span>
-        )}
-      </div>
-
-      <div className="mt-8 flex items-end gap-2">
-        <span className="text-5xl font-semibold tracking-tight text-white">{price}</span>
-        <span className="pb-1 text-sm text-slate-500">/ {period}</span>
-      </div>
-
-      <ul className="mt-8 space-y-3">
-        {features.map((feature) => (
-          <li key={feature} className="flex items-start gap-3 text-sm text-slate-300">
-            <BadgeCheck className="mt-0.5 h-4 w-4 flex-none text-[#8cc9c2]" />
-            <span>{feature}</span>
-          </li>
-        ))}
-      </ul>
-
-      <Link
-        href="/register"
-        className={`mt-8 inline-flex w-full items-center justify-center rounded-2xl px-5 py-3 text-sm font-semibold transition-colors ${
-          featured
-            ? 'bg-[#e3a84f] text-[#14110c] hover:bg-[#efb65d]'
-            : 'bg-white/8 text-white hover:bg-white/12'
-        }`}
-      >
-        Start free trial
-      </Link>
-    </div>
-  );
-}
-
-const features = [
-  {
-    icon: LockKeyhole,
-    title: 'License control built for live accounts',
-    description:
-      'Issue, revoke, and bind EA licenses to specific trading accounts without patching builds or sending manual keys.',
-  },
-  {
-    icon: ShieldAlert,
-    title: 'Risk automation, not just monitoring',
-    description:
-      'Define hard drawdown rules, kill switches, and session filters so protection happens automatically when market conditions change.',
-  },
-  {
-    icon: BarChart3,
-    title: 'Readable performance analytics',
-    description:
-      'Track P&L, drawdown, trade behavior, and account health in one place without juggling broker exports and spreadsheets.',
-  },
-  {
-    icon: Radio,
-    title: 'Live sync back to the EA',
-    description:
-      'Push updated parameters, enable or disable protections, and keep connected terminals aligned without manual restarts.',
-  },
-  {
-    icon: CreditCard,
-    title: 'Commercial operations included',
-    description:
-      'Support trials, subscriptions, and renewals with billing workflows tied directly to license provisioning.',
-  },
-  {
-    icon: Sparkles,
-    title: 'Operationally clean for teams',
-    description:
-      'Give support, product, and ops teams one dashboard for customer access, account state, and emergency actions.',
-  },
-];
-
-const steps = [
-  {
-    id: '01',
-    title: 'Connect your commercial model',
-    description: 'Create plans, issue trial access, and decide how each strategy should be licensed.',
-  },
-  {
-    id: '02',
-    title: 'Deploy the EA with platform hooks',
-    description: 'Use the included integration flow for heartbeats, license checks, config sync, and kill switch control.',
-  },
-  {
-    id: '03',
-    title: 'Operate from one command surface',
-    description: 'Monitor account health, manage risk actions, and update strategy settings without touching each terminal manually.',
-  },
-];
-
-const pricing = [
-  {
-    name: 'Starter',
-    price: '$29',
-    period: 'month',
-    summary: 'For solo operators validating a single strategy.',
-    features: ['1 strategy', '3 accounts', 'Core licensing', 'Daily analytics', 'Email support'],
-  },
-  {
-    name: 'Professional',
-    price: '$79',
-    period: 'month',
-    summary: 'For active desks running live distribution and tighter controls.',
-    features: ['5 strategies', '10 accounts', 'Advanced risk rules', 'Live config sync', 'Priority support'],
-    featured: true,
-  },
-  {
-    name: 'Enterprise',
-    price: '$199',
-    period: 'month',
-    summary: 'For teams managing multi-client operations at scale.',
-    features: ['Unlimited strategies', 'Unlimited accounts', 'Custom workflows', 'Audit visibility', 'Dedicated onboarding'],
-  },
-];
-
-export default function LandingPage() {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 24);
-    window.addEventListener('scroll', handleScroll);
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  return (
-    <div className="min-h-screen overflow-x-hidden bg-[#081118] text-white">
-      <div className="pointer-events-none fixed inset-0">
-        <div className="absolute left-1/2 top-0 h-[520px] w-[760px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(140,201,194,0.2),rgba(8,17,24,0)_68%)]" />
-        <div className="absolute right-[-120px] top-[160px] h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,rgba(227,168,79,0.12),rgba(8,17,24,0)_70%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:72px_72px] opacity-[0.14]" />
-      </div>
-
-      <nav
-        className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${
-          scrolled ? 'border-b border-white/8 bg-[#081118]/85 backdrop-blur-xl' : 'bg-transparent'
-        }`}
-      >
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-6">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#8cc9c2] text-sm font-bold text-[#081118]">
-              EA
-            </div>
-            <div>
-              <div className="text-sm font-semibold tracking-[0.22em] text-slate-400">PLATFORM</div>
-              <div className="text-base font-semibold text-white">EA SaaS</div>
-            </div>
-          </Link>
-
-          <div className="hidden items-center gap-8 text-sm text-slate-400 md:flex">
-            <a href="#features" className="transition-colors hover:text-white">
-              Features
-            </a>
-            <a href="#workflow" className="transition-colors hover:text-white">
-              Workflow
-            </a>
-            <a href="#pricing" className="transition-colors hover:text-white">
-              Pricing
-            </a>
+        <div className="container relative z-10 mx-auto max-w-[900px] px-6 text-center">
+          <div className="mb-10 inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-1.5 text-sm font-medium text-blue-400">
+            <Activity size={14} />
+            <span>Built for live account control</span>
           </div>
 
-          <div className="hidden items-center gap-3 md:flex">
-            <Link href="/login" className="rounded-full px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:text-white">
-              Log in
-            </Link>
-            <Link
-              href="/register"
-              className="inline-flex items-center rounded-full bg-[#e3a84f] px-5 py-2.5 text-sm font-semibold text-[#14110c] transition-colors hover:bg-[#efb65d]"
+          <h1 className="mb-8 text-5xl font-extrabold leading-[0.92] tracking-tight text-white md:text-[6.2rem]">
+            MT4 and MT5 <br />
+            <span className="bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
+              operations layer
+            </span>
+          </h1>
+
+          <p className="mx-auto mb-12 max-w-[720px] text-lg leading-relaxed text-slate-400 md:text-[1rem] md:leading-[1.65]">
+            Control licensing, risk, and live EA operations from one surface. Built for teams selling or operating
+            Expert Advisors at scale. Replace spreadsheet ops, fragile scripts, and manual account handling with one
+            system that is readable under pressure.
+          </p>
+
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <Button onClick={() => navigateTo('pricing')} className="w-full rounded-xl px-14 py-3.5 text-base sm:w-auto">
+              Start free trial <ArrowRight size={18} className="ml-2" />
+            </Button>
+            <Button
+              onClick={() => navigateTo('workflow')}
+              variant="secondary"
+              className="w-full rounded-xl bg-slate-800/85 px-12 py-3.5 text-base sm:w-auto"
             >
-              Start free trial
-            </Link>
+              See platform flow
+            </Button>
           </div>
 
-          <button
-            type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 md:hidden"
-            onClick={() => setMobileMenuOpen((prev) => !prev)}
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+          <p className="mt-5 text-sm text-slate-500">No credit card required • 14-day trial</p>
         </div>
+      </section>
 
-        {mobileMenuOpen && (
-          <div className="border-t border-white/8 bg-[#081118]/95 px-5 py-4 backdrop-blur-xl md:hidden">
-            <div className="flex flex-col gap-3 text-sm text-slate-300">
-              <a href="#features" onClick={() => setMobileMenuOpen(false)}>
-                Features
-              </a>
-              <a href="#workflow" onClick={() => setMobileMenuOpen(false)}>
-                Workflow
-              </a>
-              <a href="#pricing" onClick={() => setMobileMenuOpen(false)}>
-                Pricing
-              </a>
-              <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
-                Log in
-              </Link>
-              <Link
-                href="/register"
-                onClick={() => setMobileMenuOpen(false)}
-                className="mt-2 inline-flex items-center justify-center rounded-full bg-[#e3a84f] px-5 py-3 font-semibold text-[#14110c]"
-              >
-                Start free trial
-              </Link>
-            </div>
+      <section className="relative z-10 border-y border-slate-800/50 bg-slate-900/50 backdrop-blur-sm">
+        <div className="container mx-auto px-6 py-10">
+          <div className="grid grid-cols-2 gap-8 divide-x divide-slate-800/0 md:grid-cols-4 md:divide-slate-800">
+            {[
+              { label: 'Active traders', value: '12,000+' },
+              { label: 'Uptime target', value: '99.9%' },
+              { label: 'Trades monitored', value: '150M+' },
+              { label: 'Markets served', value: '50+' },
+            ].map((stat) => (
+              <div key={stat.label} className="px-4 text-center">
+                <div className="mb-1 text-3xl font-bold text-white md:text-4xl">{stat.value}</div>
+                <div className="text-sm font-medium text-slate-400">{stat.label}</div>
+              </div>
+            ))}
           </div>
-        )}
-      </nav>
+        </div>
+      </section>
 
-      <main className="relative">
-        <section className="px-5 pb-20 pt-28 sm:px-6 sm:pt-36">
-          <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]">
-            <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#8cc9c2]/20 bg-[#8cc9c2]/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-[#9ddad3]">
-                <Radio className="h-3.5 w-3.5" />
-                MT4 and MT5 operations layer
-              </div>
-
-              <h1 className="mt-8 text-5xl font-semibold leading-[1.02] tracking-tight text-white sm:text-6xl lg:text-7xl">
-                Control licensing, risk, and live EA operations from one surface.
-              </h1>
-
-              <p className="mt-8 max-w-2xl text-lg leading-8 text-slate-400 sm:text-xl">
-                Built for teams selling or operating Expert Advisors at scale. Replace spreadsheet ops, fragile scripts,
-                and manual account handling with one system that is readable under pressure.
-              </p>
-
-              <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-                <Link
-                  href="/register"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#e3a84f] px-7 py-4 text-base font-semibold text-[#14110c] transition-colors hover:bg-[#efb65d]"
-                >
-                  Start free trial
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-                <a
-                  href="#features"
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-white/12 bg-white/4 px-7 py-4 text-base font-semibold text-white transition-colors hover:bg-white/8"
-                >
-                  See platform flow
-                  <ChevronRight className="h-4 w-4" />
-                </a>
-              </div>
-
-              <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-500">
-                <span>No credit card required</span>
-                <span>14-day trial</span>
-                <span>Built for live account control</span>
-              </div>
-
-              <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4">
-                {[
-                  { value: 12000, suffix: '+', label: 'Active traders' },
-                  { value: 99, suffix: '.9%', label: 'Uptime target' },
-                  { value: 150, suffix: 'M+', label: 'Trades monitored' },
-                  { value: 50, suffix: '+', label: 'Markets served' },
-                ].map((stat) => (
-                  <div key={stat.label} className="rounded-3xl border border-white/8 bg-white/[0.03] p-4">
-                    <div className="text-2xl font-semibold text-white">
-                      <AnimatedCounter target={stat.value} suffix={stat.suffix} />
-                    </div>
-                    <div className="mt-2 text-sm text-slate-500">{stat.label}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="relative">
-              <div className="absolute inset-0 rounded-[36px] bg-[radial-gradient(circle_at_top,rgba(140,201,194,0.16),rgba(8,17,24,0)_70%)]" />
-              <div className="relative rounded-[36px] border border-white/10 bg-[#0c1720]/90 p-4 shadow-[0_30px_120px_rgba(0,0,0,0.35)] backdrop-blur">
-                <div className="rounded-[28px] border border-white/8 bg-[#081118] p-5">
-                  <div className="flex items-center justify-between rounded-[24px] border border-white/8 bg-white/[0.03] px-4 py-3">
-                    <div>
-                      <div className="text-xs uppercase tracking-[0.22em] text-slate-500">Operations overview</div>
-                      <div className="mt-1 text-lg font-semibold text-white">Professional strategy desk</div>
-                    </div>
-                    <div className="rounded-full bg-[#10252a] px-3 py-1 text-xs font-semibold text-[#8cc9c2]">Live</div>
-                  </div>
-
-                  <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                    <div className="rounded-[24px] border border-white/8 bg-[#0f1b24] p-4">
-                      <div className="text-xs uppercase tracking-[0.22em] text-slate-500">License state</div>
-                      <div className="mt-4 flex items-end justify-between">
-                        <div>
-                          <div className="text-3xl font-semibold text-white">247</div>
-                          <div className="mt-1 text-sm text-slate-500">Active accounts</div>
-                        </div>
-                        <div className="rounded-full bg-[#163229] px-3 py-1 text-xs font-semibold text-[#8cc9c2]">98.4% healthy</div>
-                      </div>
-                    </div>
-
-                    <div className="rounded-[24px] border border-white/8 bg-[#16130d] p-4">
-                      <div className="text-xs uppercase tracking-[0.22em] text-slate-500">Risk actions</div>
-                      <div className="mt-4 flex items-end justify-between">
-                        <div>
-                          <div className="text-3xl font-semibold text-white">14</div>
-                          <div className="mt-1 text-sm text-slate-500">Auto interventions today</div>
-                        </div>
-                        <div className="rounded-full bg-[#2a2212] px-3 py-1 text-xs font-semibold text-[#f4c77d]">Guardrails on</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-4 rounded-[28px] border border-white/8 bg-white/[0.03] p-5">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div className="text-xs uppercase tracking-[0.22em] text-slate-500">Strategy command surface</div>
-                        <div className="mt-1 text-lg font-semibold text-white">EA Momentum XAU</div>
-                      </div>
-                      <div className="rounded-full bg-white/8 px-3 py-1 text-xs font-medium text-slate-300">Version 2.3.1</div>
-                    </div>
-
-                    <div className="mt-5 grid gap-3">
-                      {[
-                        { label: 'Heartbeat status', value: 'Streaming normally', tone: 'text-[#8cc9c2]' },
-                        { label: 'Last config push', value: '2 minutes ago', tone: 'text-white' },
-                        { label: 'Exposure rule', value: '3.5% max risk per account', tone: 'text-white' },
-                        { label: 'Emergency control', value: 'Fleet kill switch available', tone: 'text-[#f4c77d]' },
-                      ].map((row) => (
-                        <div
-                          key={row.label}
-                          className="flex items-center justify-between rounded-2xl border border-white/8 bg-[#0c1720] px-4 py-3"
-                        >
-                          <span className="text-sm text-slate-500">{row.label}</span>
-                          <span className={`text-sm font-medium ${row.tone}`}>{row.value}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="px-5 py-16 sm:px-6">
-          <div className="mx-auto grid max-w-7xl gap-4 rounded-[36px] border border-white/8 bg-white/[0.03] p-6 sm:grid-cols-3 sm:p-8">
-            <div>
-              <div className="text-xs uppercase tracking-[0.24em] text-slate-500">Why teams switch</div>
-              <div className="mt-3 text-2xl font-semibold text-white">A calmer operating model for EA businesses.</div>
-            </div>
-            <div className="rounded-[28px] border border-white/8 bg-[#0c1720] p-5">
-              <div className="text-sm font-semibold text-white">Less manual account work</div>
-              <p className="mt-2 text-sm leading-6 text-slate-400">
-                Support and ops stop handling renewals, account bindings, and emergency actions through chat and spreadsheets.
-              </p>
-            </div>
-            <div className="rounded-[28px] border border-white/8 bg-[#0c1720] p-5">
-              <div className="text-sm font-semibold text-white">Faster responses under stress</div>
-              <p className="mt-2 text-sm leading-6 text-slate-400">
-                When market conditions deteriorate, risk actions are visible, structured, and immediate instead of improvised.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section id="features" className="px-5 py-24 sm:px-6">
-          <div className="mx-auto max-w-7xl">
-            <SectionHeading
-              eyebrow="Platform capabilities"
-              title="Designed for operators, not just marketers."
-              description="Every section is tuned around the repetitive work involved in selling, protecting, and maintaining live Expert Advisor deployments."
-            />
-
-            <div className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-              {features.map((feature) => (
-                <FeatureCard
-                  key={feature.title}
-                  icon={feature.icon}
-                  title={feature.title}
-                  description={feature.description}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="workflow" className="px-5 py-24 sm:px-6">
-          <div className="mx-auto max-w-7xl">
-            <SectionHeading
-              eyebrow="Workflow"
-              title="A three-step operating loop."
-              description="The platform is built to shorten the gap between commercial access, technical deployment, and daily operational control."
-            />
-
-            <div className="mt-14 grid gap-6 lg:grid-cols-3">
-              {steps.map((step) => (
-                <div key={step.id} className="rounded-[32px] border border-white/8 bg-white/[0.03] p-8">
-                  <div className="text-sm font-semibold uppercase tracking-[0.24em] text-[#8cc9c2]">{step.id}</div>
-                  <h3 className="mt-6 text-2xl font-semibold text-white">{step.title}</h3>
-                  <p className="mt-4 text-sm leading-7 text-slate-400">{step.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="pricing" className="px-5 py-24 sm:px-6">
-          <div className="mx-auto max-w-7xl">
-            <SectionHeading
-              eyebrow="Pricing"
-              title="Straightforward plans with room to scale."
-              description="Start with a compact operational setup, then move into higher-account workflows as your client base and strategy catalog grow."
-            />
-
-            <div className="mt-14 grid gap-6 lg:grid-cols-3">
-              {pricing.map((plan) => (
-                <PricingCard key={plan.name} {...plan} />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="px-5 py-24 sm:px-6">
-          <div className="mx-auto max-w-5xl rounded-[40px] border border-white/8 bg-[linear-gradient(135deg,#0f1d24_0%,#17120d_100%)] p-8 sm:p-12">
-            <div className="max-w-3xl">
-              <div className="inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-[#8cc9c2]">
-                Final call
-              </div>
-              <h2 className="mt-6 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-                If you run EAs commercially, the operations layer matters as much as the strategy.
-              </h2>
-              <p className="mt-6 text-lg leading-8 text-slate-400">
-                Clean licensing, readable risk controls, and one reliable command surface make the business easier to grow and much easier to trust.
-              </p>
-              <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-                <Link
-                  href="/register"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#e3a84f] px-7 py-4 text-base font-semibold text-[#14110c] transition-colors hover:bg-[#efb65d]"
-                >
-                  Start your free trial
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  href="/login"
-                  className="inline-flex items-center justify-center rounded-full border border-white/12 bg-white/5 px-7 py-4 text-base font-semibold text-white transition-colors hover:bg-white/8"
-                >
-                  Existing client login
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <footer className="border-t border-white/8 px-5 py-12 sm:px-6">
-        <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-[1.2fr_1fr_1fr_1fr]">
-          <div>
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#8cc9c2] text-sm font-bold text-[#081118]">
-                EA
-              </div>
-              <div className="text-lg font-semibold text-white">EA SaaS</div>
-            </div>
-            <p className="mt-4 max-w-sm text-sm leading-6 text-slate-500">
-              Licensing, risk control, and operational visibility for Expert Advisor teams that need more than a simple dashboard.
+      <section className="relative z-10 py-24">
+        <div className="container mx-auto px-6">
+          <div className="mb-16 text-center">
+            <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">Professional strategy desk</h2>
+            <p className="mx-auto max-w-2xl text-slate-400">
+              A command center designed for rapid readability when market conditions change.
             </p>
           </div>
 
-          <div>
-            <div className="text-sm font-semibold text-white">Product</div>
-            <div className="mt-4 space-y-3 text-sm text-slate-500">
-              <a href="#features" className="block transition-colors hover:text-slate-300">
-                Features
-              </a>
-              <a href="#workflow" className="block transition-colors hover:text-slate-300">
-                Workflow
-              </a>
-              <a href="#pricing" className="block transition-colors hover:text-slate-300">
-                Pricing
-              </a>
+          <div className="mx-auto max-w-5xl overflow-hidden rounded-2xl border border-slate-800 bg-[#0B1120] shadow-2xl">
+            <div className="flex items-center justify-between border-b border-slate-800 bg-slate-900/80 p-4">
+              <div className="flex items-center gap-3">
+                <div className="h-3 w-3 rounded-full border border-red-500/50 bg-red-500/20" />
+                <div className="h-3 w-3 rounded-full border border-yellow-500/50 bg-yellow-500/20" />
+                <div className="h-3 w-3 rounded-full border border-green-500/50 bg-green-500/20" />
+              </div>
+              <div className="flex items-center gap-2 font-mono text-sm text-slate-400">
+                <Globe size={14} />
+                Live Environment
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 p-6 md:grid-cols-3 md:p-10">
+              <div className="rounded-xl border border-slate-700/50 bg-slate-800/40 p-6">
+                <div className="mb-4 flex items-center justify-between">
+                  <h3 className="font-medium text-slate-300">License state</h3>
+                  <Shield size={18} className="text-emerald-400" />
+                </div>
+                <div className="mb-2 text-4xl font-bold text-white">247</div>
+                <p className="flex items-center gap-1 text-sm text-emerald-400">
+                  <CheckCircle size={14} />
+                  Active accounts (98.4% healthy)
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-slate-700/50 bg-slate-800/40 p-6">
+                <div className="mb-4 flex items-center justify-between">
+                  <h3 className="font-medium text-slate-300">Risk actions</h3>
+                  <AlertTriangle size={18} className="text-yellow-400" />
+                </div>
+                <div className="mb-2 text-4xl font-bold text-white">14</div>
+                <p className="flex items-center gap-1 text-sm text-yellow-400">
+                  <Zap size={14} />
+                  Auto interventions today
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-slate-700/50 bg-slate-800/40 p-6">
+                <div className="mb-4 flex items-center justify-between">
+                  <h3 className="font-medium text-slate-300">Strategy</h3>
+                  <Terminal size={18} className="text-blue-400" />
+                </div>
+                <div className="mb-1 text-lg font-bold text-white">EA Momentum XAU</div>
+                <p className="mb-4 font-mono text-sm text-slate-400">v2.3.1</p>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-xs">
+                    <span className="text-slate-500">Heartbeat</span>
+                    <span className="text-emerald-400">Streaming</span>
+                  </div>
+                  <div className="flex justify-between text-xs">
+                    <span className="text-slate-500">Exposure Rule</span>
+                    <span className="text-white">3.5% Max</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+        </div>
+      </section>
+    </div>
+  );
+}
 
+function FeaturesPage() {
+  return (
+    <div className="animate-in fade-in duration-500 pb-20 pt-24">
+      <div className="container mx-auto px-6">
+        <div className="mx-auto mb-20 max-w-3xl text-center">
+          <h1 className="mb-6 text-4xl font-bold text-white md:text-5xl">
+            Designed for operators, <br />
+            <span className="text-blue-400">not just marketers.</span>
+          </h1>
+          <p className="text-lg text-slate-400">
+            Every section is tuned around the repetitive work involved in selling, protecting, and maintaining live
+            Expert Advisor deployments.
+          </p>
+        </div>
+
+        <div className="mx-auto mb-24 grid max-w-5xl grid-cols-1 gap-10 md:grid-cols-2">
+          <div className="rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900 to-slate-900/50 p-8">
+            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-500/10">
+              <RefreshCw size={24} className="text-blue-400" />
+            </div>
+            <h3 className="mb-3 text-xl font-bold text-white">Less manual account work</h3>
+            <p className="leading-relaxed text-slate-400">
+              Support and ops stop handling renewals, account bindings, and emergency actions through chat and
+              spreadsheets. Automate the lifecycle.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900 to-slate-900/50 p-8">
+            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-red-500/10">
+              <Shield size={24} className="text-red-400" />
+            </div>
+            <h3 className="mb-3 text-xl font-bold text-white">Faster responses under stress</h3>
+            <p className="leading-relaxed text-slate-400">
+              When market conditions deteriorate, risk actions are visible, structured, and immediate instead of
+              improvised.
+            </p>
+          </div>
+        </div>
+
+        <h2 className="mb-12 text-center text-3xl font-bold text-white">Platform Capabilities</h2>
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-3">
+          {[
+            {
+              icon: Lock,
+              title: 'License control built for live accounts',
+              desc: 'Issue, revoke, and bind EA licenses to specific trading accounts without patching builds or sending manual keys.',
+            },
+            {
+              icon: AlertTriangle,
+              title: 'Risk automation, not just monitoring',
+              desc: 'Define hard drawdown rules, kill switches, and session filters so protection happens automatically.',
+            },
+            {
+              icon: BarChart3,
+              title: 'Readable performance analytics',
+              desc: 'Track P&L, drawdown, trade behavior, and account health in one place without juggling broker exports.',
+            },
+            {
+              icon: Zap,
+              title: 'Live sync back to the EA',
+              desc: 'Push updated parameters, enable or disable protections, and keep connected terminals aligned without restarts.',
+            },
+            {
+              icon: Server,
+              title: 'Commercial operations included',
+              desc: 'Support trials, subscriptions, and renewals with billing workflows tied directly to license provisioning.',
+            },
+            {
+              icon: Layers,
+              title: 'Operationally clean for teams',
+              desc: 'Give support, product, and ops teams one dashboard for customer access, account state, and emergency actions.',
+            },
+          ].map((feature) => (
+            <div
+              key={feature.title}
+              className="rounded-xl border border-slate-800/60 bg-slate-900/40 p-6 transition-colors hover:bg-slate-800/40"
+            >
+              <feature.icon size={24} className="mb-4 text-cyan-400" />
+              <h4 className="mb-2 text-lg font-semibold text-white">{feature.title}</h4>
+              <p className="text-sm leading-relaxed text-slate-400">{feature.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function WorkflowPage() {
+  return (
+    <div className="animate-in fade-in duration-500 pb-20 pt-24">
+      <div className="container mx-auto px-6">
+        <div className="mx-auto mb-16 max-w-3xl text-center">
+          <h1 className="mb-6 text-4xl font-bold text-white md:text-5xl">A three-step operating loop.</h1>
+          <p className="text-lg text-slate-400">
+            The platform is built to shorten the gap between commercial access, technical deployment, and daily
+            operational control.
+          </p>
+        </div>
+
+        <div className="relative mx-auto max-w-5xl">
+          <div className="absolute left-0 top-1/2 z-0 hidden h-0.5 w-full -translate-y-1/2 bg-slate-800 md:block" />
+
+          <div className="relative z-10 grid grid-cols-1 gap-10 md:grid-cols-3">
+            {[
+              {
+                step: '01',
+                title: 'Connect your commercial model',
+                desc: 'Create plans, issue trial access, and decide how each strategy should be licensed.',
+                icon: Settings,
+              },
+              {
+                step: '02',
+                title: 'Deploy the EA with platform hooks',
+                desc: 'Use the included integration flow for heartbeats, license checks, config sync, and kill switch control.',
+                icon: Cpu,
+              },
+              {
+                step: '03',
+                title: 'Operate from one command surface',
+                desc: 'Monitor account health, manage risk actions, and update strategy settings without touching each terminal manually.',
+                icon: Activity,
+              },
+            ].map((item) => (
+              <div key={item.step} className="relative rounded-2xl border border-slate-800 bg-slate-900 p-8 shadow-xl">
+                <div className="absolute left-8 top-[-2rem] flex h-16 w-16 items-center justify-center rounded-full border border-slate-700 bg-slate-950 shadow-lg shadow-black/50">
+                  <span className="bg-gradient-to-b from-white to-slate-500 bg-clip-text text-xl font-bold text-transparent">
+                    {item.step}
+                  </span>
+                </div>
+                <div className="mt-6">
+                  <item.icon size={28} className="mb-5 text-blue-500" />
+                  <h3 className="mb-3 text-xl font-bold text-white">{item.title}</h3>
+                  <p className="text-slate-400">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PricingPage() {
+  return (
+    <div className="animate-in fade-in duration-500 pb-20 pt-24">
+      <div className="container mx-auto px-6">
+        <div className="mx-auto mb-16 max-w-3xl text-center">
+          <h1 className="mb-6 text-4xl font-bold text-white md:text-5xl">Straightforward plans with room to scale.</h1>
+          <p className="text-lg text-slate-400">
+            Start with a compact operational setup, then move into higher-account workflows as your client base and
+            strategy catalog grow.
+          </p>
+        </div>
+
+        <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-8 md:grid-cols-3">
+          <div className="rounded-2xl border border-slate-800 bg-slate-900 p-8 transition-colors hover:border-slate-700">
+            <h3 className="mb-2 text-xl font-bold text-white">Starter</h3>
+            <p className="h-10 text-sm text-slate-400">For solo operators validating a single strategy.</p>
+            <div className="my-6">
+              <span className="text-4xl font-bold text-white">$29</span>
+              <span className="text-slate-500">/ month</span>
+            </div>
+            <ul className="mb-8 space-y-4 text-sm text-slate-300">
+              {['1 strategy', '3 accounts', 'Core licensing', 'Daily analytics', 'Email support'].map((item, index) => (
+                <li key={item} className="flex items-center gap-3">
+                  <CheckCircle size={16} className={index === 4 ? 'text-slate-600' : 'text-blue-500'} />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <Button variant="secondary" className="w-full">
+              Start free trial
+            </Button>
+          </div>
+
+          <div className="relative rounded-2xl border border-blue-500/50 bg-gradient-to-b from-blue-900/40 to-slate-900 p-8 shadow-2xl shadow-blue-900/20 md:-translate-y-4">
+            <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
+              <span className="rounded-full bg-blue-500 px-3 py-1 text-xs font-bold uppercase tracking-wider text-white">
+                Popular
+              </span>
+            </div>
+            <h3 className="mb-2 text-xl font-bold text-white">Professional</h3>
+            <p className="h-10 text-sm text-slate-400">For active desks running live distribution and tighter controls.</p>
+            <div className="my-6">
+              <span className="text-4xl font-bold text-white">$79</span>
+              <span className="text-slate-500">/ month</span>
+            </div>
+            <ul className="mb-8 space-y-4 text-sm font-medium text-white">
+              {['5 strategies', '10 accounts', 'Advanced risk rules', 'Live config sync', 'Priority support'].map((item) => (
+                <li key={item} className="flex items-center gap-3">
+                  <CheckCircle size={16} className="text-cyan-400" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <Button className="w-full">Start free trial</Button>
+          </div>
+
+          <div className="rounded-2xl border border-slate-800 bg-slate-900 p-8 transition-colors hover:border-slate-700">
+            <h3 className="mb-2 text-xl font-bold text-white">Enterprise</h3>
+            <p className="h-10 text-sm text-slate-400">For teams managing multi-client operations at scale.</p>
+            <div className="my-6">
+              <span className="text-4xl font-bold text-white">$199</span>
+              <span className="text-slate-500">/ month</span>
+            </div>
+            <ul className="mb-8 space-y-4 text-sm text-slate-300">
+              {['Unlimited strategies', 'Unlimited accounts', 'Custom workflows', 'Audit visibility', 'Dedicated onboarding'].map(
+                (item) => (
+                  <li key={item} className="flex items-center gap-3">
+                    <CheckCircle size={16} className="text-blue-500" />
+                    {item}
+                  </li>
+                ),
+              )}
+            </ul>
+            <Button variant="secondary" className="w-full">
+              Start free trial
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AuthPage({
+  mode,
+  navigateTo,
+}: {
+  mode: 'login' | 'register';
+  navigateTo: (page: PageId) => void;
+}) {
+  const { login } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+
+    if (mode === 'register') {
+      window.location.href = '/register';
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      await login(email, password);
+    } catch {
+      setError('Invalid credentials');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="animate-in fade-in flex min-h-[80vh] items-center justify-center p-6 duration-500">
+      <div className="w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900 p-8 shadow-2xl">
+        <div className="mb-8 flex justify-center">
+          <div className="flex cursor-pointer items-center gap-2" onClick={() => navigateTo('home')}>
+            <div className="flex h-8 w-8 items-center justify-center rounded bg-gradient-to-br from-blue-500 to-indigo-600 font-bold text-white">
+              EA
+            </div>
+          </div>
+        </div>
+        <h2 className="mb-2 text-center text-2xl font-bold text-white">
+          {mode === 'login' ? 'Welcome back' : 'Start your free trial'}
+        </h2>
+        <p className="mb-8 text-center text-sm text-slate-400">
+          {mode === 'login' ? 'Enter your details to access your dashboard' : '14-day free trial. No credit card required.'}
+        </p>
+
+        <form className="space-y-5" onSubmit={handleSubmit}>
           <div>
-            <div className="text-sm font-semibold text-white">Access</div>
-            <div className="mt-4 space-y-3 text-sm text-slate-500">
-              <Link href="/login" className="block transition-colors hover:text-slate-300">
-                Log in
-              </Link>
-              <Link href="/register" className="block transition-colors hover:text-slate-300">
+            <label className="mb-1 block text-sm font-medium text-slate-300">Email</label>
+            <input
+              type="email"
+              placeholder="name@company.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full rounded-lg border border-slate-800 bg-slate-950 px-4 py-2.5 text-white transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label className="mb-1 block text-sm font-medium text-slate-300">Password</label>
+            <input
+              type="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full rounded-lg border border-slate-800 bg-slate-950 px-4 py-2.5 text-white transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
+
+          {mode === 'login' && (
+            <div className="flex justify-end">
+              <a href="#" className="text-sm text-blue-400 hover:text-blue-300">
+                Forgot password?
+              </a>
+            </div>
+          )}
+
+          {error && <div className="text-sm text-red-400">{error}</div>}
+
+          <Button className="mt-2 w-full py-3">
+            {isSubmitting ? 'Please wait...' : mode === 'login' ? 'Sign in' : 'Create account'}
+          </Button>
+        </form>
+
+        <div className="mt-6 text-center text-sm text-slate-400">
+          {mode === 'login' ? (
+            <>
+              Don&apos;t have an account?{' '}
+              <button onClick={() => navigateTo('register')} className="text-blue-400 hover:underline">
                 Start free trial
-              </Link>
+              </button>
+            </>
+          ) : (
+            <>
+              Already have an account?{' '}
+              <button onClick={() => navigateTo('login')} className="text-blue-400 hover:underline">
+                Log in
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Navbar({
+  navigateTo,
+  currentPage,
+  isMobileMenuOpen,
+  setIsMobileMenuOpen,
+}: {
+  navigateTo: (page: PageId) => void;
+  currentPage: PageId;
+  isMobileMenuOpen: boolean;
+  setIsMobileMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navLinks: Array<{ id: PageId; label: string }> = [
+    { id: 'home', label: 'Platform' },
+    { id: 'features', label: 'Features' },
+    { id: 'workflow', label: 'Workflow' },
+    { id: 'pricing', label: 'Pricing' },
+  ];
+
+  return (
+    <nav
+      className={`fixed top-0 z-50 w-full transition-all duration-300 ${
+        scrolled ? 'border-b border-slate-800/50 bg-[#050b1b]/85 py-3 backdrop-blur-md' : 'bg-transparent py-4'
+      }`}
+    >
+      <div className="container mx-auto flex max-w-7xl items-center justify-between px-4 md:px-6">
+        <div className="flex cursor-pointer items-center gap-2.5" onClick={() => navigateTo('home')}>
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-gradient-to-br from-blue-500 to-indigo-600 text-sm font-bold text-white">
+            EA
+          </div>
+          <span className="text-[1.15rem] font-bold tracking-tight text-white">SaaS</span>
+        </div>
+
+        <div className="hidden items-center gap-9 md:flex">
+          {navLinks.map((link) => (
+            <button
+              key={link.id}
+              onClick={() => navigateTo(link.id)}
+              className={`text-sm font-medium transition-colors ${
+                currentPage === link.id ? 'text-white' : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              {link.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="hidden items-center gap-4 md:flex">
+          <Button variant="ghost" onClick={() => navigateTo('login')} className="px-4 text-sm font-semibold">
+            Log in
+          </Button>
+          <Button onClick={() => navigateTo('register')} className="rounded-xl px-7 py-3 text-sm font-semibold">
+            Start free trial
+          </Button>
+        </div>
+
+        <button className="text-slate-300 md:hidden" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {isMobileMenuOpen && (
+        <div className="absolute left-0 top-full flex w-full flex-col gap-4 border-b border-slate-800 bg-slate-900 p-6 shadow-2xl md:hidden">
+          {navLinks.map((link) => (
+            <button
+              key={link.id}
+              onClick={() => navigateTo(link.id)}
+              className="py-2 text-left text-lg font-medium text-slate-300 hover:text-white"
+            >
+              {link.label}
+            </button>
+          ))}
+          <div className="my-2 h-px bg-slate-800" />
+          <button onClick={() => navigateTo('login')} className="py-2 text-left text-lg font-medium text-slate-300">
+            Log in
+          </button>
+          <Button onClick={() => navigateTo('register')} className="mt-2 w-full rounded-xl">
+            Start free trial
+          </Button>
+        </div>
+      )}
+    </nav>
+  );
+}
+
+function Footer({ navigateTo }: { navigateTo: (page: PageId) => void }) {
+  return (
+    <footer className="border-t border-slate-800/50 bg-slate-950 pb-8 pt-16">
+      <div className="container mx-auto px-6">
+        <div className="mb-12 grid grid-cols-1 gap-12 md:grid-cols-4">
+          <div className="md:col-span-2">
+            <div className="mb-4 flex items-center gap-2">
+              <div className="flex h-6 w-6 items-center justify-center rounded bg-gradient-to-br from-blue-500 to-indigo-600 text-xs font-bold text-white">
+                EA
+              </div>
+              <span className="text-lg font-bold tracking-tight text-white">SaaS</span>
+            </div>
+            <p className="mb-6 max-w-sm text-sm text-slate-400">
+              Licensing, risk control, and operational visibility for Expert Advisor teams that need more than a simple
+              dashboard.
+            </p>
+            <div className="flex gap-2">
+              {['Next.js', 'Prisma', 'MySQL', 'Redis'].map((item) => (
+                <span
+                  key={item}
+                  className="rounded border border-slate-800 bg-slate-900 px-2 py-1 font-mono text-xs text-slate-500"
+                >
+                  {item}
+                </span>
+              ))}
             </div>
           </div>
 
           <div>
-            <div className="text-sm font-semibold text-white">Stack</div>
-            <div className="mt-4 space-y-3 text-sm text-slate-500">
-              <div>Next.js</div>
-              <div>Prisma</div>
-              <div>MySQL</div>
-              <div>Redis</div>
-            </div>
+            <h4 className="mb-4 font-semibold text-white">Product</h4>
+            <ul className="space-y-3">
+              <li>
+                <button onClick={() => navigateTo('features')} className="text-sm text-slate-400 transition-colors hover:text-white">
+                  Features
+                </button>
+              </li>
+              <li>
+                <button onClick={() => navigateTo('workflow')} className="text-sm text-slate-400 transition-colors hover:text-white">
+                  Workflow
+                </button>
+              </li>
+              <li>
+                <button onClick={() => navigateTo('pricing')} className="text-sm text-slate-400 transition-colors hover:text-white">
+                  Pricing
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="mb-4 font-semibold text-white">Access</h4>
+            <ul className="space-y-3">
+              <li>
+                <button onClick={() => navigateTo('login')} className="text-sm text-slate-400 transition-colors hover:text-white">
+                  Log in
+                </button>
+              </li>
+              <li>
+                <button onClick={() => navigateTo('register')} className="text-sm text-slate-400 transition-colors hover:text-white">
+                  Start free trial
+                </button>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className="mx-auto mt-10 max-w-7xl border-t border-white/8 pt-6 text-sm text-slate-600">
-          2026 EA SaaS Platform. All rights reserved.
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-slate-800 pt-8 md:flex-row">
+          <p className="text-sm text-slate-500">© 2026 EA SaaS Platform. All rights reserved.</p>
         </div>
-      </footer>
+      </div>
+    </footer>
+  );
+}
+
+export default function App() {
+  const [currentPage, setCurrentPage] = useState<PageId>('home');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const navigateTo = (page: PageId) => {
+    setCurrentPage(page);
+    setIsMobileMenuOpen(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  return (
+    <div className="min-h-screen bg-[#030817] font-sans text-slate-200 selection:bg-blue-500/30">
+      <Navbar
+        navigateTo={navigateTo}
+        currentPage={currentPage}
+        isMobileMenuOpen={isMobileMenuOpen}
+        setIsMobileMenuOpen={setIsMobileMenuOpen}
+      />
+
+      <main className="min-h-screen">
+        {currentPage === 'home' && <HomePage navigateTo={navigateTo} />}
+        {currentPage === 'features' && <FeaturesPage />}
+        {currentPage === 'workflow' && <WorkflowPage />}
+        {currentPage === 'pricing' && <PricingPage />}
+        {currentPage === 'login' && <AuthPage mode="login" navigateTo={navigateTo} />}
+        {currentPage === 'register' && <AuthPage mode="register" navigateTo={navigateTo} />}
+      </main>
+
+      <Footer navigateTo={navigateTo} />
     </div>
   );
 }

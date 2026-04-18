@@ -3,8 +3,8 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server';
-import { authMiddleware } from '../../middleware/auth';
-import { createCheckoutSession } from '../../services/billing.service';
+import { authMiddleware } from '../../../middleware/auth';
+import { createCheckoutSession } from '../../../services/billing.service';
 import { z } from 'zod';
 
 const checkoutSchema = z.object({
@@ -44,6 +44,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: error.message },
         { status: 409 }
+      );
+    }
+
+    if (error instanceof Error && error.message.includes('STRIPE_SECRET_KEY is not configured')) {
+      return NextResponse.json(
+        { error: 'Stripe checkout is not configured. Set a real STRIPE_SECRET_KEY in .env.' },
+        { status: 503 }
       );
     }
 

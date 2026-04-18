@@ -3,9 +3,9 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server';
-import { adminOnlyMiddleware, requireWriteAccess } from '../../middleware/adminOnly';
-import { createLicense } from '../../services/license.service';
-import { prisma } from '../../lib/prisma';
+import { adminOnlyMiddleware, requireWriteAccess } from '../../../middleware/adminOnly';
+import { createLicense } from '../../../services/license.service';
+import { prisma } from '../../../lib/prisma';
 import { z } from 'zod';
 
 const createLicenseSchema = z.object({

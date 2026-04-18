@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient, UserRole, UserStatus, BillingCycle, AdminRole } from '@prisma/client';
+import { Prisma, PrismaClient, UserRole, UserStatus, BillingCycle, AdminRole, SubscriptionStatus } from '@prisma/client';
 import * as crypto from 'crypto';
 
 const prisma = new PrismaClient();
@@ -10,7 +10,12 @@ async function main() {
   const adminPasswordHash = await hashPassword('Admin@2026!Secure');
   const admin = await prisma.adminUser.upsert({
     where: { email: 'admin@ea-saas.com' },
-    update: {},
+    update: {
+      passwordHash: adminPasswordHash,
+      name: 'Super Admin',
+      role: AdminRole.SUPER_ADMIN,
+      twoFactorEnabled: false,
+    },
     create: {
       email: 'admin@ea-saas.com',
       passwordHash: adminPasswordHash,
@@ -25,7 +30,15 @@ async function main() {
   const traderPasswordHash = await hashPassword('Trader@2026!Demo');
   const trader = await prisma.user.upsert({
     where: { email: 'trader@demo.com' },
-    update: {},
+    update: {
+      passwordHash: traderPasswordHash,
+      name: 'Demo Trader',
+      timezone: 'UTC',
+      role: UserRole.TRADER,
+      status: UserStatus.ACTIVE,
+      emailVerified: new Date(),
+      autoLinkAccounts: true,
+    },
     create: {
       email: 'trader@demo.com',
       passwordHash: traderPasswordHash,
@@ -275,6 +288,33 @@ async function main() {
   console.log(`✅ Packages created: ${starterPackage.name}, ${professionalPackage.name}, ${enterprisePackage.name}, ${yearlyStarterPackage.name}, ${yearlyProPackage.name}`);
 
   // ─── Create Config Versions for Strategies ──────────────────────────────────
+  const now = new Date();
+  const nextMonth = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
+
+  const demoSubscription = await prisma.subscription.upsert({
+    where: { id: 'sub_demo_trader_professional' },
+    update: {
+      userId: trader.id,
+      packageId: professionalPackage.id,
+      status: SubscriptionStatus.ACTIVE,
+      currentPeriodStart: now,
+      currentPeriodEnd: nextMonth,
+      cancelAtPeriodEnd: false,
+      stripeSubscriptionId: null,
+      stripeCustomerId: null,
+    },
+    create: {
+      id: 'sub_demo_trader_professional',
+      userId: trader.id,
+      packageId: professionalPackage.id,
+      status: SubscriptionStatus.ACTIVE,
+      currentPeriodStart: now,
+      currentPeriodEnd: nextMonth,
+      cancelAtPeriodEnd: false,
+    },
+  });
+  console.log(`โ… Demo subscription created: ${demoSubscription.id}`);
+
   const strategies = [scalperStrategy, swingStrategy, gridStrategy];
   for (const strategy of strategies) {
     const configHash = hashConfig(JSON.stringify(strategy.defaultConfig));
@@ -297,14 +337,19 @@ async function main() {
   console.log('✅ Config versions created for all strategies');
 
   // ─── Create Demo API Key for Trader ───────────────────────────────────────
-  const apiKeyRaw = `ea_${crypto.randomUUID()}`;
+  const apiKeyRaw = 'ea_demo_trader_local_2026';
   const apiKeyHash = crypto.createHash('sha256').update(apiKeyRaw).digest('hex');
   const apiKeyPrefix = apiKeyRaw.substring(0, 8);
 
-  await prisma.apiKey.upsert({
-    where: { keyHash: apiKeyHash },
-    update: {},
-    create: {
+  await prisma.apiKey.deleteMany({
+    where: {
+      userId: trader.id,
+      name: 'Demo Trading API Key',
+    },
+  });
+
+  await prisma.apiKey.create({
+    data: {
       userId: trader.id,
       keyHash: apiKeyHash,
       keyPrefix: apiKeyPrefix,
@@ -312,7 +357,7 @@ async function main() {
     },
   });
   console.log(`✅ API key created for demo trader (prefix: ${apiKeyPrefix})`);
-  console.log(`   Full API key (save this — shown only once): ${apiKeyRaw}`);
+  console.log(`   Full API key: ${apiKeyRaw}`);
 
   console.log('\n🎉 Seeding complete!');
   console.log('\n📝 Default credentials:');

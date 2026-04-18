@@ -3,8 +3,8 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server';
-import { adminOnlyMiddleware, requireWriteAccess } from '../../middleware/adminOnly';
-import { prisma } from '../../lib/prisma';
+import { adminOnlyMiddleware, requireWriteAccess } from '../../../middleware/adminOnly';
+import { prisma } from '../../../lib/prisma';
 import {
   revokeLicense,
   pauseLicense,
@@ -12,7 +12,7 @@ import {
   extendLicense,
   regenerateLicenseKey,
   toggleKillSwitch,
-} from '../../services/license.service';
+} from '../../../services/license.service';
 import { z } from 'zod';
 
 // ─── GET: List all licenses ────────────────────────────────────────────────

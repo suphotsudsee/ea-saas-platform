@@ -3,8 +3,8 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server';
-import { adminOnlyMiddleware } from '../../middleware/adminOnly';
-import { prisma } from '../../lib/prisma';
+import { adminOnlyMiddleware } from '../../../middleware/adminOnly';
+import { prisma } from '../../../lib/prisma';
 
 export async function GET(request: NextRequest) {
   const authResult = await adminOnlyMiddleware(request);

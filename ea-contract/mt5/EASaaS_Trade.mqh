@@ -8,9 +8,9 @@
 //| MQL5-compatible trade operations                                   |
 //+------------------------------------------------------------------+
 #property strict
-#include <EASaaS_Utils.mqh>
-#include <EASaaS_License.mqh>
-#include <EASaaS_Risk.mqh>
+#include "EASaaS_Utils.mqh"
+#include "EASaaS_License.mqh"
+#include "EASaaS_Risk.mqh"
 
 struct TradeResult
 {
@@ -306,7 +306,7 @@ bool ClosePosition(ulong ticket)
       int err = (int)tradeResult.retcode;
       LogError(StringFormat("Close failed: ticket=%I64u retcode=%d (%s)", ticket, err, TradeErrorDescriptionMT5(tradeResult.retcode)));
 
-      if(err == TRADE_RETCODE_INVALID_ORDER || err == TRADE_RETCODE_ORDER_FROZEN)
+      if(err == TRADE_RETCODE_INVALID_ORDER || err == TRADE_RETCODE_FROZEN)
          break;
    }
 

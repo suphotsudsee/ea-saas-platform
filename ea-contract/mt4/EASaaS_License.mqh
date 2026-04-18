@@ -24,12 +24,12 @@ enum LICENSE_STATE
    LICENSE_REVOKED    = 4,   // License has been revoked by admin
    LICENSE_KILLED     = 5,   // Kill switch is active
    LICENSE_PAUSED     = 6,   // License is paused
-   LICENSE_ERROR      = 7,   // Network or other error
+   LICENSE_STATE_ERROR = 7,   // Network or other error
    LICENSE_INVALID    = 8    // License key is invalid
 };
 
 // ─── License Error Codes ─────────────────────────────────────────────────────
-enum LICENSE_ERROR
+enum LICENSE_ERR
 {
    LIC_ERR_NONE              = 0,
    LIC_ERR_INVALID_KEY       = 1,
@@ -49,7 +49,7 @@ enum LICENSE_ERROR
 struct LicenseInfo
 {
    LICENSE_STATE  state;              // Current license state
-   LICENSE_ERROR  errorCode;          // Last error code
+   LICENSE_ERR   errorCode;          // Last error code
    string         licenseId;          // License ID from server
    string         licenseKey;         // License key
    string         userId;             // User ID
@@ -132,7 +132,7 @@ bool ValidateLicense(string serverUrl, string accountNumber)
    if(!resp.success)
    {
       g_license.retryCount++;
-      g_license.state = LICENSE_ERROR;
+      g_license.state = LICENSE_STATE_ERROR;
       g_license.errorCode = LIC_ERR_NETWORK;
       g_license.lastError = "Network error: " + resp.error;
 
@@ -242,7 +242,7 @@ bool ValidateLicense(string serverUrl, string accountNumber)
       }
       else
       {
-         g_license.state = LICENSE_ERROR;
+         g_license.state = LICENSE_STATE_ERROR;
          g_license.errorCode = LIC_ERR_SERVER;
       }
 
@@ -338,14 +338,14 @@ string GetLicenseStateString(LICENSE_STATE state)
       case LICENSE_REVOKED:    return "REVOKED";
       case LICENSE_KILLED:     return "KILLED";
       case LICENSE_PAUSED:     return "PAUSED";
-      case LICENSE_ERROR:      return "ERROR";
+      case LICENSE_STATE_ERROR: return "ERROR";
       case LICENSE_INVALID:    return "INVALID";
       default:                 return "UNKNOWN";
    }
 }
 
 /// Get human-readable error code string
-string GetLicenseErrorString(LICENSE_ERROR err)
+string GetLicenseErrorString(LICENSE_ERR err)
 {
    switch(err)
    {

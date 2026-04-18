@@ -3,9 +3,9 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server';
-import { adminOnlyMiddleware } from '../../middleware/adminOnly';
-import { prisma } from '../../lib/prisma';
-import { redis } from '../../utils/redis';
+import { adminOnlyMiddleware } from '../../../middleware/adminOnly';
+import { prisma } from '../../../lib/prisma';
+import { redis } from '../../../utils/redis';
 
 export async function GET(request: NextRequest) {
   const authResult = await adminOnlyMiddleware(request);

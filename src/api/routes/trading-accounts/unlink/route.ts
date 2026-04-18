@@ -3,8 +3,8 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server';
-import { authMiddleware } from '../../middleware/auth';
-import { prisma } from '../../lib/prisma';
+import { authMiddleware } from '../../../middleware/auth';
+import { prisma } from '../../../lib/prisma';
 import { z } from 'zod';
 
 const unlinkSchema = z.object({

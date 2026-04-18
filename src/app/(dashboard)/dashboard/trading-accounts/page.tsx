@@ -1,12 +1,11 @@
 'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Activity, Plus, Trash2, Link as LinkIcon, Unlink } from 'lucide-react';
-import { useState } from 'react';
+import { Activity, Link as LinkIcon, Plus, Unlink, WalletCards, X } from 'lucide-react';
 
 const MOCK_ACCOUNTS = [
   { id: 'ta1', number: '84729103', broker: 'IC Markets', platform: 'MT4', status: 'ACTIVE', lastHeartbeat: '2 mins ago', equity: '$12,400.00' },
@@ -14,103 +13,135 @@ const MOCK_ACCOUNTS = [
   { id: 'ta3', number: '55667788', broker: 'RoboForex', platform: 'MT4', status: 'OFFLINE', lastHeartbeat: '2 hours ago', equity: '$25,000.00' },
 ];
 
+function statusClass(status: string) {
+  if (status === 'ACTIVE') return 'bg-emerald-500/10 text-emerald-300 border-emerald-500/20';
+  if (status === 'STALE') return 'bg-amber-500/10 text-amber-300 border-amber-500/20';
+  return 'bg-rose-500/10 text-rose-300 border-rose-500/20';
+}
+
 export default function TradingAccountsPage() {
   const [isLinking, setIsLinking] = useState(false);
+  const [platform, setPlatform] = useState<'MT4' | 'MT5'>('MT4');
 
   return (
-    <div className="space-y-8">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-white">Trading Accounts</h1>
-          <p className="text-slate-400">Link your brokerage accounts to your licenses.</p>
+    <div className="space-y-6 lg:space-y-8">
+      <section className="flex flex-col gap-4 rounded-[32px] border border-white/8 bg-[linear-gradient(135deg,#0f1d24_0%,#17120d_100%)] p-6 sm:p-8 lg:flex-row lg:items-end lg:justify-between">
+        <div className="max-w-2xl">
+          <Badge className="border-[#8cc9c2]/20 bg-[#112129] text-[#8cc9c2] hover:bg-[#112129]">Account linking</Badge>
+          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white">Connect brokerage accounts and watch live heartbeat state.</h2>
+          <p className="mt-3 text-sm leading-7 text-slate-400 sm:text-base">
+            This page keeps platform, broker, and license relationships visible so support and ops can react quickly.
+          </p>
         </div>
-        <Button 
-          className="bg-blue-600 hover:bg-blue-700" 
-          onClick={() => setIsLinking(true)}
-        >
-          <Plus className="w-4 h-4 mr-2" />
-          Link New Account
+        <Button className="rounded-full bg-[#e3a84f] px-5 text-[#14110c] hover:bg-[#efb65d]" onClick={() => setIsLinking(true)}>
+          <Plus className="mr-2 h-4 w-4" />
+          Link new account
         </Button>
-      </div>
+      </section>
 
       {isLinking && (
-        <Card className="border-blue-500/50 bg-blue-500/5 p-6 animate-in fade-in slide-in-from-top-4">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold text-white">Link Account</h3>
-            <Button variant="ghost" size="sm" onClick={() => setIsLinking(false)}>✕</Button>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Input placeholder="Account Number" className="bg-slate-900 border-slate-700 text-white" />
-            <Input placeholder="Broker Name" className="bg-slate-900 border-slate-700 text-white" />
-            <div className="flex gap-2">
-              <Button variant="outline" className="flex-1 border-slate-700 text-slate-300">MT4</Button>
-              <Button variant="outline" className="flex-1 border-slate-700 text-slate-300">MT5</Button>
+        <Card className="rounded-[32px] border-[#8cc9c2]/20 bg-[#10252a]/35">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0">
+            <div>
+              <CardTitle className="text-xl text-white">Link trading account</CardTitle>
+              <p className="mt-1 text-sm text-slate-400">Attach a new broker account to the platform and choose the MetaTrader version.</p>
             </div>
-          </div>
-          <div className="mt-4 flex justify-end">
-            <Button className="bg-blue-600 hover:bg-blue-700 px-8">Confirm Linking</Button>
-          </div>
+            <Button variant="ghost" size="sm" className="rounded-full border border-white/10" onClick={() => setIsLinking(false)}>
+              <X className="h-4 w-4" />
+            </Button>
+          </CardHeader>
+          <CardContent className="space-y-5">
+            <div className="grid gap-4 md:grid-cols-3">
+              <Input placeholder="Account number" className="rounded-2xl border-white/10 bg-[#081118] text-white" />
+              <Input placeholder="Broker name" className="rounded-2xl border-white/10 bg-[#081118] text-white" />
+              <div className="grid grid-cols-2 gap-2">
+                <Button
+                  variant="outline"
+                  className={`rounded-2xl border-white/10 ${platform === 'MT4' ? 'bg-white/[0.08] text-white' : 'bg-transparent text-slate-300'}`}
+                  onClick={() => setPlatform('MT4')}
+                >
+                  MT4
+                </Button>
+                <Button
+                  variant="outline"
+                  className={`rounded-2xl border-white/10 ${platform === 'MT5' ? 'bg-white/[0.08] text-white' : 'bg-transparent text-slate-300'}`}
+                  onClick={() => setPlatform('MT5')}
+                >
+                  MT5
+                </Button>
+              </div>
+            </div>
+            <div className="flex justify-end">
+              <Button className="rounded-full bg-[#e3a84f] px-6 text-[#14110c] hover:bg-[#efb65d]">
+                <LinkIcon className="mr-2 h-4 w-4" />
+                Confirm linking
+              </Button>
+            </div>
+          </CardContent>
         </Card>
       )}
 
-      <div className="grid grid-cols-1 gap-6">
-        <Card className="border-slate-800 bg-slate-900">
-          <CardHeader>
-            <CardTitle className="text-lg text-white">Linked Accounts</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow className="border-slate-800">
-                  <TableHead className="text-slate-400">Account #</TableHead>
-                  <TableHead className="text-slate-400">Broker / Platform</TableHead>
-                  <TableHead className="text-slate-400">Status</TableHead>
-                  <TableHead className="text-slate-400">Equity</TableHead>
-                  <TableHead className="text-slate-400">Last Heartbeat</TableHead>
-                  <TableHead className="text-right text-slate-400">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {MOCK_ACCOUNTS.map((acc) => (
-                  <TableRow key={acc.id} className="border-slate-800 hover:bg-slate-800/50 transition-colors">
-                    <TableCell className="font-mono text-white">{acc.number}</TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <span className="text-slate-300">{acc.broker}</span>
-                        <Badge variant="outline" className="text-[10px] px-1 border-slate-700 text-slate-500">
-                          {acc.platform}
-                        </Badge>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <Badge 
-                        className={cn(
-                          acc.status === 'ACTIVE' ? 'bg-green-500/10 text-green-400 border-green-500/20' : 
-                          acc.status === 'STALE' ? 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20' : 
-                          'bg-red-500/10 text-red-400 border-red-500/20'
-                        )}
-                      >
-                        {acc.status}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-white font-medium">{acc.equity}</TableCell>
-                    <TableCell className="text-slate-500 text-sm">{acc.lastHeartbeat}</TableCell>
-                    <TableCell className="text-right">
-                      <Button variant="ghost" size="sm" className="text-slate-500 hover:text-red-400 hover:bg-red-900/20">
-                        <Unlink className="w-4 h-4" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+      <section className="grid gap-4 md:grid-cols-3">
+        <Card className="rounded-[28px] border-white/8 bg-white/[0.03]">
+          <CardContent className="p-6">
+            <div className="text-xs uppercase tracking-[0.24em] text-slate-500">Connected accounts</div>
+            <div className="mt-3 text-3xl font-semibold text-white">3</div>
+            <p className="mt-2 text-sm text-slate-400">2 accounts are feeding healthy heartbeats right now.</p>
           </CardContent>
         </Card>
-      </div>
+        <Card className="rounded-[28px] border-white/8 bg-white/[0.03]">
+          <CardContent className="p-6">
+            <div className="text-xs uppercase tracking-[0.24em] text-slate-500">Platform mix</div>
+            <div className="mt-3 flex items-center gap-2 text-xl font-semibold text-white">
+              <WalletCards className="h-5 w-5 text-[#f4c77d]" />
+              2 MT4 / 1 MT5
+            </div>
+            <p className="mt-2 text-sm text-slate-400">Version visibility matters when debugging deployment issues.</p>
+          </CardContent>
+        </Card>
+        <Card className="rounded-[28px] border-white/8 bg-white/[0.03]">
+          <CardContent className="p-6">
+            <div className="text-xs uppercase tracking-[0.24em] text-slate-500">Connection state</div>
+            <div className="mt-3 flex items-center gap-2 text-xl font-semibold text-white">
+              <Activity className="h-5 w-5 text-[#8cc9c2]" />
+              One stale feed
+            </div>
+            <p className="mt-2 text-sm text-slate-400">Review delayed heartbeat accounts before they drift out of sync.</p>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="grid gap-5 xl:grid-cols-3">
+        {MOCK_ACCOUNTS.map((acc) => (
+          <Card key={acc.id} className="rounded-[30px] border-white/8 bg-white/[0.03]">
+            <CardHeader className="pb-4">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <CardTitle className="text-xl text-white">{acc.number}</CardTitle>
+                  <p className="mt-2 text-sm text-slate-400">
+                    {acc.broker} · {acc.platform}
+                  </p>
+                </div>
+                <Badge className={statusClass(acc.status)}>{acc.status}</Badge>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="rounded-2xl border border-white/8 bg-[#0c1720] p-4">
+                <div className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Last heartbeat</div>
+                <div className="mt-2 text-sm font-semibold text-white">{acc.lastHeartbeat}</div>
+              </div>
+              <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+                <div className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Equity</div>
+                <div className="mt-2 text-sm font-semibold text-white">{acc.equity}</div>
+              </div>
+              <Button variant="outline" className="w-full rounded-2xl border-rose-500/20 bg-rose-500/5 text-rose-300 hover:bg-rose-500/10">
+                <Unlink className="mr-2 h-4 w-4" />
+                Unlink account
+              </Button>
+            </CardContent>
+          </Card>
+        ))}
+      </section>
     </div>
   );
-}
-
-function cn(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
 }

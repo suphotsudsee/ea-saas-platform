@@ -3,8 +3,8 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server';
-import { adminOnlyMiddleware, requireWriteAccess, requireSuperAdmin } from '../../middleware/adminOnly';
-import { prisma } from '../../lib/prisma';
+import { adminOnlyMiddleware, requireWriteAccess, requireSuperAdmin } from '../../../middleware/adminOnly';
+import { prisma } from '../../../lib/prisma';
 import { z } from 'zod';
 import crypto from 'crypto';
 

@@ -1,13 +1,181 @@
 'use client';
 
+import { useEffect, useMemo, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { StatsCard } from '@/components/dashboard/stats-card';
 import { PnLChart } from '@/components/dashboard/pnl-chart';
 import { RecentTrades } from '@/components/dashboard/recent-trades';
 import { Badge } from '@/components/ui/badge';
 import { Activity, ArrowUpRight, Shield, TrendingUp, WalletCards, Zap } from 'lucide-react';
+import api from '@/lib/api';
+
+interface TradeStatsResponse {
+  stats: {
+    totalTrades: number;
+    winningTrades: number;
+    losingTrades: number;
+    winRate: number;
+    totalPnl: number;
+    totalCommission: number;
+    totalSwap: number;
+    netPnl: number;
+    totalVolume: number;
+  };
+}
+
+interface SubscriptionResponse {
+  subscription: {
+    currentPeriodEnd: string;
+    package: {
+      name: string;
+      maxAccounts: number;
+    };
+  };
+}
+
+interface AccountsResponse {
+  accounts: Array<{
+    id: string;
+    status: string;
+    lastHeartbeatAt: string | null;
+  }>;
+}
+
+interface LicensesResponse {
+  licenses: Array<{
+    id: string;
+    status: string;
+    killSwitch: boolean;
+  }>;
+}
+
+interface TradeListResponse {
+  trades: Array<{
+    id: string;
+    eventType: 'OPEN' | 'CLOSE' | 'MODIFY' | 'PARTIAL_CLOSE';
+    symbol: string;
+    profit: number | null;
+    createdAt: string;
+    closeTime?: string | null;
+    tradingAccount?: {
+      accountNumber: string;
+    };
+  }>;
+}
+
+function formatCurrency(value: number) {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 2,
+  }).format(value);
+}
+
+function formatRelativeTime(value: string) {
+  const diffMs = Date.now() - new Date(value).getTime();
+  const mins = Math.max(1, Math.round(diffMs / 60000));
+  if (mins < 60) return `${mins}m ago`;
+  const hours = Math.round(mins / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.round(hours / 24);
+  return `${days}d ago`;
+}
 
 export default function DashboardPage() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [stats, setStats] = useState<TradeStatsResponse['stats'] | null>(null);
+  const [subscription, setSubscription] = useState<SubscriptionResponse['subscription'] | null>(null);
+  const [accounts, setAccounts] = useState<AccountsResponse['accounts']>([]);
+  const [licenses, setLicenses] = useState<LicensesResponse['licenses']>([]);
+  const [trades, setTrades] = useState<TradeListResponse['trades']>([]);
+
+  useEffect(() => {
+    const loadDashboard = async () => {
+      setIsLoading(true);
+      try {
+        const [statsRes, accountsRes, licensesRes, tradesRes, subscriptionRes] = await Promise.allSettled([
+          api.get<TradeStatsResponse>('/trade-events/stats'),
+          api.get<AccountsResponse>('/trading-accounts/list'),
+          api.get<LicensesResponse>('/licenses/list'),
+          api.get<TradeListResponse>('/trade-events/list?pageSize=7'),
+          api.get<SubscriptionResponse>('/subscriptions/current'),
+        ]);
+
+        if (statsRes.status === 'fulfilled') setStats(statsRes.value.data.stats);
+        if (accountsRes.status === 'fulfilled') setAccounts(accountsRes.value.data.accounts);
+        if (licensesRes.status === 'fulfilled') setLicenses(licensesRes.value.data.licenses);
+        if (tradesRes.status === 'fulfilled') setTrades(tradesRes.value.data.trades);
+        if (subscriptionRes.status === 'fulfilled') setSubscription(subscriptionRes.value.data.subscription);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadDashboard();
+  }, []);
+
+  const activeAccounts = accounts.filter((account) => account.status === 'ACTIVE');
+  const activeLicenses = licenses.filter((license) => license.status === 'ACTIVE');
+  const healthPct = accounts.length > 0 ? (activeAccounts.length / accounts.length) * 100 : 0;
+  const activeHeartbeats = activeAccounts.filter((account) => account.lastHeartbeatAt).length;
+
+  const chartData = useMemo(() => {
+    const buckets = Array.from({ length: 7 }, (_, index) => {
+      const date = new Date();
+      date.setDate(date.getDate() - (6 - index));
+      const key = date.toISOString().slice(0, 10);
+      return {
+        key,
+        name: date.toLocaleDateString('en-US', { weekday: 'short' }),
+        equity: 0,
+      };
+    });
+
+    for (const trade of trades) {
+      const pointKey = new Date(trade.closeTime || trade.createdAt).toISOString().slice(0, 10);
+      const bucket = buckets.find((entry) => entry.key === pointKey);
+      if (bucket) {
+        bucket.equity += trade.profit || 0;
+      }
+    }
+
+    let running = 0;
+    return buckets.map((bucket) => {
+      running += bucket.equity;
+      return { name: bucket.name, equity: running };
+    });
+  }, [trades]);
+
+  const recentActivity = useMemo(
+    () =>
+      trades.slice(0, 5).map((trade) => {
+        const profit = trade.profit || 0;
+        return {
+          id: trade.id,
+          event: trade.eventType === 'CLOSE' ? 'Trade Closed' : trade.eventType.replace('_', ' '),
+          symbol: trade.symbol || trade.tradingAccount?.accountNumber || '-',
+          signal:
+            trade.eventType === 'CLOSE'
+              ? `${profit >= 0 ? '+' : ''}${formatCurrency(profit)}`
+              : trade.eventType,
+          time: formatRelativeTime(trade.closeTime || trade.createdAt),
+          type: (trade.eventType === 'CLOSE'
+            ? profit >= 0
+              ? 'profit'
+              : 'warning'
+            : 'info') as 'profit' | 'warning' | 'info',
+        };
+      }),
+    [trades]
+  );
+
+  const renewalText = subscription
+    ? `Renewal due ${new Date(subscription.currentPeriodEnd).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+      })} with ${subscription.package.maxAccounts} linked account slots.`
+    : 'No active subscription found.';
+
   return (
     <div className="space-y-6 lg:space-y-8">
       <section className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
@@ -17,7 +185,7 @@ export default function DashboardPage() {
               Live operations
             </Badge>
             <Badge variant="outline" className="border-white/10 bg-white/[0.04] text-slate-300">
-              4 strategies connected
+              {activeLicenses.length} active licenses
             </Badge>
           </div>
 
@@ -33,10 +201,10 @@ export default function DashboardPage() {
             <div className="rounded-2xl border border-white/8 bg-white/[0.04] px-5 py-4">
               <div className="text-xs uppercase tracking-[0.24em] text-slate-500">Today&apos;s net result</div>
               <div className="mt-2 flex items-center gap-2 text-2xl font-semibold text-white">
-                $12,450.20
+                {formatCurrency(stats?.netPnl || 0)}
                 <span className="inline-flex items-center gap-1 rounded-full bg-[#112129] px-2.5 py-1 text-xs font-semibold text-[#8cc9c2]">
                   <ArrowUpRight className="h-3 w-3" />
-                  +12.5%
+                  {stats ? `${stats.winRate.toFixed(1)}% win rate` : 'Live'}
                 </span>
               </div>
             </div>
@@ -44,7 +212,7 @@ export default function DashboardPage() {
             <div className="rounded-2xl border border-white/8 bg-white/[0.04] px-5 py-4">
               <div className="text-xs uppercase tracking-[0.24em] text-slate-500">Account health</div>
               <div className="mt-2 flex items-center gap-2 text-2xl font-semibold text-white">
-                98.4%
+                {healthPct.toFixed(1)}%
                 <span className="rounded-full bg-[#2a2212] px-2.5 py-1 text-xs font-semibold text-[#f4c77d]">
                   Rules active
                 </span>
@@ -58,27 +226,33 @@ export default function DashboardPage() {
             <div className="text-xs uppercase tracking-[0.24em] text-slate-500">Heartbeat</div>
             <div className="mt-3 flex items-center gap-2 text-lg font-semibold text-white">
               <Activity className="h-4 w-4 text-[#8cc9c2]" />
-              Streaming normally
+              {activeHeartbeats > 0 ? 'Streaming normally' : 'Awaiting heartbeat'}
             </div>
-            <p className="mt-2 text-sm text-slate-400">Last EA sync received 2 minutes ago.</p>
+            <p className="mt-2 text-sm text-slate-400">
+              {activeHeartbeats > 0
+                ? `${activeHeartbeats} active accounts have reported heartbeat.`
+                : 'No active account heartbeat reported yet.'}
+            </p>
           </div>
 
           <div className="rounded-[28px] border border-white/8 bg-white/[0.03] p-5">
             <div className="text-xs uppercase tracking-[0.24em] text-slate-500">Subscriptions</div>
             <div className="mt-3 flex items-center gap-2 text-lg font-semibold text-white">
               <WalletCards className="h-4 w-4 text-[#f4c77d]" />
-              Professional plan
+              {subscription?.package.name || 'No active plan'}
             </div>
-            <p className="mt-2 text-sm text-slate-400">Renewal due in 19 days with 10 linked account slots.</p>
+            <p className="mt-2 text-sm text-slate-400">{renewalText}</p>
           </div>
 
           <div className="rounded-[28px] border border-white/8 bg-white/[0.03] p-5">
             <div className="text-xs uppercase tracking-[0.24em] text-slate-500">Protection</div>
             <div className="mt-3 flex items-center gap-2 text-lg font-semibold text-white">
               <Shield className="h-4 w-4 text-[#8cc9c2]" />
-              Guardrails armed
+              {licenses.some((license) => license.killSwitch) ? 'Kill switch engaged' : 'Guardrails armed'}
             </div>
-            <p className="mt-2 text-sm text-slate-400">Kill switch and drawdown controls are ready across active licenses.</p>
+            <p className="mt-2 text-sm text-slate-400">
+              {activeLicenses.length} active licenses monitored with protection controls.
+            </p>
           </div>
         </div>
       </section>
@@ -86,32 +260,32 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
         <StatsCard
           title="Total P&L"
-          value="$12,450.20"
-          trend="+12.5%"
-          trendUp={true}
+          value={formatCurrency(stats?.netPnl || 0)}
+          trend={`${stats?.totalTrades || 0} trades`}
+          trendUp={(stats?.netPnl || 0) >= 0}
           icon={<TrendingUp className="h-5 w-5 text-[#8cc9c2]" />}
           tone="teal"
         />
         <StatsCard
           title="Win Rate"
-          value="68.4%"
-          trend="+2.1%"
-          trendUp={true}
+          value={`${(stats?.winRate || 0).toFixed(1)}%`}
+          trend={`${stats?.winningTrades || 0} winners`}
+          trendUp={(stats?.winRate || 0) >= 50}
           icon={<Zap className="h-5 w-5 text-[#f4c77d]" />}
           tone="amber"
         />
         <StatsCard
           title="Active EAs"
-          value="4"
-          trend="Stable"
+          value={String(activeAccounts.length)}
+          trend={`${licenses.length} linked licenses`}
           trendUp={true}
           icon={<Activity className="h-5 w-5 text-sky-300" />}
           tone="slate"
         />
         <StatsCard
           title="Max Drawdown"
-          value="4.2%"
-          trend="-0.8%"
+          value="N/A"
+          trend="No metric feed yet"
           trendUp={false}
           icon={<Shield className="h-5 w-5 text-rose-300" />}
           tone="rose"
@@ -127,11 +301,11 @@ export default function DashboardPage() {
                 <p className="mt-1 text-sm text-slate-400">7-day view across active strategy accounts.</p>
               </div>
               <Badge variant="outline" className="border-white/10 bg-white/[0.04] text-slate-300">
-                Updated live
+                {isLoading ? 'Loading...' : 'Updated live'}
               </Badge>
             </CardHeader>
-              <CardContent>
-              <PnLChart />
+            <CardContent>
+              <PnLChart data={chartData} />
             </CardContent>
           </Card>
         </div>
@@ -140,10 +314,10 @@ export default function DashboardPage() {
           <Card className="h-full rounded-[32px] border-white/8 bg-white/[0.03]">
             <CardHeader>
               <CardTitle className="text-lg text-white">Recent Activity</CardTitle>
-              <p className="text-sm text-slate-400">Latest trade, heartbeat, and risk events.</p>
+              <p className="text-sm text-slate-400">Latest real trade events from your connected accounts.</p>
             </CardHeader>
             <CardContent>
-              <RecentTrades />
+              <RecentTrades items={recentActivity} />
             </CardContent>
           </Card>
         </div>

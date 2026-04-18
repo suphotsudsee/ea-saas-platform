@@ -28,8 +28,6 @@ export function getRedisClient() {
         },
         connectTimeout: 5000,
       },
-      // Disable offline queue to fail fast when Redis is down
-      offline_queue: false,
     });
 
     redisClient.on('error', (err) => {
@@ -56,13 +54,28 @@ export async function connectRedis(): Promise<void> {
   }
 }
 
+async function ensureRedisConnected(): Promise<ReturnType<typeof createClient> | null> {
+  const client = getRedisClient();
+
+  if (client.isOpen) {
+    return client;
+  }
+
+  try {
+    await client.connect();
+    return client;
+  } catch {
+    return null;
+  }
+}
+
 // Exported convenience instance
 // Note: Must call connectRedis() before using this in request handlers
 // In Next.js, this is typically done in instrumentation.ts or a layout effect
 export const redis = {
   get: async (key: string): Promise<string | null> => {
-    const client = getRedisClient();
-    if (!client.isOpen) return null;
+    const client = await ensureRedisConnected();
+    if (!client) return null;
     try {
       return await client.get(key);
     } catch {
@@ -71,8 +84,8 @@ export const redis = {
   },
 
   set: async (key: string, value: string): Promise<string | null> => {
-    const client = getRedisClient();
-    if (!client.isOpen) return null;
+    const client = await ensureRedisConnected();
+    if (!client) return null;
     try {
       return await client.set(key, value);
     } catch {
@@ -81,8 +94,8 @@ export const redis = {
   },
 
   setex: async (key: string, seconds: number, value: string): Promise<string | null> => {
-    const client = getRedisClient();
-    if (!client.isOpen) return null;
+    const client = await ensureRedisConnected();
+    if (!client) return null;
     try {
       return await client.setEx(key, seconds, value);
     } catch {
@@ -91,8 +104,8 @@ export const redis = {
   },
 
   del: async (...keys: string[]): Promise<number> => {
-    const client = getRedisClient();
-    if (!client.isOpen) return 0;
+    const client = await ensureRedisConnected();
+    if (!client) return 0;
     try {
       return await client.del(keys);
     } catch {
@@ -101,8 +114,8 @@ export const redis = {
   },
 
   exists: async (key: string): Promise<number> => {
-    const client = getRedisClient();
-    if (!client.isOpen) return 0;
+    const client = await ensureRedisConnected();
+    if (!client) return 0;
     try {
       return await client.exists(key);
     } catch {
@@ -111,8 +124,8 @@ export const redis = {
   },
 
   incr: async (key: string): Promise<number> => {
-    const client = getRedisClient();
-    if (!client.isOpen) return 0;
+    const client = await ensureRedisConnected();
+    if (!client) return 0;
     try {
       return await client.incr(key);
     } catch {
@@ -121,8 +134,8 @@ export const redis = {
   },
 
   expire: async (key: string, seconds: number): Promise<boolean> => {
-    const client = getRedisClient();
-    if (!client.isOpen) return false;
+    const client = await ensureRedisConnected();
+    if (!client) return false;
     try {
       return await client.expire(key, seconds);
     } catch {
@@ -131,8 +144,8 @@ export const redis = {
   },
 
   ttl: async (key: string): Promise<number> => {
-    const client = getRedisClient();
-    if (!client.isOpen) return -2;
+    const client = await ensureRedisConnected();
+    if (!client) return -2;
     try {
       return await client.ttl(key);
     } catch {
@@ -141,8 +154,8 @@ export const redis = {
   },
 
   hset: async (key: string, ...fieldValues: (string | number)[]): Promise<number> => {
-    const client = getRedisClient();
-    if (!client.isOpen) return 0;
+    const client = await ensureRedisConnected();
+    if (!client) return 0;
     try {
       const data: Record<string, string | number> = {};
       for (let i = 0; i < fieldValues.length; i += 2) {
@@ -155,8 +168,8 @@ export const redis = {
   },
 
   hget: async (key: string, field: string): Promise<string | undefined> => {
-    const client = getRedisClient();
-    if (!client.isOpen) return undefined;
+    const client = await ensureRedisConnected();
+    if (!client) return undefined;
     try {
       return await client.hGet(key, field) ?? undefined;
     } catch {
@@ -165,8 +178,8 @@ export const redis = {
   },
 
   hgetall: async (key: string): Promise<Record<string, string>> => {
-    const client = getRedisClient();
-    if (!client.isOpen) return {};
+    const client = await ensureRedisConnected();
+    if (!client) return {};
     try {
       return await client.hGetAll(key);
     } catch {
@@ -175,8 +188,8 @@ export const redis = {
   },
 
   zadd: async (key: string, ...members: { score: number; member: string }[]): Promise<number> => {
-    const client = getRedisClient();
-    if (!client.isOpen) return 0;
+    const client = await ensureRedisConnected();
+    if (!client) return 0;
     try {
       return await client.zAdd(key, members);
     } catch {
@@ -185,8 +198,8 @@ export const redis = {
   },
 
   zremrangebyscore: async (key: string, min: number, max: number): Promise<number> => {
-    const client = getRedisClient();
-    if (!client.isOpen) return 0;
+    const client = await ensureRedisConnected();
+    if (!client) return 0;
     try {
       return await client.zRemRangeByScore(key, min, max);
     } catch {
@@ -195,8 +208,8 @@ export const redis = {
   },
 
   zcard: async (key: string): Promise<number> => {
-    const client = getRedisClient();
-    if (!client.isOpen) return 0;
+    const client = await ensureRedisConnected();
+    if (!client) return 0;
     try {
       return await client.zCard(key);
     } catch {
@@ -205,8 +218,8 @@ export const redis = {
   },
 
   pexpire: async (key: string, milliseconds: number): Promise<boolean> => {
-    const client = getRedisClient();
-    if (!client.isOpen) return false;
+    const client = await ensureRedisConnected();
+    if (!client) return false;
     try {
       return await client.pExpire(key, milliseconds);
     } catch {
@@ -217,8 +230,8 @@ export const redis = {
   // ─── Stream Operations (for background job processing) ───────────────────
 
   xadd: async (key: string, fields: Record<string, string>, id = '*'): Promise<string | null> => {
-    const client = getRedisClient();
-    if (!client.isOpen) return null;
+    const client = await ensureRedisConnected();
+    if (!client) return null;
     try {
       return await client.xAdd(key, id, fields);
     } catch {
@@ -227,8 +240,8 @@ export const redis = {
   },
 
   xread: async (key: string, count: number, lastId = '0'): Promise<Array<{ id: string; fields: Record<string, string> }> | null> => {
-    const client = getRedisClient();
-    if (!client.isOpen) return null;
+    const client = await ensureRedisConnected();
+    if (!client) return null;
     try {
       const results = await client.xRead(
         { key, id: lastId },
@@ -247,8 +260,8 @@ export const redis = {
   },
 
   xack: async (key: string, group: string, ...ids: string[]): Promise<number> => {
-    const client = getRedisClient();
-    if (!client.isOpen) return 0;
+    const client = await ensureRedisConnected();
+    if (!client) return 0;
     try {
       return await client.xAck(key, group, ids);
     } catch {
@@ -266,8 +279,8 @@ export const redis = {
   // ─── Health Check ──────────────────────────────────────────────────────
 
   ping: async (): Promise<boolean> => {
-    const client = getRedisClient();
-    if (!client.isOpen) return false;
+    const client = await ensureRedisConnected();
+    if (!client) return false;
     try {
       const result = await client.ping();
       return result === 'PONG';

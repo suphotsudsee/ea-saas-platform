@@ -11,8 +11,10 @@ import Stripe from 'stripe';
 
 function getStripeClient(): Stripe {
   const secretKey = process.env.STRIPE_SECRET_KEY;
-  if (!secretKey) throw new Error('STRIPE_SECRET_KEY is not configured');
-  return new Stripe(secretKey, { apiVersion: '2024-06-20' });
+  if (!secretKey || secretKey.includes('REPLACE_WITH_YOUR_KEY')) {
+    throw new Error('STRIPE_SECRET_KEY is not configured');
+  }
+  return new Stripe(secretKey, { apiVersion: '2025-02-24.acacia' });
 }
 
 // ─── List Packages ────────────────────────────────────────────────────────────

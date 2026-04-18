@@ -4,8 +4,8 @@
 //| Version: 1.0.0                                                    |
 //+------------------------------------------------------------------+
 #property strict
-#include <EASaaS_Http.mqh>
-#include <EASaaS_Utils.mqh>
+#include "EASaaS_Http.mqh"
+#include "EASaaS_Utils.mqh"
 
 struct RiskConfig
 {
@@ -168,7 +168,7 @@ bool SpreadFilter(string symbol)
 {
    double spread = SymbolInfoDouble(symbol, SYMBOL_ASK) - SymbolInfoDouble(symbol, SYMBOL_BID);
    double point = SymbolInfoDouble(symbol, SYMBOL_POINT);
-   int digits = SymbolInfoInteger(symbol, SYMBOL_DIGITS);
+   long digits = SymbolInfoInteger(symbol, SYMBOL_DIGITS);
    double spreadPips = 0;
    if(point > 0)
    {

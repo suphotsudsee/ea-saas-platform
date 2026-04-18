@@ -1,121 +1,135 @@
 'use client';
 
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
-import { User, Lock, Bell, Save } from 'lucide-react';
-import { useState } from 'react';
+import { BadgeCheck, Bell, Lock, Save, UserCircle2 } from 'lucide-react';
 
 export default function SettingsPage() {
   const [isSaving, setIsSaving] = useState(false);
 
   const handleSave = async () => {
     setIsSaving(true);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 900));
     setIsSaving(false);
-    alert('Settings saved successfully');
   };
 
   return (
-    <div className="space-y-8 max-w-4xl">
-      <div>
-        <h1 className="text-3xl font-bold text-white">Account Settings</h1>
-        <p className="text-slate-400">Manage your profile and security preferences.</p>
-      </div>
+    <div className="space-y-6 lg:space-y-8">
+      <section className="rounded-[32px] border border-white/8 bg-[linear-gradient(135deg,#0f1d24_0%,#17120d_100%)] p-6 sm:p-8">
+        <div className="max-w-2xl">
+          <div className="inline-flex rounded-full border border-[#8cc9c2]/20 bg-[#112129] px-4 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-[#8cc9c2]">
+            Account settings
+          </div>
+          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white">Keep operator identity, security, and alerts in sync.</h2>
+          <p className="mt-3 text-sm leading-7 text-slate-400 sm:text-base">
+            This section is designed for the practical settings that keep communication and access clean as the account grows.
+          </p>
+        </div>
+      </section>
 
-      <div className="grid grid-cols-1 gap-6">
-        {/* Profile Section */}
-        <Card className="border-slate-800 bg-slate-900">
-          <CardHeader>
-            <CardTitle className="text-lg text-white flex items-center gap-2">
-              <User className="w-5 h-5 text-blue-400" />
-              Profile Information
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid gap-6 xl:grid-cols-3">
+        <div className="space-y-6 xl:col-span-2">
+          <Card className="rounded-[30px] border-white/8 bg-white/[0.03]">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-xl text-white">
+                <UserCircle2 className="h-5 w-5 text-[#8cc9c2]" />
+                Profile information
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label className="text-slate-400">Full Name</Label>
-                <Input defaultValue="John Doe" className="bg-slate-800 border-slate-700 text-white" />
+                <Label className="text-slate-400">Full name</Label>
+                <Input defaultValue="John Doe" className="rounded-2xl border-white/10 bg-[#0c1720] text-white" />
               </div>
               <div className="space-y-2">
-                <Label className="text-slate-400">Email Address</Label>
-                <Input defaultValue="john@example.com" className="bg-slate-800 border-slate-700 text-white" />
+                <Label className="text-slate-400">Email address</Label>
+                <Input defaultValue="john@example.com" className="rounded-2xl border-white/10 bg-[#0c1720] text-white" />
               </div>
               <div className="space-y-2">
                 <Label className="text-slate-400">Timezone</Label>
-                <Input defaultValue="Asia/Bangkok" className="bg-slate-800 border-slate-700 text-white" />
+                <Input defaultValue="Asia/Bangkok" className="rounded-2xl border-white/10 bg-[#0c1720] text-white" />
               </div>
-            </div>
-          </CardContent>
-        </Card>
+              <div className="space-y-2">
+                <Label className="text-slate-400">Organization</Label>
+                <Input defaultValue="EA Operations Desk" className="rounded-2xl border-white/10 bg-[#0c1720] text-white" />
+              </div>
+            </CardContent>
+          </Card>
 
-        {/* Security Section */}
-        <Card className="border-slate-800 bg-slate-900">
-          <CardHeader>
-            <CardTitle className="text-lg text-white flex items-center gap-2">
-              <Lock className="w-5 h-5 text-blue-400" />
-              Security & Password
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-4">
+          <Card className="rounded-[30px] border-white/8 bg-white/[0.03]">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-xl text-white">
+                <Lock className="h-5 w-5 text-[#f4c77d]" />
+                Security and password
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="grid gap-4 md:grid-cols-3">
               <div className="space-y-2">
-                <Label className="text-slate-400">Current Password</Label>
-                <Input type="password" placeholder="••••••••" className="bg-slate-800 border-slate-700 text-white" />
+                <Label className="text-slate-400">Current password</Label>
+                <Input type="password" placeholder="********" className="rounded-2xl border-white/10 bg-[#0c1720] text-white" />
               </div>
               <div className="space-y-2">
-                <Label className="text-slate-400">New Password</Label>
-                <Input type="password" placeholder="••••••••" className="bg-slate-800 border-slate-700 text-white" />
+                <Label className="text-slate-400">New password</Label>
+                <Input type="password" placeholder="********" className="rounded-2xl border-white/10 bg-[#0c1720] text-white" />
               </div>
               <div className="space-y-2">
-                <Label className="text-slate-400">Confirm New Password</Label>
-                <Input type="password" placeholder="••••••••" className="bg-slate-800 border-slate-700 text-white" />
+                <Label className="text-slate-400">Confirm password</Label>
+                <Input type="password" placeholder="********" className="rounded-2xl border-white/10 bg-[#0c1720] text-white" />
               </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </div>
 
-        {/* Notifications Section */}
-        <Card className="border-slate-800 bg-slate-900">
-          <CardHeader>
-            <CardTitle className="text-lg text-white flex items-center gap-2">
-              <Bell className="w-5 h-5 text-blue-400" />
-              Notification Preferences
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center justify-between p-3 bg-slate-950 rounded-lg border border-slate-800">
-              <div className="space-y-1">
-                <p className="text-sm font-medium text-white">Email Notifications</p>
-                <p className="text-xs text-slate-500">Receive alerts for risk breaches and subscription updates.</p>
+        <div className="space-y-6">
+          <Card className="rounded-[30px] border-white/8 bg-white/[0.03]">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-xl text-white">
+                <Bell className="h-5 w-5 text-[#8cc9c2]" />
+                Notifications
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div className="rounded-2xl border border-white/8 bg-[#0c1720] p-4">
+                <div className="text-sm font-semibold text-white">Email alerts</div>
+                <p className="mt-1 text-xs leading-6 text-slate-500">Risk breaches, renewals, and critical operational messages.</p>
+                <div className="mt-3 inline-flex rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-300">
+                  Enabled
+                </div>
               </div>
-              <Button variant="outline" className="border-blue-500 text-blue-400 hover:bg-blue-500/10">Enabled</Button>
-            </div>
-            <div className="flex items-center justify-between p-3 bg-slate-950 rounded-lg border border-slate-800">
-              <div className="space-y-1">
-                <p className="text-sm font-medium text-white">In-App Alerts</p>
-                <p className="text-xs text-slate-500">Get real-time notifications inside the dashboard.</p>
+              <div className="rounded-2xl border border-white/8 bg-[#0c1720] p-4">
+                <div className="text-sm font-semibold text-white">In-app alerts</div>
+                <p className="mt-1 text-xs leading-6 text-slate-500">Live dashboard notifications for account and license activity.</p>
+                <div className="mt-3 inline-flex rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-300">
+                  Enabled
+                </div>
               </div>
-              <Button variant="outline" className="border-blue-500 text-blue-400 hover:bg-blue-500/10">Enabled</Button>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+
+          <Card className="rounded-[30px] border-white/8 bg-white/[0.03]">
+            <CardHeader>
+              <CardTitle className="text-xl text-white">Workspace status</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div className="flex items-center gap-3 rounded-2xl border border-white/8 bg-[#0c1720] p-4">
+                <BadgeCheck className="h-5 w-5 text-[#8cc9c2]" />
+                <div>
+                  <div className="text-sm font-semibold text-white">Identity healthy</div>
+                  <div className="text-xs text-slate-500">Primary account metadata is complete.</div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
 
-      <div className="flex justify-end pt-4">
-        <Button 
-          disabled={isSaving} 
-          className="bg-blue-600 hover:bg-blue-700 px-10" 
-          onClick={handleSave}
-        >
-          {isSaving ? 'Saving...' : (
-            <>
-              <Save className="w-4 h-4 mr-2" />
-              Save Changes
-            </>
-          )}
+      <div className="flex justify-end">
+        <Button onClick={handleSave} disabled={isSaving} className="rounded-full bg-[#e3a84f] px-6 text-[#14110c] hover:bg-[#efb65d]">
+          <Save className="mr-2 h-4 w-4" />
+          {isSaving ? 'Saving...' : 'Save changes'}
         </Button>
       </div>
     </div>

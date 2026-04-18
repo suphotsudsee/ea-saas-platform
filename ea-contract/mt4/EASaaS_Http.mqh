@@ -101,6 +101,9 @@ HttpResponse HttpGet(string url, int timeoutMs = 0)
    }
 
    int retryDelay = g_http_base_delay_ms;
+   char postData[];
+   char resultBody[];
+   string resultHeaders;
 
    for(int attempt = 0; attempt <= g_http_max_retries; attempt++)
    {
@@ -113,18 +116,17 @@ HttpResponse HttpGet(string url, int timeoutMs = 0)
          retryDelay = retryDelay * 2; // Exponential backoff
       }
 
-      // Reset response
+      // Reset response and arrays
       response.statusCode = 0;
       response.body = "";
       response.headers = "";
       response.success = false;
       response.error = "";
+      ArrayFree(postData);
+      ArrayFree(resultBody);
+      resultHeaders = "";
 
       // Make the WebRequest
-      string resultHeaders[];
-      uchar postData[];
-      uchar resultBody[];
-
       int res = WebRequest("GET", url, headers, timeoutMs, postData, resultBody, resultHeaders);
 
       if(res == -1)
@@ -153,12 +155,7 @@ HttpResponse HttpGet(string url, int timeoutMs = 0)
       // Success - parse response
       response.statusCode = res;
       response.body = CharArrayToString(resultBody);
-
-      // Build headers string from array
-      for(int h = 0; h < ArraySize(resultHeaders); h++)
-      {
-         response.headers += resultHeaders[h] + "\r\n";
-      }
+      response.headers = resultHeaders;
 
       response.success = (res >= 200 && res < 300);
 
@@ -228,10 +225,12 @@ HttpResponse HttpPost(string url, string jsonBody, int timeoutMs = 0)
    }
 
    // Convert JSON body to byte array
-   uchar postData[];
+   char postData[];
    StringToCharArray(jsonBody, postData, 0, StringLen(jsonBody));
 
    int retryDelay = g_http_base_delay_ms;
+   char resultBody[];
+   string resultHeaders;
 
    for(int attempt = 0; attempt <= g_http_max_retries; attempt++)
    {
@@ -244,17 +243,16 @@ HttpResponse HttpPost(string url, string jsonBody, int timeoutMs = 0)
          retryDelay = retryDelay * 2;
       }
 
-      // Reset response
+      // Reset response and arrays
       response.statusCode = 0;
       response.body = "";
       response.headers = "";
       response.success = false;
       response.error = "";
+      ArrayFree(resultBody);
+      resultHeaders = "";
 
       // Make the WebRequest
-      string resultHeaders[];
-      uchar resultBody[];
-
       int res = WebRequest("POST", url, headers, timeoutMs, postData, resultBody, resultHeaders);
 
       if(res == -1)
@@ -280,11 +278,7 @@ HttpResponse HttpPost(string url, string jsonBody, int timeoutMs = 0)
 
       response.statusCode = res;
       response.body = CharArrayToString(resultBody);
-
-      for(int h = 0; h < ArraySize(resultHeaders); h++)
-      {
-         response.headers += resultHeaders[h] + "\r\n";
-      }
+      response.headers = resultHeaders;
 
       response.success = (res >= 200 && res < 300);
 

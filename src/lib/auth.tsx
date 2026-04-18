@@ -1,20 +1,22 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import api from './api';
 
 interface User {
   id: string;
   email: string;
   name?: string;
-  role: 'TRADER' | 'ADMIN' | 'SUPER_ADMIN';
+  role: 'TRADER' | 'ADMIN' | 'SUPER_ADMIN' | 'BILLING_ADMIN' | 'RISK_ADMIN' | 'SUPPORT';
+  actorType?: 'user' | 'admin';
 }
 
 interface AuthContextType {
   user: User | null;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
+  adminLogin: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   isAuthenticated: boolean;
   isAdmin: boolean;
@@ -26,8 +28,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
+    const isProtectedPath =
+      pathname?.startsWith('/dashboard') ||
+      pathname?.startsWith('/admin') ||
+      pathname === '/login' ||
+      pathname === '/register';
+
+    if (!isProtectedPath) {
+      setIsLoading(false);
+      return;
+    }
+
     const initAuth = async () => {
       try {
         const { data } = await api.get('/auth/me');
@@ -39,13 +53,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
     };
     initAuth();
-  }, []);
+  }, [pathname]);
 
   const login = async (email: string, password: string) => {
     await api.post('/auth/login', { email, password });
     const { data } = await api.get('/auth/me');
     setUser(data.user ?? data);
     router.push('/dashboard');
+  };
+
+  const adminLogin = async (email: string, password: string) => {
+    await api.post('/admin/auth/login', { email, password });
+    const { data } = await api.get('/auth/me');
+    setUser(data.user ?? data);
+    router.push('/dashboard/admin');
   };
 
   const logout = async () => {
@@ -58,10 +79,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const isAuthenticated = !!user;
-  const isAdmin = user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN';
+  const isAdmin = user?.actorType === 'admin' || ['ADMIN', 'SUPER_ADMIN', 'BILLING_ADMIN', 'RISK_ADMIN', 'SUPPORT'].includes(user?.role || '');
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, logout, isAuthenticated, isAdmin }}>
+    <AuthContext.Provider value={{ user, isLoading, login, adminLogin, logout, isAuthenticated, isAdmin }}>
       {children}
     </AuthContext.Provider>
   );

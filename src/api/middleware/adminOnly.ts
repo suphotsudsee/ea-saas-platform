@@ -3,8 +3,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { prisma } from '../lib/prisma';
+import { authMiddleware } from './auth';
 
 type AdminRole = 'SUPER_ADMIN' | 'BILLING_ADMIN' | 'RISK_ADMIN' | 'SUPPORT';
 
@@ -27,8 +26,9 @@ export async function adminOnlyMiddleware(
   admin: {
     id: string;
     email: string;
-    name: string;
+    name: string | null;
     role: string;
+    actorType: 'user' | 'admin';
   };
   response?: undefined;
 } | {
@@ -36,56 +36,21 @@ export async function adminOnlyMiddleware(
   response: NextResponse;
 }> {
   const { allowedRoles } = options;
+  const authResult = await authMiddleware(request);
 
-  const session = await getServerSession();
-
-  if (!session?.user?.email) {
+  if (authResult.response || !authResult.user) {
     return {
-      response: NextResponse.json(
+      response: authResult.response || NextResponse.json(
         { error: 'Authentication required' },
         { status: 401 }
       ),
     };
   }
 
-  // Check if this is an AdminUser
-  const admin = await prisma.adminUser.findUnique({
-    where: { email: session.user.email },
-    select: {
-      id: true,
-      email: true,
-      name: true,
-      role: true,
-    },
-  });
+  const admin = authResult.user;
+  const adminRoles = ['ADMIN', 'SUPER_ADMIN', 'BILLING_ADMIN', 'RISK_ADMIN', 'SUPPORT'];
 
-  if (!admin) {
-    // Also check if a regular User has ADMIN or SUPER_ADMIN role
-    const regularUser = await prisma.user.findUnique({
-      where: { email: session.user.email },
-      select: { id: true, email: true, name: true, role: true, status: true },
-    });
-
-    if (regularUser && (regularUser.role === 'ADMIN' || regularUser.role === 'SUPER_ADMIN')) {
-      if (allowedRoles && !allowedRoles.includes(regularUser.role as AdminRole)) {
-        return {
-          response: NextResponse.json(
-            { error: 'Insufficient privileges' },
-            { status: 403 }
-          ),
-        };
-      }
-
-      return {
-        admin: {
-          id: regularUser.id,
-          email: regularUser.email,
-          name: regularUser.name || 'Admin',
-          role: regularUser.role,
-        },
-      };
-    }
-
+  if (!adminRoles.includes(admin.role)) {
     return {
       response: NextResponse.json(
         { error: 'Admin access required' },
@@ -94,7 +59,6 @@ export async function adminOnlyMiddleware(
     };
   }
 
-  // AdminUser found — check role restrictions
   if (allowedRoles && !allowedRoles.includes(admin.role as AdminRole)) {
     return {
       response: NextResponse.json(

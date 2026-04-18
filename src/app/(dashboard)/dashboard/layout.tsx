@@ -107,7 +107,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     return current?.name ?? 'Dashboard';
   }, [pathname]);
 
-  const isAdmin = user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN';
+  const isAdmin =
+    user?.actorType === 'admin' ||
+    ['ADMIN', 'SUPER_ADMIN', 'BILLING_ADMIN', 'RISK_ADMIN', 'SUPPORT'].includes(user?.role || '');
 
   return (
     <div className="min-h-screen bg-[#081118] text-white">

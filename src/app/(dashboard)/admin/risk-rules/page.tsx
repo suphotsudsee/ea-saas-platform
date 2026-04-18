@@ -1,116 +1,105 @@
 'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { ShieldAlert, Activity, AlertTriangle, Zap } from 'lucide-react';
-import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { AlertTriangle, Activity, ShieldAlert, Zap } from 'lucide-react';
 
 const MOCK_RISK_ACCOUNTS = [
-  { id: 'ta1', account: '84729103', customer: 'John Doe', drawdown: '18.5%', limit: '20%', status: 'WARNING', riskLevel: 'HIGH' },
-  { id: 'ta2', account: '10293847', customer: 'Sarah Smith', drawdown: '25.1%', limit: '20%', status: 'CRITICAL', riskLevel: 'CRITICAL' },
-  { id: 'ta3', account: '55667788', customer: 'Mike Ross', drawdown: '2.1%', limit: '20%', status: 'NORMAL', riskLevel: 'LOW' },
+  { id: 'ta1', account: '84729103', customer: 'John Doe', drawdown: '18.5%', limit: '20%', status: 'WARNING' },
+  { id: 'ta2', account: '10293847', customer: 'Sarah Smith', drawdown: '25.1%', limit: '20%', status: 'CRITICAL' },
+  { id: 'ta3', account: '55667788', customer: 'Mike Ross', drawdown: '2.1%', limit: '20%', status: 'NORMAL' },
 ];
+
+function statusClass(status: string) {
+  if (status === 'CRITICAL') return 'bg-rose-500/10 text-rose-300 border-rose-500/20';
+  if (status === 'WARNING') return 'bg-amber-500/10 text-amber-300 border-amber-500/20';
+  return 'bg-emerald-500/10 text-emerald-300 border-emerald-500/20';
+}
 
 export default function AdminRiskPage() {
   return (
-    <div className="space-y-8">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-white">Risk Management</h1>
-          <p className="text-slate-400">Monitor account exposure and enforce global risk rules.</p>
+    <div className="space-y-6 lg:space-y-8">
+      <section className="flex flex-col gap-4 rounded-[32px] border border-white/8 bg-[linear-gradient(135deg,#0f1d24_0%,#17120d_100%)] p-6 sm:p-8 lg:flex-row lg:items-end lg:justify-between">
+        <div className="max-w-2xl">
+          <Badge className="border-[#8cc9c2]/20 bg-[#112129] text-[#8cc9c2] hover:bg-[#112129]">Risk management</Badge>
+          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white">Escalate account risk before it becomes an operational incident.</h2>
+          <p className="mt-3 text-sm leading-7 text-slate-400 sm:text-base">
+            Use this view to spot drawdown breaches, identify customers near hard limits, and intervene fast when strategy behavior shifts.
+          </p>
         </div>
-        <Button variant="destructive" className="bg-red-600 hover:bg-red-700 px-6">
-          <ShieldAlert className="w-4 h-4 mr-2" />
-          Global Kill Switch
+        <Button variant="outline" className="rounded-full border-rose-500/20 bg-rose-500/5 px-5 text-rose-300 hover:bg-rose-500/10">
+          <ShieldAlert className="mr-2 h-4 w-4" />
+          Global kill switch
         </Button>
-      </div>
+      </section>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="border-slate-800 bg-slate-900 p-6 flex items-center gap-4">
-          <div className="p-3 bg-red-500/10 rounded-lg">
-            <AlertTriangle className="w-6 h-6 text-red-400" />
-          </div>
-          <div>
-            <p className="text-sm text-slate-500 font-medium">Critical Accounts</p>
-            <h3 className="text-2xl font-bold text-white">12</h3>
-          </div>
+      <section className="grid gap-4 md:grid-cols-3">
+        <Card className="rounded-[28px] border-white/8 bg-white/[0.03]">
+          <CardContent className="flex items-center gap-4 p-6">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-500/10 text-rose-300">
+              <AlertTriangle className="h-5 w-5" />
+            </div>
+            <div>
+              <div className="text-sm text-slate-500">Critical accounts</div>
+              <div className="mt-2 text-3xl font-semibold text-white">12</div>
+            </div>
+          </CardContent>
         </Card>
-        <Card className="border-slate-800 bg-slate-900 p-6 flex items-center gap-4">
-          <div className="p-3 bg-yellow-500/10 rounded-lg">
-            <Activity className="w-6 h-6 text-yellow-400" />
-          </div>
-          <div>
-            <p className="text-sm text-slate-500 font-medium">Warning Accounts</p>
-            <h3 className="text-2xl font-bold text-white">45</h3>
-          </div>
+        <Card className="rounded-[28px] border-white/8 bg-white/[0.03]">
+          <CardContent className="flex items-center gap-4 p-6">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-300">
+              <Activity className="h-5 w-5" />
+            </div>
+            <div>
+              <div className="text-sm text-slate-500">Warning accounts</div>
+              <div className="mt-2 text-3xl font-semibold text-white">45</div>
+            </div>
+          </CardContent>
         </Card>
-        <Card className="border-slate-800 bg-slate-900 p-6 flex items-center gap-4">
-          <div className="p-3 bg-green-500/10 rounded-lg">
-            <Zap className="w-6 h-6 text-green-400" />
-          </div>
-          <div>
-            <p className="text-sm text-slate-500 font-medium">Healthy Accounts</p>
-            <h3 className="text-2xl font-bold text-white">1,204</h3>
-          </div>
+        <Card className="rounded-[28px] border-white/8 bg-white/[0.03]">
+          <CardContent className="flex items-center gap-4 p-6">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-300">
+              <Zap className="h-5 w-5" />
+            </div>
+            <div>
+              <div className="text-sm text-slate-500">Healthy accounts</div>
+              <div className="mt-2 text-3xl font-semibold text-white">1,204</div>
+            </div>
+          </CardContent>
         </Card>
-      </div>
+      </section>
 
-      <Card className="border-slate-800 bg-slate-900">
-        <CardHeader>
-          <CardTitle className="text-lg text-white">High Risk Exposure</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow className="border-slate-800">
-                <TableHead className="text-slate-400">Account #</TableHead>
-                <TableHead className="text-slate-400">Customer</TableHead>
-                <TableHead className="text-slate-400">Drawdown</TableHead>
-                <TableHead className="text-slate-400">Limit</TableHead>
-                <TableHead className="text-slate-400">Status</TableHead>
-                <TableHead className="text-right text-slate-400">Action</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {MOCK_RISK_ACCOUNTS.map((acc) => (
-                <TableRow key={acc.id} className="border-slate-800 hover:bg-slate-800/50 transition-colors">
-                  <TableCell className="font-mono text-white">{acc.account}</TableCell>
-                  <TableCell className="text-slate-300">{acc.customer}</TableCell>
-                  <TableCell className={cn(
-                    'font-bold',
-                    acc.status === 'CRITICAL' ? 'text-red-400' : acc.status === 'WARNING' ? 'text-yellow-400' : 'text-green-400'
-                  )}>
-                    {acc.drawdown}
-                  </TableCell>
-                  <TableCell className="text-slate-500">{acc.limit}</TableCell>
-                  <TableCell>
-                    <Badge 
-                      className={cn(
-                        acc.status === 'CRITICAL' ? 'bg-red-500/10 text-red-400 border-red-500/20' : 
-                        acc.status === 'WARNING' ? 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20' : 
-                        'bg-green-500/10 text-green-400 border-green-500/20'
-                      )}
-                    >
-                      {acc.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <Button variant="destructive" size="sm" className="bg-red-600 hover:bg-red-700">
-                      Kill EA
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+      <section className="space-y-4">
+        {MOCK_RISK_ACCOUNTS.map((acc) => (
+          <Card key={acc.id} className="rounded-[30px] border-white/8 bg-white/[0.03]">
+            <CardContent className="grid gap-5 p-6 lg:grid-cols-[0.8fr_0.9fr_0.7fr_0.7fr_auto] lg:items-center">
+              <div>
+                <div className="text-sm font-semibold text-white">{acc.account}</div>
+                <div className="mt-1 text-xs text-slate-500">Account number</div>
+              </div>
+              <div>
+                <div className="text-sm font-semibold text-white">{acc.customer}</div>
+                <div className="mt-1 text-xs text-slate-500">Customer</div>
+              </div>
+              <div>
+                <div className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Drawdown</div>
+                <div className="mt-2 text-lg font-semibold text-white">{acc.drawdown}</div>
+              </div>
+              <div>
+                <div className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Limit</div>
+                <div className="mt-2 text-lg font-semibold text-white">{acc.limit}</div>
+              </div>
+              <div className="flex items-center gap-3">
+                <Badge className={statusClass(acc.status)}>{acc.status}</Badge>
+                <Button variant="outline" className="rounded-2xl border-rose-500/20 bg-rose-500/5 text-rose-300 hover:bg-rose-500/10">
+                  Kill EA
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </section>
     </div>
   );
-}
-
-function cn(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
 }

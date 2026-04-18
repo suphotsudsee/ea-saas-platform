@@ -1,16 +1,16 @@
 'use client';
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
+interface ActivityRow {
+  id: string;
+  event: string;
+  symbol: string;
+  signal: string;
+  time: string;
+  type: 'profit' | 'warning' | 'info';
+}
 
-const MOCK_ACTIVITY = [
-  { id: '1', event: 'Trade Closed', symbol: 'EURUSD', profit: '+$30.00', time: '2m ago', type: 'profit' },
-  { id: '2', event: 'Heartbeat Received', symbol: 'MT4-84729', profit: 'Online', time: '5m ago', type: 'info' },
-  { id: '3', event: 'Trade Closed', symbol: 'GBPUSD', profit: '+$10.00', time: '15m ago', type: 'profit' },
-  { id: '4', event: 'Risk Alert', symbol: 'USDJPY', profit: 'Slippage', time: '1h ago', type: 'warning' },
-];
-
-export function RecentTrades() {
+export function RecentTrades({ items }: { items: ActivityRow[] }) {
   return (
     <div className="space-y-4">
       <Table>
@@ -22,7 +22,15 @@ export function RecentTrades() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {MOCK_ACTIVITY.map((act) => (
+          {items.length === 0 && (
+            <TableRow className="border-white/8">
+              <TableCell colSpan={3} className="py-8 text-center text-sm text-slate-500">
+                No recent trade activity yet.
+              </TableCell>
+            </TableRow>
+          )}
+
+          {items.map((act) => (
             <TableRow key={act.id} className="border-white/8 transition-colors hover:bg-white/[0.03]">
               <TableCell>
                 <div className="flex flex-col">
@@ -41,7 +49,7 @@ export function RecentTrades() {
                         : 'bg-white/[0.05] text-slate-300'
                   )}
                 >
-                  {act.profit}
+                  {act.signal}
                 </span>
               </TableCell>
               <TableCell className="text-right text-xs text-slate-500">{act.time}</TableCell>

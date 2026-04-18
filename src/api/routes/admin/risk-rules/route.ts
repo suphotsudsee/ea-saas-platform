@@ -3,10 +3,10 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server';
-import { adminOnlyMiddleware, requireWriteAccess } from '../../middleware/adminOnly';
-import { getRiskDashboard, resolveRiskEvent } from '../../services/risk.service';
-import { setGlobalKillSwitch } from '../../services/license.service';
-import { prisma } from '../../lib/prisma';
+import { adminOnlyMiddleware, requireWriteAccess } from '../../../middleware/adminOnly';
+import { getRiskDashboard, resolveRiskEvent } from '../../../services/risk.service';
+import { setGlobalKillSwitch } from '../../../services/license.service';
+import { prisma } from '../../../lib/prisma';
 import { z } from 'zod';
 
 // ─── GET: Risk dashboard data ──────────────────────────────────────────────
@@ -90,7 +90,7 @@ export async function PATCH(request: NextRequest) {
         });
 
         // Invalidate risk config cache
-        const { redis, RedisKeys } = await import('../../utils/redis');
+        const { redis } = await import('../../../utils/redis');
         await redis.del(`risk:config:${validated.strategyId}`);
 
         await prisma.auditLog.create({

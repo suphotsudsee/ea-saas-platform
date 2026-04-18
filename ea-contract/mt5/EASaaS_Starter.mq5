@@ -13,13 +13,13 @@
 #property version   "1.00"
 #property strict
 
-#include <EASaaS_Utils.mqh>
-#include <EASaaS_Http.mqh>
-#include <EASaaS_License.mqh>
-#include <EASaaS_Heartbeat.mqh>
-#include <EASaaS_Risk.mqh>
-#include <EASaaS_Config.mqh>
-#include <EASaaS_Trade.mqh>
+#include "EASaaS_Utils.mqh"
+#include "EASaaS_Http.mqh"
+#include "EASaaS_License.mqh"
+#include "EASaaS_Heartbeat.mqh"
+#include "EASaaS_Risk.mqh"
+#include "EASaaS_Config.mqh"
+#include "EASaaS_Trade.mqh"
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // INPUT PARAMETERS
@@ -343,8 +343,7 @@ void OnTick()
    ExecuteStrategy();
 
    // 8. Trailing Stop Management
-   if(g_trailing_stop_pips > 0)
-      ManageTrailingStops();
+   ManageTrailingStops();
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -356,39 +355,132 @@ void ExecuteStrategy()
    if(!CheckRiskRules(_Symbol, InpMagicNumber))
       return;
 
-   // Simple MA Crossover Strategy
-   int fastPeriod = 10;
-   int slowPeriod = 50;
+   // Forex Swing Master refined swing logic:
+   // 1. Align current timeframe with higher-timeframe trend (H4 50/200 EMA)
+   // 2. Require a pullback into the trend area
+   // 3. Confirm break of structure on the signal candle
+   // 4. Size stops dynamically with ATR
+   const int trendFastPeriod = 50;
+   const int trendSlowPeriod = 200;
+   const int rsiPeriod = 14;
+   const int atrPeriod = 14;
+   const int swingLookback = 6;
+   const ENUM_TIMEFRAMES trendTimeframe = PERIOD_H4;
 
-   double fastMA_0 = iMA(_Symbol, PERIOD_CURRENT, fastPeriod, 0, MODE_EMA, PRICE_CLOSE, 0);
-   double fastMA_1 = iMA(_Symbol, PERIOD_CURRENT, fastPeriod, 0, MODE_EMA, PRICE_CLOSE, 1);
-   double slowMA_0 = iMA(_Symbol, PERIOD_CURRENT, slowPeriod, 0, MODE_EMA, PRICE_CLOSE, 0);
-   double slowMA_1 = iMA(_Symbol, PERIOD_CURRENT, slowPeriod, 0, MODE_EMA, PRICE_CLOSE, 1);
+   double emaFast_1 = GetEMAValue(trendFastPeriod, 1);
+   double emaFast_2 = GetEMAValue(trendFastPeriod, 2);
+   double emaSlow_1 = GetEMAValue(trendSlowPeriod, 1);
+   double emaSlow_2 = GetEMAValue(trendSlowPeriod, 2);
+   double emaFastHTF_1 = GetEMAValueForTimeframe(trendFastPeriod, 1, trendTimeframe);
+   double emaFastHTF_2 = GetEMAValueForTimeframe(trendFastPeriod, 2, trendTimeframe);
+   double emaSlowHTF_1 = GetEMAValueForTimeframe(trendSlowPeriod, 1, trendTimeframe);
+   double emaSlowHTF_2 = GetEMAValueForTimeframe(trendSlowPeriod, 2, trendTimeframe);
+   double rsi_1 = GetRSIValue(rsiPeriod, 1);
+   double atrPips = GetATRPips(atrPeriod, 1, PERIOD_CURRENT);
 
-   // Buy signal
-   if(fastMA_1 <= slowMA_1 && fastMA_0 > slowMA_0)
+   if(emaFast_1 == EMPTY_VALUE || emaFast_2 == EMPTY_VALUE ||
+      emaSlow_1 == EMPTY_VALUE || emaSlow_2 == EMPTY_VALUE ||
+      emaFastHTF_1 == EMPTY_VALUE || emaFastHTF_2 == EMPTY_VALUE ||
+      emaSlowHTF_1 == EMPTY_VALUE || emaSlowHTF_2 == EMPTY_VALUE ||
+      rsi_1 == EMPTY_VALUE || atrPips == EMPTY_VALUE)
    {
-      if(HasPositionMT5(POSITION_TYPE_BUY)) return;
+      LogWarn("Forex Swing Master: indicator data not ready yet");
+      return;
+   }
+
+   bool bullishTrend = emaFast_1 > emaSlow_1 &&
+                       emaFast_2 >= emaSlow_2 &&
+                       emaFastHTF_1 > emaSlowHTF_1 &&
+                       emaFastHTF_2 >= emaSlowHTF_2;
+   bool bearishTrend = emaFast_1 < emaSlow_1 &&
+                       emaFast_2 <= emaSlow_2 &&
+                       emaFastHTF_1 < emaSlowHTF_1 &&
+                       emaFastHTF_2 <= emaSlowHTF_2;
+
+   double close_1 = iClose(_Symbol, PERIOD_CURRENT, 1);
+   double open_1 = iOpen(_Symbol, PERIOD_CURRENT, 1);
+   double high_1 = iHigh(_Symbol, PERIOD_CURRENT, 1);
+   double low_1 = iLow(_Symbol, PERIOD_CURRENT, 1);
+   double htfClose_1 = iClose(_Symbol, trendTimeframe, 1);
+   double htfOpen_1 = iOpen(_Symbol, trendTimeframe, 1);
+
+   double swingHigh = GetRecentSwingHigh(swingLookback, 2);
+   double swingLow = GetRecentSwingLow(swingLookback, 2);
+
+   bool bullishBreakOfStructure = close_1 > swingHigh;
+   bool bearishBreakOfStructure = close_1 < swingLow;
+   bool htfBullishClose = htfClose_1 > htfOpen_1;
+   bool htfBearishClose = htfClose_1 < htfOpen_1;
+   bool inOverlapSession = IsInLondonNewYorkOverlap();
+
+   bool bullishPullback = bullishTrend &&
+                          inOverlapSession &&
+                          htfBullishClose &&
+                          low_1 <= emaFast_1 &&
+                          low_1 > emaSlow_1 &&
+                          close_1 > open_1 &&
+                          rsi_1 >= 50.0 && rsi_1 <= 68.0 &&
+                          bullishBreakOfStructure;
+
+   bool bearishPullback = bearishTrend &&
+                          inOverlapSession &&
+                          htfBearishClose &&
+                          high_1 >= emaFast_1 &&
+                          high_1 < emaSlow_1 &&
+                          close_1 < open_1 &&
+                          rsi_1 >= 32.0 && rsi_1 <= 50.0 &&
+                          bearishBreakOfStructure;
+
+   int dynamicStopLossPips = (int)MathMax((double)g_stop_loss_pips, MathCeil(atrPips * 1.5));
+   int dynamicTakeProfitPips = (int)MathMax((double)g_take_profit_pips, (double)(dynamicStopLossPips * 2));
+
+   if(bullishPullback)
+   {
+      if(HasPositionMT5(POSITION_TYPE_BUY))
+         return;
+
       ClosePositionsByTypeMT5(POSITION_TYPE_SELL);
 
       double lots = CalculateLotSize(_Symbol, g_risk_percent, g_stop_loss_pips);
-      TradeResult result = OpenBuy(_Symbol, lots, g_stop_loss_pips,
-         g_take_profit_pips, InpMagicNumber, InpTradeComment);
+      TradeResult result = OpenBuy(
+         _Symbol,
+         lots,
+         dynamicStopLossPips,
+         dynamicTakeProfitPips,
+         InpMagicNumber,
+         InpTradeComment + "_FSM_BUY"
+      );
 
-      if(result.success) g_trade_count++;
+      if(result.success)
+      {
+         g_trade_count++;
+         LogInfo("Forex Swing Master: bullish swing entry opened");
+      }
+      return;
    }
 
-   // Sell signal
-   if(fastMA_1 >= slowMA_1 && fastMA_0 < slowMA_0)
+   if(bearishPullback)
    {
-      if(HasPositionMT5(POSITION_TYPE_SELL)) return;
+      if(HasPositionMT5(POSITION_TYPE_SELL))
+         return;
+
       ClosePositionsByTypeMT5(POSITION_TYPE_BUY);
 
       double lots = CalculateLotSize(_Symbol, g_risk_percent, g_stop_loss_pips);
-      TradeResult result = OpenSell(_Symbol, lots, g_stop_loss_pips,
-         g_take_profit_pips, InpMagicNumber, InpTradeComment);
+      TradeResult result = OpenSell(
+         _Symbol,
+         lots,
+         dynamicStopLossPips,
+         dynamicTakeProfitPips,
+         InpMagicNumber,
+         InpTradeComment + "_FSM_SELL"
+      );
 
-      if(result.success) g_trade_count++;
+      if(result.success)
+      {
+         g_trade_count++;
+         LogInfo("Forex Swing Master: bearish swing entry opened");
+      }
    }
 }
 
@@ -412,6 +504,106 @@ bool HasPositionMT5(ENUM_POSITION_TYPE posType)
    return false;
 }
 
+double GetEMAValue(int period, int shift)
+{
+   return GetEMAValueForTimeframe(period, shift, PERIOD_CURRENT);
+}
+
+double GetEMAValueForTimeframe(int period, int shift, ENUM_TIMEFRAMES timeframe)
+{
+   int handle = iMA(_Symbol, timeframe, period, 0, MODE_EMA, PRICE_CLOSE);
+   if(handle == INVALID_HANDLE)
+      return EMPTY_VALUE;
+
+   double buffer[];
+   ArraySetAsSeries(buffer, true);
+
+   if(CopyBuffer(handle, 0, shift, 1, buffer) <= 0)
+   {
+      IndicatorRelease(handle);
+      return EMPTY_VALUE;
+   }
+
+   IndicatorRelease(handle);
+   return buffer[0];
+}
+
+double GetRSIValue(int period, int shift)
+{
+   int handle = iRSI(_Symbol, PERIOD_CURRENT, period, PRICE_CLOSE);
+   if(handle == INVALID_HANDLE)
+      return EMPTY_VALUE;
+
+   double buffer[];
+   ArraySetAsSeries(buffer, true);
+
+   if(CopyBuffer(handle, 0, shift, 1, buffer) <= 0)
+   {
+      IndicatorRelease(handle);
+      return EMPTY_VALUE;
+   }
+
+   IndicatorRelease(handle);
+   return buffer[0];
+}
+
+double GetATRPips(int period, int shift, ENUM_TIMEFRAMES timeframe)
+{
+   int handle = iATR(_Symbol, timeframe, period);
+   if(handle == INVALID_HANDLE)
+      return EMPTY_VALUE;
+
+   double buffer[];
+   ArraySetAsSeries(buffer, true);
+
+   if(CopyBuffer(handle, 0, shift, 1, buffer) <= 0)
+   {
+      IndicatorRelease(handle);
+      return EMPTY_VALUE;
+   }
+
+   IndicatorRelease(handle);
+
+   int digits = (int)SymbolInfoInteger(_Symbol, SYMBOL_DIGITS);
+   double point = SymbolInfoDouble(_Symbol, SYMBOL_POINT);
+   double pipSize = (digits == 3 || digits == 5) ? point * 10.0 : point;
+   if(pipSize <= 0.0)
+      return EMPTY_VALUE;
+
+   return buffer[0] / pipSize;
+}
+
+bool IsInLondonNewYorkOverlap()
+{
+   MqlDateTime now;
+   TimeToStruct(TimeGMT(), now);
+   return now.hour >= 13 && now.hour < 17;
+}
+
+double GetRecentSwingHigh(int bars, int startShift)
+{
+   double highest = iHigh(_Symbol, PERIOD_CURRENT, startShift);
+   for(int shift = startShift + 1; shift < startShift + bars; shift++)
+   {
+      double high = iHigh(_Symbol, PERIOD_CURRENT, shift);
+      if(high > highest)
+         highest = high;
+   }
+   return highest;
+}
+
+double GetRecentSwingLow(int bars, int startShift)
+{
+   double lowest = iLow(_Symbol, PERIOD_CURRENT, startShift);
+   for(int shift = startShift + 1; shift < startShift + bars; shift++)
+   {
+      double low = iLow(_Symbol, PERIOD_CURRENT, shift);
+      if(low < lowest)
+         lowest = low;
+   }
+   return lowest;
+}
+
 void ClosePositionsByTypeMT5(ENUM_POSITION_TYPE posType)
 {
    for(int i = PositionsTotal() - 1; i >= 0; i--)
@@ -429,8 +621,6 @@ void ClosePositionsByTypeMT5(ENUM_POSITION_TYPE posType)
 
 void ManageTrailingStops()
 {
-   if(g_trailing_stop_pips <= 0) return;
-
    for(int i = PositionsTotal() - 1; i >= 0; i--)
    {
       ulong ticket = PositionGetTicket(i);
@@ -440,7 +630,13 @@ void ManageTrailingStops()
       string sym = PositionGetString(POSITION_SYMBOL);
       int digits = (int)SymbolInfoInteger(sym, SYMBOL_DIGITS);
       double point = SymbolInfoDouble(sym, SYMBOL_POINT);
-      double trailPoints = (digits == 3 || digits == 5) ? g_trailing_stop_pips * 10 : g_trailing_stop_pips;
+      double atrTrailPips = GetATRPips(14, 1, PERIOD_CURRENT);
+      double baseTrailPips = g_trailing_stop_pips > 0 ? g_trailing_stop_pips : atrTrailPips;
+      if(baseTrailPips == EMPTY_VALUE || baseTrailPips <= 0.0)
+         continue;
+
+      double effectiveTrailPips = g_trailing_stop_pips > 0 ? MathMax((double)g_trailing_stop_pips, atrTrailPips) : atrTrailPips;
+      double trailPoints = (digits == 3 || digits == 5) ? effectiveTrailPips * 10 : effectiveTrailPips;
       double trailDistance = trailPoints * point;
 
       if(PositionGetInteger(POSITION_TYPE) == POSITION_TYPE_BUY)

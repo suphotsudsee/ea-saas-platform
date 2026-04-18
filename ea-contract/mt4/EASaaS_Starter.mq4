@@ -404,7 +404,7 @@ void OnTick()
    // The starter provides a simple signal example using MA crossover.
    // Replace this with your actual trading strategy.
 
-   ExecuteStrategy();
+   ExecuteForexSwingMasterMT4();
 
    // ─── 8. Trailing Stop Management ──────────────────────────────────────
    if(g_trailing_stop_pips > 0)
@@ -480,6 +480,180 @@ void ExecuteStrategy()
 // HELPER FUNCTIONS
 // ═══════════════════════════════════════════════════════════════════════════════
 
+void ExecuteForexSwingMasterMT4()
+{
+   if(!CheckRiskRules(Symbol(), InpMagicNumber))
+      return;
+
+   int trendFastPeriod = 50;
+   int trendSlowPeriod = 200;
+   int rsiPeriod = 14;
+    int atrPeriod = 14;
+   int swingLookback = 6;
+   int trendTimeframe = PERIOD_H4;
+
+   double emaFast_1 = GetEMAValueMT4(trendFastPeriod, 1);
+   double emaFast_2 = GetEMAValueMT4(trendFastPeriod, 2);
+   double emaSlow_1 = GetEMAValueMT4(trendSlowPeriod, 1);
+   double emaSlow_2 = GetEMAValueMT4(trendSlowPeriod, 2);
+   double emaFastHTF_1 = GetEMAValueForTimeframeMT4(trendFastPeriod, 1, trendTimeframe);
+   double emaFastHTF_2 = GetEMAValueForTimeframeMT4(trendFastPeriod, 2, trendTimeframe);
+   double emaSlowHTF_1 = GetEMAValueForTimeframeMT4(trendSlowPeriod, 1, trendTimeframe);
+   double emaSlowHTF_2 = GetEMAValueForTimeframeMT4(trendSlowPeriod, 2, trendTimeframe);
+   double rsi_1 = GetRSIValueMT4(rsiPeriod, 1);
+   double atrPips = GetATRPipsMT4(atrPeriod, 1, PERIOD_CURRENT);
+
+   bool bullishTrend = emaFast_1 > emaSlow_1 &&
+                       emaFast_2 >= emaSlow_2 &&
+                       emaFastHTF_1 > emaSlowHTF_1 &&
+                       emaFastHTF_2 >= emaSlowHTF_2;
+   bool bearishTrend = emaFast_1 < emaSlow_1 &&
+                       emaFast_2 <= emaSlow_2 &&
+                       emaFastHTF_1 < emaSlowHTF_1 &&
+                       emaFastHTF_2 <= emaSlowHTF_2;
+
+   double close_1 = iClose(Symbol(), PERIOD_CURRENT, 1);
+   double open_1 = iOpen(Symbol(), PERIOD_CURRENT, 1);
+   double high_1 = iHigh(Symbol(), PERIOD_CURRENT, 1);
+   double low_1 = iLow(Symbol(), PERIOD_CURRENT, 1);
+   double htfClose_1 = iClose(Symbol(), trendTimeframe, 1);
+   double htfOpen_1 = iOpen(Symbol(), trendTimeframe, 1);
+
+   double swingHigh = GetRecentSwingHighMT4(swingLookback, 2);
+   double swingLow = GetRecentSwingLowMT4(swingLookback, 2);
+
+   bool bullishBreakOfStructure = close_1 > swingHigh;
+   bool bearishBreakOfStructure = close_1 < swingLow;
+   bool htfBullishClose = htfClose_1 > htfOpen_1;
+   bool htfBearishClose = htfClose_1 < htfOpen_1;
+   bool inOverlapSession = IsInLondonNewYorkOverlapMT4();
+
+   bool bullishPullback = bullishTrend &&
+                          inOverlapSession &&
+                          htfBullishClose &&
+                          low_1 <= emaFast_1 &&
+                          low_1 > emaSlow_1 &&
+                          close_1 > open_1 &&
+                          rsi_1 >= 50.0 && rsi_1 <= 68.0 &&
+                          bullishBreakOfStructure;
+
+   bool bearishPullback = bearishTrend &&
+                          inOverlapSession &&
+                          htfBearishClose &&
+                          high_1 >= emaFast_1 &&
+                          high_1 < emaSlow_1 &&
+                          close_1 < open_1 &&
+                          rsi_1 >= 32.0 && rsi_1 <= 50.0 &&
+                          bearishBreakOfStructure;
+
+   int dynamicStopLossPips = (int)MathMax((double)g_stop_loss_pips, MathCeil(atrPips * 1.5));
+   int dynamicTakeProfitPips = (int)MathMax((double)g_take_profit_pips, (double)(dynamicStopLossPips * 2));
+
+   if(bullishPullback)
+   {
+      if(HasPosition(OP_BUY)) return;
+
+      ClosePositionsByType(OP_SELL);
+
+      double lots = CalculateLotSize(Symbol(), g_risk_percent, g_stop_loss_pips);
+      TradeResult result = OpenBuy(
+         Symbol(),
+         lots,
+         dynamicStopLossPips,
+         dynamicTakeProfitPips,
+         InpMagicNumber,
+         InpTradeComment + "_FSM_BUY"
+      );
+
+      if(result.success)
+      {
+         g_trade_count++;
+         LogInfo("Forex Swing Master MT4: bullish swing entry opened");
+      }
+      return;
+   }
+
+   if(bearishPullback)
+   {
+      if(HasPosition(OP_SELL)) return;
+
+      ClosePositionsByType(OP_BUY);
+
+      double lots = CalculateLotSize(Symbol(), g_risk_percent, g_stop_loss_pips);
+      TradeResult result = OpenSell(
+         Symbol(),
+         lots,
+         dynamicStopLossPips,
+         dynamicTakeProfitPips,
+         InpMagicNumber,
+         InpTradeComment + "_FSM_SELL"
+      );
+
+      if(result.success)
+      {
+         g_trade_count++;
+         LogInfo("Forex Swing Master MT4: bearish swing entry opened");
+      }
+   }
+}
+
+double GetEMAValueMT4(int period, int shift)
+{
+   return GetEMAValueForTimeframeMT4(period, shift, PERIOD_CURRENT);
+}
+
+double GetEMAValueForTimeframeMT4(int period, int shift, int timeframe)
+{
+   return iMA(Symbol(), timeframe, period, 0, MODE_EMA, PRICE_CLOSE, shift);
+}
+
+double GetRSIValueMT4(int period, int shift)
+{
+   return iRSI(Symbol(), PERIOD_CURRENT, period, PRICE_CLOSE, shift);
+}
+
+double GetATRPipsMT4(int period, int shift, int timeframe)
+{
+   double atrValue = iATR(Symbol(), timeframe, period, shift);
+   int digits = (int)MarketInfo(Symbol(), MODE_DIGITS);
+   double point = MarketInfo(Symbol(), MODE_POINT);
+   double pipSize = (digits == 3 || digits == 5) ? point * 10.0 : point;
+   if(pipSize <= 0.0)
+      return 0.0;
+
+   return atrValue / pipSize;
+}
+
+double GetRecentSwingHighMT4(int bars, int startShift)
+{
+   double highest = iHigh(Symbol(), PERIOD_CURRENT, startShift);
+   for(int shift = startShift + 1; shift < startShift + bars; shift++)
+   {
+      double high = iHigh(Symbol(), PERIOD_CURRENT, shift);
+      if(high > highest)
+         highest = high;
+   }
+   return highest;
+}
+
+double GetRecentSwingLowMT4(int bars, int startShift)
+{
+   double lowest = iLow(Symbol(), PERIOD_CURRENT, startShift);
+   for(int shift = startShift + 1; shift < startShift + bars; shift++)
+   {
+      double low = iLow(Symbol(), PERIOD_CURRENT, shift);
+      if(low < lowest)
+         lowest = low;
+   }
+   return lowest;
+}
+
+bool IsInLondonNewYorkOverlapMT4()
+{
+   int utcHour = TimeHour(TimeGMT());
+   return utcHour >= 13 && utcHour < 17;
+}
+
 /// Check if we have an open position of the specified type
 bool HasPosition(int orderType)
 {
@@ -518,8 +692,6 @@ void ClosePositionsByType(int orderType)
 /// Manage trailing stops for all open positions
 void ManageTrailingStops()
 {
-   if(g_trailing_stop_pips <= 0) return;
-
    for(int i = OrdersTotal() - 1; i >= 0; i--)
    {
       if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
@@ -530,11 +702,19 @@ void ManageTrailingStops()
          string sym = OrderSymbol();
          int digits = (int)MarketInfo(sym, MODE_DIGITS);
          double point = MarketInfo(sym, MODE_POINT);
+         double atrTrailPips = GetATRPipsMT4(14, 1, PERIOD_CURRENT);
+
+         if((g_trailing_stop_pips <= 0 && atrTrailPips <= 0.0) || point <= 0.0)
+            continue;
+
+         double effectiveTrailPips = atrTrailPips;
+         if(g_trailing_stop_pips > 0)
+            effectiveTrailPips = MathMax((double)g_trailing_stop_pips, atrTrailPips);
 
          // Convert trailing pips to points (for 5-digit brokers)
-         double trailPoints = g_trailing_stop_pips;
+         double trailPoints = effectiveTrailPips;
          if(digits == 3 || digits == 5)
-            trailPoints = g_trailing_stop_pips * 10;
+            trailPoints = effectiveTrailPips * 10;
 
          double trailDistance = trailPoints * point;
 

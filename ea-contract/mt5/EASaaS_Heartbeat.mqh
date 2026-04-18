@@ -4,8 +4,8 @@
 //| Version: 1.0.0                                                    |
 //+------------------------------------------------------------------+
 #property strict
-#include <EASaaS_Http.mqh>
-#include <EASaaS_License.mqh>
+#include "EASaaS_Http.mqh"
+#include "EASaaS_License.mqh"
 
 int g_heartbeat_interval_sec = 60;
 int g_heartbeat_timeout_ms = 8000;

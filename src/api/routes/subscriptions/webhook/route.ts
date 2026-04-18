@@ -3,7 +3,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server';
-import { handleStripeWebhook } from '../../services/billing.service';
+import { handleStripeWebhook } from '../../../services/billing.service';
 import Stripe from 'stripe';
 
 export async function POST(request: NextRequest) {
@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-      apiVersion: '2024-06-20',
+      apiVersion: '2025-02-24.acacia',
     });
 
     const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;

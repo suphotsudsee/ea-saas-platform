@@ -27,19 +27,53 @@ export interface ValidatedLicenseRequest extends NextRequest {
   };
 }
 
+async function extractEAAuth(request: NextRequest): Promise<{
+  apiKey: string | null;
+  licenseKey: string | null;
+}> {
+  const headerApiKey = request.headers.get('x-api-key');
+  const headerLicenseKey = request.headers.get('x-license-key');
+
+  if (headerApiKey && headerLicenseKey) {
+    return { apiKey: headerApiKey, licenseKey: headerLicenseKey };
+  }
+
+  const queryApiKey = request.nextUrl.searchParams.get('apiKey');
+  const queryLicenseKey = request.nextUrl.searchParams.get('licenseKey');
+
+  if (queryApiKey && queryLicenseKey) {
+    return { apiKey: queryApiKey, licenseKey: queryLicenseKey };
+  }
+
+  if (request.method !== 'GET' && request.method !== 'HEAD') {
+    try {
+      const body = await request.clone().json();
+      const bodyApiKey = typeof body?.apiKey === 'string' ? body.apiKey : null;
+      const bodyLicenseKey = typeof body?.licenseKey === 'string' ? body.licenseKey : null;
+
+      if (bodyApiKey && bodyLicenseKey) {
+        return { apiKey: bodyApiKey, licenseKey: bodyLicenseKey };
+      }
+    } catch {
+      // Ignore non-JSON bodies; the standard validation error is returned below.
+    }
+  }
+
+  return { apiKey: null, licenseKey: null };
+}
+
 export async function validateLicenseMiddleware(
   request: NextRequest
 ): Promise<{ license: NonNullable<ValidatedLicenseRequest['license']>; apiKey: NonNullable<ValidatedLicenseRequest['apiKey']> } | NextResponse> {
   // ─── Extract Headers ────────────────────────────────────────────────
-  const apiKeyHeader = request.headers.get('x-api-key');
-  const licenseKeyHeader = request.headers.get('x-license-key');
+  const { apiKey: apiKeyHeader, licenseKey: licenseKeyHeader } = await extractEAAuth(request);
 
   if (!apiKeyHeader || !licenseKeyHeader) {
     return NextResponse.json(
       {
         valid: false,
         error: 'MISSING_HEADERS',
-        message: 'X-API-Key and X-License-Key headers are required',
+        message: 'API key and license key are required via headers, query, or JSON body',
       },
       { status: 400 }
     );
@@ -94,7 +128,10 @@ export async function validateLicenseMiddleware(
       );
     }
     return {
-      license: cached.license,
+      license: {
+        ...cached.license,
+        expiresAt: new Date(cached.license.expiresAt),
+      },
       apiKey: {
         id: apiKey.id,
         userId: apiKey.userId,
@@ -162,7 +199,7 @@ export async function validateLicenseMiddleware(
     subscriptionId: license.subscriptionId,
     strategyId: license.strategyId,
     status: license.status,
-    expiresAt: license.expiresAt.toISOString(),
+    expiresAt: license.expiresAt,
     maxAccounts: license.maxAccounts,
     killSwitch: license.killSwitch,
     killSwitchReason: license.killSwitchReason,
@@ -170,11 +207,14 @@ export async function validateLicenseMiddleware(
 
   await redis.setex(cacheKey, parseInt(process.env.LICENSE_CACHE_TTL_SEC || '300'), JSON.stringify({
     status: 'ACTIVE',
-    license: licenseInfo,
+    license: {
+      ...licenseInfo,
+      expiresAt: licenseInfo.expiresAt.toISOString(),
+    },
   }));
 
   return {
-    license: licenseInfo as NonNullable<ValidatedLicenseRequest['license']>,
+    license: licenseInfo,
     apiKey: {
       id: apiKey.id,
       userId: apiKey.userId,

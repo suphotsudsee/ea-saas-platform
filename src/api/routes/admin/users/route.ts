@@ -3,8 +3,8 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server';
-import { adminOnlyMiddleware } from '../../middleware/adminOnly';
-import { prisma } from '../../lib/prisma';
+import { adminOnlyMiddleware } from '../../../middleware/adminOnly';
+import { prisma } from '../../../lib/prisma';
 
 export async function GET(request: NextRequest) {
   const authResult = await adminOnlyMiddleware(request);
@@ -43,7 +43,27 @@ export async function GET(request: NextRequest) {
           emailVerified: true,
           twoFactorEnabled: true,
           createdAt: true,
-          lastLoginAt: true,
+          subscriptions: {
+            orderBy: { createdAt: 'desc' },
+            take: 1,
+            select: {
+              id: true,
+              status: true,
+              currentPeriodEnd: true,
+              package: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+          tradingAccounts: {
+            orderBy: { updatedAt: 'desc' },
+            take: 1,
+            select: {
+              updatedAt: true,
+            },
+          },
           _count: {
             select: {
               subscriptions: true,

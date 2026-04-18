@@ -1,95 +1,157 @@
 'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useRouter } from 'next/navigation';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { LayoutDashboard, Users, Layers, ShieldAlert, Key, CreditCard } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { AlertTriangle, CreditCard, KeyRound, Layers3, ShieldAlert, Users } from 'lucide-react';
 
-export default function AdminDashboardPage() {
+function AdminKpiCard({
+  title,
+  value,
+  trend,
+  icon,
+}: {
+  title: string;
+  value: string;
+  trend: string;
+  icon: React.ReactNode;
+}) {
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold text-white">Admin Command Center</h1>
-        <p className="text-slate-400">Platform-wide metrics and operational overview.</p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <AdminKpiCard title="Total MRR" value="$12,450" trend="+8%" icon={<CreditCard className="text-green-400" />} />
-        <AdminKpiCard title="Active Licenses" value="1,240" trend="+12%" icon={<Key className="text-blue-400" />} />
-        <AdminKpiCard title="Active EAs" value="3,102" trend="+5%" icon={<Layers className="text-purple-400" />} />
-        <AdminKpiCard title="Risk Alerts" value="12" trend="-2%" icon={<ShieldAlert className="text-red-400" />} />
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
-          <Card className="border-slate-800 bg-slate-900 p-6">
-            <CardHeader>
-              <CardTitle className="text-lg text-white">System Health</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <HealthBar label="API Response Time" value={45} max={100} color="bg-green-500" status="45ms" />
-                <HealthBar label="Database Load" value={20} max={100} color="bg-green-500" status="20%" />
-                <HealthBar label="Redis Memory" value={65} max={100} color="bg-yellow-500" status="65%" />
-                <HealthBar label="Worker Queue" value={10} max={100} color="bg-green-500" status="10 items" />
-              </div>
-            </CardContent>
-          </Card>
+    <Card className="rounded-[28px] border-white/8 bg-white/[0.03]">
+      <CardContent className="p-6">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <div className="text-sm text-slate-500">{title}</div>
+            <div className="mt-3 text-3xl font-semibold text-white">{value}</div>
+            <div className="mt-3 inline-flex rounded-full bg-emerald-500/10 px-2.5 py-1 text-xs font-semibold text-emerald-300">
+              {trend}
+            </div>
+          </div>
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/[0.06]">{icon}</div>
         </div>
-        <div className="lg:col-span-1">
-          <Card className="border-slate-800 bg-slate-900">
-            <CardHeader>
-              <CardTitle className="text-lg text-white">Quick Actions</CardTitle>
-            </CardHeader>
-            <CardContent className="grid grid-cols-1 gap-2">
-              <Button variant="outline" className="justify-start border-slate-700 text-slate-300 hover:bg-slate-800">
-                <Users className="w-4 h-4 mr-2" /> Manage Users
-              </Button>
-              <Button variant="outline" className="justify-start border-slate-700 text-slate-300 hover:bg-slate-800">
-                <Key className="w-4 h-4 mr-2" /> Revoke Licenses
-              </Button>
-              <Button variant="outline" className="justify-start border-slate-700 text-slate-300 hover:bg-slate-800">
-                <Layers className="w-4 h-4 mr-2" /> Strategy Config
-              </Button>
-              <Button variant="destructive" className="justify-start bg-red-900/20 text-red-400 border-red-900/50 hover:bg-red-900/40">
-                <ShieldAlert className="w-4 h-4 mr-2" /> Global Kill
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function AdminKpiCard({ title, value, trend, icon }: any) {
-  return (
-    <Card className="border-slate-800 bg-slate-900 p-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-sm text-slate-500 font-medium">{title}</p>
-          <h3 className="text-2xl font-bold text-white">{value}</h3>
-        </div>
-        <div className="p-3 bg-slate-800 rounded-lg">{icon}</div>
-      </div>
-      <div className="mt-4 text-xs text-green-400 font-medium">{trend} vs last month</div>
+      </CardContent>
     </Card>
   );
 }
 
-function HealthBar({ label, value, max, color, status }: any) {
+function HealthBar({
+  label,
+  value,
+  color,
+  status,
+}: {
+  label: string;
+  value: number;
+  color: string;
+  status: string;
+}) {
   return (
     <div className="space-y-2">
-      <div className="flex justify-between text-xs font-medium">
+      <div className="flex items-center justify-between text-sm">
         <span className="text-slate-400">{label}</span>
-        <span className="text-white">{status}</span>
+        <span className="font-medium text-white">{status}</span>
       </div>
-      <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
-        <div className={cn(`h-full ${color} transition-all duration-500`)} style={{ width: `${(value / max) * 100}%` }} />
+      <div className="h-2 overflow-hidden rounded-full bg-white/[0.06]">
+        <div className={`h-full rounded-full ${color}`} style={{ width: `${value}%` }} />
       </div>
     </div>
   );
 }
 
-function cn(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
+export default function AdminDashboardPage() {
+  const router = useRouter();
+
+  return (
+    <div className="space-y-6 lg:space-y-8">
+      <section className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
+        <Card className="rounded-[32px] border-white/8 bg-[linear-gradient(135deg,#0f1d24_0%,#17120d_100%)]">
+          <CardContent className="p-6 sm:p-8">
+            <Badge className="border-[#8cc9c2]/20 bg-[#112129] text-[#8cc9c2] hover:bg-[#112129]">Admin command center</Badge>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white">Platform-wide visibility for licensing, revenue, and risk operations.</h2>
+            <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-400 sm:text-base">
+              This view is meant for fast executive scanning: monetization health, customer footprint, and the few risk signals that need immediate decisions.
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="rounded-[32px] border-white/8 bg-white/[0.03]">
+          <CardHeader>
+            <CardTitle className="text-xl text-white">Quick actions</CardTitle>
+          </CardHeader>
+          <CardContent className="grid gap-3">
+            <Button
+              variant="outline"
+              className="justify-start rounded-2xl border-white/10 bg-white/[0.02] text-slate-200 hover:bg-white/[0.06]"
+              onClick={() => router.push('/dashboard/admin/users')}
+            >
+              <Users className="mr-2 h-4 w-4" />
+              Manage users
+            </Button>
+            <Button
+              variant="outline"
+              className="justify-start rounded-2xl border-white/10 bg-white/[0.02] text-slate-200 hover:bg-white/[0.06]"
+              onClick={() => router.push('/dashboard/admin/licenses')}
+            >
+              <KeyRound className="mr-2 h-4 w-4" />
+              Audit license pool
+            </Button>
+            <Button
+              variant="outline"
+              className="justify-start rounded-2xl border-white/10 bg-white/[0.02] text-slate-200 hover:bg-white/[0.06]"
+              onClick={() => router.push('/dashboard/admin/strategies')}
+            >
+              <Layers3 className="mr-2 h-4 w-4" />
+              Review strategy setup
+            </Button>
+            <Button
+              variant="outline"
+              className="justify-start rounded-2xl border-rose-500/20 bg-rose-500/5 text-rose-300 hover:bg-rose-500/10"
+              onClick={() => router.push('/dashboard/admin/risk-rules')}
+            >
+              <ShieldAlert className="mr-2 h-4 w-4" />
+              Global kill switch
+            </Button>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <AdminKpiCard title="Total MRR" value="$12,450" trend="+8% vs last month" icon={<CreditCard className="h-5 w-5 text-[#8cc9c2]" />} />
+        <AdminKpiCard title="Active licenses" value="1,240" trend="+12% issued" icon={<KeyRound className="h-5 w-5 text-[#f4c77d]" />} />
+        <AdminKpiCard title="Active EAs" value="3,102" trend="+5% connected" icon={<Layers3 className="h-5 w-5 text-sky-300" />} />
+        <AdminKpiCard title="Risk alerts" value="12" trend="-2 incidents" icon={<AlertTriangle className="h-5 w-5 text-rose-300" />} />
+      </section>
+
+      <section className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+        <Card className="rounded-[30px] border-white/8 bg-white/[0.03]">
+          <CardHeader>
+            <CardTitle className="text-xl text-white">System health</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-5">
+            <HealthBar label="API response time" value={45} color="bg-emerald-400" status="45ms" />
+            <HealthBar label="Database load" value={20} color="bg-emerald-400" status="20%" />
+            <HealthBar label="Redis memory" value={65} color="bg-amber-400" status="65%" />
+            <HealthBar label="Worker queue" value={10} color="bg-emerald-400" status="10 items" />
+          </CardContent>
+        </Card>
+
+        <Card className="rounded-[30px] border-white/8 bg-white/[0.03]">
+          <CardHeader>
+            <CardTitle className="text-xl text-white">Operational notes</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="rounded-2xl border border-white/8 bg-[#0c1720] p-4">
+              <div className="text-sm font-semibold text-white">Renewals are healthy</div>
+              <p className="mt-1 text-xs leading-6 text-slate-500">No abnormal payment failure spike detected in the last billing cycle.</p>
+            </div>
+            <div className="rounded-2xl border border-white/8 bg-[#0c1720] p-4">
+              <div className="text-sm font-semibold text-white">Risk queue is manageable</div>
+              <p className="mt-1 text-xs leading-6 text-slate-500">Only 12 accounts require active review across the fleet.</p>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+    </div>
+  );
 }
