@@ -45,7 +45,7 @@ A comprehensive test suite has been created covering all critical paths of the E
 
 #### 3. `subscriptions.test.ts`
 - **List packages** — active packages, sort order
-- **Create checkout** — validation (missing user, inactive package, duplicate sub), Stripe integration
+- **Create checkout** — validation (missing user, inactive package, duplicate sub), USDT payment integration
 - **Get subscription** — active/trial/past_due status, license details
 - **Cancel subscription** — immediate vs period-end, Stripe degradation, audit logging
 - **Payment history** — pagination, total pages calculation

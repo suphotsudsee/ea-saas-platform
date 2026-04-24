@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>FB Post 4 - Comparison</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/p5.min.js"></script>
+<style>body{margin:0;overflow:hidden;background:#0A0A0F;}</style>
+</head>
+<body>
+<script>
+const W = 1200, H = 1200;
+const GOLD = '#D4AF37';
+const BLACK = '#0A0A0F';
+const GREEN = '#10B981';
+const AMBER = '#F59E0B';
+const RED = '#EF4444';
+
+function setup() {
+  createCanvas(W, H);
+  pixelDensity(1);
+  noLoop();
+}
+
+function draw() {
+  background(BLACK);
+
+  // Gold top bar
+  noStroke();
+  fill(GOLD);
+  rect(0, 0, W, 6);
+
+  // Title
+  fill(255);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  textSize(40);
+  text('EA ทั่วไป vs TradeCandle v11', W / 2, 30);
+
+  fill(180);
+  textSize(20);
+  textStyle(NORMAL);
+  text('เปรียบเทียบแบบเห็นชัด ๆ', W / 2, 80);
+
+  // Divider line in the middle
+  stroke(GOLD);
+  strokeWeight(3);
+  line(W / 2, 130, W / 2, 1050);
+
+  // VS badge
+  fill(GOLD);
+  noStroke();
+  ellipse(W / 2, 130, 70, 70);
+  fill(BLACK);
+  textAlign(CENTER, CENTER);
+  textStyle(BOLD);
+  textSize(24);
+  text('VS', W / 2, 127);
+
+  // ==== LEFT: EA ทั่วไป (Red/Dark theme) ====
+  let leftX = 40, leftW = W / 2 - 70;
+
+  // Header
+  fill(RED);
+  noStroke();
+  rect(leftX, 130, leftW, 55, 12);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(24);
+  textStyle(BOLD);
+  text('❌ EA ทั่วไป', leftX + leftW / 2, 155);
+
+  // Comparison items - left side (bad)
+  const leftItems = [
+    { icon: '📉', text: 'รอ TP จนราคากลับ' },
+    { icon: '🎲', text: 'เปิดเทรดสุ่ม ๆ' },
+    { icon: '🔍', text: 'ไม่มี Smart Money Filter' },
+    { icon: '🖥️', text: 'ต้องเฝ้าหน้าจอ 24 ชม.' },
+    { icon: '💸', text: 'Drawdown สูง ขาดทุนง่าย' },
+    { icon: '⚠️', text: 'ไม่มี Kill Switch หยุดยาก' },
+    { icon: '❓', text: 'ไม่มี Dashboard ดูยาก' },
+  ];
+
+  let itemY = 210;
+  for (let item of leftItems) {
+    fill(30, 15, 15);
+    stroke(RED);
+    strokeWeight(1);
+    rect(leftX + 10, itemY, leftW - 20, 55, 8);
+
+    fill(RED);
+    noStroke();
+    textAlign(LEFT, CENTER);
+    textSize(28);
+    text(item.icon, leftX + 25, itemY + 28);
+
+    fill(220);
+    textSize(19);
+    textStyle(NORMAL);
+    text(item.text, leftX + 65, itemY + 28);
+
+    itemY += 70;
+  }
+
+  // Pain chart on left
+  drawPainChart(leftX + 30, itemY + 10, leftW - 60, 140);
+
+  // ==== RIGHT: TradeCandle (Green/Gold theme) ====
+  let rightX = W / 2 + 30;
+
+  // Header
+  fill(GOLD);
+  noStroke();
+  rect(rightX, 130, leftW, 55, 12);
+  fill(BLACK);
+  textAlign(CENTER, CENTER);
+  textSize(24);
+  textStyle(BOLD);
+  text('✅ TradeCandle v11', rightX + leftW / 2, 155);
+
+  // Comparison items - right side (good)
+  const rightItems = [
+    { icon: '🎯', text: '3-Wave Cashout ปิดกำไร 3 รอบ' },
+    { icon: '🧠', text: '6 Smart Money Filters อัตโนมัติ' },
+    { icon: '📊', text: 'อ่านโครงสร้างตลาดด้วย AI' },
+    { icon: '😴', text: 'ตื่นมาเห็นกำไร ไม่ต้องเฝ้า' },
+    { icon: '🛡️', text: 'Drawdown ต่ำ Win Rate สูง' },
+    { icon: '🛑', text: 'Kill Switch หยุดทันที 1 คลิก' },
+    { icon: '📱', text: 'SaaS Dashboard ดูผล Real-time' },
+  ];
+
+  itemY = 210;
+  for (let item of rightItems) {
+    fill(10, 30, 20);
+    stroke(GREEN);
+    strokeWeight(1);
+    rect(rightX + 10, itemY, leftW - 20, 55, 8);
+
+    fill(GREEN);
+    noStroke();
+    textAlign(LEFT, CENTER);
+    textSize(28);
+    text(item.icon, rightX + 25, itemY + 28);
+
+    fill(220);
+    textSize(19);
+    textStyle(NORMAL);
+    text(item.text, rightX + 65, itemY + 28);
+
+    itemY += 70;
+  }
+
+  // Profit chart on right
+  drawProfitChart(rightX + 30, itemY + 10, leftW - 60, 140);
+
+  // === Bottom section ===
+  fill(GOLD);
+  noStroke();
+  rect(100, 1060, W - 200, 70, 35);
+  fill(BLACK);
+  textAlign(CENTER, CENTER);
+  textSize(26);
+  textStyle(BOLD);
+  text('เลือกที่ดีกว่า → 7 วันฟรี เริ่มต้น 990฿/เดือน', W / 2, 1095);
+
+  fill(130);
+  textSize(14);
+  textStyle(NORMAL);
+  text('TradeCandle v11 • AI EA for XAUUSD/MT5', W / 2, 1155);
+
+  // Pricing hint
+  fill(90);
+  textSize(13);
+  text('Starter 990฿ • Pro 2,490฿ • Elite 4,990฿', W / 2, 1178);
+}
+
+function drawPainChart(x, y, w, h) {
+  // Background
+  fill(30, 15, 15);
+  stroke(RED);
+  strokeWeight(1);
+  rect(x - 10, y - 25, w + 20, h + 40, 8);
+
+  fill(RED);
+  noStroke();
+  textAlign(CENTER, TOP);
+  textSize(12);
+  textStyle(BOLD);
+  text('Equity Typical EA', x + w / 2, y - 22);
+
+  // Grid
+  stroke(40, 20, 20);
+  strokeWeight(0.5);
+  for (let j = y + 20; j < y + h; j += 30) line(x, j, x + w, j);
+
+  // Jagged loss line
+  stroke(RED);
+  strokeWeight(2);
+  noFill();
+  beginShape();
+  for (let i = 0; i <= 50; i++) {
+    let px = x + (i / 50) * w;
+    let py = y + h * 0.3 + Math.sin(i * 0.5) * (15 + i * 0.3) + i * 3;
+    if (py > y + h) py = y + h;
+    vertex(px, py);
+  }
+  endShape();
+
+  fill(RED);
+  noStroke();
+  textAlign(RIGHT, BOTTOM);
+  textSize(11);
+  text('📉 Drawdown', x + w, y + h + 12);
+}
+
+function drawProfitChart(x, y, w, h) {
+  // Background
+  fill(10, 30, 20);
+  stroke(GREEN);
+  strokeWeight(1);
+  rect(x - 10, y - 25, w + 20, h + 40, 8);
+
+  fill(GREEN);
+  noStroke();
+  textAlign(CENTER, TOP);
+  textSize(12);
+  textStyle(BOLD);
+  text('Equity TradeCandle v11', x + w / 2, y - 22);
+
+  // Grid
+  stroke(20, 50, 30);
+  strokeWeight(0.5);
+  for (let j = y + 20; j < y + h; j += 30) line(x, j, x + w, j);
+
+  // Smooth profit line
+  stroke(GOLD);
+  strokeWeight(2.5);
+  noFill();
+  beginShape();
+  for (let i = 0; i <= 50; i++) {
+    let px = x + (i / 50) * w;
+    let py = y + h * 0.8 - (i * 2.5) + Math.sin(i * 0.4) * 8;
+    vertex(px, py);
+  }
+  endShape();
+
+  // Fill area
+  fill(color(GOLD).levels[0], color(GOLD).levels[1], color(GOLD).levels[2], 20);
+  noStroke();
+  beginShape();
+  vertex(x, y + h * 0.8);
+  for (let i = 0; i <= 50; i++) {
+    let px = x + (i / 50) * w;
+    let py = y + h * 0.8 - (i * 2.5) + Math.sin(i * 0.4) * 8;
+    vertex(px, py);
+  }
+  vertex(x + w, y + h * 0.8);
+  endShape(CLOSE);
+
+  fill(GREEN);
+  noStroke();
+  textAlign(RIGHT, BOTTOM);
+  textSize(11);
+  text('📈 Consistent Profit', x + w, y + h + 12);
+}
+
+function keyPressed() {
+  if (key === 's' || key === 'S') saveCanvas('fb-post-4', 'png');
+}
+</script>
+</body>
+</html>

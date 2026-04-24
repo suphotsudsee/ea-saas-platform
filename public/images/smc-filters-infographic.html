@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Money Filters — TradeCandle v11</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0A0A0A; overflow: hidden; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/p5.min.js"></script>
+<script>
+// ─── Smart Money Filters Infographic ────────────────────────────────
+// 1200x1800 portrait explaining 6 PA/SMC filters
+
+const W = 1200, H = 1800;
+
+const PALETTE = {
+  bg: '#0A0A0F',
+  bgCard: '#111118',
+  gold: '#D4AF37',
+  goldLight: '#F5C842',
+  green: '#10B981',
+  greenLight: '#34D399',
+  blue: '#3B82F6',
+  blueLight: '#60A5FA',
+  purple: '#8B5CF6',
+  purpleLight: '#A78BFA',
+  amber: '#F59E0B',
+  cyan: '#06B6D4',
+  white: '#FFFFFF',
+  textGray: '#9CA3AF',
+  textLight: '#E5E7EB',
+  red: '#EF4444',
+};
+
+const filters = [
+  {
+    name: 'BOS',
+    fullName: 'Break of Structure',
+    thai: 'ทรงสตรัคเจอร์แตก',
+    desc: 'ราคาทะลุจุดสูง/ต่ำสุดเดิม\nยืนยันเทรนด์ต่อเนื่อง',
+    icon: '📈',
+    color: '#10B981',
+    darkBg: '#0A1F15',
+    score: '+2',
+  },
+  {
+    name: 'CHoCH',
+    fullName: 'Change of Character',
+    thai: 'เทรนด์เปลี่ยนทิศ',
+    desc: 'จากขึ้นเป็นลง หรือลงเป็นขึ้น\nสัญญาณกลับตัวสำคัญ',
+    icon: '🔄',
+    color: '#F59E0B',
+    darkBg: '#1A1505',
+    score: '+3',
+  },
+  {
+    name: 'Order Block',
+    fullName: 'Order Block Zone',
+    thai: 'โซนสถาบันเข้า position',
+    desc: 'แท่งเทียนสุดท้ายก่อนวิ่ง\nโซนที่เทรดเดอร์ใหญ่เคยเข้า',
+    icon: '🧱',
+    color: '#3B82F6',
+    darkBg: '#0A1520',
+    score: '+2',
+  },
+  {
+    name: 'FVG',
+    fullName: 'Fair Value Gap',
+    thai: 'ช่องว่างราคา Imbalance',
+    desc: 'ราคาวิ่งผ่านเร็ว ทิ้งช่องว่าง\nมักกลับมาเติมก่อนไปต่อ',
+    icon: '📐',
+    color: '#8B5CF6',
+    darkBg: '#150A20',
+    score: '+1',
+  },
+  {
+    name: 'Liquidity Sweep',
+    fullName: 'Liquidity Sweep',
+    thai: 'ล่าสภาพคล่อง / Stop Hunt',
+    desc: 'ราคาทะลุจุดสูง/ต่ำเพื่อกรอง SL\nก่อนจะกลับทิศที่แท้จริง',
+    icon: '💧',
+    color: '#06B6D4',
+    darkBg: '#0A1A1F',
+    score: '+2',
+  },
+  {
+    name: 'S/D Zone',
+    fullName: 'Supply & Demand Zone',
+    thai: 'โซนอุปสงค์-อุปทาน',
+    desc: 'โซนที่ราคาเคยวิ่งออกแรงๆ\nจุดที่กลุ่มคำสั่งรวมกัน',
+    icon: '📦',
+    color: '#D4AF37',
+    darkBg: '#1A1505',
+    score: '+1',
+  },
+];
+
+function setup() {
+  createCanvas(W, H);
+  pixelDensity(1);
+  noLoop();
+}
+
+function draw() {
+  background(PALETTE.bg);
+  
+  drawHeader();
+  drawFilters();
+  drawHowItWorks();
+  drawBonusNote();
+  drawFooter();
+}
+
+function drawHeader() {
+  // Top accent bar
+  noStroke();
+  fill(PALETTE.gold);
+  rect(0, 0, W, 6);
+  
+  // Brand
+  fill(PALETTE.gold);
+  textAlign(CENTER);
+  textFont('sans-serif');
+  textSize(18);
+  textStyle(NORMAL);
+  text('TradeCandle v11', W/2, 50);
+  
+  // Title
+  fill(PALETTE.white);
+  textSize(52);
+  textStyle(BOLD);
+  text('Smart Money Filters', W/2, 110);
+  
+  // Subtitle
+  fill(PALETTE.goldLight);
+  textSize(22);
+  textStyle(NORMAL);
+  text('6 ตัวกรอง PA/SMC — อ่านทรงสตรัคเจอร์อัตโนมัติ', W/2, 150);
+  
+  // Divider
+  stroke(PALETTE.gold);
+  strokeWeight(2);
+  line(W/2 - 80, 170, W/2 + 80, 170);
+  noStroke();
+}
+
+function drawFilters() {
+  let startY = 210;
+  let cardH = 210;
+  let gap = 20;
+  let colW = (W - 150) / 2;
+  
+  for (let i = 0; i < filters.length; i++) {
+    let f = filters[i];
+    let col = i % 2;
+    let row = Math.floor(i / 2);
+    let x = 75 + col * (colW + gap);
+    let y = startY + row * (cardH + gap);
+    
+    // Card background
+    fill(f.darkBg);
+    stroke(f.color + '40');
+    strokeWeight(1);
+    rect(x, y, colW, cardH, 14);
+    
+    // Top accent
+    noStroke();
+    fill(f.color);
+    rect(x, y, colW, 3, 14, 14, 0, 0);
+    
+    // Icon circle
+    fill(f.color + '20');
+    noStroke();
+    ellipse(x + 45, y + 45, 50, 50);
+    
+    fill('#FFFFFF');
+    textAlign(CENTER);
+    textSize(24);
+    text(f.icon, x + 45, y + 52);
+    
+    // Name + full name
+    fill(f.color);
+    textAlign(LEFT);
+    textSize(22);
+    textStyle(BOLD);
+    text(f.name, x + 80, y + 38);
+    
+    textSize(12);
+    textStyle(NORMAL);
+    fill(PALETTE.textGray);
+    text(f.fullName, x + 80, y + 55);
+    
+    // Thai name
+    fill(PALETTE.textLight);
+    textSize(14);
+    text(f.thai, x + 25, y + 85);
+    
+    // Description lines
+    fill(PALETTE.textGray);
+    textSize(12);
+    let lines = f.desc.split('\n');
+    let dy = y + 108;
+    for (let line of lines) {
+      text(line, x + 25, dy);
+      dy += 20;
+    }
+    
+    // Score badge
+    fill(f.color + '20');
+    noStroke();
+    let badgeX = x + colW - 60;
+    let badgeY = y + cardH - 50;
+    rect(badgeX, badgeY, 45, 30, 6);
+    fill(f.color);
+    textAlign(CENTER);
+    textSize(14);
+    textStyle(BOLD);
+    text(f.score, badgeX + 22, badgeY + 20);
+    textStyle(NORMAL);
+  }
+}
+
+function drawHowItWorks() {
+  let y = 930;
+  
+  // Section title
+  fill(PALETTE.gold);
+  textAlign(CENTER);
+  textSize(24);
+  textStyle(BOLD);
+  text('ทำงานยังไง?', W/2, y);
+  textStyle(NORMAL);
+  
+  y += 40;
+  
+  // Step boxes
+  let steps = [
+    { num: '1', text: 'EA เช็คสัญญาณเข้า\n(PA/SMC ทั้ง 6 filter)', icon: '🔍' },
+    { num: '2', text: 'Score ≥ 2 filter ชี้ข้ามเดียวกัน\n→ เพิ่มคะแนนความมั่นใจ', icon: '📊' },
+    { num: '3', text: 'คะแนนถึง threshold\n→ เปิดออเดอร์อัตโนมัติ', icon: '✅' },
+  ];
+  
+  let stepW = (W - 180) / 3;
+  for (let i = 0; i < steps.length; i++) {
+    let s = steps[i];
+    let sx = 60 + i * (stepW + 30);
+    
+    // Card
+    fill(PALETTE.bgCard);
+    stroke(PALETTE.gold + '30');
+    strokeWeight(1);
+    rect(sx, y, stepW, 130, 12);
+    
+    // Step number
+    fill(PALETTE.gold + '20');
+    noStroke();
+    ellipse(sx + stepW/2, y + 35, 40, 40);
+    fill(PALETTE.gold);
+    textAlign(CENTER);
+    textSize(20);
+    textStyle(BOLD);
+    text(s.icon, sx + stepW/2, y + 42);
+    
+    // Text
+    fill(PALETTE.textLight);
+    textSize(13);
+    textStyle(NORMAL);
+    let lines = s.text.split('\n');
+    let dy = y + 70;
+    for (let l of lines) {
+      text(l, sx + stepW/2, dy);
+      dy += 20;
+    }
+    
+    // Arrow between steps
+    if (i < 2) {
+      fill(PALETTE.gold + '60');
+      textSize(28);
+      text('→', sx + stepW + 15, y + 65);
+    }
+  }
+}
+
+function drawBonusNote() {
+  let y = 1140;
+  
+  // Big emphasis box
+  drawingContext.save();
+  drawingContext.fillStyle = 'rgba(212, 175, 55, 0.06)';
+  drawingContext.strokeStyle = 'rgba(212, 175, 55, 0.3)';
+  drawingContext.lineWidth = 2;
+  drawingContext.beginPath();
+  drawingContext.roundRect(60, y, W - 120, 200, 16);
+  drawingContext.fill();
+  drawingContext.stroke();
+  drawingContext.restore();
+  
+  // ⚡ icon
+  fill(PALETTE.gold);
+  textAlign(CENTER);
+  textSize(40);
+  text('💡', W/2, y + 50);
+  
+  // Heading
+  fill(PALETTE.goldLight);
+  textSize(22);
+  textStyle(BOLD);
+  text('สำคัญ: Filters เป็น Bonus — ไม่บล็อกสัญญาณ!', W/2, y + 90);
+  
+  // Detail
+  fill(PALETTE.textLight);
+  textSize(16);
+  textStyle(NORMAL);
+  text('PA/SMC Filters ทำหน้าที่ "เพิ่มคะแนน" ไม่ใช่ "บล็อก"', W/2, y + 125);
+  text('สัญญาณเข้าที่ดีแล้ว → filter ชี้ข้ามเดียวกัน → คะแนนเพิ่ม', W/2, y + 150);
+  text('สัญญาณไม่ดี → filter ไม่ชี้ → คะแนนไม่เพิ่ม (แต่ไม่บล็อก)', W/2, y + 175);
+}
+
+function drawFooter() {
+  let y = H - 50;
+  
+  // Bottom accent
+  noStroke();
+  fill(PALETTE.gold);
+  rect(0, H - 6, W, 6);
+  
+  fill(PALETTE.textGray);
+  textAlign(CENTER);
+  textSize(14);
+  text('TradeCandle v11 • AI Gold Trading • tradecandle.ai', W/2, y);
+  text('6 Smart Money Filters • BOS • CHoCH • OB • FVG • Liq • S/D', W/2, y + 22);
+}
+
+function keyPressed() {
+  if (key === 's' || key === 'S') {
+    saveCanvas('smart-money-filters-infographic', 'png');
+  }
+}
+</script>
+</body>
+</html>

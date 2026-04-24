@@ -19,6 +19,11 @@ import {
   Lock,
   RefreshCw,
   Cpu,
+  ChevronDown,
+  Waves,
+  TrendingUp,
+  Smartphone,
+  MessageCircle,
 } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 
@@ -39,10 +44,10 @@ function Button({
     'inline-flex items-center justify-center rounded-lg px-5 py-2.5 text-sm font-medium transition-all duration-200';
   const variants = {
     primary:
-      'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-900/20 hover:from-blue-500 hover:to-indigo-500',
-    secondary: 'border border-slate-700 bg-slate-800 text-white hover:bg-slate-700',
+      'bg-gradient-to-r from-amber-500 to-yellow-600 text-black shadow-lg shadow-amber-900/30 hover:from-amber-400 hover:to-yellow-500 font-bold',
+    secondary: 'border border-amber-900/50 bg-amber-950/30 text-amber-200 hover:bg-amber-900/30',
     ghost: 'text-slate-300 hover:bg-slate-800/50 hover:text-white',
-    outline: 'border border-blue-500/50 text-blue-400 hover:bg-blue-500/10',
+    outline: 'border border-amber-500/50 text-amber-400 hover:bg-amber-500/10',
   };
 
   return (
@@ -52,60 +57,74 @@ function Button({
   );
 }
 
+/* ─── Section 1: Hero ──────────────────────────────────────────────────── */
 function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
   return (
     <div className="animate-in fade-in duration-500">
-      <section className="relative min-h-[92vh] overflow-hidden border-b border-slate-800/50 pt-36">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.08),transparent_50%)]" />
-        <div className="pointer-events-none absolute left-1/2 top-[16%] h-[420px] w-[860px] -translate-x-1/2 rounded-full bg-blue-600/18 blur-[150px]" />
+      {/* Hero */}
+      <section className="relative min-h-[92vh] overflow-hidden border-b border-amber-900/20 pt-36">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.1),transparent_50%)]" />
+        <div className="pointer-events-none absolute left-1/2 top-[16%] h-[420px] w-[860px] -translate-x-1/2 rounded-full bg-amber-500/10 blur-[150px]" />
 
         <div className="container relative z-10 mx-auto max-w-[900px] px-6 text-center">
-          <div className="mb-10 inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-1.5 text-sm font-medium text-blue-400">
-            <Activity size={14} />
-            <span>Built for live account control</span>
+          <div className="mb-10 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5 text-sm font-medium text-amber-300">
+            <Waves size={14} />
+            <span>AI Gold Trading Bot — Version 11</span>
           </div>
 
           <h1 className="mb-8 text-5xl font-extrabold leading-[0.92] tracking-tight text-white md:text-[6.2rem]">
-            MT4 and MT5 <br />
-            <span className="bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
-              operations layer
+            AI เทรดทองคำ
+            <br />
+            <span className="bg-gradient-to-r from-amber-400 to-yellow-300 bg-clip-text text-transparent">
+              อัตโนมัติ
             </span>
           </h1>
 
+          <p className="mx-auto mb-4 text-2xl font-semibold text-amber-200 md:text-3xl">
+            ปิดกำไรเป็น 3 คลื่น ไม่ต้องนั่งดูจอ
+          </p>
+
           <p className="mx-auto mb-12 max-w-[720px] text-lg leading-relaxed text-slate-400 md:text-[1rem] md:leading-[1.65]">
-            Control licensing, risk, and live EA operations from one surface. Built for teams selling or operating
-            Expert Advisors at scale. Replace spreadsheet ops, fragile scripts, and manual account handling with one
-            system that is readable under pressure.
+            3-Wave Cashout + 6 Smart Money Filters บน MT5 — ซื้อ License Key รับได้ทันที
+            <br />
+            ควบคุมจาก Dashboard หยุด EA ได้จากมือถือทุกที่ทุกเวลา
           </p>
 
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button onClick={() => navigateTo('pricing')} className="w-full rounded-xl px-14 py-3.5 text-base sm:w-auto">
-              Start free trial <ArrowRight size={18} className="ml-2" />
+              เริ่มต้น 990฿/เดือน <ArrowRight size={18} className="ml-2" />
             </Button>
             <Button
-              onClick={() => navigateTo('workflow')}
+              onClick={() => navigateTo('features')}
               variant="secondary"
-              className="w-full rounded-xl bg-slate-800/85 px-12 py-3.5 text-base sm:w-auto"
+              className="w-full rounded-xl px-12 py-3.5 text-base sm:w-auto"
             >
-              See platform flow
+              ดูวิธีทำงาน
             </Button>
           </div>
 
-          <p className="mt-5 text-sm text-slate-500">No credit card required • 14-day trial</p>
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-3 text-sm text-slate-500">
+            <span className="flex items-center gap-1"><CheckCircle size={14} className="text-amber-500" /> MT5</span>
+            <span className="flex items-center gap-1"><CheckCircle size={14} className="text-amber-500" /> XAUUSD</span>
+            <span className="flex items-center gap-1"><CheckCircle size={14} className="text-amber-500" /> 24/5</span>
+            <span className="flex items-center gap-1"><CheckCircle size={14} className="text-amber-500" /> SaaS Dashboard</span>
+          </div>
+          <p className="mt-3 text-sm text-amber-500/70">⭐ ทดลองใช้ 7 วัน ไม่ต้องจ่ายก่อน</p>
         </div>
       </section>
 
-      <section className="relative z-10 border-y border-slate-800/50 bg-slate-900/50 backdrop-blur-sm">
+      {/* Stats bar */}
+      <section className="relative z-10 border-y border-amber-900/20 bg-slate-900/50 backdrop-blur-sm">
         <div className="container mx-auto px-6 py-10">
-          <div className="grid grid-cols-2 gap-8 divide-x divide-slate-800/0 md:grid-cols-4 md:divide-slate-800">
+          <div className="grid grid-cols-2 gap-8 divide-x divide-amber-900/0 md:grid-cols-4 md:divide-amber-900/30">
             {[
-              { label: 'Active traders', value: '12,000+' },
-              { label: 'Uptime target', value: '99.9%' },
-              { label: 'Trades monitored', value: '150M+' },
-              { label: 'Markets served', value: '50+' },
+              { label: '3-Wave Cashout', value: '✅' },
+              { label: 'Smart Money Filters', value: '6' },
+              { label: 'Uptime Target', value: '99.9%' },
+              { label: 'Thai Support', value: '🇹🇭' },
             ].map((stat) => (
               <div key={stat.label} className="px-4 text-center">
-                <div className="mb-1 text-3xl font-bold text-white md:text-4xl">{stat.value}</div>
+                <div className="mb-1 text-3xl font-bold text-amber-400 md:text-4xl">{stat.value}</div>
                 <div className="text-sm font-medium text-slate-400">{stat.label}</div>
               </div>
             ))}
@@ -113,114 +132,383 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
         </div>
       </section>
 
+      {/* ─── Section 2: Pain Points ──────────────────────────────────────── */}
       <section className="relative z-10 py-24">
         <div className="container mx-auto px-6">
-          <div className="mb-16 text-center">
-            <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">Professional strategy desk</h2>
-            <p className="mx-auto max-w-2xl text-slate-400">
-              A command center designed for rapid readability when market conditions change.
+          <div className="mx-auto mb-16 max-w-3xl text-center">
+            <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">เคยเป็นไหม?</h2>
+          </div>
+
+          <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {[
+              { emoji: '😰', text: 'ราคาทองขึ้น +$80 แต่รอ TP เต็ม → ราคากลับ → กำไรหายหมด' },
+              { emoji: '😫', text: 'นั่งดูจอ 8 ชม. พอเผลอ 5 นาที → พลาดจังหวะ' },
+              { emoji: '😤', text: 'ตั้ง SL แน่นไป → โดน stop hunt ทุกที' },
+              { emoji: '😞', text: 'ซื้อ EA มาใช้ 3 วันก็ขาดทุน → เก็บเข้ากรุ' },
+              { emoji: '🤔', text: 'ไม่รู้ว่า EA ที่รันอยู่ตอนนี้ กำไรหรือขาดทุน?' },
+              { emoji: '😰', text: 'EA filter แรงเกิน → ไม่ยอมเปิดออเดอร์เลย' },
+            ].map((item, i) => (
+              <div key={i} className="rounded-xl border border-red-900/30 bg-red-950/10 p-6 transition-colors hover:border-red-900/50">
+                <div className="mb-3 text-2xl">{item.emoji}</div>
+                <p className="text-sm leading-relaxed text-slate-300">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Section 3: 3-Wave Cashout Solution ─────────────────────────── */}
+      <section className="relative z-10 border-y border-amber-900/20 bg-slate-900/30 py-24">
+        <div className="container mx-auto px-6">
+          <div className="mx-auto mb-16 max-w-3xl text-center">
+            <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">
+              💡 แก้ด้วย <span className="text-amber-400">3-Wave Cashout</span> System
+            </h2>
+            <p className="text-slate-400">ปิดกำไรเป็น 3 รอบ — ยังไงก็ได้กำไรบางส่วน ไม่รอ TP เต็ม 100%</p>
+          </div>
+
+          <div className="relative mx-auto max-w-5xl">
+            <div className="absolute left-0 top-1/2 z-0 hidden h-0.5 w-full -translate-y-1/2 bg-amber-900/30 md:block" />
+
+            <div className="relative z-10 grid grid-cols-1 gap-8 md:grid-cols-3">
+              {[
+                {
+                  step: 'W1',
+                  title: 'Wave 1 — ล็อคแรก',
+                  pct: '25% TP',
+                  desc: 'ปิด 1/3 ของ lot ที่ 25% ของ TP — กำไรแรกล็อคแล้ว ไม่กลับมาเป็นขาดทุนได้',
+                  color: 'from-green-600 to-green-500',
+                  icon: CheckCircle,
+                },
+                {
+                  step: 'W2',
+                  title: 'Wave 2 — เพิ่มกำไร',
+                  pct: '50% TP',
+                  desc: 'ปิด 1/3 ถัดไปที่ 50% ของ TP — กำไรเพิ่มขึ้น ยังเหลือ lot สุดท้าย',
+                  color: 'from-green-500 to-emerald-400',
+                  icon: TrendingUp,
+                },
+                {
+                  step: 'W3',
+                  title: 'Wave 3 — ไล่เทรนด์',
+                  pct: 'Trailing',
+                  desc: 'Breakeven + Trailing Stop — ไล่ตามเทรนด์ กำไรไม่จำกัด ถ้าราคาวิ่งต่อ',
+                  color: 'from-emerald-400 to-amber-400',
+                  icon: Waves,
+                },
+              ].map((item) => (
+                <div key={item.step} className="relative rounded-2xl border border-amber-900/30 bg-slate-900 p-8 shadow-xl">
+                  <div className="absolute left-8 top-[-2rem] flex h-16 w-16 items-center justify-center rounded-full border border-amber-700/50 bg-slate-950 shadow-lg shadow-black/50">
+                    <span className={`bg-gradient-to-b ${item.color} bg-clip-text text-xl font-bold text-transparent`}>
+                      {item.step}
+                    </span>
+                  </div>
+                  <div className="mt-6">
+                    <item.icon size={28} className="mb-5 text-amber-500" />
+                    <h3 className="mb-2 text-xl font-bold text-white">{item.title}</h3>
+                    <p className="mb-3 font-mono text-sm text-amber-400">{item.pct}</p>
+                    <p className="text-slate-400">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Comparison */}
+          <div className="mx-auto mt-16 grid max-w-3xl grid-cols-1 gap-6 md:grid-cols-2">
+            <div className="rounded-xl border border-red-900/30 bg-red-950/10 p-6 text-center">
+              <p className="mb-2 text-lg font-bold text-red-400">❌ EA ทั่วไป</p>
+              <p className="text-sm text-slate-400">รอ TP 100% → ราคากลับ → ขาดทุน</p>
+            </div>
+            <div className="rounded-xl border border-green-900/30 bg-green-950/10 p-6 text-center">
+              <p className="mb-2 text-lg font-bold text-green-400">✅ TradeCandle v11</p>
+              <p className="text-sm text-slate-400">ปิดทยอย 3 รอบ → ยังไงก็ได้กำไร</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Section 4: Smart Money Filters ──────────────────────────────── */}
+      <section className="relative z-10 py-24">
+        <div className="container mx-auto px-6">
+          <div className="mx-auto mb-16 max-w-3xl text-center">
+            <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">
+              🔓 6 <span className="text-amber-400">Smart Money</span> Filters
+            </h2>
+            <p className="text-slate-400">
+              ระบบอ่านทรงสตรัคเจอร์เหมือนโปรเทรดเดอร์ แต่ทำงานอัตโนมัติทุก tick
+              <br />
+              เป็น <strong className="text-amber-300">Bonus Score</strong> — ไม่บล็อกสัญญาณ
             </p>
           </div>
 
-          <div className="mx-auto max-w-5xl overflow-hidden rounded-2xl border border-slate-800 bg-[#0B1120] shadow-2xl">
-            <div className="flex items-center justify-between border-b border-slate-800 bg-slate-900/80 p-4">
-              <div className="flex items-center gap-3">
-                <div className="h-3 w-3 rounded-full border border-red-500/50 bg-red-500/20" />
-                <div className="h-3 w-3 rounded-full border border-yellow-500/50 bg-yellow-500/20" />
-                <div className="h-3 w-3 rounded-full border border-green-500/50 bg-green-500/20" />
-              </div>
-              <div className="flex items-center gap-2 font-mono text-sm text-slate-400">
-                <Globe size={14} />
-                Live Environment
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 gap-6 p-6 md:grid-cols-3 md:p-10">
-              <div className="rounded-xl border border-slate-700/50 bg-slate-800/40 p-6">
-                <div className="mb-4 flex items-center justify-between">
-                  <h3 className="font-medium text-slate-300">License state</h3>
-                  <Shield size={18} className="text-emerald-400" />
-                </div>
-                <div className="mb-2 text-4xl font-bold text-white">247</div>
-                <p className="flex items-center gap-1 text-sm text-emerald-400">
-                  <CheckCircle size={14} />
-                  Active accounts (98.4% healthy)
-                </p>
-              </div>
-
-              <div className="rounded-xl border border-slate-700/50 bg-slate-800/40 p-6">
-                <div className="mb-4 flex items-center justify-between">
-                  <h3 className="font-medium text-slate-300">Risk actions</h3>
-                  <AlertTriangle size={18} className="text-yellow-400" />
-                </div>
-                <div className="mb-2 text-4xl font-bold text-white">14</div>
-                <p className="flex items-center gap-1 text-sm text-yellow-400">
-                  <Zap size={14} />
-                  Auto interventions today
-                </p>
-              </div>
-
-              <div className="rounded-xl border border-slate-700/50 bg-slate-800/40 p-6">
-                <div className="mb-4 flex items-center justify-between">
-                  <h3 className="font-medium text-slate-300">Strategy</h3>
-                  <Terminal size={18} className="text-blue-400" />
-                </div>
-                <div className="mb-1 text-lg font-bold text-white">EA Momentum XAU</div>
-                <p className="mb-4 font-mono text-sm text-slate-400">v2.3.1</p>
-                <div className="space-y-2">
-                  <div className="flex justify-between text-xs">
-                    <span className="text-slate-500">Heartbeat</span>
-                    <span className="text-emerald-400">Streaming</span>
+          <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {[
+              { icon: '⚡', name: 'BOS', full: 'Break of Structure', score: '±1', desc: 'ทรงสตรัคเจอร์แตก — ราคาทะลุจุดสูง/ต่ำสุดเดิม' },
+              { icon: '🔄', name: 'CHoCH', full: 'Change of Character', score: '±2', desc: 'เทรนด์เปลี่ยนทิศ — จากขึ้นเป็นลง หรือลงเป็นขึ้น' },
+              { icon: '🧱', name: 'OB', full: 'Order Block', score: '±1', desc: 'โซนที่สถาบันเข้า position — จุดกลับราคาสำคัญ' },
+              { icon: '📐', name: 'FVG', full: 'Fair Value Gap', score: '±1', desc: 'ช่องว่างราคาที่ราคาวิ่งผ่านเร็ว — มักกลับมาเติม' },
+              { icon: '💧', name: 'Liq Sweep', full: 'Liquidity Sweep', score: '±2', desc: 'ล่าสภาพคล่อง (stop hunt) — ราคาแตะจุดแล้วกลับทิศ' },
+              { icon: '📦', name: 'S/D', full: 'Supply/Demand Zone', score: '±1', desc: 'โซนอุปสงค์-อุปทาน — จุดที่กองทุนเคยเข้า' },
+            ].map((filter) => (
+              <div key={filter.name} className="rounded-xl border border-amber-900/20 bg-slate-900/40 p-5 transition-colors hover:border-amber-900/40 hover:bg-slate-800/40">
+                <div className="mb-3 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xl">{filter.icon}</span>
+                    <span className="text-lg font-bold text-white">{filter.name}</span>
                   </div>
-                  <div className="flex justify-between text-xs">
-                    <span className="text-slate-500">Exposure Rule</span>
-                    <span className="text-white">3.5% Max</span>
-                  </div>
+                  <span className="rounded-full bg-amber-500/10 px-2 py-0.5 font-mono text-xs text-amber-400">
+                    {filter.score}
+                  </span>
                 </div>
+                <p className="mb-2 text-sm font-medium text-amber-300">{filter.full}</p>
+                <p className="text-sm text-slate-400">{filter.desc}</p>
               </div>
-            </div>
+            ))}
           </div>
+
+          {/* Confluence Gate */}
+          <div className="mx-auto mt-10 max-w-xl rounded-xl border border-amber-700/30 bg-amber-950/20 p-6 text-center">
+            <p className="mb-2 text-lg font-bold text-amber-300">🚦 Confluence Gate</p>
+            <p className="text-sm text-slate-400">
+              ต้อง ≥2 filters ชี้ข้ามเดียวกัน + ไม่มี opposing → ถึงจะเพิ่มคะแนน
+              <br />
+              กรองสัญญาณอ่อน ไม่แทรกแซงสัญญาณแข็งแกร่ง
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Section 5: SaaS Platform Features ───────────────────────────── */}
+      <section className="relative z-10 border-y border-amber-900/20 bg-slate-900/30 py-24">
+        <div className="container mx-auto px-6">
+          <div className="mx-auto mb-16 max-w-3xl text-center">
+            <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">
+              📱 ควบคุมจากมือถือ ทุกที่ ทุกเวลา
+            </h2>
+            <p className="text-slate-400">SaaS Dashboard ให้คุณเห็น คุม และหยุด EA ได้จากที่ไหนก็ได้</p>
+          </div>
+
+          <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {[
+              { icon: Lock, title: '🔑 License Key รับทันที', desc: 'ซื้อ → รับ key → วางใน MT5 → เริ่มเทรด', color: 'text-amber-400' },
+              { icon: Activity, title: '💓 Heartbeat Monitoring', desc: 'รู้ทันทีว่า EA ยังรันอยู่ไหม ไม่ต้องเปิด MT5', color: 'text-green-400' },
+              { icon: BarChart3, title: '📊 Dashboard Real-time', desc: 'P&L, Win Rate, Drawdown, ทุกบัญชี ในหน้าเดียว', color: 'text-cyan-400' },
+              { icon: AlertTriangle, title: '🛑 Kill Switch', desc: 'หยุด EA ทันทีจากมือถือ ไม่ต้องเข้า VPS', color: 'text-red-400' },
+              { icon: Shield, title: '🛡️ Risk Management', desc: 'DD limit, Session filter, Spread filter จากแพลตฟอร์ม', color: 'text-yellow-400' },
+              { icon: RefreshCw, title: '🔄 Auto Config Sync', desc: 'อัปเดตพารามิเตอร์ EA จากเว็บ ไม่ต้อง restart', color: 'text-purple-400' },
+            ].map((feature) => (
+              <div key={feature.title} className="rounded-xl border border-slate-800/60 bg-slate-900/40 p-6 transition-colors hover:bg-slate-800/40">
+                <feature.icon size={24} className={`mb-4 ${feature.color}`} />
+                <h4 className="mb-2 text-base font-semibold text-white">{feature.title}</h4>
+                <p className="text-sm leading-relaxed text-slate-400">{feature.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Section 6: Social Proof ─────────────────────────────────────── */}
+      <section className="relative z-10 py-24">
+        <div className="container mx-auto px-6">
+          <div className="mx-auto mb-16 max-w-3xl text-center">
+            <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">
+              ⭐ เทรดเดอร์ทองพูดถึงเรา
+            </h2>
+          </div>
+
+          <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-3">
+            {[
+              { quote: '"ตื่นมาเช้า เปิด MT5 เห็น +$340 ไม่ต้องทำอะไรเลย"', name: 'พี่ตู้', role: 'เทรดเดอร์ทอง 5 ปี' },
+              { quote: '"3-Wave คือเกมเชนเจอร์ ก่อนนี้ใช้ EA อื่นรอ TP เต็ม ราคากลับทุกที ตอนนี้ปิด Wave 1 ได้กำไรแล้ว"', name: 'เจม', role: 'Swing Trader' },
+              { quote: '"Dashboard ดูง่าย รู้เลยว่า EA ตัวนี้กำไรหรือขาดทุน ไม่ต้องเข้า MT5 ดูทีละบัญชี"', name: 'บอย', role: 'Full-time Trader' },
+            ].map((review, i) => (
+              <div key={i} className="rounded-2xl border border-amber-900/20 bg-slate-900/60 p-8">
+                <p className="mb-6 text-sm leading-relaxed text-slate-300">{review.quote}</p>
+                <div>
+                  <p className="font-bold text-amber-300">{review.name}</p>
+                  <p className="text-sm text-slate-500">{review.role}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Section 7: Pricing ──────────────────────────────────────────── */}
+      <section className="relative z-10 border-y border-amber-900/20 bg-slate-900/30 py-24" id="pricing-section">
+        <div className="container mx-auto px-6">
+          <div className="mx-auto mb-16 max-w-3xl text-center">
+            <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">💰 เลือกแพ็คเกจที่ใช่</h2>
+            <p className="text-slate-400">ทดลอง 7 วันฟรี ไม่ต้องจ่ายก่อน — ยกเลิกได้ทุกเมื่อ</p>
+          </div>
+
+          {/**<PricingCards navigateTo={navigateTo} />**/}
+          <PricingPage />
+        </div>
+      </section>
+
+      {/* ─── Section 8: FAQ ──────────────────────────────────────────────── */}
+      <section className="relative z-10 py-24">
+        <div className="container mx-auto px-6">
+          <div className="mx-auto mb-16 max-w-3xl text-center">
+            <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">❓ คำถามที่พบบ่อย</h2>
+          </div>
+
+          <div className="mx-auto max-w-3xl space-y-4">
+            {[
+              { q: 'ต้องนั่งดูจอไหม?', a: 'ไม่ต้อง! EA ทำงานอัตโนมัติ 24/5 คุณดูผลจาก Dashboard ได้' },
+              { q: 'ใช้กับโบรกเกอร์ไหนได้บ้าง?', a: 'โบรกเกอร์ที่รองรับ MT5 ทุกค่าย (Exness, XM, IC Markets ฯลฯ)' },
+              { q: 'ขั้นต่ำทุนเทรดเท่าไหร่?', a: 'แนะนำ $500+ (0.01 lot) หรือ $2,000+ (0.03 lot)' },
+              { q: 'มี guarantee ไหม?', a: 'ทดลอง 7 วันฟรี ไม่พอใจยกเลิกได้ ไม่หักเงิน + 30 วันเงินคืน' },
+              { q: 'EA รันบนคอมผมหรือ Cloud?', a: 'รันบน MT5 ของคุณเอง (VPS แนะนำ) เราให้ license + dashboard' },
+              { q: 'ต่างจาก EA ฟรียังไง?', a: '3-Wave Cashout + Smart Money Filters + SaaS Dashboard + Thai Support' },
+            ].map((faq, i) => (
+              <details key={i} className="group rounded-xl border border-amber-900/20 bg-slate-900/40">
+                <summary className="flex cursor-pointer items-center justify-between p-5 text-base font-semibold text-white hover:text-amber-300">
+                  {faq.q}
+                  <ChevronDown size={18} className="shrink-0 text-slate-500 transition-transform group-open:rotate-180" />
+                </summary>
+                <div className="px-5 pb-5 text-sm leading-relaxed text-slate-400">{faq.a}</div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Section 9: Final CTA ────────────────────────────────────────── */}
+      <section className="relative z-10 border-t border-amber-900/20 bg-gradient-to-b from-amber-950/20 to-transparent py-24">
+        <div className="container mx-auto px-6 text-center">
+          <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">
+            🔥 พร้อมให้ AI เทรดทองให้คุณแล้วหรือยัง?
+          </h2>
+          <p className="mx-auto mb-8 max-w-xl text-slate-400">
+            เริ่มต้น 990บาท/เดือน — ทดลอง 7 วันฟรี ไม่ต้องจ่ายก่อน — ยกเลิกได้ทุกเมื่อ
+          </p>
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <Button onClick={() => navigateTo('register')} className="w-full rounded-xl px-14 py-3.5 text-base sm:w-auto">
+              🚀 เริ่มต้น 7 วันฟรี <ArrowRight size={18} className="ml-2" />
+            </Button>
+            <Button variant="secondary" className="w-full rounded-xl px-12 py-3.5 text-base sm:w-auto">
+              💬 สอบถาม Line OA
+            </Button>
+          </div>
+          <p className="mt-5 text-sm text-amber-500/80">⏰ สมัครเดือนนี้ รับส่วนลด 20% ทุกแพ็คเกจ!</p>
         </div>
       </section>
     </div>
   );
 }
 
+/* ─── Pricing Page (also used inline) ──────────────────────────────────── */
+function PricingPage() {
+  return (
+    <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-8 md:grid-cols-3">
+      {/* Starter */}
+      <div className="rounded-2xl border border-amber-900/20 bg-slate-900 p-8 transition-colors hover:border-amber-900/40">
+        <h3 className="mb-2 text-xl font-bold text-white">Starter</h3>
+        <p className="h-10 text-sm text-slate-400">สำหรับเทรดเดอร์เริ่มต้น 1 บัญชี</p>
+        <div className="my-6">
+          <span className="text-4xl font-bold text-white">990฿</span>
+          <span className="text-slate-500">/ เดือน</span>
+        </div>
+        <ul className="mb-8 space-y-4 text-sm text-slate-300">
+          {['1 บัญชี MT5', 'SaaS Dashboard', 'Heartbeat Monitor', 'Email Support'].map((item, index) => (
+            <li key={item} className="flex items-center gap-3">
+              <CheckCircle size={16} className={index === 3 ? 'text-slate-600' : 'text-amber-500'} />
+              {item}
+            </li>
+          ))}
+        </ul>
+        <Button variant="secondary" className="w-full">
+          เริ่มต้น
+        </Button>
+      </div>
+
+      {/* Pro ⭐ */}
+      <div className="relative rounded-2xl border border-amber-500/50 bg-gradient-to-b from-amber-900/30 to-slate-900 p-8 shadow-2xl shadow-amber-900/20 md:-translate-y-4">
+        <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
+          <span className="rounded-full bg-amber-500 px-3 py-1 text-xs font-bold uppercase tracking-wider text-black">
+            ยอดนิยม
+          </span>
+        </div>
+        <h3 className="mb-2 text-xl font-bold text-white">Pro ⭐</h3>
+        <p className="h-10 text-sm text-slate-400">สำหรับเทรดเดอร์จริงจัง 3 บัญชี</p>
+        <div className="my-6">
+          <span className="text-4xl font-bold text-white">2,490฿</span>
+          <span className="text-slate-500">/ เดือน</span>
+        </div>
+        <ul className="mb-8 space-y-4 text-sm font-medium text-white">
+          {['3 บัญชี MT5', 'Dashboard + Kill Switch', 'Heartbeat + Risk Mgmt', 'Line Support'].map((item) => (
+            <li key={item} className="flex items-center gap-3">
+              <CheckCircle size={16} className="text-amber-400" />
+              {item}
+            </li>
+          ))}
+        </ul>
+        <Button className="w-full">ยอดนิยม</Button>
+      </div>
+
+      {/* Elite */}
+      <div className="rounded-2xl border border-amber-900/20 bg-slate-900 p-8 transition-colors hover:border-amber-900/40">
+        <h3 className="mb-2 text-xl font-bold text-white">Elite</h3>
+        <p className="h-10 text-sm text-slate-400">สำหรับมืออาชีพ 5 บัญชี + VIP</p>
+        <div className="my-6">
+          <span className="text-4xl font-bold text-white">4,990฿</span>
+          <span className="text-slate-500">/ เดือน</span>
+        </div>
+        <ul className="mb-8 space-y-4 text-sm text-slate-300">
+          {['5 บัญชี MT5', 'ทุกอย่างใน Pro', 'Custom EA Config', 'VIP Line + 1-on-1 Setup Call'].map((item) => (
+            <li key={item} className="flex items-center gap-3">
+              <CheckCircle size={16} className="text-amber-500" />
+              {item}
+            </li>
+          ))}
+        </ul>
+        <Button variant="secondary" className="w-full">
+          เลือก Elite
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Features Page ────────────────────────────────────────────────────── */
 function FeaturesPage() {
   return (
     <div className="animate-in fade-in duration-500 pb-20 pt-24">
       <div className="container mx-auto px-6">
         <div className="mx-auto mb-20 max-w-3xl text-center">
           <h1 className="mb-6 text-4xl font-bold text-white md:text-5xl">
-            Designed for operators, <br />
-            <span className="text-blue-400">not just marketers.</span>
+            ทำไม <span className="text-amber-400">TradeCandle v11</span>
+            <br />
+            ต่างจาก EA ทั่วไป
           </h1>
           <p className="text-lg text-slate-400">
-            Every section is tuned around the repetitive work involved in selling, protecting, and maintaining live
-            Expert Advisor deployments.
+            ทุกฟีเจอร์ถูกออกแบบมาแก้ปัญหาจริงของเทรดเดอร์ทองคำ
           </p>
         </div>
 
         <div className="mx-auto mb-24 grid max-w-5xl grid-cols-1 gap-10 md:grid-cols-2">
-          <div className="rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900 to-slate-900/50 p-8">
-            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-500/10">
-              <RefreshCw size={24} className="text-blue-400" />
+          <div className="rounded-2xl border border-amber-900/20 bg-gradient-to-br from-slate-900 to-slate-900/50 p-8">
+            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-amber-500/10">
+              <RefreshCw size={24} className="text-amber-400" />
             </div>
-            <h3 className="mb-3 text-xl font-bold text-white">Less manual account work</h3>
+            <h3 className="mb-3 text-xl font-bold text-white">กำไรไม่หายระหว่างทาง</h3>
             <p className="leading-relaxed text-slate-400">
-              Support and ops stop handling renewals, account bindings, and emergency actions through chat and
-              spreadsheets. Automate the lifecycle.
+              3-Wave Cashout ปิดกำไรทยอย 3 รอบ — ไม่รอ TP เต็ม 100% ที่อาจไม่ถึง
+              Wave 1 ล็อคกำไรแรก Wave 2 เพิ่ม Wave 3 ไล่เทรนด์
             </p>
           </div>
 
-          <div className="rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900 to-slate-900/50 p-8">
-            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-red-500/10">
-              <Shield size={24} className="text-red-400" />
+          <div className="rounded-2xl border border-amber-900/20 bg-gradient-to-br from-slate-900 to-slate-900/50 p-8">
+            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-green-500/10">
+              <Shield size={24} className="text-green-400" />
             </div>
-            <h3 className="mb-3 text-xl font-bold text-white">Faster responses under stress</h3>
+            <h3 className="mb-3 text-xl font-bold text-white">Smart Money ไม่บล็อกสัญญาณ</h3>
             <p className="leading-relaxed text-slate-400">
-              When market conditions deteriorate, risk actions are visible, structured, and immediate instead of
-              improvised.
+              6 PA/SMC Filters เป็น Bonus Score ไม่ใช่ Gate — ไม่มีปัญหา over-filter
+              Confluence Gate ต้อง ≥2 ตัวชี้ข้ามเดียวกันถึงจะเพิ่มคะแนน
             </p>
           </div>
         </div>
@@ -230,40 +518,40 @@ function FeaturesPage() {
           {[
             {
               icon: Lock,
-              title: 'License control built for live accounts',
-              desc: 'Issue, revoke, and bind EA licenses to specific trading accounts without patching builds or sending manual keys.',
+              title: 'License Key อัตโนมัติ',
+              desc: 'ซื้อ → รับ key → วางใน MT5 → เริ่มเทรด ผูกบัญชีอัตโนมัติผ่าน Heartbeat',
             },
             {
               icon: AlertTriangle,
-              title: 'Risk automation, not just monitoring',
-              desc: 'Define hard drawdown rules, kill switches, and session filters so protection happens automatically.',
+              title: 'Risk Management จากแพลตฟอร์ม',
+              desc: 'DD limit, Session filter, Spread filter คุ้มครองระดับแพลตฟอร์ม ไม่ขึ้นกับ EA',
             },
             {
               icon: BarChart3,
-              title: 'Readable performance analytics',
-              desc: 'Track P&L, drawdown, trade behavior, and account health in one place without juggling broker exports.',
+              title: 'Dashboard Real-time',
+              desc: 'P&L, Win Rate, Drawdown, Trade History ทุกบัญชี ในหน้าเดียว',
             },
             {
               icon: Zap,
-              title: 'Live sync back to the EA',
-              desc: 'Push updated parameters, enable or disable protections, and keep connected terminals aligned without restarts.',
+              title: 'Kill Switch หยุดทันที',
+              desc: 'กดปุ่มเดียวจากมือถือ EA หยุดทันที ไม่ต้องเข้า VPS',
             },
             {
               icon: Server,
-              title: 'Commercial operations included',
-              desc: 'Support trials, subscriptions, and renewals with billing workflows tied directly to license provisioning.',
+              title: 'Subscription + Billing ครบ',
+              desc: 'ชำระเงินผ่าน USDT (ERC-20), ทดลองใช้, ต่ออายุอัตโนมัติ',
             },
             {
               icon: Layers,
-              title: 'Operationally clean for teams',
-              desc: 'Give support, product, and ops teams one dashboard for customer access, account state, and emergency actions.',
+              title: 'Thai Support ตอบไว',
+              desc: 'Line OA ตอบทุกคำถาม Pro+ ขึ้นไปมี Line priority support',
             },
           ].map((feature) => (
             <div
               key={feature.title}
-              className="rounded-xl border border-slate-800/60 bg-slate-900/40 p-6 transition-colors hover:bg-slate-800/40"
+              className="rounded-xl border border-amber-900/10 bg-slate-900/40 p-6 transition-colors hover:bg-slate-800/40"
             >
-              <feature.icon size={24} className="mb-4 text-cyan-400" />
+              <feature.icon size={24} className="mb-4 text-amber-400" />
               <h4 className="mb-2 text-lg font-semibold text-white">{feature.title}</h4>
               <p className="text-sm leading-relaxed text-slate-400">{feature.desc}</p>
             </div>
@@ -274,50 +562,50 @@ function FeaturesPage() {
   );
 }
 
+/* ─── Workflow Page ─────────────────────────────────────────────────────── */
 function WorkflowPage() {
   return (
     <div className="animate-in fade-in duration-500 pb-20 pt-24">
       <div className="container mx-auto px-6">
         <div className="mx-auto mb-16 max-w-3xl text-center">
-          <h1 className="mb-6 text-4xl font-bold text-white md:text-5xl">A three-step operating loop.</h1>
-          <p className="text-lg text-slate-400">
-            The platform is built to shorten the gap between commercial access, technical deployment, and daily
-            operational control.
-          </p>
+          <h1 className="mb-6 text-4xl font-bold text-white md:text-5xl">
+            เริ่มใช้ <span className="text-amber-400">3 ขั้นตอน</span>
+          </h1>
+          <p className="text-lg text-slate-400">จากสมัคร ถึงเทรดอัตโนมัติ ใช้เวลาไม่ถึง 10 นาที</p>
         </div>
 
         <div className="relative mx-auto max-w-5xl">
-          <div className="absolute left-0 top-1/2 z-0 hidden h-0.5 w-full -translate-y-1/2 bg-slate-800 md:block" />
+          <div className="absolute left-0 top-1/2 z-0 hidden h-0.5 w-full -translate-y-1/2 bg-amber-900/30 md:block" />
 
           <div className="relative z-10 grid grid-cols-1 gap-10 md:grid-cols-3">
             {[
               {
                 step: '01',
-                title: 'Connect your commercial model',
-                desc: 'Create plans, issue trial access, and decide how each strategy should be licensed.',
+                title: 'สมัคร + รับ License Key',
+                desc: 'เลือกแพ็คเกจ → โอน USDT → รับ key ทันทีใน Dashboard',
                 icon: Settings,
               },
               {
                 step: '02',
-                title: 'Deploy the EA with platform hooks',
-                desc: 'Use the included integration flow for heartbeats, license checks, config sync, and kill switch control.',
+                title: 'วาง Key ใน MT5',
+                desc: 'ดาวน์โหลด EA → วาง License Key → ผูกบัญชีอัตโนมัติผ่าน Heartbeat',
                 icon: Cpu,
               },
               {
                 step: '03',
-                title: 'Operate from one command surface',
-                desc: 'Monitor account health, manage risk actions, and update strategy settings without touching each terminal manually.',
+                title: 'เทรดอัตโนมัติ + ดูผล',
+                desc: 'EA เทรด 24/5 คุณดูผลจากมือถือ หยุดได้ทันทีด้วย Kill Switch',
                 icon: Activity,
               },
             ].map((item) => (
-              <div key={item.step} className="relative rounded-2xl border border-slate-800 bg-slate-900 p-8 shadow-xl">
-                <div className="absolute left-8 top-[-2rem] flex h-16 w-16 items-center justify-center rounded-full border border-slate-700 bg-slate-950 shadow-lg shadow-black/50">
-                  <span className="bg-gradient-to-b from-white to-slate-500 bg-clip-text text-xl font-bold text-transparent">
+              <div key={item.step} className="relative rounded-2xl border border-amber-900/30 bg-slate-900 p-8 shadow-xl">
+                <div className="absolute left-8 top-[-2rem] flex h-16 w-16 items-center justify-center rounded-full border border-amber-700/50 bg-slate-950 shadow-lg shadow-black/50">
+                  <span className="bg-gradient-to-b from-amber-300 to-amber-600 bg-clip-text text-xl font-bold text-transparent">
                     {item.step}
                   </span>
                 </div>
                 <div className="mt-6">
-                  <item.icon size={28} className="mb-5 text-blue-500" />
+                  <item.icon size={28} className="mb-5 text-amber-500" />
                   <h3 className="mb-3 text-xl font-bold text-white">{item.title}</h3>
                   <p className="text-slate-400">{item.desc}</p>
                 </div>
@@ -330,89 +618,7 @@ function WorkflowPage() {
   );
 }
 
-function PricingPage() {
-  return (
-    <div className="animate-in fade-in duration-500 pb-20 pt-24">
-      <div className="container mx-auto px-6">
-        <div className="mx-auto mb-16 max-w-3xl text-center">
-          <h1 className="mb-6 text-4xl font-bold text-white md:text-5xl">Straightforward plans with room to scale.</h1>
-          <p className="text-lg text-slate-400">
-            Start with a compact operational setup, then move into higher-account workflows as your client base and
-            strategy catalog grow.
-          </p>
-        </div>
-
-        <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-8 md:grid-cols-3">
-          <div className="rounded-2xl border border-slate-800 bg-slate-900 p-8 transition-colors hover:border-slate-700">
-            <h3 className="mb-2 text-xl font-bold text-white">Starter</h3>
-            <p className="h-10 text-sm text-slate-400">For solo operators validating a single strategy.</p>
-            <div className="my-6">
-              <span className="text-4xl font-bold text-white">$29</span>
-              <span className="text-slate-500">/ month</span>
-            </div>
-            <ul className="mb-8 space-y-4 text-sm text-slate-300">
-              {['1 strategy', '3 accounts', 'Core licensing', 'Daily analytics', 'Email support'].map((item, index) => (
-                <li key={item} className="flex items-center gap-3">
-                  <CheckCircle size={16} className={index === 4 ? 'text-slate-600' : 'text-blue-500'} />
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <Button variant="secondary" className="w-full">
-              Start free trial
-            </Button>
-          </div>
-
-          <div className="relative rounded-2xl border border-blue-500/50 bg-gradient-to-b from-blue-900/40 to-slate-900 p-8 shadow-2xl shadow-blue-900/20 md:-translate-y-4">
-            <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
-              <span className="rounded-full bg-blue-500 px-3 py-1 text-xs font-bold uppercase tracking-wider text-white">
-                Popular
-              </span>
-            </div>
-            <h3 className="mb-2 text-xl font-bold text-white">Professional</h3>
-            <p className="h-10 text-sm text-slate-400">For active desks running live distribution and tighter controls.</p>
-            <div className="my-6">
-              <span className="text-4xl font-bold text-white">$79</span>
-              <span className="text-slate-500">/ month</span>
-            </div>
-            <ul className="mb-8 space-y-4 text-sm font-medium text-white">
-              {['5 strategies', '10 accounts', 'Advanced risk rules', 'Live config sync', 'Priority support'].map((item) => (
-                <li key={item} className="flex items-center gap-3">
-                  <CheckCircle size={16} className="text-cyan-400" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <Button className="w-full">Start free trial</Button>
-          </div>
-
-          <div className="rounded-2xl border border-slate-800 bg-slate-900 p-8 transition-colors hover:border-slate-700">
-            <h3 className="mb-2 text-xl font-bold text-white">Enterprise</h3>
-            <p className="h-10 text-sm text-slate-400">For teams managing multi-client operations at scale.</p>
-            <div className="my-6">
-              <span className="text-4xl font-bold text-white">$199</span>
-              <span className="text-slate-500">/ month</span>
-            </div>
-            <ul className="mb-8 space-y-4 text-sm text-slate-300">
-              {['Unlimited strategies', 'Unlimited accounts', 'Custom workflows', 'Audit visibility', 'Dedicated onboarding'].map(
-                (item) => (
-                  <li key={item} className="flex items-center gap-3">
-                    <CheckCircle size={16} className="text-blue-500" />
-                    {item}
-                  </li>
-                ),
-              )}
-            </ul>
-            <Button variant="secondary" className="w-full">
-              Start free trial
-            </Button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
+/* ─── Auth Page ─────────────────────────────────────────────────────────── */
 function AuthPage({
   mode,
   navigateTo,
@@ -439,7 +645,7 @@ function AuthPage({
     try {
       await login(email, password);
     } catch {
-      setError('Invalid credentials');
+      setError('ข้อมูลไม่ถูกต้อง');
     } finally {
       setIsSubmitting(false);
     }
@@ -447,47 +653,47 @@ function AuthPage({
 
   return (
     <div className="animate-in fade-in flex min-h-[80vh] items-center justify-center p-6 duration-500">
-      <div className="w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900 p-8 shadow-2xl">
+      <div className="w-full max-w-md rounded-2xl border border-amber-900/30 bg-slate-900 p-8 shadow-2xl">
         <div className="mb-8 flex justify-center">
           <div className="flex cursor-pointer items-center gap-2" onClick={() => navigateTo('home')}>
-            <div className="flex h-8 w-8 items-center justify-center rounded bg-gradient-to-br from-blue-500 to-indigo-600 font-bold text-white">
-              EA
+            <div className="flex h-8 w-8 items-center justify-center rounded bg-gradient-to-br from-amber-500 to-yellow-600 font-bold text-black text-sm">
+              TC
             </div>
           </div>
         </div>
         <h2 className="mb-2 text-center text-2xl font-bold text-white">
-          {mode === 'login' ? 'Welcome back' : 'Start your free trial'}
+          {mode === 'login' ? 'เข้าสู่ระบบ' : 'เริ่มต้นทดลองฟรี'}
         </h2>
         <p className="mb-8 text-center text-sm text-slate-400">
-          {mode === 'login' ? 'Enter your details to access your dashboard' : '14-day free trial. No credit card required.'}
+          {mode === 'login' ? 'ใส่อีเมลและรหัสผ่าน' : 'ทดลอง 7 วันฟรี ไม่ต้องจ่ายก่อน'}
         </p>
 
         <form className="space-y-5" onSubmit={handleSubmit}>
           <div>
-            <label className="mb-1 block text-sm font-medium text-slate-300">Email</label>
+            <label className="mb-1 block text-sm font-medium text-slate-300">อีเมล</label>
             <input
               type="email"
-              placeholder="name@company.com"
+              placeholder="name@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-lg border border-slate-800 bg-slate-950 px-4 py-2.5 text-white transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full rounded-lg border border-amber-900/30 bg-slate-950 px-4 py-2.5 text-white transition-colors focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
             />
           </div>
           <div>
-            <label className="mb-1 block text-sm font-medium text-slate-300">Password</label>
+            <label className="mb-1 block text-sm font-medium text-slate-300">รหัสผ่าน</label>
             <input
               type="password"
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-lg border border-slate-800 bg-slate-950 px-4 py-2.5 text-white transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full rounded-lg border border-amber-900/30 bg-slate-950 px-4 py-2.5 text-white transition-colors focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
             />
           </div>
 
           {mode === 'login' && (
             <div className="flex justify-end">
-              <a href="#" className="text-sm text-blue-400 hover:text-blue-300">
-                Forgot password?
+              <a href="#" className="text-sm text-amber-400 hover:text-amber-300">
+                ลืมรหัสผ่าน?
               </a>
             </div>
           )}
@@ -495,23 +701,23 @@ function AuthPage({
           {error && <div className="text-sm text-red-400">{error}</div>}
 
           <Button className="mt-2 w-full py-3">
-            {isSubmitting ? 'Please wait...' : mode === 'login' ? 'Sign in' : 'Create account'}
+            {isSubmitting ? 'กรุณารอ...' : mode === 'login' ? 'เข้าสู่ระบบ' : 'สร้างบัญชี'}
           </Button>
         </form>
 
         <div className="mt-6 text-center text-sm text-slate-400">
           {mode === 'login' ? (
             <>
-              Don&apos;t have an account?{' '}
-              <button onClick={() => navigateTo('register')} className="text-blue-400 hover:underline">
-                Start free trial
+              ยังไม่มีบัญชี?{' '}
+              <button onClick={() => navigateTo('register')} className="text-amber-400 hover:underline">
+                ทดลองฟรี
               </button>
             </>
           ) : (
             <>
-              Already have an account?{' '}
-              <button onClick={() => navigateTo('login')} className="text-blue-400 hover:underline">
-                Log in
+              มีบัญชีอยู่แล้ว?{' '}
+              <button onClick={() => navigateTo('login')} className="text-amber-400 hover:underline">
+                เข้าสู่ระบบ
               </button>
             </>
           )}
@@ -521,6 +727,7 @@ function AuthPage({
   );
 }
 
+/* ─── Navbar ────────────────────────────────────────────────────────────── */
 function Navbar({
   navigateTo,
   currentPage,
@@ -541,24 +748,26 @@ function Navbar({
   }, []);
 
   const navLinks: Array<{ id: PageId; label: string }> = [
-    { id: 'home', label: 'Platform' },
-    { id: 'features', label: 'Features' },
-    { id: 'workflow', label: 'Workflow' },
-    { id: 'pricing', label: 'Pricing' },
+    { id: 'home', label: 'หน้าแรก' },
+    { id: 'features', label: 'ฟีเจอร์' },
+    { id: 'workflow', label: 'วิธีใช้' },
+    { id: 'pricing', label: 'ราคา' },
   ];
 
   return (
     <nav
       className={`fixed top-0 z-50 w-full transition-all duration-300 ${
-        scrolled ? 'border-b border-slate-800/50 bg-[#050b1b]/85 py-3 backdrop-blur-md' : 'bg-transparent py-4'
+        scrolled ? 'border-b border-amber-900/20 bg-[#050b1b]/85 py-3 backdrop-blur-md' : 'bg-transparent py-4'
       }`}
     >
       <div className="container mx-auto flex max-w-7xl items-center justify-between px-4 md:px-6">
         <div className="flex cursor-pointer items-center gap-2.5" onClick={() => navigateTo('home')}>
-          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-gradient-to-br from-blue-500 to-indigo-600 text-sm font-bold text-white">
-            EA
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-gradient-to-br from-amber-500 to-yellow-600 text-sm font-bold text-black">
+            TC
           </div>
-          <span className="text-[1.15rem] font-bold tracking-tight text-white">SaaS</span>
+          <span className="text-[1.15rem] font-bold tracking-tight text-white">
+            Trade<span className="text-amber-400">Candle</span>
+          </span>
         </div>
 
         <div className="hidden items-center gap-9 md:flex">
@@ -567,7 +776,7 @@ function Navbar({
               key={link.id}
               onClick={() => navigateTo(link.id)}
               className={`text-sm font-medium transition-colors ${
-                currentPage === link.id ? 'text-white' : 'text-slate-400 hover:text-white'
+                currentPage === link.id ? 'text-amber-400' : 'text-slate-400 hover:text-white'
               }`}
             >
               {link.label}
@@ -577,10 +786,10 @@ function Navbar({
 
         <div className="hidden items-center gap-4 md:flex">
           <Button variant="ghost" onClick={() => navigateTo('login')} className="px-4 text-sm font-semibold">
-            Log in
+            เข้าสู่ระบบ
           </Button>
           <Button onClick={() => navigateTo('register')} className="rounded-xl px-7 py-3 text-sm font-semibold">
-            Start free trial
+            ทดลองฟรี
           </Button>
         </div>
 
@@ -590,7 +799,7 @@ function Navbar({
       </div>
 
       {isMobileMenuOpen && (
-        <div className="absolute left-0 top-full flex w-full flex-col gap-4 border-b border-slate-800 bg-slate-900 p-6 shadow-2xl md:hidden">
+        <div className="absolute left-0 top-full flex w-full flex-col gap-4 border-b border-amber-900/20 bg-slate-900 p-6 shadow-2xl md:hidden">
           {navLinks.map((link) => (
             <button
               key={link.id}
@@ -602,10 +811,10 @@ function Navbar({
           ))}
           <div className="my-2 h-px bg-slate-800" />
           <button onClick={() => navigateTo('login')} className="py-2 text-left text-lg font-medium text-slate-300">
-            Log in
+            เข้าสู่ระบบ
           </button>
           <Button onClick={() => navigateTo('register')} className="mt-2 w-full rounded-xl">
-            Start free trial
+            ทดลองฟรี
           </Button>
         </div>
       )}
@@ -613,27 +822,29 @@ function Navbar({
   );
 }
 
+/* ─── Footer ────────────────────────────────────────────────────────────── */
 function Footer({ navigateTo }: { navigateTo: (page: PageId) => void }) {
   return (
-    <footer className="border-t border-slate-800/50 bg-slate-950 pb-8 pt-16">
+    <footer className="border-t border-amber-900/20 bg-slate-950 pb-8 pt-16">
       <div className="container mx-auto px-6">
         <div className="mb-12 grid grid-cols-1 gap-12 md:grid-cols-4">
           <div className="md:col-span-2">
             <div className="mb-4 flex items-center gap-2">
-              <div className="flex h-6 w-6 items-center justify-center rounded bg-gradient-to-br from-blue-500 to-indigo-600 text-xs font-bold text-white">
-                EA
+              <div className="flex h-6 w-6 items-center justify-center rounded bg-gradient-to-br from-amber-500 to-yellow-600 text-xs font-bold text-black">
+                TC
               </div>
-              <span className="text-lg font-bold tracking-tight text-white">SaaS</span>
+              <span className="text-lg font-bold tracking-tight text-white">
+                Trade<span className="text-amber-400">Candle</span>
+              </span>
             </div>
             <p className="mb-6 max-w-sm text-sm text-slate-400">
-              Licensing, risk control, and operational visibility for Expert Advisor teams that need more than a simple
-              dashboard.
+              AI เทรดทองคำอัตโนมัติ ปิดกำไรเป็น 3 คลื่น — 3-Wave Cashout + 6 Smart Money Filters บน MT5
             </p>
             <div className="flex gap-2">
-              {['Next.js', 'Prisma', 'MySQL', 'Redis'].map((item) => (
+              {['MT5', 'XAUUSD', 'SaaS', 'Thai'].map((item) => (
                 <span
                   key={item}
-                  className="rounded border border-slate-800 bg-slate-900 px-2 py-1 font-mono text-xs text-slate-500"
+                  className="rounded border border-amber-900/30 bg-amber-950/20 px-2 py-1 font-mono text-xs text-amber-600"
                 >
                   {item}
                 </span>
@@ -642,51 +853,53 @@ function Footer({ navigateTo }: { navigateTo: (page: PageId) => void }) {
           </div>
 
           <div>
-            <h4 className="mb-4 font-semibold text-white">Product</h4>
+            <h4 className="mb-4 font-semibold text-white">สินค้า</h4>
             <ul className="space-y-3">
               <li>
                 <button onClick={() => navigateTo('features')} className="text-sm text-slate-400 transition-colors hover:text-white">
-                  Features
+                  ฟีเจอร์
                 </button>
               </li>
               <li>
                 <button onClick={() => navigateTo('workflow')} className="text-sm text-slate-400 transition-colors hover:text-white">
-                  Workflow
+                  วิธีใช้
                 </button>
               </li>
               <li>
                 <button onClick={() => navigateTo('pricing')} className="text-sm text-slate-400 transition-colors hover:text-white">
-                  Pricing
+                  ราคา
                 </button>
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="mb-4 font-semibold text-white">Access</h4>
+            <h4 className="mb-4 font-semibold text-white">เข้าถึง</h4>
             <ul className="space-y-3">
               <li>
                 <button onClick={() => navigateTo('login')} className="text-sm text-slate-400 transition-colors hover:text-white">
-                  Log in
+                  เข้าสู่ระบบ
                 </button>
               </li>
               <li>
                 <button onClick={() => navigateTo('register')} className="text-sm text-slate-400 transition-colors hover:text-white">
-                  Start free trial
+                  ทดลองฟรี
                 </button>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-between gap-4 border-t border-slate-800 pt-8 md:flex-row">
-          <p className="text-sm text-slate-500">© 2026 EA SaaS Platform. All rights reserved.</p>
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-amber-900/20 pt-8 md:flex-row">
+          <p className="text-sm text-slate-500">© 2026 TradeCandle. All rights reserved.</p>
+          <p className="text-xs text-slate-600">⚠️ Trading involves risk. Past performance does not guarantee future results.</p>
         </div>
       </div>
     </footer>
   );
 }
 
+/* ─── App Root ──────────────────────────────────────────────────────────── */
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageId>('home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -698,7 +911,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#030817] font-sans text-slate-200 selection:bg-blue-500/30">
+    <div className="min-h-screen bg-[#0a0a0a] font-sans text-slate-200 selection:bg-amber-500/30">
       <Navbar
         navigateTo={navigateTo}
         currentPage={currentPage}

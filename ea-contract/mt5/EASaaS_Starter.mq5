@@ -77,6 +77,29 @@ int    g_trailing_stop_pips;
 int    g_max_slippage;
 int    g_tick_count = 0;
 int    g_trade_count = 0;
+datetime g_last_entry_time = 0;
+
+bool IsGridStrategy()
+{
+   string lotSizingMethod = GetConfigValue("lotSizingMethod", "");
+   if(lotSizingMethod == "") return false;
+
+   string normalizedLotSizingMethod = lotSizingMethod;
+   StringToLower(normalizedLotSizingMethod);
+   return (StringFind(normalizedLotSizingMethod, "grid") >= 0 ||
+           StringFind(normalizedLotSizingMethod, "martingale") >= 0);
+}
+
+bool GetConfigBool(string key, bool defaultValue)
+{
+   string value = GetConfigValue(key, defaultValue ? "true" : "false");
+   string normalizedValue = value;
+   StringToLower(normalizedValue);
+   return (normalizedValue == "true" ||
+           normalizedValue == "1" ||
+           normalizedValue == "yes" ||
+           normalizedValue == "on");
+}
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // OnInit — EA INITIALIZATION
@@ -208,6 +231,7 @@ int OnInit()
    g_ea_initialized = true;
    g_ea_killed = false;
    g_last_bar_time = 0;
+   g_last_entry_time = 0;
 
    LogInfo("EA initialization complete. Ready to trade.");
    Print("  EA SaaS Starter (MT5) initialized successfully!");
@@ -370,9 +394,34 @@ void ExecuteStrategy()
    int gridSizePips = GetConfigValueInt("gridSizePips", 3000);
    int gridTakeProfitPips = GetConfigValueInt("gridTakeProfitPips", 1200);
    int maxOrders = GetConfigValueInt("maxOrders", 6);
+   int cooldownBarsAfterLoss = GetConfigValueInt("cooldownBarsAfterLoss", 3);
+   int minBarsBetweenEntries = GetConfigValueInt("minBarsBetweenEntries", 2);
    double startLot = GetConfigValueNum("startLot", 0.01);
    double maxLot = GetConfigValueNum("maxLot", 0.10);
+   double minAtrPips = GetConfigValueNum("minAtrPips", 4.0);
+   double minEmaGapPips = GetConfigValueNum("minEmaGapPips", 2.5);
    string lotSizingMethod = GetConfigValue("lotSizingMethod", "fixed");
+   bool allowLong = GetConfigBool("allowLong", false);
+   bool allowShort = GetConfigBool("allowShort", true);
+   bool restrictToOverlapSession = GetConfigBool("restrictToOverlapSession", true);
+
+   if(restrictToOverlapSession && !IsInLondonNewYorkOverlap())
+   {
+      LogDebug("Grid strategy: outside preferred overlap session");
+      return;
+   }
+
+   if(IsCooldownAfterLossActive(cooldownBarsAfterLoss))
+   {
+      LogDebug("Grid strategy: cooldown after loss is active");
+      return;
+   }
+
+   if(g_last_entry_time > 0 && GetBarsSinceTime(g_last_entry_time) < minBarsBetweenEntries)
+   {
+      LogDebug("Grid strategy: entry spacing filter active");
+      return;
+   }
 
    int buyCount = CountSymbolPositionsByTypeMT5(POSITION_TYPE_BUY);
    int sellCount = CountSymbolPositionsByTypeMT5(POSITION_TYPE_SELL);
@@ -395,8 +444,14 @@ void ExecuteStrategy()
       return;
    }
 
-   bool bullishBias = emaFast > emaSlow;
-   bool bearishBias = emaFast < emaSlow;
+   if(!IsSignalStrongEnough(emaFast, emaSlow, minEmaGapPips, minAtrPips))
+   {
+      LogDebug("Grid strategy: signal strength filter blocked entry");
+      return;
+   }
+
+   bool bullishBias = (emaFast > emaSlow) && allowLong;
+   bool bearishBias = (emaFast < emaSlow) && allowShort;
 
    if(totalPositions == 0)
    {
@@ -409,6 +464,7 @@ void ExecuteStrategy()
          if(result.success)
          {
             g_trade_count++;
+            g_last_entry_time = TimeCurrent();
             LogInfo("Grid Trader Elite: initial BUY basket opened");
          }
       }
@@ -418,6 +474,7 @@ void ExecuteStrategy()
          if(result.success)
          {
             g_trade_count++;
+            g_last_entry_time = TimeCurrent();
             LogInfo("Grid Trader Elite: initial SELL basket opened");
          }
       }
@@ -437,13 +494,14 @@ void ExecuteStrategy()
    if(buyCount > 0 && sellCount == 0)
    {
       double lowestBuyOpen = GetExtremeOpenPriceByTypeMT5(POSITION_TYPE_BUY, true);
-      if(lowestBuyOpen > 0 && bid <= (lowestBuyOpen - gridDistance))
+      if(allowLong && lowestBuyOpen > 0 && bid <= (lowestBuyOpen - gridDistance))
       {
          double buyLots = ResolveGridLotSize(buyCount, startLot, maxLot, lotSizingMethod);
          TradeResult buyResult = OpenBuy(_Symbol, buyLots, 0, 0, InpMagicNumber, InpTradeComment + "_GRID_BUY");
          if(buyResult.success)
          {
             g_trade_count++;
+            g_last_entry_time = TimeCurrent();
             LogInfo("Grid Trader Elite: additional BUY layer opened");
          }
       }
@@ -453,13 +511,14 @@ void ExecuteStrategy()
    if(sellCount > 0 && buyCount == 0)
    {
       double highestSellOpen = GetExtremeOpenPriceByTypeMT5(POSITION_TYPE_SELL, false);
-      if(highestSellOpen > 0 && ask >= (highestSellOpen + gridDistance))
+      if(allowShort && highestSellOpen > 0 && ask >= (highestSellOpen + gridDistance))
       {
          double sellLots = ResolveGridLotSize(sellCount, startLot, maxLot, lotSizingMethod);
          TradeResult sellResult = OpenSell(_Symbol, sellLots, 0, 0, InpMagicNumber, InpTradeComment + "_GRID_SELL");
          if(sellResult.success)
          {
             g_trade_count++;
+            g_last_entry_time = TimeCurrent();
             LogInfo("Grid Trader Elite: additional SELL layer opened");
          }
       }
@@ -576,6 +635,15 @@ double GridPipsToPriceDistance(int pips, double point, int digits)
    return pips * pipMultiplier * point;
 }
 
+double PriceDistanceToPips(double distance, double point, int digits)
+{
+   if(point <= 0.0 || distance <= 0.0)
+      return 0.0;
+
+   double divisor = (digits == 3 || digits == 5) ? 10.0 : 1.0;
+   return (distance / point) / divisor;
+}
+
 double ResolveGridLotSize(int layerIndex, double startLot, double maxLot, string lotSizingMethod)
 {
    double lots = startLot > 0.0 ? startLot : 0.01;
@@ -627,6 +695,75 @@ void ManageGridBasketExit(int gridTakeProfitPips)
             LogInfo("Grid Trader Elite: SELL basket closed at target");
       }
    }
+}
+
+int GetBarsSinceTime(datetime eventTime)
+{
+   if(eventTime <= 0)
+      return 999999;
+
+   int shift = iBarShift(_Symbol, PERIOD_CURRENT, eventTime, true);
+   if(shift < 0)
+      return 999999;
+
+   return shift;
+}
+
+double GetLatestClosedTradePnl(datetime &closeTime)
+{
+   closeTime = 0;
+   if(!HistorySelect(TimeCurrent() - 86400 * 30, TimeCurrent()))
+      return 0.0;
+
+   int totalDeals = HistoryDealsTotal();
+   for(int i = totalDeals - 1; i >= 0; i--)
+   {
+      ulong dealTicket = HistoryDealGetTicket(i);
+      if(dealTicket <= 0)
+         continue;
+
+      if(HistoryDealGetString(dealTicket, DEAL_SYMBOL) != _Symbol)
+         continue;
+
+      if((int)HistoryDealGetInteger(dealTicket, DEAL_MAGIC) != InpMagicNumber)
+         continue;
+
+      int entry = (int)HistoryDealGetInteger(dealTicket, DEAL_ENTRY);
+      if(entry != DEAL_ENTRY_OUT && entry != DEAL_ENTRY_INOUT)
+         continue;
+
+      closeTime = (datetime)HistoryDealGetInteger(dealTicket, DEAL_TIME);
+      return HistoryDealGetDouble(dealTicket, DEAL_PROFIT) +
+             HistoryDealGetDouble(dealTicket, DEAL_SWAP) +
+             HistoryDealGetDouble(dealTicket, DEAL_COMMISSION);
+   }
+
+   return 0.0;
+}
+
+bool IsCooldownAfterLossActive(int cooldownBars)
+{
+   if(cooldownBars <= 0)
+      return false;
+
+   datetime lastCloseTime = 0;
+   double latestPnl = GetLatestClosedTradePnl(lastCloseTime);
+   if(lastCloseTime <= 0 || latestPnl >= 0.0)
+      return false;
+
+   return (GetBarsSinceTime(lastCloseTime) < cooldownBars);
+}
+
+bool IsSignalStrongEnough(double emaFast, double emaSlow, double minEmaGapPips, double minAtrPips)
+{
+   double atrPips = GetATRPips(14, 1, PERIOD_CURRENT);
+   if(atrPips == EMPTY_VALUE || atrPips < minAtrPips)
+      return false;
+
+   double point = SymbolInfoDouble(_Symbol, SYMBOL_POINT);
+   int digits = (int)SymbolInfoInteger(_Symbol, SYMBOL_DIGITS);
+   double emaGapPips = PriceDistanceToPips(MathAbs(emaFast - emaSlow), point, digits);
+   return (emaGapPips >= minEmaGapPips);
 }
 
 double GetEMAValue(int period, int shift)
@@ -754,6 +891,9 @@ void ClosePositionsByTypeMT5(ENUM_POSITION_TYPE posType)
 
 void ManageTrailingStops()
 {
+   if(IsGridStrategy())
+      return;
+
    for(int i = PositionsTotal() - 1; i >= 0; i--)
    {
       ulong ticket = PositionGetTicket(i);

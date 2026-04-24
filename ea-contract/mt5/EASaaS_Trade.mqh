@@ -27,6 +27,19 @@ int g_trade_max_slippage = 10;
 int g_trade_retry_count = 3;
 int g_trade_retry_delay = 1000;
 
+ENUM_ORDER_TYPE_FILLING GetSymbolFillingMode(string symbol)
+{
+   long fillingMode = SymbolInfoInteger(symbol, SYMBOL_FILLING_MODE);
+
+   if((fillingMode & SYMBOL_FILLING_IOC) == SYMBOL_FILLING_IOC)
+      return ORDER_FILLING_IOC;
+
+   if((fillingMode & SYMBOL_FILLING_FOK) == SYMBOL_FILLING_FOK)
+      return ORDER_FILLING_FOK;
+
+   return ORDER_FILLING_RETURN;
+}
+
 bool PreTradeCheck(string symbol)
 {
    if(!CheckLicenseValid())
@@ -114,7 +127,7 @@ TradeResult OpenBuy(string symbol, double lots, int slPips, int tpPips, int magi
       request.deviation = g_trade_max_slippage;
       request.magic = magicNumber;
       request.comment = orderComment;
-      request.type_filling = ORDER_FILLING_FOK;
+      request.type_filling = GetSymbolFillingMode(symbol);
 
       if(OrderSend(request, tradeResult))
       {
@@ -213,7 +226,7 @@ TradeResult OpenSell(string symbol, double lots, int slPips, int tpPips, int mag
       request.deviation = g_trade_max_slippage;
       request.magic = magicNumber;
       request.comment = orderComment;
-      request.type_filling = ORDER_FILLING_FOK;
+      request.type_filling = GetSymbolFillingMode(symbol);
 
       if(OrderSend(request, tradeResult))
       {
@@ -292,7 +305,7 @@ bool ClosePosition(ulong ticket)
       request.position = ticket;
       request.price = closePrice;
       request.deviation = g_trade_max_slippage;
-      request.type_filling = ORDER_FILLING_FOK;
+      request.type_filling = GetSymbolFillingMode(sym);
 
       if(OrderSend(request, tradeResult))
       {

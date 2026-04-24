@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3-Wave Cashout — TradeCandle v11</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0A0A0A; overflow: hidden; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/p5.min.js"></script>
+<script>
+// ─── 3-Wave Cashout Infographic ───────────────────────────────────
+// 1200x1500 portrait infographic explaining the 3-Wave Cashout system
+
+const W = 1200, H = 1500;
+
+const PALETTE = {
+  bg: '#0A0A0F',
+  bgCard: '#111118',
+  gold: '#D4AF37',
+  goldLight: '#F5C842',
+  green: '#10B981',
+  greenLight: '#34D399',
+  red: '#EF4444',
+  redLight: '#F87171',
+  white: '#FFFFFF',
+  textGray: '#9CA3AF',
+  textLight: '#E5E7EB',
+  amber: '#F59E0B',
+  dark: '#1F2937',
+};
+
+function setup() {
+  createCanvas(W, H);
+  pixelDensity(1);
+  noLoop(); // Static infographic
+}
+
+function draw() {
+  background(PALETTE.bg);
+  
+  drawHeader();
+  drawTraditionalEA();
+  drawWaveDiagram();
+  drawComparison();
+  drawThreeWaves();
+  drawSummary();
+  drawFooter();
+}
+
+function drawHeader() {
+  // Top bar accent
+  noStroke();
+  fill(PALETTE.gold);
+  rect(0, 0, W, 6);
+  
+  // Brand
+  fill(PALETTE.gold);
+  textAlign(CENTER);
+  textFont('sans-serif');
+  textSize(18);
+  textStyle(NORMAL);
+  text('TradeCandle v11', W/2, 50);
+  
+  // Main title
+  fill(PALETTE.white);
+  textSize(56);
+  textStyle(BOLD);
+  text('3-Wave Cashout', W/2, 110);
+  
+  // Subtitle
+  fill(PALETTE.goldLight);
+  textSize(24);
+  textStyle(NORMAL);
+  text('ปิดกำไรเป็น 3 รอบ — ยังไงก็ได้กำไร', W/2, 150);
+  
+  // Decorative line
+  stroke(PALETTE.gold);
+  strokeWeight(2);
+  line(W/2 - 100, 170, W/2 + 100, 170);
+  noStroke();
+}
+
+function drawTraditionalEA() {
+  let y = 210;
+  
+  // Section title
+  fill(PALETTE.redLight);
+  textAlign(LEFT);
+  textSize(20);
+  textStyle(BOLD);
+  text('❌ EA ทั่วไป', 60, y);
+  
+  fill(PALETTE.textGray);
+  textSize(14);
+  textStyle(NORMAL);
+  text('รอ TP เต็ม 100% หรือ SL → ราคากลับ = ขาดทุน', 60, y + 28);
+  
+  // Mini chart showing loss scenario
+  y += 50;
+  let chartX = 60, chartW = W - 120, chartH = 160;
+  
+  // Chart background
+  fill(PALETTE.bgCard);
+  noStroke();
+  rect(chartX, y, chartW, chartH, 12);
+  
+  // Price line going up then crashing
+  let entryPrice = y + chartH * 0.6;
+  let peakPrice = y + chartH * 0.15;
+  let exitPrice = y + chartH * 0.85; // Below entry = loss
+  
+  // Entry line
+  stroke(PALETTE.textGray + '40');
+  strokeWeight(1);
+  drawingContext.setLineDash([4, 4]);
+  line(chartX + 20, entryPrice, chartX + chartW - 20, entryPrice);
+  drawingContext.setLineDash([]);
+  
+  noStroke();
+  fill(PALETTE.textGray);
+  textSize(11);
+  textAlign(RIGHT);
+  text('Entry', chartX + chartW - 25, entryPrice - 5);
+  
+  // Price line
+  noFill();
+  stroke(PALETTE.red);
+  strokeWeight(2.5);
+  beginShape();
+  for (let i = 0; i <= 100; i++) {
+    let px = chartX + 20 + (i / 100) * (chartW - 40);
+    let py;
+    if (i < 30) py = lerp(entryPrice, peakPrice, i / 30);
+    else if (i < 50) py = peakPrice + sin((i - 30) * 0.3) * 15;
+    else py = lerp(peakPrice, exitPrice, (i - 50) / 50);
+    vertex(px, py);
+  }
+  endShape();
+  
+  // TP line (not reached)
+  stroke(PALETTE.greenLight + '60');
+  strokeWeight(1);
+  drawingContext.setLineDash([6, 4]);
+  line(chartX + 20, peakPrice - 20, chartX + chartW - 20, peakPrice - 20);
+  drawingContext.setLineDash([]);
+  
+  noStroke();
+  fill(PALETTE.green + '80');
+  textSize(11);
+  textAlign(LEFT);
+  text('TP (ไม่ถึง)', chartX + 30, peakPrice - 28);
+  
+  // Loss label
+  fill(PALETTE.red);
+  textSize(16);
+  textStyle(BOLD);
+  textAlign(CENTER);
+  text('-$340 ขาดทุน 😤', chartX + chartW/2, exitPrice + 25);
+  
+  textStyle(NORMAL);
+}
+
+function drawWaveDiagram() {
+  let y = 470;
+  
+  // Section title
+  fill(PALETTE.greenLight);
+  textAlign(LEFT);
+  textSize(20);
+  textStyle(BOLD);
+  text('✅ 3-Wave Cashout — TradeCandle v11', 60, y);
+  
+  fill(PALETTE.textGray);
+  textSize(14);
+  textStyle(NORMAL);
+  text('ปิดกำไรทยอย 3 รอบ → ราคากลับก็ยังได้กำไร', 60, y + 28);
+  
+  // Main chart
+  y += 55;
+  let chartX = 60, chartW = W - 120, chartH = 280;
+  
+  // Chart background
+  fill(PALETTE.bgCard);
+  noStroke();
+  rect(chartX, y, chartW, chartH, 12);
+  
+  let entryPrice = y + chartH * 0.75;
+  let w1Price = y + chartH * 0.45;
+  let w2Price = y + chartH * 0.22;
+  let w3Price = y + chartH * 0.1;
+  
+  // Entry line
+  stroke(PALETTE.textGray + '40');
+  strokeWeight(1);
+  drawingContext.setLineDash([4, 4]);
+  line(chartX + 20, entryPrice, chartX + chartW - 20, entryPrice);
+  drawingContext.setLineDash([]);
+  
+  noStroke();
+  fill(PALETTE.textGray);
+  textSize(11);
+  textAlign(LEFT);
+  text('Entry $2,350', chartX + 25, entryPrice + 18);
+  
+  // Profit zone fill
+  drawingContext.save();
+  drawingContext.beginPath();
+  drawingContext.rect(chartX, y + 10, chartW, entryPrice - y - 10);
+  drawingContext.clip();
+  drawingContext.fillStyle = 'rgba(16, 185, 129, 0.06)';
+  drawingContext.fillRect(chartX, y + 10, chartW, entryPrice - y - 10);
+  drawingContext.restore();
+  
+  // Price curve
+  noFill();
+  stroke(PALETTE.gold);
+  strokeWeight(3);
+  beginShape();
+  for (let i = 0; i <= 200; i++) {
+    let px = chartX + 20 + (i / 200) * (chartW - 40);
+    let py;
+    if (i < 40) py = lerp(entryPrice, w1Price, i / 40) + sin(i * 0.2) * 5;
+    else if (i < 55) py = w1Price + sin((i - 40) * 0.4) * 15;
+    else if (i < 100) py = lerp(w1Price + 15, w2Price, (i - 55) / 45) + sin(i * 0.2) * 8;
+    else if (i < 115) py = w2Price + sin((i - 100) * 0.3) * 10;
+    else if (i < 170) py = lerp(w2Price + 10, w3Price, (i - 115) / 55) + sin(i * 0.15) * 6;
+    else py = w3Price + sin((i - 170) * 0.3) * 8;
+    vertex(px, py);
+  }
+  endShape();
+  
+  // Wave markers
+  let waves = [
+    { x: chartX + chartW * 0.2, y: w1Price, pct: '25%', profit: '+$150', label: 'Wave 1', color: PALETTE.green },
+    { x: chartX + chartW * 0.5, y: w2Price, pct: '50%', profit: '+$525', label: 'Wave 2', color: PALETTE.goldLight },
+    { x: chartX + chartW * 0.8, y: w3Price, pct: '25%', profit: '+$700+', label: 'Wave 3', color: PALETTE.amber },
+  ];
+  
+  for (let w of waves) {
+    // Vertical dashed line from entry
+    stroke(w.color + '80');
+    strokeWeight(1);
+    drawingContext.setLineDash([4, 4]);
+    line(w.x, entryPrice, w.x, w.y);
+    drawingContext.setLineDash([]);
+    
+    // Circle marker
+    noStroke();
+    fill(w.color);
+    ellipse(w.x, w.y, 14);
+    
+    // Glow
+    fill(w.color + '30');
+    ellipse(w.x, w.y, 30);
+    
+    // Label above
+    fill(w.color);
+    textAlign(CENTER);
+    textSize(16);
+    textStyle(BOLD);
+    text(w.label + ' ' + w.pct, w.x, w.y - 20);
+    
+    textSize(13);
+    textStyle(NORMAL);
+    text(w.profit, w.x, w.y - 5);
+  }
+  
+  textStyle(NORMAL);
+}
+
+function drawComparison() {
+  let y = 820;
+  
+  fill(PALETTE.white);
+  textAlign(CENTER);
+  textSize(22);
+  textStyle(BOLD);
+  text('เปรียบเทียบผลลัพธ์', W/2, y);
+  textStyle(NORMAL);
+  
+  y += 30;
+  let colW = (W - 150) / 2;
+  
+  // EA Tradisional box
+  drawComparisonBox(75, y, colW, '❌ EA ทั่วไป', [
+    'รอ TP เต็ม 100%',
+    'ราคากลับ = ขาดทุน',
+    'กำไร: $0 หรือ -$340',
+    'นั่งดูจอทั้งวัน',
+  ], PALETTE.red, PALETTE.redLight);
+  
+  // TradeCandle box
+  drawComparisonBox(75 + colW + 40, y, colW, '✅ 3-Wave Cashout', [
+    'ปิดทยอย 25% → 50% → Trail',
+    'ราคากลับก็ยังได้กำไร',
+    'กำไร: +$525 ขั้นต่ำ',
+    'ไม่ต้องดูจอ ทำอัตโนมัติ',
+  ], PALETTE.green, PALETTE.greenLight);
+}
+
+function drawComparisonBox(x, y, w, title, items, borderColor, textColor) {
+  // Background
+  fill(PALETTE.bgCard);
+  stroke(borderColor + '60');
+  strokeWeight(1);
+  rect(x, y, w, 200, 12);
+  
+  // Top accent
+  noStroke();
+  fill(borderColor);
+  rect(x, y, w, 4, 12, 12, 0, 0);
+  
+  // Title
+  fill(textColor);
+  textAlign(CENTER);
+  textSize(16);
+  textStyle(BOLD);
+  text(title, x + w/2, y + 35);
+  
+  // Items
+  textStyle(NORMAL);
+  textSize(14);
+  fill(PALETTE.textLight);
+  textAlign(LEFT);
+  let iy = y + 65;
+  for (let item of items) {
+    text(item, x + 25, iy);
+    iy += 32;
+  }
+}
+
+function drawThreeWaves() {
+  let y = 1090;
+  
+  fill(PALETTE.gold);
+  textAlign(CENTER);
+  textSize(22);
+  textStyle(BOLD);
+  text('รายละเอียด 3 คลื่น', W/2, y);
+  textStyle(NORMAL);
+  
+  y += 35;
+  let colW = (W - 180) / 3;
+  
+  let waveData = [
+    {
+      title: 'Wave 1',
+      subtitle: 'ปิด 25% ของ TP',
+      color: PALETTE.green,
+      darkColor: '#0A2E1F',
+      details: ['ล็อคกำไรแรกทันที', '+15 จุด = ~$150', 'ปิด 0.25 lot', 'ราคายังไม่ถึง TP'],
+    },
+    {
+      title: 'Wave 2',
+      subtitle: 'ปิด 50% ของ TP',
+      color: PALETTE.goldLight,
+      darkColor: '#1A1505',
+      details: ['กำไรเพิ่มขึ้น', '+35 จุด = ~$525', 'ปิด 0.25 lot เพิ่ม', 'สะสมกำไรแล้ว 75%'],
+    },
+    {
+      title: 'Wave 3',
+      subtitle: 'Trailing Stop',
+      color: PALETTE.amber,
+      darkColor: '#1A0F05',
+      details: ['ไล่ตามเทรนด์', 'ไม่จำกัดกำไรสูงสุด', 'Breakeven + Trail', '+65 จุดขึ้นไป'],
+    },
+  ];
+  
+  for (let i = 0; i < 3; i++) {
+    let w = waveData[i];
+    let bx = 60 + i * (colW + 30);
+    
+    // Card
+    fill(w.darkColor);
+    stroke(w.color + '40');
+    strokeWeight(1);
+    rect(bx, y, colW, 220, 12);
+    
+    // Top bar
+    noStroke();
+    fill(w.color);
+    rect(bx, y, colW, 4, 12, 12, 0, 0);
+    
+    // Wave number circle
+    fill(w.color + '20');
+    ellipse(bx + colW/2, y + 45, 40, 40);
+    fill(w.color);
+    textAlign(CENTER);
+    textSize(20);
+    textStyle(BOLD);
+    text(w.title, bx + colW/2, y + 52);
+    
+    // Subtitle
+    textSize(13);
+    textStyle(NORMAL);
+    text(w.subtitle, bx + colW/2, y + 75);
+    
+    // Details
+    fill(PALETTE.textLight);
+    textSize(12);
+    textAlign(LEFT);
+    let dy = y + 100;
+    for (let d of w.details) {
+      text('• ' + d, bx + 20, dy);
+      dy += 28;
+    }
+  }
+}
+
+function drawSummary() {
+  let y = 1370;
+  
+  // Summary box
+  drawingContext.save();
+  drawingContext.fillStyle = 'rgba(212, 175, 55, 0.08)';
+  drawingContext.beginPath();
+  drawingContext.roundRect(60, y, W - 120, 50, 12);
+  drawingContext.fill();
+  drawingContext.strokeStyle = 'rgba(212, 175, 55, 0.3)';
+  drawingContext.lineWidth = 1;
+  drawingContext.stroke();
+  drawingContext.restore();
+  
+  fill(PALETTE.goldLight);
+  textAlign(CENTER);
+  textSize(18);
+  textStyle(BOLD);
+  text('💡 สรุป: ยังไงก็ได้กำไรบางส่วน — ไม่ต้องรอ TP เต็ม 100%', W/2, y + 32);
+  textStyle(NORMAL);
+}
+
+function drawFooter() {
+  let y = H - 40;
+  
+  // Bottom bar
+  noStroke();
+  fill(PALETTE.gold);
+  rect(0, H - 6, W, 6);
+  
+  fill(PALETTE.textGray);
+  textAlign(CENTER);
+  textSize(14);
+  text('TradeCandle v11 • AI Gold Trading • tradecandle.ai', W/2, y + 5);
+}
+
+function keyPressed() {
+  if (key === 's' || key === 'S') {
+    saveCanvas('3wave-cashout-infographic', 'png');
+  }
+}
+</script>
+</body>
+</html>

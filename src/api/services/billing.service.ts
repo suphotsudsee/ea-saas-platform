@@ -89,6 +89,20 @@ export async function createCheckoutSession(
   return { sessionId: session.id, url: session.url };
 }
 
+export async function createCustomerPortalSession(userId: string, returnUrl: string) {
+  const stripe = getStripeClient();
+  const user = await prisma.user.findUnique({ where: { id: userId } });
+  if (!user) throw new Error('User not found');
+
+  const stripeCustomerId = await getOrCreateStripeCustomer(user.id, user.email, user.name || undefined);
+  const session = await stripe.billingPortal.sessions.create({
+    customer: stripeCustomerId,
+    return_url: returnUrl,
+  });
+
+  return { url: session.url };
+}
+
 // ─── Handle Stripe Webhook ───────────────────────────────────────────────────
 
 export async function handleStripeWebhook(event: Stripe.Event) {

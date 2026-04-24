@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>FB Post 2 - Smart Money Filters</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/p5.min.js"></script>
+<style>body{margin:0;overflow:hidden;background:#0A0A0F;}</style>
+</head>
+<body>
+<script>
+const W = 1200, H = 1200;
+const GOLD = '#D4AF37';
+const BLACK = '#0A0A0F';
+const GREEN = '#10B981';
+const AMBER = '#F59E0B';
+
+function setup() {
+  createCanvas(W, H);
+  pixelDensity(1);
+  noLoop();
+}
+
+function draw() {
+  background(BLACK);
+
+  // Subtle grid
+  stroke(255, 255, 255, 8);
+  strokeWeight(0.5);
+  for (let i = 0; i < W; i += 50) line(i, 0, i, H);
+  for (let j = 0; j < H; j += 50) line(0, j, W, j);
+
+  // Gold top bar
+  noStroke();
+  fill(GOLD);
+  rect(0, 0, W, 6);
+
+  // Main headline
+  fill(255);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  textSize(44);
+  text('6 Smart Money Filters', W / 2, 40);
+
+  fill(GOLD);
+  textSize(28);
+  text('อ่านทรงสตรัคเจอร์อัตโนมัติ', W / 2, 95);
+
+  // Subtitle
+  fill(180);
+  textSize(18);
+  textStyle(NORMAL);
+  text('TradeCandle v11 วิเคราะห์ Smart Money ทั้ง 6 ฟิลเตอร์ให้อัตโนมัติ', W / 2, 135);
+
+  // 6 filter cards
+  const filters = [
+    { name: 'BOS', full: 'Break of Structure', desc: 'ตรวจจับการเปลี่ยนทิศทาง\nของเทรนด์หลัก', color: GREEN, icon: '📈' },
+    { name: 'CHoCH', full: 'Change of Character', desc: 'จับจังหวะเปลี่ยนเทรนด์\nจากบึ้งเป็นขึ้นหรือกลับกัน', color: AMBER, icon: '🔄' },
+    { name: 'Order Block', full: 'OB Zone', desc: 'ระบุโซนที่สถาบัน\nเข้าเทรดรวมกัน', color: '#8B5CF6', icon: '🧱' },
+    { name: 'FVG', full: 'Fair Value Gap', desc: 'ตรวจจับช่องว่างราคา\nที่ยังไม่ถูกเติม', color: '#EC4899', icon: '⚡' },
+    { name: 'Liquidity\nSweep', full: 'Liquidity Sweep', desc: 'จับภาพการดึงราคาไป\nเก็บสต็อปก่อนกลับทิศ', color: '#F97316', icon: '🎯' },
+    { name: 'S/D Zone', full: 'Supply & Demand', desc: 'ระบุโซนอุปสงค์-อุปทาน\nที่ราคาจะตอบสนอง', color: '#06B6D4', icon: '⚖️' }
+  ];
+
+  const startY = 200;
+  const cardW = 320;
+  const cardH = 260;
+  const gapX = (W - 3 * cardW) / 4;
+  const gapY = 30;
+
+  for (let i = 0; i < 6; i++) {
+    let row = Math.floor(i / 3);
+    let col = i % 3;
+    let x = gapX + col * (cardW + gapX);
+    let y = startY + row * (cardH + gapY);
+
+    let f = filters[i];
+
+    // Card background
+    fill(18, 18, 28);
+    stroke(f.color);
+    strokeWeight(2);
+    rect(x, y, cardW, cardH, 16);
+
+    // Icon circle
+    fill(color(f.color).levels[0], color(f.color).levels[1], color(f.color).levels[2], 30);
+    noStroke();
+    ellipse(x + 55, y + 55, 65, 65);
+    
+    fill(255);
+    textAlign(CENTER, CENTER);
+    textSize(32);
+    text(f.icon, x + 55, y + 52);
+
+    // Filter name
+    fill(f.color);
+    textAlign(LEFT, TOP);
+    textStyle(BOLD);
+    textSize(26);
+    text(f.name, x + 100, y + 20);
+
+    // Full name
+    fill(180);
+    textSize(16);
+    textStyle(NORMAL);
+    textAlign(LEFT, TOP);
+    text(f.full, x + 100, y + 55);
+
+    // Description
+    fill(200);
+    textSize(17);
+    let lines = f.desc.split('\n');
+    for (let li = 0; li < lines.length; li++) {
+      text(lines[li], x + 25, y + 140 + li * 24);
+    }
+
+    // Checkmark badge
+    fill(GREEN);
+    noStroke();
+    rect(x + cardW - 50, y + 12, 38, 26, 13);
+    fill(255);
+    textAlign(CENTER, CENTER);
+    textSize(14);
+    textStyle(BOLD);
+    text('✓', x + cardW - 31, y + 24);
+  }
+
+  // Bottom section - combined power statement
+  fill(GOLD);
+  noStroke();
+  rect(100, 800, W - 200, 80, 40);
+  fill(BLACK);
+  textAlign(CENTER, CENTER);
+  textSize(26);
+  textStyle(BOLD);
+  text('6 ฟิลเตอร์ทำงานร่วมกัน → สัญญาณเทรดคุณภาพสูง', W / 2, 840);
+
+  // Mini chart visualization at bottom
+  drawMiniChart(150, 930, 900, 160);
+
+  // CTA
+  fill(GOLD);
+  rect(W / 2 - 260, 1150, 520, 55, 28);
+  fill(BLACK);
+  textAlign(CENTER, CENTER);
+  textSize(24);
+  textStyle(BOLD);
+  text('เริ่ม 7 วันฟรี → No Credit Card', W / 2, 1177);
+
+  fill(130);
+  textSize(14);
+  textStyle(NORMAL);
+  text('TradeCandle v11 • AI EA for XAUUSD/MT5', W / 2, 1180);
+}
+
+function drawMiniChart(x, y, w, h) {
+  fill(14, 14, 24);
+  stroke(40, 40, 55);
+  strokeWeight(1);
+  rect(x, y, w, h, 12);
+
+  // Grid
+  stroke(30, 30, 45);
+  strokeWeight(0.5);
+  for (let i = y + 30; i < y + h; i += 30) line(x + 10, i, x + w - 10, i);
+
+  // Candles going up with filters marked
+  let candleStartX = x + 40;
+  let candleW = 18;
+  let candleGap = 28;
+  let cY = y + h / 2;
+
+  for (let i = 0; i < 25; i++) {
+    let cx = candleStartX + i * candleGap;
+    if (cx > x + w - 40) break;
+    let isUp = random() > 0.35;
+    let bodyH = random() > 0.7 ? random(30, 50) : random(15, 30);
+    let wickTop = random(5, 15);
+    let wickBot = random(5, 15);
+
+    let baseY = cY + sin(i * 0.3) * 30 - i * 2.5;
+
+    // Wick
+    stroke(isUp ? color(GREEN) : color(RED));
+    strokeWeight(1);
+    line(cx + candleW / 2, baseY - bodyH / 2 - wickTop, cx + candleW / 2, baseY + bodyH / 2 + wickBot);
+
+    // Body
+    noStroke();
+    fill(isUp ? color(GREEN) : color('#EF4444'));
+    rect(cx, baseY - bodyH / 2, candleW, bodyH, 2);
+  }
+
+  // Filter markers
+  let markers = [
+    { label: 'BOS', mx: x + 180, my: y + 50, col: GREEN },
+    { label: 'OB', mx: x + 380, my: y + 60, col: '#8B5CF6' },
+    { label: 'FVG', mx: x + 560, my: y + 45, col: '#EC4899' },
+    { label: 'Liq.Sweep', mx: x + 720, my: y + 55, col: '#F97316' }
+  ];
+
+  for (let m of markers) {
+    fill(color(m.col).levels[0], color(m.col).levels[1], color(m.col).levels[2], 180);
+    noStroke();
+    rect(m.mx, m.my, 70, 22, 11);
+    fill(255);
+    textAlign(CENTER, CENTER);
+    textSize(11);
+    text(m.label, m.mx + 35, m.my + 11);
+  }
+}
+
+function keyPressed() {
+  if (key === 's' || key === 'S') saveCanvas('fb-post-2', 'png');
+}
+</script>
+</body>
+</html>

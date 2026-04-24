@@ -25,7 +25,8 @@ export async function GET(request: NextRequest) {
       totalTrades,
       totalRevenue,
       killedLicenses,
-      recentRiskEvents,
+      unresolvedRiskEvents,
+      unresolvedRiskAccounts,
     ] = await Promise.all([
       prisma.user.count(),
       prisma.user.count({ where: { status: 'ACTIVE' } }),
@@ -42,6 +43,11 @@ export async function GET(request: NextRequest) {
       }),
       prisma.license.count({ where: { killSwitch: true } }),
       prisma.riskEvent.count({ where: { resolvedAt: null } }),
+      prisma.riskEvent.findMany({
+        where: { resolvedAt: null },
+        select: { tradingAccountId: true },
+        distinct: ['tradingAccountId'],
+      }),
     ]);
 
     // Check global kill switch
@@ -82,7 +88,8 @@ export async function GET(request: NextRequest) {
         totalTrades,
         totalRevenueCents: totalRevenue._sum.amountCents || 0,
         killedLicenses,
-        unresolvedRiskEvents: recentRiskEvents,
+        unresolvedRiskEvents,
+        unresolvedRiskAccounts: unresolvedRiskAccounts.length,
         globalKillSwitch: globalKillSwitch === '1',
       },
       growth: {

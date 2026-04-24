@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Line OA Rich Menu — TradeCandle v11</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0A0A0A; overflow: hidden; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/p5.min.js"></script>
+<script>
+// ─── Line OA Rich Menu — 2500x1686 px ────────────────────────
+// 4 zones: สมัครใช้ | ดูราคา | Dashboard | ช่วยเหลือ
+
+const W = 2500, H = 1686;
+
+const PALETTE = {
+  bg: '#0A0A0F',
+  gold: '#D4AF37',
+  goldLight: '#F5C842',
+  green: '#10B981',
+  white: '#FFFFFF',
+  textGray: '#9CA3AF',
+  amber: '#F59E0B',
+  dark1: '#0F1118',
+  dark2: '#151105',
+  dark3: '#1A1F15',
+  dark4: '#101520',
+};
+
+function setup() {
+  createCanvas(W, H);
+  pixelDensity(1);
+  noLoop();
+}
+
+function draw() {
+  background(PALETTE.bg);
+  
+  // Top half
+  let halfH = H / 2;
+  let halfW = W / 2;
+  
+  // Zone 1: สมัครใช้ (top-left) — Gold accent
+  drawZone(0, 0, halfW, halfH, {
+    icon: '🚀',
+    title: 'สมัครใช้',
+    subtitle: '7 วันฟรี',
+    color: PALETTE.gold,
+    darkBg: PALETTE.dark2,
+  });
+  
+  // Zone 2: ดูราคา (top-right) — Green accent
+  drawZone(halfW, 0, halfW, halfH, {
+    icon: '💰',
+    title: 'ดูราคา',
+    subtitle: '990฿ — 4,990฿',
+    color: PALETTE.green,
+    darkBg: PALETTE.dark3,
+  });
+  
+  // Divider lines
+  stroke(PALETTE.gold + '30');
+  strokeWeight(2);
+  line(halfW, 0, halfW, H); // Vertical
+  line(0, halfH, W, halfH); // Horizontal
+  
+  // Zone 3: Dashboard (bottom-left) — Blue/cyan accent
+  drawZone(0, halfH, halfW, halfH, {
+    icon: '📊',
+    title: 'Dashboard',
+    subtitle: 'ดูผล Real-time',
+    color: '#06B6D4',
+    darkBg: PALETTE.dark4,
+  });
+  
+  // Zone 4: ช่วยเหลือ (bottom-right) — Amber accent
+  drawZone(halfW, halfH, halfW, halfH, {
+    icon: '💬',
+    title: 'ช่วยเหลือ',
+    subtitle: 'พิมพ์ "ช่วย"',
+    color: PALETTE.amber,
+    darkBg: PALETTE.dark1,
+  });
+}
+
+function drawZone(x, y, w, h, zone) {
+  // Background fill
+  fill(zone.darkBg);
+  noStroke();
+  rect(x, y, w, h);
+  
+  // Subtle gradient overlay
+  drawingContext.save();
+  let gradient = drawingContext.createRadialGradient(
+    x + w/2, y + h/2, 0,
+    x + w/2, y + h/2, w * 0.6
+  );
+  gradient.addColorStop(0, zone.color + '15');
+  gradient.addColorStop(1, 'transparent');
+  drawingContext.fillStyle = gradient;
+  drawingContext.fillRect(x, y, w, h);
+  drawingContext.restore();
+  
+  // Decorative corner lines
+  stroke(zone.color + '30');
+  strokeWeight(2);
+  let margin = 40;
+  // Top-left corner
+  line(x + margin, y + margin, x + margin + 50, y + margin);
+  line(x + margin, y + margin, x + margin, y + margin + 50);
+  // Bottom-right corner
+  line(x + w - margin, y + h - margin, x + w - margin - 50, y + h - margin);
+  line(x + w - margin, y + h - margin, x + w - margin, y + h - margin - 50);
+  noStroke();
+  
+  // Icon (large emoji)
+  fill('#FFFFFF');
+  textAlign(CENTER, CENTER);
+  textSize(100);
+  text(zone.icon, x + w/2, y + h/2 - 80);
+  
+  // Title
+  fill(zone.color);
+  textFont('sans-serif');
+  textSize(52);
+  textStyle(BOLD);
+  textAlign(CENTER, CENTER);
+  text(zone.title, x + w/2, y + h/2 + 30);
+  
+  // Subtitle
+  fill('#9CA3AF');
+  textSize(28);
+  textStyle(NORMAL);
+  text(zone.subtitle, x + w/2, y + h/2 + 80);
+  
+  // Bottom accent bar
+  fill(zone.color + '60');
+  noStroke();
+  rect(x + 20, y + h - 8, w - 40, 4, 2);
+}
+
+function keyPressed() {
+  if (key === 's' || key === 'S') {
+    saveCanvas('line-rich-menu', 'png');
+  }
+}
+</script>
+</body>
+</html>

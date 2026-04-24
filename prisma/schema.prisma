@@ -38,13 +38,22 @@ enum SubscriptionStatus {
   CANCELED
   EXPIRED
   TRIAL
+  PENDING_PAYMENT
 }
 
 enum PaymentStatus {
   PENDING
+  AWAITING_DEPOSIT
   COMPLETED
   FAILED
+  EXPIRED
   REFUNDED
+}
+
+enum PaymentMethod {
+  USDT_ERC20
+  USDT_TRC20
+  USDT_BEP20
 }
 
 enum LicenseStatus {
@@ -175,22 +184,36 @@ model Subscription {
 }
 
 model Payment {
-  id              String        @id @default(cuid())
-  userId          String
-  subscriptionId  String?
-  amountCents     Int
-  currency        String        @default("USD")
-  status          PaymentStatus @default(PENDING)
-  stripePaymentId String?       @unique
-  description     String?
+  id                String        @id @default(cuid())
+  userId            String
+  subscriptionId    String?
+  amountCents       Int
+  currency          String        @default("USDT")
+  status            PaymentStatus @default(PENDING)
+  paymentMethod     PaymentMethod @default(USDT_ERC20)
+  stripePaymentId   String?       @unique
 
-  user            User          @relation(fields: [userId], references: [id])
-  subscription    Subscription? @relation(fields: [subscriptionId], references: [id])
+  // USDT payment fields
+  depositAddress    String?       // Wallet address to send USDT to
+  depositNetwork    String?       @default("ERC-20") // ERC-20 (Ethereum), TRC-20 (Tron), BEP-20 (BSC)
+  txHash            String?       @unique             // Blockchain transaction hash
+  fromAddress       String?       // Sender wallet address
+  confirmations     Int?          @default(0)         // Blockchain confirmations
+  verifiedAt        DateTime?     // When payment was verified on-chain
+  expiresAt         DateTime?     // Payment expiration (e.g., 30 min for deposit)
 
-  createdAt       DateTime      @default(now())
+  description       String?
+
+  user              User          @relation(fields: [userId], references: [id])
+  subscription      Subscription? @relation(fields: [subscriptionId], references: [id])
+
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
 
   @@index([userId])
   @@index([status])
+  @@index([depositAddress])
+  @@index([txHash])
   @@map("payments")
 }
 

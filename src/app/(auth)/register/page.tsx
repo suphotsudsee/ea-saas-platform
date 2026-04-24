@@ -6,15 +6,42 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { CardContent, CardFooter } from '@/components/ui/card';
 import { useState } from 'react';
+import api from '@/lib/api';
 
 export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+    setSuccess(null);
+
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
     setIsLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    window.location.href = '/login';
+    try {
+      await api.post('/auth/register', {
+        name,
+        email,
+        password,
+      });
+
+      setSuccess('Registration successful. You can sign in now.');
+      window.location.href = '/login';
+    } catch (err: any) {
+      setError(err?.response?.data?.error || 'Failed to create account');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -34,20 +61,48 @@ export default function RegisterPage() {
         <CardContent className="space-y-5 p-6">
           <div className="space-y-2">
             <label className="text-sm font-medium text-slate-300">Full name</label>
-            <Input type="text" placeholder="John Doe" className="h-11 rounded-xl border-slate-800 bg-slate-950 text-white" required />
+            <Input
+              type="text"
+              placeholder="John Doe"
+              className="h-11 rounded-xl border-slate-800 bg-slate-950 text-white"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium text-slate-300">Email</label>
-            <Input type="email" placeholder="name@company.com" className="h-11 rounded-xl border-slate-800 bg-slate-950 text-white" required />
+            <Input
+              type="email"
+              placeholder="name@company.com"
+              className="h-11 rounded-xl border-slate-800 bg-slate-950 text-white"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium text-slate-300">Password</label>
-            <Input type="password" className="h-11 rounded-xl border-slate-800 bg-slate-950 text-white" required />
+            <Input
+              type="password"
+              className="h-11 rounded-xl border-slate-800 bg-slate-950 text-white"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium text-slate-300">Confirm password</label>
-            <Input type="password" className="h-11 rounded-xl border-slate-800 bg-slate-950 text-white" required />
+            <Input
+              type="password"
+              className="h-11 rounded-xl border-slate-800 bg-slate-950 text-white"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
           </div>
+          {error ? <div className="text-sm text-rose-300">{error}</div> : null}
+          {success ? <div className="text-sm text-emerald-300">{success}</div> : null}
         </CardContent>
         <CardFooter className="flex flex-col gap-4 p-6 pt-0">
           <Button disabled={isLoading} className="h-11 w-full rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500">

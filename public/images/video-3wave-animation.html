@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3-Wave Cashout Animation — TradeCandle v11</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+    canvas { display: block; }
+    #controls { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); color: #9CA3AF; font-family: sans-serif; font-size: 12px; text-align: center; z-index: 10; }
+  </style>
+</head>
+<body>
+<div id="controls">Press [S] Save PNG • [G] Save GIF (5s) • [R] Reset • [Space] Pause</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/p5.min.js"></script>
+<script>
+// ─── 3-Wave Cashout Animated Demo ──────────────────────────────
+// 1080x1920 (vertical) for TikTok/Reels
+// Shows 3-Wave Cashout mechanism with animated chart
+
+const W = 1080, H = 1920;
+const PALETTE = {
+  bg: '#0A0A0F',
+  gold: '#D4AF37',
+  goldLight: '#F5C842',
+  green: '#10B981',
+  greenLight: '#34D399',
+  red: '#EF4444',
+  white: '#FFFFFF',
+  textGray: '#6B7280',
+  textLight: '#E5E7EB',
+  amber: '#F59E0B',
+  dark: '#1F2937',
+};
+
+let frame = 0;
+let phase = 0; // 0: entry, 1: wave1, 2: wave2, 3: wave3/trail, 4: summary
+let chartPoints = [];
+let waveCloseY = [];
+let profitParticles = [];
+let paused = false;
+
+function setup() {
+  createCanvas(W, H);
+  pixelDensity(1);
+  colorMode(HSB, 360, 100, 100, 100);
+  
+  // Pre-generate chart path
+  generateChart();
+}
+
+function generateChart() {
+  chartPoints = [];
+  let totalFrames = 400;
+  for (let i = 0; i <= totalFrames; i++) {
+    let t = i / totalFrames;
+    let y;
+    if (t < 0.05) y = 0;
+    else if (t < 0.35) y = easeOutCubic((t - 0.05) / 0.3) * 350;
+    else if (t < 0.45) y = 350 - easeOutCubic((t - 0.35) / 0.1) * 80 + Math.sin(t * 40) * 20;
+    else if (t < 0.7) y = 270 + easeOutCubic((t - 0.45) / 0.25) * 280;
+    else if (t < 0.8) y = 550 - easeOutCubic((t - 0.7) / 0.1) * 50 + Math.sin(t * 35) * 15;
+    else y = 500 + easeOutCubic((t - 0.8) / 0.2) * 150 + Math.sin(t * 25) * 10;
+    
+    chartPoints.push(y);
+  }
+  
+  waveCloseY = [0 * 350, 0.55 * 550, 0.9 * 650]; // Relative profit at each wave close
+}
+
+function easeOutCubic(t) {
+  return 1 - Math.pow(1 - t, 3);
+}
+
+function draw() {
+  if (paused) return;
+  frame++;
+  
+  background(PALETTE.bg);
+  
+  let progress = (frame % 420) / 420; // Loop every ~7 seconds at 60fps
+  
+  drawBackground();
+  drawHeader();
+  drawAnimatedChart(progress);
+  drawWaveMarkers(progress);
+  drawWaveLabels(progress);
+  drawProfitCounter(progress);
+  drawCTA(progress);
+}
+
+function drawBackground() {
+  // Subtle grid
+  stroke(255, 255, 255, 3);
+  strokeWeight(0.5);
+  for (let y = 300; y < 1400; y += 60) {
+    line(40, y, W - 40, y);
+  }
+  for (let x = 40; x < W - 40; x += 80) {
+    line(x, 300, x, 1400);
+  }
+  noStroke();
+}
+
+function drawHeader() {
+  // Brand
+  fill(PALETTE.gold);
+  textAlign(CENTER);
+  textFont('sans-serif');
+  textSize(36);
+  textStyle(BOLD);
+  text('TradeCandle v11', W/2, 60);
+  
+  // Main headline
+  fill(PALETTE.white);
+  textSize(72);
+  text('3-Wave', W/2, 150);
+  text('Cashout', W/2, 230);
+  
+  // Subtitle
+  fill(PALETTE.goldLight);
+  textSize(28);
+  textStyle(NORMAL);
+  text('ปิดกำไรเป็น 3 รอบ — ยังไงก็ได้กำไร', W/2, 280);
+}
+
+function drawAnimatedChart(progress) {
+  let chartX = 60;
+  let chartW = W - 120;
+  let chartTop = 360;
+  let chartH = 700;
+  let baselineY = chartTop + chartH;
+  
+  // Chart background
+  fill(17, 20, 30, 100);
+  stroke(PALETTE.gold + '15');
+  strokeWeight(1);
+  rect(chartX - 10, chartTop - 10, chartW + 20, chartH + 20, 12);
+  noStroke();
+  
+  // Entry line
+  stroke(PALETTE.textGray + '40');
+  strokeWeight(1);
+  drawingContext.setLineDash([5, 5]);
+  line(chartX, baselineY, chartX + chartW, baselineY);
+  drawingContext.setLineDash([]);
+  
+  fill(PALETTE.textGray);
+  textSize(14);
+  textAlign(LEFT);
+  text('$2,350', chartX + 10, baselineY + 20);
+  
+  // Animate price line
+  let pointsToShow = Math.min(Math.floor(progress * 400), chartPoints.length - 1);
+  
+  // Draw filled profit zone
+  if (pointsToShow > 10) {
+    drawingContext.save();
+    drawingContext.beginPath();
+    drawingContext.moveTo(chartX, baselineY);
+    for (let i = 0; i <= pointsToShow; i++) {
+      let px = chartX + (i / 400) * chartW;
+      let py = baselineY - chartPoints[i];
+      drawingContext.lineTo(px, py);
+    }
+    drawingContext.lineTo(chartX + (pointsToShow / 400) * chartW, baselineY);
+    drawingContext.closePath();
+    
+    let gradient = drawingContext.createLinearGradient(0, chartTop, 0, baselineY);
+    gradient.addColorStop(0, 'rgba(16, 185, 129, 0.15)');
+    gradient.addColorStop(1, 'rgba(16, 185, 129, 0)');
+    drawingContext.fillStyle = gradient;
+    drawingContext.fill();
+    drawingContext.restore();
+  }
+  
+  // Draw price line
+  noFill();
+  stroke(PALETTE.gold);
+  strokeWeight(3);
+  beginShape();
+  for (let i = 0; i <= pointsToShow; i++) {
+    let px = chartX + (i / 400) * chartW;
+    let py = baselineY - chartPoints[i];
+    vertex(px, py);
+  }
+  endShape();
+  
+  // Current price dot (glowing)
+  if (pointsToShow > 0) {
+    let cx = chartX + (pointsToShow / 400) * chartW;
+    let cy = baselineY - chartPoints[pointsToShow];
+    
+    // Glow
+    for (let r = 20; r > 0; r -= 5) {
+      fill(46, 79, 57, Math.floor(20 - r));
+      noStroke();
+      ellipse(cx, cy, r * 2, r * 2);
+    }
+    fill(PALETTE.gold);
+    noStroke();
+    ellipse(cx, cy, 10, 10);
+    
+    // Price label
+    let currentPip = Math.floor(chartPoints[pointsToShow] / 3.5);
+    let currentPrice = 2350 + currentPip;
+    fill(PALETTE.white);
+    textAlign(LEFT);
+    textSize(16);
+    text('$' + currentPrice, cx + 15, cy - 10);
+  }
+  
+  noStroke();
+}
+
+function drawWaveMarkers(progress) {
+  let chartX = 60;
+  let chartW = W - 120;
+  let chartTop = 360;
+  let chartH = 700;
+  let baselineY = chartTop + chartH;
+  
+  // Wave markers at specific progress points
+  let waveProgresses = [0.3, 0.6, 0.85];
+  let waveNames = ['Wave 1', 'Wave 2', 'Wave 3'];
+  let wavePcts = ['25%', '50%', 'Trail'];
+  let waveColors = [PALETTE.green, PALETTE.goldLight, PALETTE.amber];
+  
+  for (let i = 0; i < 3; i++) {
+    if (progress < waveProgresses[i]) continue;
+    
+    let wp = waveProgresses[i];
+    let pointIndex = Math.floor(wp * 400);
+    let px = chartX + (wp * chartW);
+    let py = baselineY - chartPoints[Math.min(pointIndex, chartPoints.length - 1)];
+    
+    // Dashed line from entry to wave close
+    stroke(waveColors[i] + '60');
+    strokeWeight(1);
+    drawingContext.setLineDash([4, 4]);
+    line(px, baselineY, px, py);
+    drawingContext.setLineDash([]);
+    
+    // Circle marker
+    noStroke();
+    fill(waveColors[i]);
+    ellipse(px, py, 14, 14);
+    
+    // Glow
+    fill(waveColors[i] + '30');
+    ellipse(px, py, 30, 30);
+    
+    // Label
+    fill(waveColors[i]);
+    textAlign(CENTER);
+    textSize(16);
+    textStyle(BOLD);
+    text(waveNames[i] + ' ' + wavePcts[i], px, py - 25);
+    textStyle(NORMAL);
+  }
+  noStroke();
+}
+
+function drawWaveLabels(progress) {
+  let labelY = 1120;
+  
+  let waves = [
+    { pct: '25%', desc: 'ปิดที่ 25% → ล็อคกำไรแรก', color: PALETTE.green, prog: 0.3 },
+    { pct: '50%', desc: 'ปิดที่ 50% → กำไรเพิ่มขึ้น', color: PALETTE.goldLight, prog: 0.6 },
+    { pct: 'Trail', desc: 'Trailing → ไล่เทรนด์ไม่จำกัด', color: PALETTE.amber, prog: 0.85 },
+  ];
+  
+  for (let i = 0; i < waves.length; i++) {
+    let w = waves[i];
+    if (progress < w.prog) break;
+    
+    let alpha = Math.min(1, (progress - w.prog) * 5);
+    
+    // Card
+    fill(17, 20, 30, Math.floor(alpha * 100));
+    stroke(w.color + Math.floor(alpha * 60).toString(16).padStart(2, '0'));
+    strokeWeight(1);
+    rect(60, labelY + i * 80, W - 120, 70, 10);
+    noStroke();
+    
+    // Wave indicator
+    fill(w.color);
+    ellipse(100, labelY + i * 80 + 35, 30, 30);
+    fill(PALETTE.bg);
+    textAlign(CENTER);
+    textSize(14);
+    textStyle(BOLD);
+    text('W' + (i + 1), 100, labelY + i * 80 + 40);
+    
+    // Text
+    fill(PALETTE.white);
+    textAlign(LEFT);
+    textSize(18);
+    text(w.desc, 130, labelY + i * 80 + 42);
+    textStyle(NORMAL);
+  }
+}
+
+function drawProfitCounter(progress) {
+  if (progress < 0.3) return;
+  
+  let counterY = 1360;
+  let maxProfit = 340;
+  let currentProfit = Math.floor(maxProfit * Math.min(1, (progress - 0.3) / 0.6));
+  
+  // Profit display
+  fill(PALETTE.green);
+  textAlign(CENTER);
+  textFont('sans-serif');
+  textSize(24);
+  textStyle(NORMAL);
+  text('กำไรสะสม', W/2, counterY);
+  
+  textSize(72);
+  textStyle(BOLD);
+  fill(PALETTE.greenLight);
+  text('+$' + currentProfit, W/2, counterY + 65);
+  
+  textSize(20);
+  textStyle(NORMAL);
+  fill(PALETTE.textGray);
+  text('จาก XAUUSD 0.5 lot', W/2, counterY + 100);
+}
+
+function drawCTA(progress) {
+  let ctaY = 1550;
+  
+  // CTA button (appear after progress > 0.8)
+  if (progress < 0.8) return;
+  
+  let alpha = Math.min(1, (progress - 0.8) * 5);
+  
+  // Button glow
+  drawingContext.save();
+  drawingContext.fillStyle = `rgba(212, 175, 55, ${alpha * 0.2})`;
+  drawingContext.beginPath();
+  drawingContext.roundRect(W/2 - 220, ctaY + 30, 440, 60, 30);
+  drawingContext.fill();
+  drawingContext.restore();
+  
+  // Button
+  fill(PALETTE.gold);
+  noStroke();
+  rect(W/2 - 200, ctaY + 35, 400, 50, 25);
+  
+  fill(PALETTE.bg);
+  textAlign(CENTER);
+  textSize(20);
+  textStyle(BOLD);
+  text('🔥 ทดลอง 7 วันฟรี — เริ่ม 990฿/เดือน', W/2, ctaY + 65);
+  textStyle(NORMAL);
+  
+  // Bottom
+  fill(PALETTE.textGray);
+  textSize(14);
+  text('ลิงก์ใน Bio • tradecandle.ai', W/2, ctaY + 120);
+}
+
+function keyPressed() {
+  if (key === 's' || key === 'S') saveCanvas('3wave-animation', 'png');
+  if (key === 'g' || key === 'G') saveGif('3wave-animation', 7);
+  if (key === 'r' || key === 'R') { frame = 0; }
+  if (key === ' ') { paused = !paused; }
+}
+</script>
+</body>
+</html>

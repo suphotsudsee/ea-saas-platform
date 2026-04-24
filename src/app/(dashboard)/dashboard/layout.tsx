@@ -51,7 +51,7 @@ const adminItems: NavItem[] = [
 
 function isActiveRoute(pathname: string, href: string) {
   if (pathname === href) return true;
-  if (href === '/dashboard') return false;
+  if (href === '/dashboard' || href === '/dashboard/admin') return false;
   return pathname.startsWith(`${href}/`);
 }
 
@@ -117,6 +117,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     user?.actorType === 'admin' ||
     ['ADMIN', 'SUPER_ADMIN', 'BILLING_ADMIN', 'RISK_ADMIN', 'SUPPORT'].includes(user?.role || '');
 
+  const showTraderMenu = user?.actorType !== 'admin';
+
   return (
     <div className="min-h-screen bg-[#081118] text-white">
       <div className="pointer-events-none fixed inset-0">
@@ -170,7 +172,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           </div>
 
           <nav className="mt-6 flex-1 space-y-8 overflow-y-auto pr-1">
-            <SidebarSection title="Main" items={menuItems} pathname={pathname} onNavigate={() => setMobileOpen(false)} />
+            {showTraderMenu && (
+              <SidebarSection title="Main" items={menuItems} pathname={pathname} onNavigate={() => setMobileOpen(false)} />
+            )}
             {isAdmin && (
               <SidebarSection
                 title="Administration"

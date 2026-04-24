@@ -1,14 +1,31 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { BadgeCheck, Bell, Lock, Save, UserCircle2 } from 'lucide-react';
+import { useAuth } from '@/lib/auth';
 
 export default function SettingsPage() {
+  const { user } = useAuth();
   const [isSaving, setIsSaving] = useState(false);
+  const [profile, setProfile] = useState({
+    name: '',
+    email: '',
+    timezone: 'Asia/Bangkok',
+    organization: '',
+  });
+
+  useEffect(() => {
+    setProfile({
+      name: user?.name || '',
+      email: user?.email || '',
+      timezone: 'Asia/Bangkok',
+      organization: user?.actorType === 'admin' ? 'Administration' : 'Trader workspace',
+    });
+  }, [user]);
 
   const handleSave = async () => {
     setIsSaving(true);
@@ -42,19 +59,35 @@ export default function SettingsPage() {
             <CardContent className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <Label className="text-slate-400">Full name</Label>
-                <Input defaultValue="John Doe" className="rounded-2xl border-white/10 bg-[#0c1720] text-white" />
+                <Input
+                  value={profile.name}
+                  onChange={(e) => setProfile((current) => ({ ...current, name: e.target.value }))}
+                  className="rounded-2xl border-white/10 bg-[#0c1720] text-white"
+                />
               </div>
               <div className="space-y-2">
                 <Label className="text-slate-400">Email address</Label>
-                <Input defaultValue="john@example.com" className="rounded-2xl border-white/10 bg-[#0c1720] text-white" />
+                <Input
+                  value={profile.email}
+                  onChange={(e) => setProfile((current) => ({ ...current, email: e.target.value }))}
+                  className="rounded-2xl border-white/10 bg-[#0c1720] text-white"
+                />
               </div>
               <div className="space-y-2">
                 <Label className="text-slate-400">Timezone</Label>
-                <Input defaultValue="Asia/Bangkok" className="rounded-2xl border-white/10 bg-[#0c1720] text-white" />
+                <Input
+                  value={profile.timezone}
+                  onChange={(e) => setProfile((current) => ({ ...current, timezone: e.target.value }))}
+                  className="rounded-2xl border-white/10 bg-[#0c1720] text-white"
+                />
               </div>
               <div className="space-y-2">
                 <Label className="text-slate-400">Organization</Label>
-                <Input defaultValue="EA Operations Desk" className="rounded-2xl border-white/10 bg-[#0c1720] text-white" />
+                <Input
+                  value={profile.organization}
+                  onChange={(e) => setProfile((current) => ({ ...current, organization: e.target.value }))}
+                  className="rounded-2xl border-white/10 bg-[#0c1720] text-white"
+                />
               </div>
             </CardContent>
           </Card>

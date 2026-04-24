@@ -3,25 +3,25 @@
 @tailwind utilities;
 
 :root {
-  --background: 222.2 84% 4.9%;
-  --foreground: 210 40% 98%;
-  --card: 222.2 84% 4.9%;
-  --card-foreground: 210 40% 98%;
-  --popover: 222.2 84% 4.9%;
-  --popover-foreground: 210 40% 98%;
-  --primary: 217 91% 60%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
-  --accent: 217.2 32.6% 17.5%;
-  --accent-foreground: 210 40% 98%;
+  --background: 30 10% 4%;
+  --foreground: 45 30% 95%;
+  --card: 30 10% 4%;
+  --card-foreground: 45 30% 95%;
+  --popover: 30 10% 4%;
+  --popover-foreground: 45 30% 95%;
+  --primary: 43 74% 49%;
+  --primary-foreground: 0 0% 4%;
+  --secondary: 30 20% 10%;
+  --secondary-foreground: 45 30% 95%;
+  --muted: 30 20% 10%;
+  --muted-foreground: 30 10% 55%;
+  --accent: 30 20% 10%;
+  --accent-foreground: 45 30% 95%;
   --destructive: 0 62.8% 50.6%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 217.2 32.6% 17.5%;
-  --input: 217.2 32.6% 17.5%;
-  --ring: 224.3 76.3% 48%;
+  --destructive-foreground: 45 30% 95%;
+  --border: 30 30% 14%;
+  --input: 30 30% 14%;
+  --ring: 43 74% 49%;
   --radius: 0.75rem;
 }
 
@@ -30,7 +30,7 @@
     border-color: hsl(var(--border));
   }
   body {
-    background-color: #0a0e1a;
+    background-color: #0a0a0a;
     color: hsl(var(--foreground));
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -42,10 +42,10 @@
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  @apply bg-[#0a0e1a];
+  @apply bg-[#0a0a0a];
 }
 ::-webkit-scrollbar-thumb {
-  @apply bg-slate-700 rounded-full hover:bg-slate-600;
+  @apply bg-amber-900/50 rounded-full hover:bg-amber-800/60;
 }
 
 /* ─── Smooth Scrolling ───────────────────────────────────────────────────── */
@@ -55,27 +55,23 @@ html {
 
 /* ─── Selection ──────────────────────────────────────────────────────────── */
 ::selection {
-  background: rgba(59, 130, 246, 0.3);
+  background: rgba(212, 175, 55, 0.3);
   color: white;
 }
 
 /* ─── Glass Effect ────────────────────────────────────────────────────────── */
 .glass {
-  @apply bg-white/5 backdrop-blur-xl border border-white/10;
+  @apply bg-amber-950/10 backdrop-blur-xl border border-amber-900/20;
 }
 
 /* ─── Gradient Text Helper ───────────────────────────────────────────────── */
 .gradient-text {
-  @apply bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent;
+  @apply bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 bg-clip-text text-transparent;
 }
 
 /* ─── Glow Effects ───────────────────────────────────────────────────────── */
-.glow-blue {
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3), 0 0 60px rgba(59, 130, 246, 0.1);
-}
-
-.glow-purple {
-  box-shadow: 0 0 20px rgba(147, 51, 234, 0.3), 0 0 60px rgba(147, 51, 234, 0.1);
+.glow-gold {
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3), 0 0 60px rgba(212, 175, 55, 0.1);
 }
 
 .glow-green {
@@ -98,7 +94,7 @@ html {
   content: '';
   position: absolute;
   inset: -2px;
-  background: conic-gradient(from var(--angle, 0deg), #3b82f6, #8b5cf6, #06b6d4, #3b82f6);
+  background: conic-gradient(from var(--angle, 0deg), #d4af37, #f59e0b, #eab308, #d4af37);
   border-radius: inherit;
   z-index: -1;
   animation: border-rotate 4s linear infinite;
@@ -108,7 +104,7 @@ html {
   content: '';
   position: absolute;
   inset: 2px;
-  background: #0a0e1a;
+  background: #0a0a0a;
   border-radius: inherit;
   z-index: -1;
 }
@@ -152,7 +148,7 @@ html {
 
 /* ─── Chart Tooltip ──────────────────────────────────────────────────────── */
 .recharts-tooltip-wrapper {
-  @apply !rounded-xl !border !border-slate-700/50 !bg-slate-900/95 !backdrop-blur-xl;
+  @apply !rounded-xl !border !border-amber-900/30 !bg-slate-900/95 !backdrop-blur-xl;
 }
 
 /* ─── Table Striped ──────────────────────────────────────────────────────── */
@@ -178,5 +174,5 @@ html {
 }
 
 .status-trial {
-  @apply text-blue-400 bg-blue-400/10;
+  @apply text-amber-400 bg-amber-400/10;
 }

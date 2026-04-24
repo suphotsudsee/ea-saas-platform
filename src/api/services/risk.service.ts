@@ -380,6 +380,19 @@ async function getConsecutiveLosses(tradingAccountId: string, licenseId: string)
 // ─── Get Risk Dashboard Data ─────────────────────────────────────────────────
 
 export async function getRiskDashboard() {
+  const globalKillValue = await redis.get(RedisKeys.globalKillSwitch());
+  const globalKillSwitch = globalKillValue === '1';
+  const latestGlobalKillAudit = await prisma.auditLog.findFirst({
+    where: {
+      resourceType: 'system',
+      resourceId: 'global',
+      action: {
+        in: ['GLOBAL_KILL_SWITCH_ACTIVATE', 'GLOBAL_KILL_SWITCH_DEACTIVATE'],
+      },
+    },
+    orderBy: { createdAt: 'desc' },
+  });
+
   // Get accounts near drawdown limits
   const recentRiskEvents = await prisma.riskEvent.findMany({
     where: { resolvedAt: null },
@@ -431,7 +444,54 @@ export async function getRiskDashboard() {
     },
   });
 
+  const totalActiveAccounts = await prisma.tradingAccount.count({
+    where: {
+      status: 'ACTIVE',
+    },
+  });
+
+  const criticalAccountIds = new Set<string>();
+  const warningAccountIds = new Set<string>();
+
+  for (const event of recentRiskEvents) {
+    const gap = event.actualValue - event.thresholdValue;
+    if (gap >= 5) {
+      criticalAccountIds.add(event.tradingAccount.id);
+      warningAccountIds.delete(event.tradingAccount.id);
+    } else if (!criticalAccountIds.has(event.tradingAccount.id)) {
+      warningAccountIds.add(event.tradingAccount.id);
+    }
+  }
+
+  for (const account of staleAccounts) {
+    if (!criticalAccountIds.has(account.id)) {
+      warningAccountIds.add(account.id);
+    }
+  }
+
+  for (const license of killedLicenses) {
+    for (const account of license.tradingAccounts) {
+      criticalAccountIds.add(account.id);
+      warningAccountIds.delete(account.id);
+    }
+  }
+
+  const criticalAccounts = criticalAccountIds.size;
+  const warningAccounts = warningAccountIds.size;
+  const healthyAccounts = Math.max(0, totalActiveAccounts - criticalAccounts - warningAccounts);
+
   return {
+    globalKillSwitch,
+    globalKillReason:
+      globalKillSwitch && latestGlobalKillAudit?.action === 'GLOBAL_KILL_SWITCH_ACTIVATE'
+        ? ((latestGlobalKillAudit.newValue as { reason?: string } | null)?.reason || null)
+        : null,
+    summary: {
+      totalActiveAccounts,
+      criticalAccounts,
+      warningAccounts,
+      healthyAccounts,
+    },
     recentRiskEvents,
     killedLicenses,
     staleAccounts,

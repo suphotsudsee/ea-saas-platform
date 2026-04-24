@@ -7,11 +7,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle2, CreditCard, FileText, RefreshCw } from 'lucide-react';
 import api from '@/lib/api';
 
-const MOCK_PAYMENTS = [
-  { id: 'p1', amount: '$49.00', date: '2026-04-01', status: 'COMPLETED', invoice: 'INV-2026-001' },
-  { id: 'p2', amount: '$49.00', date: '2026-03-01', status: 'COMPLETED', invoice: 'INV-2026-000' },
-];
-
 interface SubscriptionPackage {
   id: string;
   name: string;
@@ -29,6 +24,16 @@ interface CurrentSubscription {
   currentPeriodEnd: string | null;
   cancelAtPeriodEnd?: boolean;
   package: SubscriptionPackage;
+}
+
+interface BillingPayment {
+  id: string;
+  amountCents: number;
+  currency: string;
+  status: string;
+  stripePaymentId: string | null;
+  description: string | null;
+  createdAt: string;
 }
 
 function formatMoney(amountCents: number, currency: string) {
@@ -49,8 +54,10 @@ function formatCycle(cycle: string) {
 export default function SubscriptionPage() {
   const [subscription, setSubscription] = useState<CurrentSubscription | null>(null);
   const [packages, setPackages] = useState<SubscriptionPackage[]>([]);
+  const [payments, setPayments] = useState<BillingPayment[]>([]);
   const [upgrading, setUpgrading] = useState(false);
   const [upgradeError, setUpgradeError] = useState<string | null>(null);
+  const [paymentMethodMessage, setPaymentMethodMessage] = useState<string | null>(null);
   const checkoutConfigured = Boolean(
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY &&
       !process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY.includes('REPLACE_WITH_YOUR_KEY')
@@ -59,7 +66,11 @@ export default function SubscriptionPage() {
   useEffect(() => {
     let mounted = true;
 
-    Promise.allSettled([api.get('/subscriptions/current'), api.get('/subscriptions/list')]).then((results) => {
+    Promise.allSettled([
+      api.get('/subscriptions/current'),
+      api.get('/subscriptions/list'),
+      api.get('/subscriptions/history'),
+    ]).then((results) => {
       if (!mounted) return;
 
       const currentResult = results[0];
@@ -74,6 +85,13 @@ export default function SubscriptionPage() {
         setPackages(packagesResult.value.data.packages ?? []);
       } else {
         setPackages([]);
+      }
+
+      const paymentsResult = results[2];
+      if (paymentsResult.status === 'fulfilled') {
+        setPayments(paymentsResult.value.data.payments ?? []);
+      } else {
+        setPayments([]);
       }
     });
 
@@ -229,20 +247,33 @@ export default function SubscriptionPage() {
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between rounded-2xl border border-white/8 bg-[#0c1720] p-4">
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-14 items-center justify-center rounded-xl bg-[#12357a] text-xs font-bold text-white">VISA</div>
+                <div className="flex h-10 w-14 items-center justify-center rounded-xl bg-slate-800 text-xs font-bold text-slate-300">N/A</div>
                 <div>
-                  <div className="text-sm font-semibold text-white">Visa ending in 4242</div>
-                  <div className="text-xs text-slate-500">Expires 12/27</div>
+                  <div className="text-sm font-semibold text-white">No stored payment method details</div>
+                  <div className="text-xs text-slate-500">
+                    This app does not yet sync card brand, last4, or expiry from Stripe.
+                  </div>
                 </div>
               </div>
-              <Button variant="ghost" className="rounded-full text-slate-300 hover:bg-white/[0.06] hover:text-white">
+              <Button
+                variant="ghost"
+                className="rounded-full text-slate-300 hover:bg-white/[0.06] hover:text-white"
+                onClick={() => setPaymentMethodMessage('Payment method editing is not wired yet. Add a Stripe customer portal or setup intent flow first.')}
+              >
                 Edit
               </Button>
             </div>
-            <Button variant="outline" className="w-full rounded-2xl border-white/10 bg-white/[0.02] text-slate-200 hover:bg-white/[0.06]">
+            <Button
+              variant="outline"
+              className="w-full rounded-2xl border-white/10 bg-white/[0.02] text-slate-200 hover:bg-white/[0.06]"
+              onClick={() => setPaymentMethodMessage('Add new card is not wired yet. The current checkout flow only creates subscriptions, not standalone card updates.')}
+            >
               <RefreshCw className="mr-2 h-4 w-4" />
               Add new card
             </Button>
+            {paymentMethodMessage ? (
+              <div className="text-sm text-amber-300">{paymentMethodMessage}</div>
+            ) : null}
           </CardContent>
         </Card>
 
@@ -251,23 +282,31 @@ export default function SubscriptionPage() {
             <CardTitle className="text-xl text-white">Billing history</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            {MOCK_PAYMENTS.map((pay) => (
-              <div key={pay.id} className="flex items-center justify-between rounded-2xl border border-white/8 bg-[#0c1720] p-4">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-300">
-                    <CheckCircle2 className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <div className="text-sm font-semibold text-white">{pay.amount}</div>
-                    <div className="text-xs text-slate-500">{pay.date} • {pay.invoice}</div>
-                  </div>
-                </div>
-                <Button variant="ghost" className="rounded-full text-slate-300 hover:bg-white/[0.06] hover:text-white">
-                  <FileText className="mr-2 h-4 w-4" />
-                  Invoice
-                </Button>
+            {payments.length === 0 ? (
+              <div className="rounded-2xl border border-white/8 bg-[#0c1720] p-4 text-sm text-slate-400">
+                No billing history found yet.
               </div>
-            ))}
+            ) : (
+              payments.map((pay) => (
+                <div key={pay.id} className="flex items-center justify-between rounded-2xl border border-white/8 bg-[#0c1720] p-4">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-300">
+                      <CheckCircle2 className="h-4 w-4" />
+                    </div>
+                    <div>
+                      <div className="text-sm font-semibold text-white">{formatMoney(pay.amountCents, pay.currency)}</div>
+                      <div className="text-xs text-slate-500">
+                        {new Date(pay.createdAt).toLocaleDateString('en-US')} • {pay.stripePaymentId || pay.description || pay.status}
+                      </div>
+                    </div>
+                  </div>
+                  <Button variant="ghost" className="rounded-full text-slate-300 hover:bg-white/[0.06] hover:text-white" disabled>
+                    <FileText className="mr-2 h-4 w-4" />
+                    {pay.status}
+                  </Button>
+                </div>
+              ))
+            )}
           </CardContent>
         </Card>
       </section>

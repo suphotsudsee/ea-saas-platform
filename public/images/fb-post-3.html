@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>FB Post 3 - Social Proof Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/p5.min.js"></script>
+<style>body{margin:0;overflow:hidden;background:#0A0A0F;}</style>
+</head>
+<body>
+<script>
+const W = 1200, H = 1200;
+const GOLD = '#D4AF37';
+const BLACK = '#0A0A0F';
+const GREEN = '#10B981';
+const AMBER = '#F59E0B';
+
+function setup() {
+  createCanvas(W, H);
+  pixelDensity(1);
+  noLoop();
+}
+
+function draw() {
+  background(BLACK);
+
+  // Gold top bar
+  noStroke();
+  fill(GOLD);
+  rect(0, 0, W, 4);
+
+  // Headline
+  fill(255);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  textSize(20);
+  text('━━━━━━━━━━━━━━', W / 2, 25);
+  fill(GOLD);
+  textSize(46);
+  text('ตื่นมาเห็นกำไร +$340', W / 2, 50);
+  fill(200);
+  textSize(24);
+  textStyle(NORMAL);
+  text('ไม่ต้องทำอะไร — TradeCandle ทำให้', W / 2, 105);
+  fill(255);
+  textSize(16);
+  text('━━━━━━━━━━━━━━', W / 2, 140);
+
+  // === Dashboard mock ===
+  let dashX = 80, dashY = 175, dashW = W - 160, dashH = 800;
+
+  // Dashboard outer frame
+  fill(12, 12, 20);
+  stroke(50, 50, 70);
+  strokeWeight(2);
+  rect(dashX, dashY, dashW, dashH, 16);
+
+  // Title bar
+  fill(18, 18, 28);
+  noStroke();
+  rect(dashX, dashY, dashW, 50, 16, 16, 0, 0);
+
+  // Traffic light dots
+  fill('#EF4444');
+  ellipse(dashX + 25, dashY + 25, 14, 14);
+  fill(AMBER);
+  ellipse(dashX + 48, dashY + 25, 14, 14);
+  fill(GREEN);
+  ellipse(dashX + 71, dashY + 25, 14, 14);
+
+  // Title
+  fill(200);
+  textAlign(LEFT, CENTER);
+  textSize(16);
+  textStyle(BOLD);
+  text('TradeCandle v11 — Dashboard', dashX + 100, dashY + 25);
+
+  // Time
+  fill(100);
+  textAlign(RIGHT, CENTER);
+  textSize(14);
+  textStyle(NORMAL);
+  text('Live • XAUUSD • H1', dashX + dashW - 20, dashY + 25);
+
+  // === Stats cards row ===
+  let statsY = dashY + 70;
+  let statsH = 120;
+  let cardGap = 15;
+  let cardCount = 4;
+  let cardW = (dashW - 20 - (cardCount - 1) * cardGap) / cardCount;
+
+  const stats = [
+    { label: 'กำไรวันนี้', value: '+$340', sub: '+5.8%', color: GREEN },
+    { label: 'Win Rate', value: '78%', sub: '14/18 trades', color: GOLD },
+    { label: 'Floating', value: '+$45.20', sub: '2 positions active', color: GREEN },
+    { label: 'Drawdown', value: '2.3%', sub: 'Max: 4.1%', color: AMBER }
+  ];
+
+  for (let i = 0; i < stats.length; i++) {
+    let sx = dashX + 10 + i * (cardW + cardGap);
+    fill(20, 20, 30);
+    stroke(40, 40, 55);
+    strokeWeight(1);
+    rect(sx, statsY, cardW, statsH, 10);
+
+    fill(140);
+    noStroke();
+    textAlign(LEFT, TOP);
+    textSize(14);
+    textStyle(NORMAL);
+    text(stats[i].label, sx + 15, statsY + 15);
+
+    fill(stats[i].color);
+    textStyle(BOLD);
+    textSize(36);
+    text(stats[i].value, sx + 15, statsY + 40);
+
+    fill(100);
+    textSize(13);
+    textStyle(NORMAL);
+    text(stats[i].sub, sx + 15, statsY + statsH - 25);
+  }
+
+  // === Chart area ===
+  let chartX = dashX + 10;
+  let chartY = statsY + statsH + cardGap;
+  let chartW = dashW - 20;
+  let chartH = 340;
+
+  fill(14, 14, 22);
+  stroke(35, 35, 50);
+  strokeWeight(1);
+  rect(chartX, chartY, chartW, chartH, 10);
+
+  // Chart title
+  fill(160);
+  noStroke();
+  textAlign(LEFT, TOP);
+  textSize(14);
+  textStyle(BOLD);
+  text('Equity Curve — 7 วันล่าสุด', chartX + 15, chartY + 10);
+
+  // Mini equity line
+  stroke(GREEN);
+  strokeWeight(2.5);
+  noFill();
+  beginShape();
+  let eqPts = [];
+  let eqStartY = chartY + chatH * 0.7;
+  for (let i = 0; i < 80; i++) {
+    let px = chartX + 30 + i * ((chartW - 60) / 80);
+    let py = chartY + chartH - 30 - (i * 3.2 + Math.sin(i * 0.15) * 20 + Math.random() * 8);
+    vertex(px, py);
+    eqPts.push([px, py]);
+  }
+  endShape();
+
+  // Fill area under curve
+  fill(color(GREEN).levels[0], color(GREEN).levels[1], color(GREEN).levels[2], 25);
+  noStroke();
+  beginShape();
+  vertex(eqPts[0][0], chartY + chartH - 25);
+  for (let p of eqPts) vertex(p[0], p[1]);
+  vertex(eqPts[eqPts.length - 1][0], chartY + chartH - 25);
+  endShape(CLOSE);
+
+  // === Trade history table ===
+  let tableY = chartY + chartH + cardGap;
+  let tableH = dashY + dashH - tableY - 10;
+
+  fill(18, 18, 28);
+  stroke(40, 40, 55);
+  strokeWeight(1);
+  rect(chartX, tableY, chartW, tableH, 10);
+
+  // Table header
+  fill(GOLD);
+  noStroke();
+  textAlign(LEFT, CENTER);
+  textSize(14);
+  textStyle(BOLD);
+  text('Trade History', chartX + 15, tableY + 18);
+
+  fill(100);
+  textAlign(RIGHT, CENTER);
+  text('8 trades today', chartX + chartW - 15, tableY + 18);
+
+  // Header row
+  fill(25, 25, 38);
+  noStroke();
+  rect(chartX + 5, tableY + 35, chartW - 10, 30, 5);
+
+  fill(160);
+  textAlign(LEFT, CENTER);
+  textSize(12);
+  textStyle(BOLD);
+  let cols = ['#', 'Pair', 'Type', 'Entry', 'Exit', 'P/L', 'Filters'];
+  let colXs = [20, 70, 220, 340, 470, 590, 720];
+  for (let c = 0; c < cols.length; c++) {
+    text(cols[c], chartX + colXs[c], tableY + 50);
+  }
+
+  // Trade rows
+  const trades = [
+    { pair: 'XAUUSD', type: 'BUY', entry: '2024.50', exit: '2029.30', pl: '+$96.00', filters: 'BOS+OB', win: true },
+    { pair: 'XAUUSD', type: 'SELL', entry: '2031.80', exit: '2026.40', pl: '+$108.00', filters: 'CHoCH+FVG', win: true },
+    { pair: 'XAUUSD', type: 'BUY', entry: '2025.10', exit: '2028.70', pl: '+$72.00', filters: 'OB+S/D', win: true },
+    { pair: 'XAUUSD', type: 'SELL', entry: '2033.50', exit: '2035.10', pl: '-$32.00', filters: 'BOS', win: false },
+    { pair: 'XAUUSD', type: 'BUY', entry: '2023.00', exit: '2027.50', pl: '+$90.00', filters: 'FVG+OB', win: true },
+    { pair: 'XAUUSD', type: 'SELL', entry: '2028.30', exit: '2022.90', pl: '+$108.00', filters: 'CHoCH+S/D', win: true },
+  ];
+
+  textStyle(NORMAL);
+  for (let r = 0; r < trades.length; r++) {
+    let ry = tableY + 72 + r * 36;
+    let t = trades[r];
+
+    if (r % 2 === 0) {
+      fill(22, 22, 32);
+      noStroke();
+      rect(chartX + 5, ry - 10, chartW - 10, 36, 3);
+    }
+
+    fill(180);
+    textAlign(LEFT, CENTER);
+    textSize(12);
+    text((r + 1).toString(), chartX + colXs[0], ry + 5);
+    text(t.pair, chartX + colXs[1], ry + 5);
+
+    fill(t.type === 'BUY' ? color(GREEN) : color('#EF4444'));
+    text(t.type, chartX + colXs[2], ry + 5);
+
+    fill(180);
+    text(t.entry, chartX + colXs[3], ry + 5);
+    text(t.exit, chartX + colXs[4], ry + 5);
+
+    fill(t.win ? color(GREEN) : color('#EF4444'));
+    textStyle(BOLD);
+    text(t.pl, chartX + colXs[5], ry + 5);
+
+    fill(color(GOLD).levels[0], color(GOLD).levels[1], color(GOLD).levels[2], 200);
+    textStyle(NORMAL);
+    text(t.filters, chartX + colXs[6], ry + 5);
+  }
+
+  // === Kill Switch indicator bottom right ===
+  fill(GREEN);
+  noStroke();
+  ellipse(chartX + chartW - 80, tableY + tableH - 25, 12, 12);
+  fill(100);
+  textAlign(RIGHT, CENTER);
+  textSize(12);
+  text('Kill Switch: OFF (Active)', chartX + chartW - 90, tableY + tableH - 25);
+
+  // === Bottom CTA ===
+  fill(GOLD);
+  rect(W / 2 - 260, H - 70, 520, 50, 25);
+  fill(BLACK);
+  textAlign(CENTER, CENTER);
+  textSize(22);
+  textStyle(BOLD);
+  text('🔥 ทดลอง 7 วันฟรี → เริ่มต้น 990฿/เดือน', W / 2, H - 45);
+
+  fill(100);
+  textSize(13);
+  textStyle(NORMAL);
+  text('TradeCandle v11 • AI EA for XAUUSD/MT5', W / 2, H - 10);
+}
+
+function keyPressed() {
+  if (key === 's' || key === 'S') saveCanvas('fb-post-3', 'png');
+}
+</script>
+</body>
+</html>
