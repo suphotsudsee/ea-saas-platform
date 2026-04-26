@@ -6,6 +6,9 @@
 FROM node:20-alpine AS deps
 WORKDIR /app
 
+# Prisma requires openssl and libc6-compat on Alpine
+RUN apk add --no-cache openssl libc6-compat
+
 COPY package.json package-lock.json* yarn.lock* pnpm-lock.yaml* ./
 RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
@@ -17,6 +20,9 @@ RUN \
 # ─── Stage 2: Build ──────────────────────────────────────────────────────────
 FROM node:20-alpine AS builder
 WORKDIR /app
+
+# Prisma requires openssl and libc6-compat on Alpine
+RUN apk add --no-cache openssl libc6-compat
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -32,8 +38,8 @@ RUN npm run build
 FROM node:20-alpine AS runner
 WORKDIR /app
 
-# Install curl for health checks
-RUN apk add --no-cache curl
+# Install curl for health checks + openssl for Prisma
+RUN apk add --no-cache curl openssl libc6-compat
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
