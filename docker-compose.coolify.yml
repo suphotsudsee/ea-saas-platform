@@ -1,45 +1,15 @@
 # ─── EA SaaS Platform — Coolify Docker Compose ──────────────────────────────
 # Next.js app connecting to Coolify-managed MySQL & Redis
+# Coolify will inject Traefik labels and environment variables automatically
 # ─────────────────────────────────────────────────────────────────────────────
-
 services:
   web:
     build:
       context: .
       dockerfile: docker/Dockerfile
     restart: unless-stopped
-    environment:
-      DATABASE_URL: ${DATABASE_URL}
-      REDIS_URL: ${REDIS_URL}
-      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
-      NEXTAUTH_URL: ${NEXTAUTH_URL}
-      APP_URL: ${APP_URL}
-      API_URL: ${API_URL}
-      NODE_ENV: production
-      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
-      STRIPE_PUBLIC_KEY: ${STRIPE_PUBLIC_KEY}
-      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
-      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
-      RESEND_API_KEY: ${RESEND_API_KEY}
-      EMAIL_FROM: ${EMAIL_FROM:-noreply@tradecandle.ai}
-      RATE_LIMIT_EA_RPM: ${RATE_LIMIT_EA_RPM:-60}
-      RATE_LIMIT_WEB_RPM: ${RATE_LIMIT_WEB_RPM:-100}
-      HEARTBEAT_INTERVAL_SEC: ${HEARTBEAT_INTERVAL_SEC:-60}
-      HEARTBEAT_STALE_FACTOR: ${HEARTBEAT_STALE_FACTOR:-3}
-      LICENSE_CACHE_TTL_SEC: ${LICENSE_CACHE_TTL_SEC:-300}
-      USDT_PAYMENT_WALLET_ADDRESS: ${USDT_PAYMENT_WALLET_ADDRESS:-placeholder}
-      USDT_PAYMENT_NETWORK: ${USDT_PAYMENT_NETWORK:-trc20}
-    labels:
-      traefik.enable: "true"
-      traefik.http.routers.easaas.rule: "Host(`hicr14xu1l73l5ookns05kbd.110.164.222.217.sslip.io`)"
-      traefik.http.routers.easaas.entryPoints: "http"
-      traefik.http.services.easaas.loadbalancer.server.port: "3004"
-    healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost:3004/api/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 120s
+    ports:
+      - "3004:3004"
     networks:
       - coolify
 

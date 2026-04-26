@@ -64,8 +64,8 @@ EXPOSE 3004
 ENV PORT=3004
 ENV HOSTNAME="0.0.0.0"
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-  CMD wget -qO- http://localhost:3004/api/health >/dev/null 2>&1 || exit 1
+# Health check (use curl since it's installed in runner stage)
+HEALTHCHECK --interval=30s --timeout=10s --start-period=120s --retries=5 \
+  CMD curl -f http://localhost:3004/api/health || exit 1
 
 CMD ["node", "server.js"]
