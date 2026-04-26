@@ -29,25 +29,25 @@ export default function LoginPage() {
 
   return (
     <AuthShell
-      badge="Client access"
-      title="Welcome back"
-      description="Enter your details to access your trading dashboard and account controls."
-      sideTitle="MT4 and MT5 operations layer."
-      sideDescription="Control licensing, risk, and live EA operations from one surface. Built for teams selling or operating Expert Advisors at scale."
+      badge="AI Gold Trading Bot"
+      title="เข้าสู่ระบบ"
+      description="เข้าใช้งาน dashboard เพื่อจัดการ License Key, EA และบัญชีเทรดของคุณ"
+      sideTitle="AI เทรดทองคำอัตโนมัติ"
+      sideDescription="3-Wave Cashout + 6 Smart Money Filters บน MT5 พร้อม dashboard สำหรับควบคุม license, risk และสถานะบัญชีแบบเรียลไทม์."
       sideStats={[
-        { label: 'Active traders', value: '12,000+' },
+        { label: 'XAUUSD', value: 'MT5' },
+        { label: 'Smart filters', value: '6' },
         { label: 'Uptime target', value: '99.9%' },
-        { label: 'Trades monitored', value: '150M+' },
       ]}
     >
       <form onSubmit={handleSubmit}>
         <CardContent className="space-y-5 p-6">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-300">Email</label>
+            <label className="text-sm font-medium text-slate-300">อีเมล</label>
             <Input
               type="email"
-              placeholder="name@company.com"
-              className="h-11 rounded-xl border-slate-800 bg-slate-950 text-white"
+              placeholder="name@email.com"
+              className="h-11 rounded-xl border-amber-900/30 bg-slate-950 text-white focus:ring-amber-500"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -55,14 +55,14 @@ export default function LoginPage() {
           </div>
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <label className="text-sm font-medium text-slate-300">Password</label>
-              <Link href="/forgot-password" className="text-xs text-blue-400 hover:text-blue-300">
-                Forgot password?
+              <label className="text-sm font-medium text-slate-300">รหัสผ่าน</label>
+              <Link href="/forgot-password" className="text-xs text-amber-400 hover:text-amber-300">
+                ลืมรหัสผ่าน?
               </Link>
             </div>
             <Input
               type="password"
-              className="h-11 rounded-xl border-slate-800 bg-slate-950 text-white"
+              className="h-11 rounded-xl border-amber-900/30 bg-slate-950 text-white focus:ring-amber-500"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -70,8 +70,8 @@ export default function LoginPage() {
           </div>
         </CardContent>
         <CardFooter className="flex flex-col gap-4 p-6 pt-0">
-          <Button disabled={isLoading} className="h-11 w-full rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500">
-            {isLoading ? 'Authenticating...' : 'Sign In'}
+          <Button disabled={isLoading} className="h-11 w-full rounded-xl bg-gradient-to-r from-amber-500 to-yellow-600 font-bold text-black shadow-lg shadow-amber-900/30 hover:from-amber-400 hover:to-yellow-500">
+            {isLoading ? 'กำลังเข้าสู่ระบบ...' : 'เข้าสู่ระบบ'}
           </Button>
           <Link
             href="/admin/login"
@@ -81,9 +81,9 @@ export default function LoginPage() {
             Admin login
           </Link>
           <div className="text-center text-sm text-slate-400">
-            Don't have an account?{' '}
-            <Link href="/register" className="text-blue-400 hover:text-blue-300 hover:underline">
-              Start free trial
+            ยังไม่มีบัญชี?{' '}
+            <Link href="/register" className="text-amber-400 hover:text-amber-300 hover:underline">
+              ทดลองใช้ฟรี
             </Link>
           </div>
         </CardFooter>

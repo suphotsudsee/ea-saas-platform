@@ -69,7 +69,7 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
         <div className="container relative z-10 mx-auto max-w-[900px] px-6 text-center">
           <div className="mb-10 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5 text-sm font-medium text-amber-300">
             <Waves size={14} />
-            <span>AI Gold Trading Bot — Version 11</span>
+            <span>AI Gold Trading Bot — Version 12</span>
           </div>
 
           <h1 className="mb-8 text-5xl font-extrabold leading-[0.92] tracking-tight text-white md:text-[6.2rem]">
@@ -85,7 +85,7 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
           </p>
 
           <p className="mx-auto mb-12 max-w-[720px] text-lg leading-relaxed text-slate-400 md:text-[1rem] md:leading-[1.65]">
-            3-Wave Cashout + 6 Smart Money Filters บน MT5 — ซื้อ License Key รับได้ทันที
+            3-Wave Cashout + 6 Smart Money Filters + Time Filter บน MT5 — ทดลอง 1 เดือน ไม่ต้องจ่ายก่อน
             <br />
             ควบคุมจาก Dashboard หยุด EA ได้จากมือถือทุกที่ทุกเวลา
           </p>
@@ -109,7 +109,7 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
             <span className="flex items-center gap-1"><CheckCircle size={14} className="text-amber-500" /> 24/5</span>
             <span className="flex items-center gap-1"><CheckCircle size={14} className="text-amber-500" /> SaaS Dashboard</span>
           </div>
-          <p className="mt-3 text-sm text-amber-500/70">⭐ ทดลองใช้ 7 วัน ไม่ต้องจ่ายก่อน</p>
+          <p className="mt-3 text-sm text-amber-500/70">⭐ ทดลองใช้ 1 เดือน ไม่ต้องจ่ายก่อน</p>
         </div>
       </section>
 
@@ -133,6 +133,8 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
       </section>
 
       {/* ─── Section 2: Pain Points ──────────────────────────────────────── */}
+      <BacktestPerformanceSection />
+
       <section className="relative z-10 py-24">
         <div className="container mx-auto px-6">
           <div className="mx-auto mb-16 max-w-3xl text-center">
@@ -221,7 +223,7 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
               <p className="text-sm text-slate-400">รอ TP 100% → ราคากลับ → ขาดทุน</p>
             </div>
             <div className="rounded-xl border border-green-900/30 bg-green-950/10 p-6 text-center">
-              <p className="mb-2 text-lg font-bold text-green-400">✅ TradeCandle v11</p>
+              <p className="mb-2 text-lg font-bold text-green-400">✅ TradeCandle v12</p>
               <p className="text-sm text-slate-400">ปิดทยอย 3 รอบ → ยังไงก็ได้กำไร</p>
             </div>
           </div>
@@ -340,11 +342,11 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
         <div className="container mx-auto px-6">
           <div className="mx-auto mb-16 max-w-3xl text-center">
             <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">💰 เลือกแพ็คเกจที่ใช่</h2>
-            <p className="text-slate-400">ทดลอง 7 วันฟรี ไม่ต้องจ่ายก่อน — ยกเลิกได้ทุกเมื่อ</p>
+            <p className="text-slate-400">ทดลอง 1 เดือนฟรี ไม่ต้องจ่ายก่อน — ยกเลิกได้ทุกเมื่อ</p>
           </div>
 
           {/**<PricingCards navigateTo={navigateTo} />**/}
-          <PricingPage />
+          <PricingPage embedded />
         </div>
       </section>
 
@@ -360,7 +362,7 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
               { q: 'ต้องนั่งดูจอไหม?', a: 'ไม่ต้อง! EA ทำงานอัตโนมัติ 24/5 คุณดูผลจาก Dashboard ได้' },
               { q: 'ใช้กับโบรกเกอร์ไหนได้บ้าง?', a: 'โบรกเกอร์ที่รองรับ MT5 ทุกค่าย (Exness, XM, IC Markets ฯลฯ)' },
               { q: 'ขั้นต่ำทุนเทรดเท่าไหร่?', a: 'แนะนำ $500+ (0.01 lot) หรือ $2,000+ (0.03 lot)' },
-              { q: 'มี guarantee ไหม?', a: 'ทดลอง 7 วันฟรี ไม่พอใจยกเลิกได้ ไม่หักเงิน + 30 วันเงินคืน' },
+              { q: 'มี guarantee ไหม?', a: 'ทดลอง 1 เดือนฟรี ไม่พอใจยกเลิกได้ ไม่หักเงิน + 30 วันเงินคืน' },
               { q: 'EA รันบนคอมผมหรือ Cloud?', a: 'รันบน MT5 ของคุณเอง (VPS แนะนำ) เราให้ license + dashboard' },
               { q: 'ต่างจาก EA ฟรียังไง?', a: '3-Wave Cashout + Smart Money Filters + SaaS Dashboard + Thai Support' },
             ].map((faq, i) => (
@@ -383,11 +385,11 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
             🔥 พร้อมให้ AI เทรดทองให้คุณแล้วหรือยัง?
           </h2>
           <p className="mx-auto mb-8 max-w-xl text-slate-400">
-            เริ่มต้น 990บาท/เดือน — ทดลอง 7 วันฟรี ไม่ต้องจ่ายก่อน — ยกเลิกได้ทุกเมื่อ
+            เริ่มต้น 990บาท/เดือน — ทดลอง 1 เดือนฟรี ไม่ต้องจ่ายก่อน — ยกเลิกได้ทุกเมื่อ
           </p>
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button onClick={() => navigateTo('register')} className="w-full rounded-xl px-14 py-3.5 text-base sm:w-auto">
-              🚀 เริ่มต้น 7 วันฟรี <ArrowRight size={18} className="ml-2" />
+              🚀 เริ่มต้น 1 เดือนฟรี <ArrowRight size={18} className="ml-2" />
             </Button>
             <Button variant="secondary" className="w-full rounded-xl px-12 py-3.5 text-base sm:w-auto">
               💬 สอบถาม Line OA
@@ -401,9 +403,21 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
 }
 
 /* ─── Pricing Page (also used inline) ──────────────────────────────────── */
-function PricingPage() {
+function PricingPage({ embedded = false }: { embedded?: boolean }) {
   return (
-    <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-8 md:grid-cols-3">
+    <section className={embedded ? '' : 'px-4 pb-24 pt-32 sm:px-6 lg:pt-36'}>
+      {!embedded && (
+        <div className="mx-auto mb-12 max-w-3xl text-center">
+          <h1 className="mb-4 text-4xl font-extrabold text-white md:text-5xl">
+            เลือกแพ็กเกจที่เหมาะกับคุณ
+          </h1>
+          <p className="text-base text-slate-400 md:text-lg">
+            ทดลอง 1 เดือนฟรี จ่ายผ่าน USDT และจัดการ License ได้จาก Dashboard
+          </p>
+        </div>
+      )}
+
+    <div className="mx-auto grid max-w-6xl grid-cols-1 items-stretch gap-8 md:grid-cols-3">
       {/* Starter */}
       <div className="rounded-2xl border border-amber-900/20 bg-slate-900 p-8 transition-colors hover:border-amber-900/40">
         <h3 className="mb-2 text-xl font-bold text-white">Starter</h3>
@@ -413,15 +427,15 @@ function PricingPage() {
           <span className="text-slate-500">/ เดือน</span>
         </div>
         <ul className="mb-8 space-y-4 text-sm text-slate-300">
-          {['1 บัญชี MT5', 'SaaS Dashboard', 'Heartbeat Monitor', 'Email Support'].map((item, index) => (
+          {['1 บัญชี MT5', 'SaaS Dashboard', '3-Wave Cashout', '6 Smart Money Filters', 'Time Filter', 'Email Support'].map((item, index) => (
             <li key={item} className="flex items-center gap-3">
               <CheckCircle size={16} className={index === 3 ? 'text-slate-600' : 'text-amber-500'} />
               {item}
             </li>
           ))}
         </ul>
-        <Button variant="secondary" className="w-full">
-          เริ่มต้น
+        <Button variant="secondary" className="w-full" onClick={() => { window.location.href = '/register?packageId=pkg_starter'; }}>
+          ทดลอง 1 เดือน
         </Button>
       </div>
 
@@ -439,14 +453,14 @@ function PricingPage() {
           <span className="text-slate-500">/ เดือน</span>
         </div>
         <ul className="mb-8 space-y-4 text-sm font-medium text-white">
-          {['3 บัญชี MT5', 'Dashboard + Kill Switch', 'Heartbeat + Risk Mgmt', 'Line Support'].map((item) => (
+          {['3 บัญชี MT5', 'Dashboard + Kill Switch', '3-Wave Cashout', '6 PA/SMC Filters', 'Time Filter', 'Line Support'].map((item) => (
             <li key={item} className="flex items-center gap-3">
               <CheckCircle size={16} className="text-amber-400" />
               {item}
             </li>
           ))}
         </ul>
-        <Button className="w-full">ยอดนิยม</Button>
+        <Button className="w-full" onClick={() => { window.location.href = '/register?packageId=pkg_pro'; }}>ทดลอง 1 เดือน</Button>
       </div>
 
       {/* Elite */}
@@ -465,11 +479,112 @@ function PricingPage() {
             </li>
           ))}
         </ul>
-        <Button variant="secondary" className="w-full">
-          เลือก Elite
+        <Button variant="secondary" className="w-full" onClick={() => { window.location.href = '/register?packageId=pkg_elite'; }}>
+          ทดลอง 1 เดือน
         </Button>
       </div>
     </div>
+    </section>
+  );
+}
+
+function BacktestPerformanceSection() {
+  const metrics = [
+    { label: 'Total Net Profit', value: '+$4,857.85', tone: 'text-emerald-300' },
+    { label: 'Win Rate', value: '74.75%', tone: 'text-amber-300' },
+    { label: 'Total Trades', value: '7,353', tone: 'text-white' },
+    { label: 'Max Equity DD', value: '3.94%', tone: 'text-sky-300' },
+    { label: 'Profit Factor', value: '1.23', tone: 'text-white' },
+    { label: 'Sharpe Ratio', value: '8.35', tone: 'text-emerald-300' },
+  ];
+
+  const reportFacts = [
+    ['Expert', 'trade_candle_v12'],
+    ['Symbol', 'XAUUSD'],
+    ['Timeframe', 'M5'],
+    ['Period', '2025.04.01 - 2026.04.03'],
+    ['Initial Deposit', '$10,000'],
+    ['Broker', 'Exness-MT5Trial7'],
+  ];
+
+  return (
+    <section className="relative z-10 border-y border-amber-900/20 bg-[#080d19] py-24">
+      <div className="container mx-auto px-6">
+        <div className="mx-auto mb-14 max-w-3xl text-center">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5 text-sm font-medium text-amber-300">
+            <BarChart3 size={14} />
+            <span>Strategy Tester Report</span>
+          </div>
+          <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">
+            ผลงานทดสอบย้อนหลัง TradeCandle v12
+          </h2>
+          <p className="text-sm leading-relaxed text-slate-400 md:text-base">
+            รายงานจาก MT5 Strategy Tester บน XAUUSD M5 ช่วง 1 เม.ย. 2025 ถึง 3 เม.ย. 2026
+            ใช้เงินเริ่มต้น $10,000 และ fixed lot 0.03
+          </p>
+        </div>
+
+        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
+          {metrics.map((metric) => (
+            <div key={metric.label} className="rounded-xl border border-amber-900/20 bg-slate-950/70 p-4 text-center">
+              <div className={`text-2xl font-extrabold ${metric.tone}`}>{metric.value}</div>
+              <div className="mt-2 text-[11px] uppercase tracking-[0.16em] text-slate-500">{metric.label}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mx-auto mt-8 grid max-w-6xl gap-6 lg:grid-cols-[1.35fr_0.65fr]">
+          <div className="overflow-hidden rounded-2xl border border-amber-900/25 bg-slate-950/70 shadow-2xl shadow-black/30">
+            <div className="flex items-center justify-between border-b border-amber-900/20 px-5 py-4">
+              <div>
+                <h3 className="font-semibold text-white">Balance Graph</h3>
+                <p className="text-xs text-slate-500">MT5 Strategy Tester export</p>
+              </div>
+              <div className="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-300">
+                +48.58%
+              </div>
+            </div>
+            <div className="bg-white p-3">
+              <img
+                src="/backtests/trade-candle-v12-balance.png"
+                alt="TradeCandle v12 balance graph from MT5 Strategy Tester"
+                className="h-auto w-full"
+              />
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-amber-900/25 bg-slate-950/70 p-6">
+            <h3 className="mb-5 font-semibold text-white">รายละเอียดรายงาน</h3>
+            <div className="space-y-3">
+              {reportFacts.map(([label, value]) => (
+                <div key={label} className="flex items-center justify-between gap-4 border-b border-slate-800/70 pb-3 text-sm">
+                  <span className="text-slate-500">{label}</span>
+                  <span className="text-right font-medium text-slate-200">{value}</span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-5 rounded-xl border border-amber-900/25 bg-amber-950/20 p-4 text-xs leading-relaxed text-amber-100/80">
+              ผลทดสอบย้อนหลังใช้เพื่อประกอบการพิจารณาเท่านั้น ผลลัพธ์จริงขึ้นกับ broker, spread,
+              slippage, VPS และสภาพตลาดในเวลานั้น
+            </div>
+          </div>
+        </div>
+
+        <div className="mx-auto mt-6 grid max-w-6xl gap-6 md:grid-cols-3">
+          {[
+            ['/backtests/trade-candle-v12-histogram.png', 'Profit distribution histogram'],
+            ['/backtests/trade-candle-v12-mfemae.png', 'MFE MAE analysis graph'],
+            ['/backtests/trade-candle-v12-holding.png', 'Holding time graph'],
+          ].map(([src, alt]) => (
+            <div key={src} className="overflow-hidden rounded-xl border border-amber-900/20 bg-slate-950/70">
+              <div className="bg-white p-2">
+                <img src={src} alt={alt} className="h-auto w-full" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -480,7 +595,7 @@ function FeaturesPage() {
       <div className="container mx-auto px-6">
         <div className="mx-auto mb-20 max-w-3xl text-center">
           <h1 className="mb-6 text-4xl font-bold text-white md:text-5xl">
-            ทำไม <span className="text-amber-400">TradeCandle v11</span>
+            ทำไม <span className="text-amber-400">TradeCandle v12</span>
             <br />
             ต่างจาก EA ทั่วไป
           </h1>
@@ -665,7 +780,7 @@ function AuthPage({
           {mode === 'login' ? 'เข้าสู่ระบบ' : 'เริ่มต้นทดลองฟรี'}
         </h2>
         <p className="mb-8 text-center text-sm text-slate-400">
-          {mode === 'login' ? 'ใส่อีเมลและรหัสผ่าน' : 'ทดลอง 7 วันฟรี ไม่ต้องจ่ายก่อน'}
+          {mode === 'login' ? 'ใส่อีเมลและรหัสผ่าน' : 'ทดลอง 1 เดือนฟรี ไม่ต้องจ่ายก่อน'}
         </p>
 
         <form className="space-y-5" onSubmit={handleSubmit}>

@@ -15,7 +15,7 @@ const headers = {
 
 const richMenu = {
   size: { width: 2500, height: 1686 },
-  name: 'TradeCandle v11 Menu',
+  name: 'TradeCandle v12 Menu',
   chatBarText: 'เมนู',
   selected: false,
   areas: [

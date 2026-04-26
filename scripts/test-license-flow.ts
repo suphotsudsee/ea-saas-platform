@@ -21,7 +21,7 @@ function test(name: string, passed: boolean, detail: string) {
 }
 
 async function main() {
-  console.log('\n🧪 Testing License Validation Flow — TradeCandle v11\n');
+  console.log('\n🧪 Testing License Validation Flow — TradeCandle v12\n');
   console.log(`   API URL: ${API_URL}\n`);
 
   // ─── Step 1: Health Check ─────────────────────────────────────────────────
@@ -138,7 +138,7 @@ async function main() {
       const valData = await valRes.json();
 
       if (valRes.ok && valData.valid) {
-        test('License Validate', true, `Valid! Strategy: ${valData.strategy?.name || 'TradeCandle v11'}`);
+        test('License Validate', true, `Valid! Strategy: ${valData.strategy?.name || 'TradeCandle v12'}`);
         test('Config Received', !!valData.strategy?.defaultConfig, 'EA config included in response');
         test('Risk Config Received', !!valData.strategy?.riskConfig, 'Risk config included in response');
       } else {

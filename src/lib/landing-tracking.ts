@@ -17,7 +17,7 @@ export function useLandingTracking() {
 
   const canTrack = consent?.analytics ?? true; // Default to true if no consent system
 
-  // Hero CTA: "ทดลอง 7 วันฟรี" button
+  // Hero CTA: "ทดลอง 1 เดือนฟรี" button
   const trackHeroCTA = useCallback(() => {
     if (!canTrack) return;
     trackEvent('cta_click', {

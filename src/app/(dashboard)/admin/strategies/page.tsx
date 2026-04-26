@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import api from '@/lib/api';
+import api, { getApiErrorMessage } from '@/lib/api';
 import { useAuth } from '@/lib/auth';
 
 interface StrategyItem {
@@ -101,8 +101,8 @@ export default function AdminStrategiesPage() {
       });
       setShowCreateForm(false);
       await loadStrategies();
-    } catch (err: any) {
-      setError(err?.response?.data?.error || 'Failed to create strategy');
+    } catch (err) {
+      setError(getApiErrorMessage(err, 'Failed to create strategy'));
     } finally {
       setSaving(false);
     }
@@ -145,8 +145,8 @@ export default function AdminStrategiesPage() {
       setMessage(`Strategy '${editForm.name}' updated successfully`);
       setEditingStrategyId(null);
       await loadStrategies();
-    } catch (err: any) {
-      setError(err?.response?.data?.error || 'Failed to update strategy');
+    } catch (err) {
+      setError(getApiErrorMessage(err, 'Failed to update strategy'));
     } finally {
       setSaving(false);
     }
@@ -163,8 +163,8 @@ export default function AdminStrategiesPage() {
         setEditingStrategyId(null);
       }
       await loadStrategies();
-    } catch (err: any) {
-      setError(err?.response?.data?.error || 'Failed to deactivate strategy');
+    } catch (err) {
+      setError(getApiErrorMessage(err, 'Failed to deactivate strategy'));
     } finally {
       setDeactivatingStrategyId(null);
     }

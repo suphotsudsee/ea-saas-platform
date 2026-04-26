@@ -4,8 +4,8 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server';
-import { authMiddleware } from '../../middleware/auth';
-import { createDeposit } from '../../services/usdt-payment.service';
+import { authMiddleware } from '../../../middleware/auth';
+import { createDeposit } from '../../../services/usdt-payment.service';
 import { z } from 'zod';
 
 const createDepositSchema = z.object({
@@ -72,7 +72,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const { getPendingPayment } = await import('../../services/usdt-payment.service');
+    const { getPendingPayment } = await import('../../../services/usdt-payment.service');
     const payment = await getPendingPayment(authResult.user.id);
 
     if (!payment) {

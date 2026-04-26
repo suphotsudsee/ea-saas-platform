@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import api from '@/lib/api';
+import api, { getApiErrorMessage } from '@/lib/api';
 
 interface AdminUser {
   id: string;
@@ -145,8 +145,8 @@ export default function AdminLicensesPage() {
         expiresAt: toDateTimeLocal(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)),
       });
       await loadData();
-    } catch (err: any) {
-      setError(err?.response?.data?.error || 'Failed to create license');
+    } catch (err) {
+      setError(getApiErrorMessage(err, 'Failed to create license'));
     } finally {
       setSaving(false);
     }

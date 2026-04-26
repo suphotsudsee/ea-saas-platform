@@ -1,4 +1,4 @@
-import { broadcastMessage, LineTemplates, pushMessage, multicastMessage } from '../../services/line.service';
+import { broadcastMessage, LineTemplates, pushMessage, multicastMessage } from '../../../services/line.service';
 import { NextRequest, NextResponse } from 'next/server';
 
 // ─── POST /api/line/broadcast ─────────────────────────────────────────────
@@ -110,7 +110,6 @@ export async function PUT(request: NextRequest) {
       result = await pushMessage(userIds[0], messages);
     } else {
       // Use multicast for multiple users
-      const { multicastMessage } = await import('../../services/line.service');
       result = await multicastMessage(userIds, messages);
     }
 

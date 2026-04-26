@@ -16,9 +16,9 @@ export function RecentTrades({ items }: { items: ActivityRow[] }) {
       <Table>
         <TableHeader>
           <TableRow className="border-white/8">
-            <TableHead className="text-slate-500">Event</TableHead>
-            <TableHead className="text-slate-500">Signal</TableHead>
-            <TableHead className="text-right text-slate-500">Time</TableHead>
+            <TableHead className="text-amber-500/60">Event</TableHead>
+            <TableHead className="text-amber-500/60">Signal</TableHead>
+            <TableHead className="text-right text-amber-500/60">Time</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -46,7 +46,7 @@ export function RecentTrades({ items }: { items: ActivityRow[] }) {
                       ? 'bg-emerald-500/10 text-emerald-300'
                       : act.type === 'warning'
                         ? 'bg-amber-500/10 text-amber-300'
-                        : 'bg-white/[0.05] text-slate-300'
+                        : 'bg-amber-500/10 text-amber-300'
                   )}
                 >
                   {act.signal}

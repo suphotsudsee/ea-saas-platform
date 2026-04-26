@@ -191,7 +191,10 @@ export const redis = {
     const client = await ensureRedisConnected();
     if (!client) return 0;
     try {
-      return await client.zAdd(key, members);
+      return await client.zAdd(
+        key,
+        members.map(({ score, member }) => ({ score, value: member }))
+      );
     } catch {
       return 0;
     }

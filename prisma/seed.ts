@@ -52,29 +52,60 @@ async function main() {
   });
   console.log(`✅ Demo trader created: ${trader.email}`);
 
-  // ─── Create Strategies ────────────────────────────────────────────────────
-  const scalperStrategy = await prisma.strategy.upsert({
-    where: { name: 'Gold Scalper Pro' },
-    update: {},
-    create: {
-      name: 'Gold Scalper Pro',
-      description: 'High-frequency scalping strategy for XAU/USD with tight risk management.',
-      version: '2.1.0',
+  // ─── Create Strategy: TradeCandle v12 ────────────────────────────────────
+  // This is the real EA — XAUUSD 3-Wave Cashout + PA/SMC + Time Filter
+  const tradecandleV12 = await prisma.strategy.upsert({
+    where: { name: 'TradeCandle Gold Scalper' },
+    update: {
+      version: '12.0.0',
+      description: 'XAUUSD M5 auto-trading EA — 3-Wave Cashout + PA/SMC Confluence + Time Filter. Backtested 1yr +$5,171 PF 1.18 WR 74%.',
       defaultConfig: {
-        lotSizingMethod: 'risk_percent',
-        riskPercent: 1.0,
-        maxLot: 0.5,
-        minLot: 0.01,
-        maxTradesPerDay: 10,
-        maxSpreadPips: 2.0,
-        tradingSessions: [
-          { name: 'London', startHour: 8, endHour: 12 },
-          { name: 'New York', startHour: 13, endHour: 17 },
+        symbol: 'XAUUSDm',
+        timeframe: 'M5',
+        lotSize: 0.03,
+        slAtrMult: 2.0,
+        tpRatio: 2.0,
+        wave1TPPct: 40.0,
+        wave2TPPct: 75.0,
+        beActivatePct: 35.0,
+        beLevelPct: 10.0,
+        trailStartPct: 45.0,
+        trailStepPips: 5,
+        trailDistancePips: 8,
+        emaFast: 9,
+        emaSlow: 21,
+        htfPeriod: 'H4',
+        rsiPeriod: 14,
+        rsiOverbought: 70,
+        rsiOversold: 30,
+        rsiSellBlock: 25,
+        macdFast: 12,
+        macdSlow: 26,
+        macdSignal: 9,
+        atrPeriod: 14,
+        magicNumber: 234000,
+        maxSlippage: 30,
+        tradeOnNewBar: true,
+        cooldownBars: 5,
+        minATR: 6.0,
+        sidewaysMaxGap: 0.04,
+        useTimeFilter: true,
+        blockHours: [
+          { start: 9, end: 11 },
+          { start: 12, end: 14 },
+          { start: 17, end: 19 },
+          { start: 5, end: 6 },
         ],
-        stopLossPips: 15,
-        takeProfitPips: 10,
-        trailingStop: false,
-        magicNumber: 100100,
+        skipMonday: false,
+        usePA: true,
+        paTimeframe: 'H1',
+        paLookback: 100,
+        paMinConfluence: 2,
+        swingBars: 5,
+        obMinBodyPct: 0.5,
+        fvgMinPips: 5,
+        liqSweepPips: 3,
+        sdMinMovePct: 0.4,
       },
       riskConfig: {
         maxDrawdownPct: 15,
@@ -83,219 +114,280 @@ async function main() {
         equityProtectionUsd: 500,
         maxOpenPositions: 3,
         marginLevelPct: 150,
-        spreadFilter: { default: 2.0, XAUUSD: 3.0 },
-        sessionFilter: { enabled: true, sessions: [
-          { name: 'London', startHour: 8, endHour: 12 },
-          { name: 'New York', startHour: 13, endHour: 17 },
-        ]},
+        spreadFilter: { default: 3.0, XAUUSD: 5.0 },
+        sessionFilter: {
+          enabled: true,
+          sessions: [
+            { name: 'London', startHour: 8, endHour: 12 },
+            { name: 'New York', startHour: 14, endHour: 17 },
+          ],
+        },
       },
       isActive: true,
     },
-  });
-
-  const swingStrategy = await prisma.strategy.upsert({
-    where: { name: 'Forex Swing Master' },
-    update: {},
     create: {
-      name: 'Forex Swing Master',
-      description: 'Medium-term swing trading strategy for major forex pairs.',
-      version: '1.5.0',
+      name: 'TradeCandle Gold Scalper',
+      description: 'XAUUSD M5 auto-trading EA — 3-Wave Cashout + PA/SMC Confluence + Time Filter. Backtested 1yr +$5,171 PF 1.18 WR 74%.',
+      version: '12.0.0',
       defaultConfig: {
-        lotSizingMethod: 'fixed_lot',
-        fixedLot: 0.1,
-        maxLot: 1.0,
-        minLot: 0.01,
-        maxTradesPerDay: 3,
-        maxSpreadPips: 3.0,
-        tradingSessions: [
-          { name: 'London-NY Overlap', startHour: 13, endHour: 17 },
+        symbol: 'XAUUSDm',
+        timeframe: 'M5',
+        lotSize: 0.03,
+        slAtrMult: 2.0,
+        tpRatio: 2.0,
+        wave1TPPct: 40.0,
+        wave2TPPct: 75.0,
+        beActivatePct: 35.0,
+        beLevelPct: 10.0,
+        trailStartPct: 45.0,
+        trailStepPips: 5,
+        trailDistancePips: 8,
+        emaFast: 9,
+        emaSlow: 21,
+        htfPeriod: 'H4',
+        rsiPeriod: 14,
+        rsiOverbought: 70,
+        rsiOversold: 30,
+        rsiSellBlock: 25,
+        macdFast: 12,
+        macdSlow: 26,
+        macdSignal: 9,
+        atrPeriod: 14,
+        magicNumber: 234000,
+        maxSlippage: 30,
+        tradeOnNewBar: true,
+        cooldownBars: 5,
+        minATR: 6.0,
+        sidewaysMaxGap: 0.04,
+        useTimeFilter: true,
+        blockHours: [
+          { start: 9, end: 11 },
+          { start: 12, end: 14 },
+          { start: 17, end: 19 },
+          { start: 5, end: 6 },
         ],
-        stopLossPips: 50,
-        takeProfitPips: 100,
-        trailingStop: true,
-        trailingStopPips: 30,
-        magicNumber: 200200,
+        skipMonday: false,
+        usePA: true,
+        paTimeframe: 'H1',
+        paLookback: 100,
+        paMinConfluence: 2,
+        swingBars: 5,
+        obMinBodyPct: 0.5,
+        fvgMinPips: 5,
+        liqSweepPips: 3,
+        sdMinMovePct: 0.4,
       },
       riskConfig: {
-        maxDrawdownPct: 20,
-        maxDailyLossPct: 5,
-        maxConsecutiveLosses: 7,
-        equityProtectionUsd: 1000,
-        maxOpenPositions: 5,
-        marginLevelPct: 120,
-        spreadFilter: { default: 3.0, EURUSD: 1.5, GBPUSD: 2.0 },
-        sessionFilter: { enabled: true, sessions: [
-          { name: 'London-NY Overlap', startHour: 13, endHour: 17 },
-        ]},
+        maxDrawdownPct: 15,
+        maxDailyLossPct: 3,
+        maxConsecutiveLosses: 5,
+        equityProtectionUsd: 500,
+        maxOpenPositions: 3,
+        marginLevelPct: 150,
+        spreadFilter: { default: 3.0, XAUUSD: 5.0 },
+        sessionFilter: {
+          enabled: true,
+          sessions: [
+            { name: 'London', startHour: 8, endHour: 12 },
+            { name: 'New York', startHour: 14, endHour: 17 },
+          ],
+        },
       },
       isActive: true,
     },
   });
+  console.log(`✅ Strategy created: ${tradecandleV12.name} v${tradecandleV12.version}`);
 
-  const gridStrategy = await prisma.strategy.upsert({
-    where: { name: 'Grid Trader Elite' },
-    update: {},
-    create: {
-      name: 'Grid Trader Elite',
-      description: 'Grid-based trading strategy with dynamic grid spacing and recovery mode.',
-      version: '3.0.0',
-      defaultConfig: {
-        lotSizingMethod: 'martingale',
-        startLot: 0.01,
-        maxLot: 0.5,
-        minLot: 0.01,
-        gridSizePips: 20,
-        maxOrders: 10,
-        maxSpreadPips: 5.0,
-        tradingSessions: [
-          { name: 'Asian', startHour: 0, endHour: 8 },
-          { name: 'London', startHour: 8, endHour: 16 },
-          { name: 'New York', startHour: 13, endHour: 22 },
-        ],
-        stopLossPips: 0,
-        takeProfitPips: 0,
-        gridTakeProfitPips: 10,
-        magicNumber: 300300,
-      },
-      riskConfig: {
-        maxDrawdownPct: 30,
-        maxDailyLossPct: 8,
-        maxConsecutiveLosses: 10,
-        equityProtectionUsd: 2000,
-        maxOpenPositions: 10,
-        marginLevelPct: 100,
-        spreadFilter: { default: 5.0 },
-        sessionFilter: { enabled: false, sessions: [] },
-      },
-      isActive: true,
-    },
-  });
-
-  console.log(`✅ Strategies created: ${scalperStrategy.name}, ${swingStrategy.name}, ${gridStrategy.name}`);
-
-  // ─── Create Subscription Packages ──────────────────────────────────────────
+  // ─── Create Subscription Packages (THB pricing) ────────────────────────────
   const starterPackage = await prisma.package.upsert({
     where: { id: 'pkg_starter' },
-    update: {},
+    update: {
+      name: 'Starter',
+      description: 'สำหรับเทรดเดอร์เริ่มต้น 1 บัญชี MT5 — 3-Wave Cashout + Dashboard',
+      priceCents: 99000, // 990 THB
+      currency: 'THB',
+      billingCycle: 'MONTHLY',
+      maxAccounts: 1,
+      features: {
+        strategyIds: [tradecandleV12.id],
+        maxAccounts: 1,
+        features: [
+          '1 บัญชี MT5',
+          'SaaS Dashboard',
+          'Heartbeat Monitor',
+          'Email Support',
+          '3-Wave Cashout',
+          '6 Smart Money Filters',
+          'Time Filter',
+        ],
+        support: 'email',
+      },
+      isActive: true,
+      sortOrder: 1,
+    },
     create: {
       id: 'pkg_starter',
       name: 'Starter',
-      description: 'Perfect for beginners. Access one strategy with a single trading account.',
-      priceCents: 4900,
-      currency: 'USD',
-      billingCycle: BillingCycle.MONTHLY,
+      description: 'สำหรับเทรดเดอร์เริ่มต้น 1 บัญชี MT5 — 3-Wave Cashout + Dashboard',
+      priceCents: 99000,
+      currency: 'THB',
+      billingCycle: 'MONTHLY',
       maxAccounts: 1,
       features: {
-        strategyIds: [scalperStrategy.id],
-        priority: 'normal',
+        strategyIds: [tradecandleV12.id],
+        maxAccounts: 1,
+        features: [
+          '1 บัญชี MT5',
+          'SaaS Dashboard',
+          'Heartbeat Monitor',
+          'Email Support',
+          '3-Wave Cashout',
+          '6 Smart Money Filters',
+          'Time Filter',
+        ],
         support: 'email',
-        analytics: 'basic',
       },
       isActive: true,
       sortOrder: 1,
     },
   });
 
-  const professionalPackage = await prisma.package.upsert({
-    where: { id: 'pkg_professional' },
-    update: {},
-    create: {
-      id: 'pkg_professional',
-      name: 'Professional',
-      description: 'For serious traders. Access two strategies with up to 3 trading accounts.',
-      priceCents: 9900,
-      currency: 'USD',
-      billingCycle: BillingCycle.MONTHLY,
+  const proPackage = await prisma.package.upsert({
+    where: { id: 'pkg_pro' },
+    update: {
+      name: 'Pro',
+      description: 'สำหรับเทรดเดอร์จริงจัง 3 บัญชี — Kill Switch + Risk Management + Line Support',
+      priceCents: 249000, // 2,490 THB
+      currency: 'THB',
+      billingCycle: 'MONTHLY',
       maxAccounts: 3,
       features: {
-        strategyIds: [scalperStrategy.id, swingStrategy.id],
-        priority: 'high',
-        support: 'priority_email',
-        analytics: 'advanced',
+        strategyIds: [tradecandleV12.id],
+        maxAccounts: 3,
+        features: [
+          '3 บัญชี MT5',
+          'Dashboard + Kill Switch',
+          'Heartbeat + Risk Management',
+          'Line Support',
+          '3-Wave Cashout',
+          '6 Smart Money Filters',
+          'Time Filter',
+        ],
+        support: 'line',
+      },
+      isActive: true,
+      sortOrder: 2,
+    },
+    create: {
+      id: 'pkg_pro',
+      name: 'Pro',
+      description: 'สำหรับเทรดเดอร์จริงจัง 3 บัญชี — Kill Switch + Risk Management + Line Support',
+      priceCents: 249000,
+      currency: 'THB',
+      billingCycle: 'MONTHLY',
+      maxAccounts: 3,
+      features: {
+        strategyIds: [tradecandleV12.id],
+        maxAccounts: 3,
+        features: [
+          '3 บัญชี MT5',
+          'Dashboard + Kill Switch',
+          'Heartbeat + Risk Management',
+          'Line Support',
+          '3-Wave Cashout',
+          '6 Smart Money Filters',
+          'Time Filter',
+        ],
+        support: 'line',
       },
       isActive: true,
       sortOrder: 2,
     },
   });
 
-  const enterprisePackage = await prisma.package.upsert({
-    where: { id: 'pkg_enterprise' },
-    update: {},
-    create: {
-      id: 'pkg_enterprise',
-      name: 'Enterprise',
-      description: 'Unlimited power. Access all strategies with up to 10 trading accounts and premium support.',
-      priceCents: 24900,
-      currency: 'USD',
-      billingCycle: BillingCycle.MONTHLY,
-      maxAccounts: 10,
+  const elitePackage = await prisma.package.upsert({
+    where: { id: 'pkg_elite' },
+    update: {
+      name: 'Elite',
+      description: 'สำหรับมืออาชีพ 5 บัญชี — Custom Config + VIP Line + 1-on-1 Setup Call',
+      priceCents: 499000, // 4,990 THB
+      currency: 'THB',
+      billingCycle: 'MONTHLY',
+      maxAccounts: 5,
       features: {
-        strategyIds: [scalperStrategy.id, swingStrategy.id, gridStrategy.id],
-        priority: 'highest',
-        support: 'dedicated',
-        analytics: 'full',
-        customConfig: true,
+        strategyIds: [tradecandleV12.id],
+        maxAccounts: 5,
+        features: [
+          '5 บัญชี MT5',
+          'ทุกอย่างใน Pro',
+          'Custom EA Config',
+          'VIP Line + 1-on-1 Setup Call',
+          '3-Wave Cashout',
+          '6 Smart Money Filters',
+          'Time Filter',
+        ],
+        support: 'vip_line',
+      },
+      isActive: true,
+      sortOrder: 3,
+    },
+    create: {
+      id: 'pkg_elite',
+      name: 'Elite',
+      description: 'สำหรับมืออาชีพ 5 บัญชี — Custom Config + VIP Line + 1-on-1 Setup Call',
+      priceCents: 499000,
+      currency: 'THB',
+      billingCycle: 'MONTHLY',
+      maxAccounts: 5,
+      features: {
+        strategyIds: [tradecandleV12.id],
+        maxAccounts: 5,
+        features: [
+          '5 บัญชี MT5',
+          'ทุกอย่างใน Pro',
+          'Custom EA Config',
+          'VIP Line + 1-on-1 Setup Call',
+          '3-Wave Cashout',
+          '6 Smart Money Filters',
+          'Time Filter',
+        ],
+        support: 'vip_line',
       },
       isActive: true,
       sortOrder: 3,
     },
   });
 
-  const yearlyStarterPackage = await prisma.package.upsert({
-    where: { id: 'pkg_starter_yearly' },
+  console.log(`✅ Packages: Starter=${starterPackage.id}, Pro=${proPackage.id}, Elite=${elitePackage.id}`);
+
+  // ─── Create Config Version for TradeCandle v12 ───────────────────────────
+  const configHash = hashConfig(JSON.stringify(tradecandleV12.defaultConfig));
+  await prisma.configVersion.upsert({
+    where: {
+      strategyId_configHash: {
+        strategyId: tradecandleV12.id,
+        configHash,
+      },
+    },
     update: {},
     create: {
-      id: 'pkg_starter_yearly',
-      name: 'Starter (Yearly)',
-      description: 'Starter plan billed annually. Save 20% compared to monthly.',
-      priceCents: 47000,
-      currency: 'USD',
-      billingCycle: BillingCycle.YEARLY,
-      maxAccounts: 1,
-      features: {
-        strategyIds: [scalperStrategy.id],
-        priority: 'normal',
-        support: 'email',
-        analytics: 'basic',
-      },
-      isActive: true,
-      sortOrder: 4,
+      strategyId: tradecandleV12.id,
+      configHash,
+      configJson: tradecandleV12.defaultConfig as Prisma.InputJsonValue,
+      changeReason: 'TradeCandle v12 initial seed',
     },
   });
+  console.log('✅ Config version created for TradeCandle v12');
 
-  const yearlyProPackage = await prisma.package.upsert({
-    where: { id: 'pkg_professional_yearly' },
-    update: {},
-    create: {
-      id: 'pkg_professional_yearly',
-      name: 'Professional (Yearly)',
-      description: 'Professional plan billed annually. Save 25% compared to monthly.',
-      priceCents: 89000,
-      currency: 'USD',
-      billingCycle: BillingCycle.YEARLY,
-      maxAccounts: 3,
-      features: {
-        strategyIds: [scalperStrategy.id, swingStrategy.id],
-        priority: 'high',
-        support: 'priority_email',
-        analytics: 'advanced',
-      },
-      isActive: true,
-      sortOrder: 5,
-    },
-  });
-
-  console.log(`✅ Packages created: ${starterPackage.name}, ${professionalPackage.name}, ${enterprisePackage.name}, ${yearlyStarterPackage.name}, ${yearlyProPackage.name}`);
-
-  // ─── Create Config Versions for Strategies ──────────────────────────────────
+  // ─── Create Demo Subscription for Trader ──────────────────────────────────
   const now = new Date();
   const nextMonth = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
 
   const demoSubscription = await prisma.subscription.upsert({
-    where: { id: 'sub_demo_trader_professional' },
+    where: { id: 'sub_demo_trader_pro' },
     update: {
       userId: trader.id,
-      packageId: professionalPackage.id,
+      packageId: proPackage.id,
       status: SubscriptionStatus.ACTIVE,
       currentPeriodStart: now,
       currentPeriodEnd: nextMonth,
@@ -304,37 +396,27 @@ async function main() {
       stripeCustomerId: null,
     },
     create: {
-      id: 'sub_demo_trader_professional',
+      id: 'sub_demo_trader_pro',
       userId: trader.id,
-      packageId: professionalPackage.id,
+      packageId: proPackage.id,
       status: SubscriptionStatus.ACTIVE,
       currentPeriodStart: now,
       currentPeriodEnd: nextMonth,
       cancelAtPeriodEnd: false,
     },
   });
-  console.log(`โ… Demo subscription created: ${demoSubscription.id}`);
+  console.log(`✅ Demo subscription created: ${demoSubscription.id}`);
 
-  const strategies = [scalperStrategy, swingStrategy, gridStrategy];
-  for (const strategy of strategies) {
-    const configHash = hashConfig(JSON.stringify(strategy.defaultConfig));
-    await prisma.configVersion.upsert({
-      where: {
-        strategyId_configHash: {
-          strategyId: strategy.id,
-          configHash,
-        },
-      },
-      update: {},
-      create: {
-        strategyId: strategy.id,
-        configHash,
-        configJson: strategy.defaultConfig as Prisma.InputJsonValue,
-        changeReason: 'Initial seed',
-      },
-    });
-  }
-  console.log('✅ Config versions created for all strategies');
+  // ─── Create Demo License for Trader ─────────────────────────────────────
+  const { license: demoLicense, rawKey: demoLicenseKey } = await createLicenseWithKey({
+    userId: trader.id,
+    subscriptionId: demoSubscription.id,
+    strategyId: tradecandleV12.id,
+    maxAccounts: 3,
+    expiresAt: nextMonth,
+  });
+  console.log(`✅ Demo license created: ${demoLicense.id}`);
+  console.log(`   License Key: ${demoLicenseKey}`);
 
   // ─── Create Demo API Key for Trader ───────────────────────────────────────
   const apiKeyRaw = 'ea_demo_trader_local_2026';
@@ -375,6 +457,42 @@ async function hashPassword(password: string): Promise<string> {
 
 function hashConfig(configStr: string): string {
   return crypto.createHash('sha256').update(configStr).digest('hex');
+}
+
+async function createLicenseWithKey(input: {
+  userId: string;
+  subscriptionId: string;
+  strategyId: string;
+  maxAccounts: number;
+  expiresAt: Date;
+}) {
+  const rawKey = `ea-${crypto.randomUUID()}`;
+  let attempts = 0;
+  const maxAttempts = 5;
+
+  while (attempts < maxAttempts) {
+    try {
+      const license = await prisma.license.create({
+        data: {
+          key: rawKey,
+          userId: input.userId,
+          subscriptionId: input.subscriptionId,
+          strategyId: input.strategyId,
+          maxAccounts: input.maxAccounts,
+          expiresAt: input.expiresAt,
+          status: 'ACTIVE',
+        },
+      });
+      return { license, rawKey };
+    } catch (error: any) {
+      if (error.code === 'P2002' && error.meta?.target?.includes('key')) {
+        attempts++;
+        continue;
+      }
+      throw error;
+    }
+  }
+  throw new Error('Failed to generate unique license key');
 }
 
 main()

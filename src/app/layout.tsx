@@ -17,16 +17,16 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata = {
-  title: 'TradeCandle v11 — AI เทรดทองอัตโนมัติ | 3-Wave Cashout + Smart Money Filters',
-  description: 'AI Expert Advisor สำหรับ XAUUSD บน MT5 — ปิดกำไรเป็น 3 คลื่น, 6 Smart Money Filters, Dashboard คุมจากมือถือ, Kill Switch หยุดทันที ทดลอง 7 วันฟรี',
+  title: 'TradeCandle v12 — AI เทรดทองอัตโนมัติ | 3-Wave Cashout + Smart Money Filters',
+  description: 'AI Expert Advisor สำหรับ XAUUSD บน MT5 — ปิดกำไรเป็น 3 คลื่น, 6 Smart Money Filters, Dashboard คุมจากมือถือ, Kill Switch หยุดทันที ทดลอง 1 เดือนฟรี',
   keywords: ['EA', 'Expert Advisor', 'XAUUSD', 'ทอง', 'Gold Trading', 'MT5', 'MetaTrader', 'Smart Money', 'SMC', '3-Wave Cashout', 'TradeCandle', 'เทรดทอง', 'AI Trading'],
   icons: {
     icon: '/images/icon-512.svg',
     apple: '/images/icon-512.svg',
   },
   openGraph: {
-    title: 'TradeCandle v11 — AI เทรดทองอัตโนมัติ',
-    description: '3-Wave Cashout ปิดกำไรเป็น 3 รอบ + 6 Smart Money Filters อ่านทรงสตรัคเจอร์อัตโนมัติ | ทดลอง 7 วันฟรี',
+    title: 'TradeCandle v12 — AI เทรดทองอัตโนมัติ',
+    description: '3-Wave Cashout ปิดกำไรเป็น 3 รอบ + 6 Smart Money Filters อ่านทรงสตรัคเจอร์อัตโนมัติ | ทดลอง 1 เดือนฟรี',
     type: 'website',
     url: 'https://tradecandle.ai',
     siteName: 'TradeCandle',
@@ -35,14 +35,14 @@ export const metadata = {
         url: '/images/hero-banner.html',
         width: 1920,
         height: 1080,
-        alt: 'TradeCandle v11 — AI Gold Trading',
+        alt: 'TradeCandle v12 — AI Gold Trading',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'TradeCandle v11 — AI เทรดทองอัตโนมัติ',
-    description: '3-Wave Cashout + Smart Money Filters | ทดลอง 7 วันฟรี',
+    title: 'TradeCandle v12 — AI เทรดทองอัตโนมัติ',
+    description: '3-Wave Cashout + Smart Money Filters | ทดลอง 1 เดือนฟรี',
     images: ['/images/hero-banner.html'],
   },
   robots: {

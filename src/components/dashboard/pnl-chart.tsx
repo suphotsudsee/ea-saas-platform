@@ -14,11 +14,11 @@ export function PnLChart({ data }: { data: PnLPoint[] }) {
         <AreaChart data={data}>
           <defs>
             <linearGradient id="colorEquity" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
-              <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+              <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.35}/>
+              <stop offset="95%" stopColor="#f59e0b" stopOpacity={0}/>
             </linearGradient>
           </defs>
-          <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#2f2617" vertical={false} />
           <XAxis dataKey="name" stroke="#64748b" fontSize={12} tickLine={false} axisLine={false} />
           <YAxis
             stroke="#64748b"
@@ -28,13 +28,13 @@ export function PnLChart({ data }: { data: PnLPoint[] }) {
             tickFormatter={(val) => `$${Number(val).toLocaleString()}`}
           />
           <Tooltip 
-            contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '8px' }}
+            contentStyle={{ backgroundColor: '#0f172a', border: '1px solid rgba(245,158,11,0.3)', borderRadius: '8px' }}
             itemStyle={{ color: '#fff' }}
           />
           <Area 
             type="monotone" 
             dataKey="equity" 
-            stroke="#3b82f6" 
+            stroke="#f59e0b" 
             fillOpacity={1} 
             fill="url(#colorEquity)" 
             strokeWidth={2}

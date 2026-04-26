@@ -105,7 +105,7 @@ const arg = process.argv[3];
 
 switch (command) {
   case 'broadcast':
-    sendTestBroadcast(arg || '🔧 ทดสอบระบบ — TradeCandle v11 Line OA ใช้งานได้แล้ว!');
+    sendTestBroadcast(arg || '🔧 ทดสอบระบบ — TradeCandle v12 Line OA ใช้งานได้แล้ว!');
     break;
   case 'template':
     sendTemplateBroadcast(arg || 'teaser');
@@ -119,7 +119,7 @@ switch (command) {
   default:
     console.log(`
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📱 Line OA Management — TradeCandle v11
+📱 Line OA Management — TradeCandle v12
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Usage: npx tsx scripts/line-manage.ts <command> [args]

@@ -13,6 +13,39 @@ interface RetryableAxiosRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;
 }
 
+interface ApiErrorPayload {
+  error?: string;
+  message?: string;
+  details?: Array<{
+    path?: Array<string | number>;
+    message?: string;
+  }>;
+}
+
+export function getApiErrorMessage(error: unknown, fallback = 'Something went wrong') {
+  if (!axios.isAxiosError<ApiErrorPayload>(error)) {
+    return error instanceof Error ? error.message : fallback;
+  }
+
+  const payload = error.response?.data;
+  const validationDetails = payload?.details
+    ?.map((detail) => {
+      const field = detail.path?.join('.');
+      return [field, detail.message].filter(Boolean).join(': ');
+    })
+    .filter(Boolean);
+
+  if (validationDetails?.length) {
+    return `ข้อมูลไม่ถูกต้อง: ${validationDetails.join(', ')}`;
+  }
+
+  if (payload?.error === 'Validation failed') {
+    return 'ข้อมูลที่กรอกไม่ถูกต้อง กรุณาตรวจสอบข้อมูลแล้วลองใหม่อีกครั้ง';
+  }
+
+  return payload?.error || payload?.message || error.message || fallback;
+}
+
 // Auth Interceptor
 api.interceptors.request.use((config) => {
   const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;

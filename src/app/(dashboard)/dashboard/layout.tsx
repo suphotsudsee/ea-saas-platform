@@ -68,7 +68,7 @@ function SidebarSection({
 }) {
   return (
     <div>
-      <p className="px-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">{title}</p>
+      <p className="px-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-amber-500/60">{title}</p>
       <ul className="mt-4 space-y-1.5">
         {items.map((item) => {
           const active = isActiveRoute(pathname, item.href);
@@ -81,13 +81,13 @@ function SidebarSection({
                 onClick={onNavigate}
                 className={`group flex items-center gap-3 rounded-2xl px-3 py-3 text-sm transition-all ${
                   active
-                    ? 'bg-[#112129] text-white shadow-[inset_0_0_0_1px_rgba(140,201,194,0.18)]'
-                    : 'text-slate-400 hover:bg-white/[0.04] hover:text-white'
+                    ? 'bg-amber-500/10 text-white shadow-[inset_0_0_0_1px_rgba(245,158,11,0.28)]'
+                    : 'text-slate-400 hover:bg-amber-500/10 hover:text-white'
                 }`}
               >
                 <span
                   className={`flex h-9 w-9 items-center justify-center rounded-xl transition-colors ${
-                    active ? 'bg-[#8cc9c2] text-[#081118]' : 'bg-white/[0.04] text-slate-400 group-hover:text-white'
+                    active ? 'bg-gradient-to-br from-amber-500 to-yellow-600 text-black' : 'bg-white/[0.04] text-slate-400 group-hover:text-amber-300'
                   }`}
                 >
                   <Icon className="h-4 w-4" />
@@ -120,10 +120,10 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const showTraderMenu = user?.actorType !== 'admin';
 
   return (
-    <div className="min-h-screen bg-[#081118] text-white">
+    <div className="min-h-screen bg-slate-950 text-white">
       <div className="pointer-events-none fixed inset-0">
-        <div className="absolute left-0 top-0 h-[320px] w-[320px] rounded-full bg-[radial-gradient(circle,rgba(140,201,194,0.11),rgba(8,17,24,0)_68%)]" />
-        <div className="absolute bottom-0 right-0 h-[360px] w-[360px] rounded-full bg-[radial-gradient(circle,rgba(227,168,79,0.08),rgba(8,17,24,0)_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.08),transparent_50%)]" />
+        <div className="absolute left-1/2 top-0 h-[420px] w-[860px] -translate-x-1/2 rounded-full bg-amber-500/10 blur-[150px]" />
       </div>
 
       <div className="relative flex min-h-screen">
@@ -137,18 +137,18 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         )}
 
         <aside
-          className={`fixed inset-y-0 left-0 z-40 flex w-[290px] flex-col border-r border-white/8 bg-[#0b151d]/95 px-5 py-5 backdrop-blur-xl transition-transform duration-300 lg:static lg:translate-x-0 ${
+          className={`fixed inset-y-0 left-0 z-40 flex w-[290px] flex-col border-r border-amber-900/30 bg-slate-950/95 px-5 py-5 backdrop-blur-xl transition-transform duration-300 lg:static lg:translate-x-0 ${
             mobileOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
         >
           <div className="flex items-center justify-between pb-5">
             <Link href="/dashboard" className="flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#8cc9c2] text-sm font-bold text-[#081118]">
-                EA
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-500 to-yellow-600 text-sm font-bold text-black shadow-lg shadow-amber-900/30">
+                TC
               </div>
               <div>
-                <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">Console</div>
-                <div className="text-base font-semibold text-white">EA SaaS</div>
+                <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-amber-500/70">TRADECANDLE</div>
+                <div className="text-base font-semibold text-white">AI Gold Bot</div>
               </div>
             </Link>
 
@@ -162,11 +162,11 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             </button>
           </div>
 
-          <div className="rounded-[28px] border border-white/8 bg-white/[0.03] p-4">
-            <div className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">Workspace</div>
+          <div className="rounded-[28px] border border-amber-900/30 bg-white/[0.03] p-4">
+            <div className="text-[11px] font-semibold uppercase tracking-[0.24em] text-amber-500/60">Workspace</div>
             <div className="mt-3 text-lg font-semibold text-white">{user?.name || 'Operator'}</div>
             <div className="mt-1 text-sm text-slate-400">{user?.email || 'No email loaded'}</div>
-            <div className="mt-4 inline-flex rounded-full bg-[#112129] px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[#8cc9c2]">
+            <div className="mt-4 inline-flex rounded-full bg-amber-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-amber-300">
               {user?.role || 'Trader'}
             </div>
           </div>
@@ -185,9 +185,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             )}
           </nav>
 
-          <div className="mt-6 rounded-[28px] border border-white/8 bg-[#16130d] p-4">
+          <div className="mt-6 rounded-[28px] border border-amber-900/30 bg-amber-950/20 p-4">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#2a2212] text-[#f4c77d]">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-300">
                 <ShieldAlert className="h-4 w-4" />
               </div>
               <div>
@@ -208,7 +208,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         </aside>
 
         <main className="flex min-w-0 flex-1 flex-col">
-          <header className="sticky top-0 z-20 border-b border-white/8 bg-[#081118]/85 backdrop-blur-xl">
+          <header className="sticky top-0 z-20 border-b border-amber-900/30 bg-slate-950/85 backdrop-blur-xl">
             <div className="flex items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
               <div className="flex items-center gap-3">
                 <button
@@ -221,14 +221,14 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 </button>
 
                 <div>
-                  <div className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">Dashboard</div>
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.24em] text-amber-500/60">Dashboard</div>
                   <h1 className="text-xl font-semibold text-white sm:text-2xl">{pageTitle}</h1>
                 </div>
               </div>
 
               <div className="flex items-center gap-3">
                 <div className="hidden rounded-full border border-white/8 bg-white/[0.04] px-4 py-2 text-xs font-medium text-slate-400 sm:block">
-                  <span className="mr-2 inline-block h-2 w-2 rounded-full bg-[#8cc9c2]" />
+                  <span className="mr-2 inline-block h-2 w-2 rounded-full bg-amber-400" />
                   System healthy
                 </div>
                 <div className="flex items-center gap-3 rounded-full border border-white/8 bg-white/[0.04] px-3 py-2">

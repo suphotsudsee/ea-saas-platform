@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { ReactNode } from 'react';
-import { Activity, ArrowRight, Shield, Zap } from 'lucide-react';
+import { Activity, ArrowRight, Shield, Waves, Zap } from 'lucide-react';
 
 interface AuthShellProps {
   badge: string;
@@ -24,27 +24,27 @@ export function AuthShell({
   children,
 }: AuthShellProps) {
   return (
-    <div className="min-h-screen bg-[#020617] px-4 py-8 text-white sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-950 px-4 py-8 text-white sm:px-6 lg:px-8">
       <div className="pointer-events-none fixed inset-0">
-        <div className="absolute left-1/2 top-0 h-[520px] w-[720px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(37,99,235,0.22),rgba(2,6,23,0)_70%)]" />
-        <div className="absolute bottom-0 right-0 h-[360px] w-[360px] rounded-full bg-[radial-gradient(circle,rgba(14,165,233,0.12),rgba(2,6,23,0)_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.1),transparent_50%)]" />
+        <div className="absolute left-1/2 top-[10%] h-[420px] w-[860px] -translate-x-1/2 rounded-full bg-amber-500/10 blur-[150px]" />
       </div>
 
       <div className="relative mx-auto flex min-h-[calc(100vh-4rem)] max-w-6xl items-center">
         <div className="grid w-full gap-8 lg:grid-cols-[1.1fr_460px]">
-          <div className="hidden rounded-[32px] border border-slate-800 bg-[linear-gradient(135deg,#0f172a_0%,#0b1220_100%)] p-8 shadow-2xl lg:block lg:p-10">
+          <div className="hidden rounded-[32px] border border-amber-900/30 bg-[linear-gradient(135deg,#0f172a_0%,#17120d_100%)] p-8 shadow-2xl shadow-black/40 lg:block lg:p-10">
             <Link href="/" className="inline-flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 text-sm font-bold text-white">
-                EA
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-yellow-600 text-sm font-bold text-black">
+                TC
               </div>
               <div>
-                <div className="text-sm font-semibold tracking-[0.2em] text-slate-500">PLATFORM</div>
-                <div className="text-lg font-semibold text-white">EA SaaS</div>
+                <div className="text-sm font-semibold tracking-[0.2em] text-amber-500/70">TRADECANDLE</div>
+                <div className="text-lg font-semibold text-white">AI Gold Bot</div>
               </div>
             </Link>
 
-            <div className="mt-10 inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-blue-300">
-              <Activity className="h-3.5 w-3.5" />
+            <div className="mt-10 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-amber-300">
+              <Waves className="h-3.5 w-3.5" />
               {badge}
             </div>
 
@@ -55,43 +55,43 @@ export function AuthShell({
 
             <div className="mt-10 grid gap-4 sm:grid-cols-3">
               {sideStats.map((stat) => (
-                <div key={stat.label} className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
-                  <div className="text-2xl font-bold text-white">{stat.value}</div>
+                <div key={stat.label} className="rounded-2xl border border-amber-900/30 bg-slate-900/60 p-4">
+                  <div className="text-2xl font-bold text-amber-400">{stat.value}</div>
                   <div className="mt-1 text-sm text-slate-500">{stat.label}</div>
                 </div>
               ))}
             </div>
 
             <div className="mt-10 grid gap-4">
-              <div className="flex items-start gap-3 rounded-2xl border border-slate-800 bg-slate-900/50 p-4">
-                <div className="mt-0.5 rounded-lg bg-blue-500/10 p-2 text-blue-400">
+              <div className="flex items-start gap-3 rounded-2xl border border-amber-900/30 bg-slate-900/50 p-4">
+                <div className="mt-0.5 rounded-lg bg-amber-500/10 p-2 text-amber-400">
                   <Shield className="h-4 w-4" />
                 </div>
                 <div>
-                  <div className="text-sm font-semibold text-white">Readable under pressure</div>
+                  <div className="text-sm font-semibold text-white">License key พร้อมใช้งานทันที</div>
                   <div className="mt-1 text-sm leading-6 text-slate-400">
-                    Replace spreadsheet ops and manual access handling with one system that stays clear when markets move fast.
+                    ซื้อแพ็กเกจแล้วจัดการ EA, license, risk และบัญชี MT5 จาก dashboard เดียว.
                   </div>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3 rounded-2xl border border-slate-800 bg-slate-900/50 p-4">
-                <div className="mt-0.5 rounded-lg bg-cyan-500/10 p-2 text-cyan-400">
+              <div className="flex items-start gap-3 rounded-2xl border border-amber-900/30 bg-slate-900/50 p-4">
+                <div className="mt-0.5 rounded-lg bg-amber-500/10 p-2 text-amber-400">
                   <Zap className="h-4 w-4" />
                 </div>
                 <div>
-                  <div className="text-sm font-semibold text-white">Built for live account control</div>
+                  <div className="text-sm font-semibold text-white">3-Wave Cashout + Smart Filters</div>
                   <div className="mt-1 text-sm leading-6 text-slate-400">
-                    Licensing, risk actions, and operational visibility stay tied together instead of spread across disconnected tools.
+                    ออกแบบสำหรับ XAUUSD บน MT5 พร้อมระบบติดตามและหยุด EA ได้จากมือถือ.
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="rounded-[28px] border border-slate-800 bg-slate-900/90 shadow-2xl shadow-black/30 backdrop-blur">
-            <div className="border-b border-slate-800 p-6">
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500/20 to-indigo-500/20 text-blue-300">
+          <div className="rounded-[28px] border border-amber-900/30 bg-slate-900/95 shadow-2xl shadow-black/40 backdrop-blur">
+            <div className="border-b border-amber-900/30 p-6">
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-500 to-yellow-600 text-black shadow-lg shadow-amber-900/30">
                 <ArrowRight className="h-5 w-5" />
               </div>
               <h2 className="mt-5 text-center text-3xl font-bold text-white">{title}</h2>

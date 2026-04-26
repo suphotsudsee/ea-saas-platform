@@ -21,7 +21,15 @@ const COMPANY_WALLETS: Record<string, string> = {
   'BEP-20': process.env.USDT_BEP20_ADDRESS || '',
 };
 
-const DEFAULT_NETWORK = (process.env.USDT_NETWORK || 'ERC20') as 'ERC-20' | 'TRC-20' | 'BEP-20';
+function normalizeNetwork(network?: string): 'ERC-20' | 'TRC-20' | 'BEP-20' {
+  if (network === 'TRC20') return 'TRC-20';
+  if (network === 'BEP20') return 'BEP-20';
+  if (network === 'ERC20') return 'ERC-20';
+  if (network === 'TRC-20' || network === 'BEP-20' || network === 'ERC-20') return network;
+  return 'ERC-20';
+}
+
+const DEFAULT_NETWORK = normalizeNetwork(process.env.USDT_NETWORK);
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -209,6 +217,10 @@ export async function verifyDeposit(options: VerifyDepositOptions) {
 
   // Activate subscription
   const subscription = payment.subscription;
+  if (!subscription) {
+    throw new Error('Payment is not linked to a subscription');
+  }
+
   const pkg = subscription.package;
 
   // Calculate period dates

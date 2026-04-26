@@ -8,7 +8,7 @@ import { generateLicenseKey } from '../src/api/services/license.service';
 
 const prisma = new PrismaClient();
 
-// ─── EA v11 Default Config ──────────────────────────────────────────────────
+// ─── EA v12 Default Config ──────────────────────────────────────────────────
 const STRATEGY_DEFAULT_CONFIG = {
   // 3-Wave Cashout
   wave1: { enabled: true, closePercent: 0.33, tpPercent: 0.25 },
@@ -55,7 +55,7 @@ const STRATEGY_RISK_CONFIG = {
 };
 
 async function main() {
-  console.log('🌱 Seeding demo data for TradeCandle v11...\n');
+  console.log('🌱 Seeding demo data for TradeCandle v12...\n');
 
   // ─── 1. Clean existing demo data ──────────────────────────────────────────
   console.log('🧹 Cleaning existing data...');
@@ -78,12 +78,12 @@ async function main() {
   console.log('  ✅ Cleaned\n');
 
   // ─── 2. Create Strategy ───────────────────────────────────────────────────
-  console.log('📋 Creating Strategy: TradeCandle v11...');
+  console.log('📋 Creating Strategy: TradeCandle v12...');
   const strategy = await prisma.strategy.create({
     data: {
-      name: 'TradeCandle v11',
+      name: 'TradeCandle v12',
       description: 'AI Gold Trading Bot — 3-Wave Cashout + 6 Smart Money Filters for XAUUSD on MT5',
-      version: '11.0.0',
+      version: '12.0.0',
       defaultConfig: STRATEGY_DEFAULT_CONFIG,
       riskConfig: STRATEGY_RISK_CONFIG,
       isActive: true,
@@ -351,7 +351,7 @@ async function main() {
   console.log('🎉 Demo data seeded successfully!');
   console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
   console.log('');
-  console.log('📋 Strategy:    TradeCandle v11 (XAUUSD/MT5)');
+  console.log('📋 Strategy:    TradeCandle v12 (XAUUSD/MT5)');
   console.log('💰 Packages:    Starter (990฿) / Pro (2,490฿) / Elite (4,990฿)');
   console.log('');
   console.log('👤 Test Accounts:');

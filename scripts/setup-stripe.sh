@@ -24,7 +24,7 @@ err()   { echo -e "${RED}[ERROR]${NC} $*"; }
 
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "  🔧 TradeCandle v11 — Stripe Setup Guide"
+echo "  🔧 TradeCandle v12 — Stripe Setup Guide"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 
