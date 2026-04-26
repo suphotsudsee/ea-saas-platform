@@ -147,6 +147,8 @@ model Package {
   maxAccounts   Int         @default(1)
   features      Json        // { strategyIds, priority, support }
   isActive      Boolean     @default(true)
+  isTrial       Boolean     @default(false)  // true = trial package
+  trialDays     Int         @default(0)       // trial duration in days (0 = not a trial)
   sortOrder     Int         @default(0)
   stripePriceId String?
 

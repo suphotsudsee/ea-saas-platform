@@ -57,6 +57,13 @@ COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 # Copy Redis config
 COPY --from=builder /app/redis ./redis
 
+# Copy Prisma CLI for db push at startup + start script
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
+COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+COPY --from=builder /app/docker/start.sh ./start.sh
+RUN chmod +x ./start.sh
+
 USER nextjs
 
 EXPOSE 3004
@@ -68,4 +75,4 @@ ENV HOSTNAME="0.0.0.0"
 HEALTHCHECK --interval=30s --timeout=10s --start-period=120s --retries=5 \
   CMD curl -f http://localhost:3004/api/health || exit 1
 
-CMD ["node", "server.js"]
+CMD ["./start.sh"]

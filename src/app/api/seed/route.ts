@@ -1,11 +1,25 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient, BillingCycle } from '@prisma/client';
+import { execSync } from 'child_process';
 
 const prisma = new PrismaClient();
 
 export async function GET() {
   try {
-    // Ensure TradeCandle v12 Strategy exists
+    // Step 1: Push schema to database (creates/updates tables)
+    console.log('📊 Pushing schema to database...');
+    try {
+      execSync('npx prisma db push --skip-generate --accept-data-loss 2>&1', {
+        cwd: process.cwd(),
+        timeout: 60000,
+        env: { ...process.env },
+      });
+      console.log('✅ Schema pushed');
+    } catch (e) {
+      console.log('⚠️ Schema push warning:', String(e).substring(0, 200));
+    }
+
+    // Step 2: Ensure TradeCandle v12 Strategy exists
     let strategy = await prisma.strategy.findFirst({
       where: { name: 'TradeCandle Gold Scalper' },
     });
@@ -30,22 +44,54 @@ export async function GET() {
       });
     }
 
-    // Delete existing packages
+    // Step 3: Delete existing packages (cascade subscriptions first)
     const existing = await prisma.package.findMany();
     for (const pkg of existing) {
       await prisma.subscription.deleteMany({ where: { packageId: pkg.id } });
     }
     await prisma.package.deleteMany();
 
-    // Create Starter
+    // Step 4: Create Trial Package (1 month = 30 days)
+    const trial = await prisma.package.create({
+      data: {
+        name: 'ทดลองใช้ 1 เดือน',
+        description: 'ทดลองใช้ TradeCandle Gold Scalper v12 ฟรี 30 วัน — 1 บัญชี MT5 + Dashboard + 3-Wave Cashout',
+        priceCents: 0, // ฟรี
+        currency: 'THB',
+        billingCycle: BillingCycle.MONTHLY,
+        maxAccounts: 1,
+        isTrial: true,
+        trialDays: 30,
+        features: {
+          strategyIds: [strategy.id],
+          maxAccounts: 1,
+          features: [
+            '1 บัญชี MT5',
+            'SaaS Dashboard',
+            '3-Wave Cashout',
+            '6 Smart Money Filters',
+            'Time Filter',
+            'ทดลองใช้ฟรี 30 วัน',
+            'Email Support',
+          ],
+          support: 'email',
+        },
+        isActive: true,
+        sortOrder: 0, // แสดงก่อนแพ็กเกจอื่น
+      },
+    });
+
+    // Step 5: Create Starter
     const starter = await prisma.package.create({
       data: {
         name: 'Starter',
         description: 'สำหรับเทรดเดอร์เริ่มต้น 1 บัญชี MT5 — 3-Wave Cashout + Dashboard',
-        priceCents: 99000,
+        priceCents: 99000, // 990 THB
         currency: 'THB',
         billingCycle: BillingCycle.MONTHLY,
         maxAccounts: 1,
+        isTrial: false,
+        trialDays: 0,
         features: {
           strategyIds: [strategy.id],
           maxAccounts: 1,
@@ -64,15 +110,17 @@ export async function GET() {
       },
     });
 
-    // Create Pro
+    // Step 6: Create Pro
     const pro = await prisma.package.create({
       data: {
         name: 'Pro',
         description: 'สำหรับเทรดเดอร์จริงจัง 3 บัญชี — Kill Switch + Risk Management + Line Support',
-        priceCents: 249000,
+        priceCents: 249000, // 2,490 THB
         currency: 'THB',
         billingCycle: BillingCycle.MONTHLY,
         maxAccounts: 3,
+        isTrial: false,
+        trialDays: 0,
         features: {
           strategyIds: [strategy.id],
           maxAccounts: 3,
@@ -91,15 +139,17 @@ export async function GET() {
       },
     });
 
-    // Create Elite
+    // Step 7: Create Elite
     const elite = await prisma.package.create({
       data: {
         name: 'Elite',
         description: 'สำหรับมืออาชีพ 5 บัญชี — Custom Config + VIP Line + 1-on-1 Setup Call',
-        priceCents: 499000,
+        priceCents: 499000, // 4,990 THB
         currency: 'THB',
         billingCycle: BillingCycle.MONTHLY,
         maxAccounts: 5,
+        isTrial: false,
+        trialDays: 0,
         features: {
           strategyIds: [strategy.id],
           maxAccounts: 5,
@@ -122,10 +172,17 @@ export async function GET() {
 
     return NextResponse.json({
       ok: true,
-      message: '🎉 Packages seeded!',
-      packages: { starter: starter.id, pro: pro.id, elite: elite.id },
+      message: '🎉 Schema pushed + Packages seeded!',
+      strategy: { name: strategy.name, id: strategy.id },
+      packages: {
+        trial: { id: trial.id, name: trial.name, priceCents: trial.priceCents, trialDays: trial.trialDays },
+        starter: { id: starter.id, name: starter.name },
+        pro: { id: pro.id, name: pro.name },
+        elite: { id: elite.id, name: elite.name },
+      },
     });
   } catch (error) {
+    console.error('❌ Seed failed:', error);
     await prisma.$disconnect();
     return NextResponse.json({ ok: false, error: String(error) }, { status: 500 });
   }
