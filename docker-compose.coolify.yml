@@ -2,55 +2,42 @@
 # Lightweight: only the Next.js app, connecting to Coolify-managed MySQL & Redis
 # ─────────────────────────────────────────────────────────────────────────────
 
-version: "3.9"
-
 services:
   web:
     build:
       context: .
       dockerfile: docker/Dockerfile
-    container_name: ea-saas-web
     restart: unless-stopped
-    ports:
-      - "3004:3004"
     environment:
-      # Database (Coolify managed — internal network)
-      DATABASE_URL: mysql://ea_user:EaS4asPr0d2026@c6x037e23chreg70eobkapao:3306/ea_saas
-      # Redis (Coolify managed — internal network)
-      REDIS_URL: redis://default:EaS4asPr0d2026@z1184668nu1m9iotaypi99sx:6379/0
-      # Auth
-      NEXTAUTH_SECRET: change-me-to-a-32-char-secret-key-at-least
-      NEXTAUTH_URL: http://hicr14xu1l73l5ookns05kbd.110.164.222.217.sslip.io
-      # App
-      APP_URL: http://hicr14xu1l73l5ookns05kbd.110.164.222.217.sslip.io
-      API_URL: http://hicr14xu1l73l5ookns05kbd.110.164.222.217.sslip.io
+      DATABASE_URL: ${DATABASE_URL}
+      REDIS_URL: ${REDIS_URL}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+      NEXTAUTH_URL: ${NEXTAUTH_URL}
+      APP_URL: ${APP_URL}
+      API_URL: ${API_URL}
       NODE_ENV: production
-      NEXT_PUBLIC_SITE_URL: http://hicr14xu1l73l5ookns05kbd.110.164.222.217.sslip.io
-      # Stripe
-      STRIPE_PUBLIC_KEY: pk_live_PLACEHOLDER
-      STRIPE_SECRET_KEY: sk_live_PLACEHOLDER
-      STRIPE_WEBHOOK_SECRET: whsec_PLACEHOLDER
-      # Email
-      RESEND_API_KEY: re_placeholder
-      EMAIL_FROM: noreply@tradecandle.ai
-      # Rate Limiting
-      RATE_LIMIT_EA_RPM: "60"
-      RATE_LIMIT_WEB_RPM: "100"
-      # Heartbeat
-      HEARTBEAT_INTERVAL_SEC: "60"
-      HEARTBEAT_STALE_FACTOR: "3"
-      # License
-      LICENSE_CACHE_TTL_SEC: "300"
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
+      STRIPE_PUBLIC_KEY: ${STRIPE_PUBLIC_KEY}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
+      RESEND_API_KEY: ${RESEND_API_KEY}
+      EMAIL_FROM: ${EMAIL_FROM:-noreply@tradecandle.ai}
+      RATE_LIMIT_EA_RPM: ${RATE_LIMIT_EA_RPM:-60}
+      RATE_LIMIT_WEB_RPM: ${RATE_LIMIT_WEB_RPM:-100}
+      HEARTBEAT_INTERVAL_SEC: ${HEARTBEAT_INTERVAL_SEC:-60}
+      HEARTBEAT_STALE_FACTOR: ${HEARTBEAT_STALE_FACTOR:-3}
+      LICENSE_CACHE_TTL_SEC: ${LICENSE_CACHE_TTL_SEC:-300}
+      USDT_PAYMENTwallet_address: ${USDT_PAYMENT_WALLET_ADDRESS:-placeholder}
+      USDT_PAYMENT_network: ${USDT_PAYMENT_NETWORK:-trc20}
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost:3004/api/health"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 40s
+      start_period: 120s
     networks:
       - coolify
 
 networks:
   coolify:
     external: true
-    name: coolify
