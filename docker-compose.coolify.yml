@@ -1,5 +1,5 @@
 # ─── EA SaaS Platform — Coolify Docker Compose ──────────────────────────────
-# Lightweight: only the Next.js app, connecting to Coolify-managed MySQL & Redis
+# Next.js app connecting to Coolify-managed MySQL & Redis
 # ─────────────────────────────────────────────────────────────────────────────
 
 services:
@@ -27,8 +27,13 @@ services:
       HEARTBEAT_INTERVAL_SEC: ${HEARTBEAT_INTERVAL_SEC:-60}
       HEARTBEAT_STALE_FACTOR: ${HEARTBEAT_STALE_FACTOR:-3}
       LICENSE_CACHE_TTL_SEC: ${LICENSE_CACHE_TTL_SEC:-300}
-      USDT_PAYMENTwallet_address: ${USDT_PAYMENT_WALLET_ADDRESS:-placeholder}
-      USDT_PAYMENT_network: ${USDT_PAYMENT_NETWORK:-trc20}
+      USDT_PAYMENT_WALLET_ADDRESS: ${USDT_PAYMENT_WALLET_ADDRESS:-placeholder}
+      USDT_PAYMENT_NETWORK: ${USDT_PAYMENT_NETWORK:-trc20}
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.easaas.rule: "Host(`hicr14xu1l73l5ookns05kbd.110.164.222.217.sslip.io`)"
+      traefik.http.routers.easaas.entryPoints: "http"
+      traefik.http.services.easaas.loadbalancer.server.port: "3004"
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost:3004/api/health"]
       interval: 30s
