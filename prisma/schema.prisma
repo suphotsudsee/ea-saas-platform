@@ -7,103 +7,11 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
 // ─── Enums ───────────────────────────────────────────────────────────────────
-
-enum UserRole {
-  TRADER
-  ADMIN
-  SUPER_ADMIN
-}
-
-enum UserStatus {
-  ACTIVE
-  SUSPENDED
-  BANNED
-  DELETED
-}
-
-enum BillingCycle {
-  MONTHLY
-  QUARTERLY
-  YEARLY
-}
-
-enum SubscriptionStatus {
-  ACTIVE
-  PAST_DUE
-  CANCELED
-  EXPIRED
-  TRIAL
-  PENDING_PAYMENT
-}
-
-enum PaymentStatus {
-  PENDING
-  AWAITING_DEPOSIT
-  COMPLETED
-  FAILED
-  EXPIRED
-  REFUNDED
-}
-
-enum PaymentMethod {
-  USDT_ERC20
-  USDT_TRC20
-  USDT_BEP20
-}
-
-enum LicenseStatus {
-  ACTIVE
-  EXPIRED
-  REVOKED
-  PAUSED
-}
-
-enum Platform {
-  MT4
-  MT5
-}
-
-enum AccountStatus {
-  ACTIVE
-  OFFLINE
-  STALE
-  UNLINKED
-}
-
-enum TradeDirection {
-  BUY
-  SELL
-}
-
-enum TradeEventType {
-  OPEN
-  CLOSE
-  MODIFY
-  PARTIAL_CLOSE
-}
-
-enum RiskRuleType {
-  MAX_DRAWDOWN
-  DAILY_LOSS
-  CONSECUTIVE_LOSSES
-  EQUITY_PROTECTION
-  MAX_POSITIONS
-  MARGIN_LEVEL
-  SPREAD_FILTER
-  SESSION_FILTER
-}
-
-enum AdminRole {
-  SUPER_ADMIN
-  BILLING_ADMIN
-  RISK_ADMIN
-  SUPPORT
-}
 
 // ─── User Management ─────────────────────────────────────────────────────────
 
@@ -116,8 +24,8 @@ model User {
   emailVerified   DateTime?
   twoFactorEnabled Boolean  @default(false)
   twoFactorSecret String?
-  role            UserRole  @default(TRADER)
-  status          UserStatus @default(ACTIVE)
+  role            String  @default("TRADER")
+  status          String @default("ACTIVE")
   autoLinkAccounts Boolean  @default(true)
 
   subscriptions   Subscription[]
@@ -143,9 +51,9 @@ model Package {
   description   String?
   priceCents    Int
   currency      String      @default("USD")
-  billingCycle  BillingCycle
+  billingCycle  String
   maxAccounts   Int         @default(1)
-  features      Json        // { strategyIds, priority, support }
+  features      String        // { strategyIds, priority, support }
   isActive      Boolean     @default(true)
   isTrial       Boolean     @default(false)  // true = trial package
   trialDays     Int         @default(0)       // trial duration in days (0 = not a trial)
@@ -165,7 +73,7 @@ model Subscription {
   id                  String             @id @default(cuid())
   userId              String
   packageId           String
-  status              SubscriptionStatus @default(ACTIVE)
+  status              String @default("ACTIVE")
   currentPeriodStart  DateTime
   currentPeriodEnd    DateTime
   cancelAtPeriodEnd   Boolean            @default(false)
@@ -191,8 +99,8 @@ model Payment {
   subscriptionId    String?
   amountCents       Int
   currency          String        @default("USDT")
-  status            PaymentStatus @default(PENDING)
-  paymentMethod     PaymentMethod @default(USDT_ERC20)
+  status            String @default("PENDING")
+  paymentMethod     String @default("USDT_ERC20")
   stripePaymentId   String?       @unique
 
   // USDT payment fields
@@ -227,7 +135,7 @@ model License {
   userId          String
   subscriptionId  String
   strategyId     String
-  status          LicenseStatus @default(ACTIVE)
+  status          String @default("ACTIVE")
   expiresAt       DateTime
   maxAccounts     Int           @default(1)
   killSwitch      Boolean       @default(false)
@@ -261,8 +169,8 @@ model Strategy {
   name          String    @unique
   description   String?
   version       String
-  defaultConfig Json      // Full strategy config
-  riskConfig    Json      // Risk rule thresholds
+  defaultConfig String      // Full strategy config
+  riskConfig    String      // Risk rule thresholds
   isActive      Boolean   @default(true)
 
   licenses      License[]
@@ -278,7 +186,7 @@ model ConfigVersion {
   id           String   @id @default(cuid())
   strategyId   String
   configHash   String   // SHA-256 of config JSON
-  configJson   Json
+  configJson   String
   changedBy    String?  // Admin user ID
   changeReason String?
 
@@ -298,8 +206,8 @@ model TradingAccount {
   licenseId       String
   accountNumber   String
   brokerName      String
-  platform        Platform
-  status          AccountStatus @default(ACTIVE)
+  platform        String
+  status          String @default("ACTIVE")
   lastHeartbeatAt DateTime?
   lastKnownIp     String?
 
@@ -349,8 +257,8 @@ model TradeEvent {
   tradingAccountId  String
   ticket           String
   symbol           String
-  direction        TradeDirection
-  eventType        TradeEventType
+  direction        String
+  eventType        String
   openPrice        Float?
   closePrice       Float?
   volume           Float
@@ -400,7 +308,7 @@ model RiskEvent {
   id               String        @id @default(cuid())
   licenseId        String
   tradingAccountId  String
-  ruleType         RiskRuleType
+  ruleType         String
   thresholdValue   Float
   actualValue      Float
   actionTaken      String
@@ -443,7 +351,7 @@ model AdminUser {
   email            String    @unique
   passwordHash     String
   name             String
-  role             AdminRole @default(SUPPORT)
+  role             String @default("SUPPORT")
   twoFactorEnabled Boolean   @default(false)
   twoFactorSecret  String?
 
@@ -462,8 +370,8 @@ model AuditLog {
   action       String
   resourceType String
   resourceId   String?
-  oldValue     Json?
-  newValue     Json?
+  oldValue     String?
+  newValue     String?
   ipAddress    String?
   userAgent    String?
 

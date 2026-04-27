@@ -1,0 +1,495 @@
+// ─── EA SaaS Platform — Prisma Schema ────────────────────────────────────────
+// Full 16-model schema with enums, relations, and indexes
+// ─────────────────────────────────────────────────────────────────────────────
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Enums ───────────────────────────────────────────────────────────────────
+
+enum UserRole {
+  TRADER
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  BANNED
+  DELETED
+}
+
+enum BillingCycle {
+  MONTHLY
+  QUARTERLY
+  YEARLY
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  EXPIRED
+  TRIAL
+  PENDING_PAYMENT
+}
+
+enum PaymentStatus {
+  PENDING
+  AWAITING_DEPOSIT
+  COMPLETED
+  FAILED
+  EXPIRED
+  REFUNDED
+}
+
+enum PaymentMethod {
+  USDT_ERC20
+  USDT_TRC20
+  USDT_BEP20
+}
+
+enum LicenseStatus {
+  ACTIVE
+  EXPIRED
+  REVOKED
+  PAUSED
+}
+
+enum Platform {
+  MT4
+  MT5
+}
+
+enum AccountStatus {
+  ACTIVE
+  OFFLINE
+  STALE
+  UNLINKED
+}
+
+enum TradeDirection {
+  BUY
+  SELL
+}
+
+enum TradeEventType {
+  OPEN
+  CLOSE
+  MODIFY
+  PARTIAL_CLOSE
+}
+
+enum RiskRuleType {
+  MAX_DRAWDOWN
+  DAILY_LOSS
+  CONSECUTIVE_LOSSES
+  EQUITY_PROTECTION
+  MAX_POSITIONS
+  MARGIN_LEVEL
+  SPREAD_FILTER
+  SESSION_FILTER
+}
+
+enum AdminRole {
+  SUPER_ADMIN
+  BILLING_ADMIN
+  RISK_ADMIN
+  SUPPORT
+}
+
+// ─── User Management ─────────────────────────────────────────────────────────
+
+model User {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  passwordHash    String?
+  name            String?
+  timezone        String    @default("UTC")
+  emailVerified   DateTime?
+  twoFactorEnabled Boolean  @default(false)
+  twoFactorSecret String?
+  role            UserRole  @default(TRADER)
+  status          UserStatus @default(ACTIVE)
+  autoLinkAccounts Boolean  @default(true)
+
+  subscriptions   Subscription[]
+  licenses        License[]
+  tradingAccounts TradingAccount[]
+  notifications   Notification[]
+  payments        Payment[]
+  apiKeys         ApiKey[]
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([email])
+  @@index([status])
+  @@map("users")
+}
+
+// ─── Subscription & Billing ───────────────────────────────────────────────────
+
+model Package {
+  id            String      @id @default(cuid())
+  name          String
+  description   String?
+  priceCents    Int
+  currency      String      @default("USD")
+  billingCycle  BillingCycle
+  maxAccounts   Int         @default(1)
+  features      Json        // { strategyIds, priority, support }
+  isActive      Boolean     @default(true)
+  isTrial       Boolean     @default(false)  // true = trial package
+  trialDays     Int         @default(0)       // trial duration in days (0 = not a trial)
+  sortOrder     Int         @default(0)
+  stripePriceId String?
+
+  subscriptions Subscription[]
+
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([isActive, sortOrder])
+  @@map("packages")
+}
+
+model Subscription {
+  id                  String             @id @default(cuid())
+  userId              String
+  packageId           String
+  status              SubscriptionStatus @default(ACTIVE)
+  currentPeriodStart  DateTime
+  currentPeriodEnd    DateTime
+  cancelAtPeriodEnd   Boolean            @default(false)
+  stripeSubscriptionId String?           @unique
+  stripeCustomerId    String?
+
+  user              User       @relation(fields: [userId], references: [id])
+  package           Package    @relation(fields: [packageId], references: [id])
+  licenses          License[]
+  payments          Payment[]
+
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+
+  @@index([userId])
+  @@index([status])
+  @@map("subscriptions")
+}
+
+model Payment {
+  id                String        @id @default(cuid())
+  userId            String
+  subscriptionId    String?
+  amountCents       Int
+  currency          String        @default("USDT")
+  status            PaymentStatus @default(PENDING)
+  paymentMethod     PaymentMethod @default(USDT_ERC20)
+  stripePaymentId   String?       @unique
+
+  // USDT payment fields
+  depositAddress    String?       // Wallet address to send USDT to
+  depositNetwork    String?       @default("ERC-20") // ERC-20 (Ethereum), TRC-20 (Tron), BEP-20 (BSC)
+  txHash            String?       @unique             // Blockchain transaction hash
+  fromAddress       String?       // Sender wallet address
+  confirmations     Int?          @default(0)         // Blockchain confirmations
+  verifiedAt        DateTime?     // When payment was verified on-chain
+  expiresAt         DateTime?     // Payment expiration (e.g., 30 min for deposit)
+
+  description       String?
+
+  user              User          @relation(fields: [userId], references: [id])
+  subscription      Subscription? @relation(fields: [subscriptionId], references: [id])
+
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  @@index([userId])
+  @@index([status])
+  @@index([depositAddress])
+  @@index([txHash])
+  @@map("payments")
+}
+
+// ─── License Management ──────────────────────────────────────────────────────
+
+model License {
+  id              String        @id @default(cuid())
+  key             String        @unique
+  userId          String
+  subscriptionId  String
+  strategyId     String
+  status          LicenseStatus @default(ACTIVE)
+  expiresAt       DateTime
+  maxAccounts     Int           @default(1)
+  killSwitch      Boolean       @default(false)
+  killSwitchReason String?
+  killSwitchAt   DateTime?
+  pausedAt       DateTime?
+  pausedReason   String?
+
+  user            User           @relation(fields: [userId], references: [id])
+  subscription    Subscription   @relation(fields: [subscriptionId], references: [id])
+  strategy        Strategy      @relation(fields: [strategyId], references: [id])
+  tradingAccounts TradingAccount[]
+  heartbeats      Heartbeat[]
+  tradeEvents     TradeEvent[]
+  metrics         Metric[]
+  riskEvents      RiskEvent[]
+
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@index([userId])
+  @@index([status])
+  @@index([expiresAt])
+  @@map("licenses")
+}
+
+// ─── Strategy & Configuration ─────────────────────────────────────────────────
+
+model Strategy {
+  id            String    @id @default(cuid())
+  name          String    @unique
+  description   String?
+  version       String
+  defaultConfig Json      // Full strategy config
+  riskConfig    Json      // Risk rule thresholds
+  isActive      Boolean   @default(true)
+
+  licenses      License[]
+  configVersions ConfigVersion[]
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("strategies")
+}
+
+model ConfigVersion {
+  id           String   @id @default(cuid())
+  strategyId   String
+  configHash   String   // SHA-256 of config JSON
+  configJson   Json
+  changedBy    String?  // Admin user ID
+  changeReason String?
+
+  strategy     Strategy @relation(fields: [strategyId], references: [id])
+
+  createdAt    DateTime @default(now())
+
+  @@unique([strategyId, configHash])
+  @@map("config_versions")
+}
+
+// ─── Trading Accounts ─────────────────────────────────────────────────────────
+
+model TradingAccount {
+  id              String        @id @default(cuid())
+  userId          String
+  licenseId       String
+  accountNumber   String
+  brokerName      String
+  platform        Platform
+  status          AccountStatus @default(ACTIVE)
+  lastHeartbeatAt DateTime?
+  lastKnownIp     String?
+
+  user            User        @relation(fields: [userId], references: [id])
+  license         License     @relation(fields: [licenseId], references: [id])
+  heartbeats     Heartbeat[]
+  tradeEvents    TradeEvent[]
+  metrics        Metric[]
+  riskEvents     RiskEvent[]
+
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  @@unique([accountNumber, brokerName, platform])
+  @@index([userId])
+  @@index([licenseId])
+  @@index([status])
+  @@map("trading_accounts")
+}
+
+// ─── EA Data: Heartbeats, Trades, Metrics ──────────────────────────────────────
+
+model Heartbeat {
+  id               String    @id @default(cuid())
+  licenseId        String
+  tradingAccountId  String
+  eaVersion         String?
+  equity            Float?
+  balance           Float?
+  openPositions     Int       @default(0)
+  marginLevel       Float?
+  serverTime        DateTime?
+
+  license           License        @relation(fields: [licenseId], references: [id])
+  tradingAccount    TradingAccount @relation(fields: [tradingAccountId], references: [id])
+
+  receivedAt        DateTime      @default(now())
+
+  @@index([licenseId, receivedAt])
+  @@index([tradingAccountId, receivedAt])
+  @@map("heartbeats")
+}
+
+model TradeEvent {
+  id               String         @id @default(cuid())
+  licenseId        String
+  tradingAccountId  String
+  ticket           String
+  symbol           String
+  direction        TradeDirection
+  eventType        TradeEventType
+  openPrice        Float?
+  closePrice       Float?
+  volume           Float
+  openTime         DateTime?
+  closeTime        DateTime?
+  profit           Float?
+  commission       Float?         @default(0)
+  swap             Float?         @default(0)
+  magicNumber      Int?
+  comment          String?
+
+  license           License        @relation(fields: [licenseId], references: [id])
+  tradingAccount    TradingAccount @relation(fields: [tradingAccountId], references: [id])
+
+  createdAt         DateTime       @default(now())
+
+  @@unique([licenseId, ticket])
+  @@index([tradingAccountId, closeTime])
+  @@index([licenseId, createdAt])
+  @@map("trade_events")
+}
+
+model Metric {
+  id               String    @id @default(cuid())
+  licenseId        String
+  tradingAccountId  String
+  equity           Float
+  balance          Float
+  marginLevel      Float?
+  drawdownPct      Float
+  openPositions    Int
+  freeMargin       Float?
+
+  license           License        @relation(fields: [licenseId], references: [id])
+  tradingAccount    TradingAccount @relation(fields: [tradingAccountId], references: [id])
+
+  recordedAt       DateTime      @default(now())
+
+  @@index([tradingAccountId, recordedAt])
+  @@index([licenseId, recordedAt])
+  @@map("metrics")
+}
+
+// ─── Risk Management ───────────────────────────────────────────────────────────
+
+model RiskEvent {
+  id               String        @id @default(cuid())
+  licenseId        String
+  tradingAccountId  String
+  ruleType         RiskRuleType
+  thresholdValue   Float
+  actualValue      Float
+  actionTaken      String
+  resolvedAt       DateTime?
+  resolvedBy       String?
+
+  license           License        @relation(fields: [licenseId], references: [id])
+  tradingAccount    TradingAccount @relation(fields: [tradingAccountId], references: [id])
+
+  createdAt         DateTime      @default(now())
+
+  @@index([licenseId, createdAt])
+  @@index([ruleType])
+  @@map("risk_events")
+}
+
+// ─── Notifications ──────────────────────────────────────────────────────────────
+
+model Notification {
+  id        String    @id @default(cuid())
+  userId    String
+  type      String
+  title     String
+  message   String
+  isRead    Boolean   @default(false)
+  link      String?
+
+  user      User      @relation(fields: [userId], references: [id])
+
+  createdAt DateTime  @default(now())
+
+  @@index([userId, isRead, createdAt])
+  @@map("notifications")
+}
+
+// ─── Admin & Security ──────────────────────────────────────────────────────────
+
+model AdminUser {
+  id               String    @id @default(cuid())
+  email            String    @unique
+  passwordHash     String
+  name             String
+  role             AdminRole @default(SUPPORT)
+  twoFactorEnabled Boolean   @default(false)
+  twoFactorSecret  String?
+
+  auditLogs       AuditLog[]
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@map("admin_users")
+}
+
+model AuditLog {
+  id           String    @id @default(cuid())
+  actorId      String?
+  actorType    String    // "admin" | "system" | "user"
+  action       String
+  resourceType String
+  resourceId   String?
+  oldValue     Json?
+  newValue     Json?
+  ipAddress    String?
+  userAgent    String?
+
+  actor        AdminUser? @relation(fields: [actorId], references: [id])
+
+  createdAt    DateTime  @default(now())
+
+  @@index([resourceType, resourceId])
+  @@index([createdAt])
+  @@index([actorId])
+  @@map("audit_logs")
+}
+
+model ApiKey {
+  id          String    @id @default(cuid())
+  userId      String
+  keyHash     String    @unique
+  keyPrefix   String    // First 8 chars for identification
+  name        String
+  lastUsedAt  DateTime?
+  expiresAt   DateTime?
+
+  user        User      @relation(fields: [userId], references: [id])
+
+  createdAt   DateTime  @default(now())
+
+  @@index([userId])
+  @@map("api_keys")
+}
