@@ -121,7 +121,7 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
               { label: '3-Wave Cashout', value: '✅' },
               { label: 'Smart Money Filters', value: '6' },
               { label: 'Uptime Target', value: '99.9%' },
-              { label: 'Thai Support', value: '🇹🇭' },
+              { label: '24/7 Support', value: '🌐' },
             ].map((stat) => (
               <div key={stat.label} className="px-4 text-center">
                 <div className="mb-1 text-3xl font-bold text-amber-400 md:text-4xl">{stat.value}</div>
@@ -364,7 +364,7 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
               { q: 'What is the minimum trading capital?', a: 'Recommended $500+ (0.01 lot) or $2,000+ (0.03 lot)' },
               { q: 'Is there a guarantee?', a: '1-month free trial — cancel if not satisfied, no charge + 30-day money back' },
               { q: 'Does the EA run on my computer or the cloud?', a: 'It runs on your own MT5 (VPS recommended). We provide the license + dashboard' },
-              { q: 'How is this different from free EAs?', a: '3-Wave Cashout + Smart Money Filters + SaaS Dashboard + Thai Support' },
+              { q: 'How is this different from free EAs?', a: '3-Wave Cashout + Smart Money Filters + SaaS Dashboard + 24/7 Support' },
             ].map((faq, i) => (
               <details key={i} className="group rounded-xl border border-amber-900/20 bg-slate-900/40">
                 <summary className="flex cursor-pointer items-center justify-between p-5 text-base font-semibold text-white hover:text-amber-300">
@@ -392,7 +392,7 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
               🚀 Get Started 1 monthFree <ArrowRight size={18} className="ml-2" />
             </Button>
             <Button variant="secondary" className="w-full rounded-xl px-12 py-3.5 text-base sm:w-auto">
-              💬 Contact Line OA
+              💬 Contact Support
             </Button>
           </div>
           <p className="mt-5 text-sm text-amber-500/80">⏰ Sign up this month — get 20% off all plans!</p>
@@ -658,7 +658,7 @@ function FeaturesPage() {
             },
             {
               icon: Layers,
-              title: 'Thai Support — Fast Response',
+              title: '24/7 Support — Fast Response',
               desc: 'Line OA answers all questions, Pro+ gets Line priority support',
             },
           ].map((feature) => (
@@ -956,7 +956,7 @@ function Footer({ navigateTo }: { navigateTo: (page: PageId) => void }) {
               AI Gold Trading Bot — Close profit in 3 waves — 3-Wave Cashout + 6 Smart Money Filters On MT5
             </p>
             <div className="flex gap-2">
-              {['MT5', 'XAUUSD', 'SaaS', 'Thai'].map((item) => (
+              {['MT5', 'XAUUSD', 'SaaS', '24/7 Support'].map((item) => (
                 <span
                   key={item}
                   className="rounded border border-amber-900/30 bg-amber-950/20 px-2 py-1 font-mono text-xs text-amber-600"
