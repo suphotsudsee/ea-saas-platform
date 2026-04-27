@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: ea-saas-platform
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: node .next/standalone/server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: NEXTAUTH_SECRET
+        generateValue: true
+    plan: starter
