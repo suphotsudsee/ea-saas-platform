@@ -1,9 +1,9 @@
-# 7E — Launch Day Checklist (วันเปิดตัว)
+# 7E — Launch Day Checklist (daysOpenItem)
 ## TradeCandle v11 — Step-by-step for Wednesday D-Day
 
 ---
 
-## 🌅 Pre-Launch (วันจันทร์-อังคาร ก่อนเปิดตัว)
+## 🌅 Pre-Launch (daysMonday-Tuesday ก่อนOpenItem)
 
 ### 💻 Technical Setup
 - [ ] Deploy landing page to production (`tradecandle.ai`)
@@ -36,12 +36,12 @@
 - [ ] Create Ad 1: Pain-Point Carousel (not yet active)
 - [ ] Create Ad 2: Social Proof Video 30s (not yet active)
 - [ ] Create Ad 3: Myth-Busting Single Image (not yet active)
-- [ ] Set daily budget: 1,500฿/day total (split across ad sets)
+- [ ] Set daily budget: 1,500$/day total (split across ad sets)
 - [ ] Set conversion event: `Subscribe` (for optimization)
 
 ---
 
-## 🚀 Launch Day (วันพุธ) — Hour by Hour
+## 🚀 Launch Day (daysWednesday) — Hour by Hour
 
 ### 08:00 — Final Checks
 - [ ] Open `tradecandle.ai` — check it loads
@@ -62,9 +62,9 @@
 - [ ] Send Line Broadcast #2 (Launch Day — Flex Message)
 - [ ] Publish TikTok Clip 2 (Myth-Busting)
 - [ ] Publish IG Reels (same video)
-- [ ] Activate FB Ad 1 (Pain-Point) — budget: 750฿/day
-- [ ] Activate FB Ad 2 (Social Proof) — budget: 750฿/day
-- [ ] Post Twitter/X thread: "เปิดตัวแล้ว!"
+- [ ] Activate FB Ad 1 (Pain-Point) — budget: 750$/day
+- [ ] Activate FB Ad 2 (Social Proof) — budget: 750$/day
+- [ ] Post Twitter/X thread: "OpenItemAlready!"
 
 ### 12:00 — Mid-Day Check
 - [ ] Check FB Ads Manager: impressions, CTR, CPC
@@ -75,12 +75,12 @@
 - [ ] Screenshot ad performance for reference
 
 ### 15:00 — Afternoon Push
-- [ ] Post FB Groups: "TradeCandle เปิดตัวแล้ว! ใครลองแล้วบอกมา"
+- [ ] Post FB Groups: "TradeCandle OpenItemAlready! ใครลองAlreadyบอกมา"
 - [ ] Reply to all new comments/DMs
 - [ ] Check ad spend vs sign-ups (ROAS estimate)
 
 ### 17:00 — Evening Content
-- [ ] Publish FB Post: Urgency "เหลือ 3 วัน! 20% off"
+- [ ] Publish FB Post: Urgency "เหลือ 3 days! 20% off"
 - [ ] Check ad performance — increase budget for winners
 - [ ] If any ad has CTR > 4%: increase budget 30%
 
@@ -104,9 +104,9 @@
 | Landing page visits | 1,000 | ___ |
 | Trial sign-ups | 50 | ___ |
 | Paid conversions | 10 | ___ |
-| FB Ad spend | 1,500฿ | ___ |
+| FB Ad spend | 1,500$ | ___ |
 | CTR (average) | ≥ 2.5% | ___ |
-| CPC (average) | ≤ 15฿ | ___ |
+| CPC (average) | ≤ 15$ | ___ |
 | Line broadcast open rate | 85% | ___ |
 | Line click rate | 15% | ___ |
 
@@ -114,7 +114,7 @@
 
 ## 🛑 Emergency Procedures
 
-### ถ้าเว็บล่น / ช้า
+### IfWebsiteล่น / ช้า
 ```bash
 # เช็ค Vercel deployment
 vercel logs --follow
@@ -126,28 +126,28 @@ npx prisma studio
 vercel --prod
 ```
 
-### ถ้า USDT Payment ไม่ทำงาน
-- ตรวจสอบ USDT_TRC20_ADDRESS ใน `.env` ถูกต้อง
-- ตรวจสอบ TronGrid webhook URL และ secret
+### If USDT Payment Noทำงาน
+- ตรวจสอบ USDT_TRC20_ADDRESS ใน `.env` Correct
+- ตรวจสอบ TronGrid webhook URL and secret
 - ตรวจสอบ `docs/USDT_PAYMENT_SETUP.md`
-- ตรวจสอบ STRIPE_SECRET_KEY และ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ใน `.env`
+- ตรวจสอบ STRIPE_SECRET_KEY and NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ใน `.env`
 - ตรวจสอบ webhook URL ใน Blockchain Explorer
 - ตรวจสอบ `docs/STRIPE_SETUP.md`
 
-### ถ้า Line OA ไม่ตอบ
-- เช็ค LINE_CHANNEL_ACCESS_TOKEN และ LINE_CHANNEL_SECRET ใน `.env`
+### If Line OA Noตอบ
+- เช็ค LINE_CHANNEL_ACCESS_TOKEN and LINE_CHANNEL_SECRET ใน `.env`
 - เช็ค webhook URL ใน Line Developer Console
 - ตอบด้วยมือชั่วคราว
 
-### ถ้า FB Ads ไม่แสดง
-- ตรวจสอบ Pixel ติดแล้ว (Pixel Helper extension)
+### If FB Ads NoShow
+- ตรวจสอบ Pixel ติดAlready (Pixel Helper extension)
 - ตรวจสอบ ad status: Active
 - ตรวจสอบ audience size: ≥ 1,000
-- รอ 2-4 ชม.หลังเปิด ad ใหม่
+- รอ 2-4 ชม.หลังOpen ad ใหม่
 
-### ถ้าไม่มีคนสมัครเลย
+### IfNoHasคนSubscribe Now
 - เช็ค landing page load speed (< 3 sec)
 - เช็ค CTA buttons working
 - เช็ค mobile responsive
-- เพิ่ม ad budget 20-30%
+- Add ad budget 20-30%
 - เปลี่ยน ad creative

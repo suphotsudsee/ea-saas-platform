@@ -122,7 +122,7 @@ function drawHeader() {
   fill(PALETTE.goldLight);
   textSize(28);
   textStyle(NORMAL);
-  text('ปิดกำไรเป็น 3 รอบ — ยังไงก็ได้กำไร', W/2, 280);
+  text('CloseProfitเป็น 3 Round — ยังไงก็ได้Profit', W/2, 280);
 }
 
 function drawAnimatedChart(progress) {
@@ -266,9 +266,9 @@ function drawWaveLabels(progress) {
   let labelY = 1120;
   
   let waves = [
-    { pct: '25%', desc: 'ปิดที่ 25% → ล็อคกำไรแรก', color: PALETTE.green, prog: 0.3 },
-    { pct: '50%', desc: 'ปิดที่ 50% → กำไรเพิ่มขึ้น', color: PALETTE.goldLight, prog: 0.6 },
-    { pct: 'Trail', desc: 'Trailing → ไล่เทรนด์ไม่จำกัด', color: PALETTE.amber, prog: 0.85 },
+    { pct: '25%', desc: 'CloseAt 25% → LockProfitFirst', color: PALETTE.green, prog: 0.3 },
+    { pct: '50%', desc: 'CloseAt 50% → ProfitAddUp', color: PALETTE.goldLight, prog: 0.6 },
+    { pct: 'Trail', desc: 'Trailing → Follow TrendNoLimited', color: PALETTE.amber, prog: 0.85 },
   ];
   
   for (let i = 0; i < waves.length; i++) {
@@ -315,7 +315,7 @@ function drawProfitCounter(progress) {
   textFont('sans-serif');
   textSize(24);
   textStyle(NORMAL);
-  text('กำไรสะสม', W/2, counterY);
+  text('Profitสะสม', W/2, counterY);
   
   textSize(72);
   textStyle(BOLD);
@@ -325,7 +325,7 @@ function drawProfitCounter(progress) {
   textSize(20);
   textStyle(NORMAL);
   fill(PALETTE.textGray);
-  text('จาก XAUUSD 0.5 lot', W/2, counterY + 100);
+  text('from XAUUSD 0.5 lot', W/2, counterY + 100);
 }
 
 function drawCTA(progress) {
@@ -353,13 +353,13 @@ function drawCTA(progress) {
   textAlign(CENTER);
   textSize(20);
   textStyle(BOLD);
-  text('🔥 ทดลอง 7 วันฟรี — เริ่ม 990฿/เดือน', W/2, ctaY + 65);
+  text('🔥 ทดลอง 7 daysFree — Beginner 990$/month', W/2, ctaY + 65);
   textStyle(NORMAL);
   
   // Bottom
   fill(PALETTE.textGray);
   textSize(14);
-  text('ลิงก์ใน Bio • tradecandle.ai', W/2, ctaY + 120);
+  text('Linkใน Bio • tradecandle.ai', W/2, ctaY + 120);
 }
 
 function keyPressed() {

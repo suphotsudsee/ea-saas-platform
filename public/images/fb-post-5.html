@@ -48,18 +48,18 @@ function draw() {
   textAlign(CENTER, TOP);
   textStyle(BOLD);
   textSize(52);
-  text('เริ่มต้นใช้ TradeCandle', W / 2, 150);
+  text('Start Using TradeCandle', W / 2, 150);
 
   fill(GOLD);
   textSize(60);
-  text('วันนี้', W / 2, 215);
+  text('daysThis', W / 2, 215);
 
   // 3 key points
   let pointY = 340;
   const points = [
-    { num: '7', label: 'วัน', desc: 'ทดลองใช้ฟรี', sub: 'No Credit Card', color: GREEN },
-    { num: '990', label: '฿/เดือน', desc: 'เริ่มต้น Starter', sub: '• Pro 2,490฿ • Elite 4,990฿', color: GOLD },
-    { num: '⚡', label: 'Kill Switch', desc: 'หยุดทันที 1 คลิก', sub: 'ควบคุมเต็ม 100%', color: '#EF4444' },
+    { num: '7', label: 'days', desc: 'Free Trial', sub: 'No Credit Card', color: GREEN },
+    { num: '990', label: '$/month', desc: 'Get Started Starter', sub: '• Pro 2,490$ • Elite 4,990$', color: GOLD },
+    { num: '⚡', label: 'Kill Switch', desc: 'หยุดทันที 1 คลิก', sub: 'Controlเต็ม 100%', color: '#EF4444' },
   ];
 
   for (let i = 0; i < points.length; i++) {
@@ -113,11 +113,11 @@ function draw() {
   text('ทำไมต้อง TradeCandle v11?', W / 2, featY);
 
   let featItems = [
-    '✅ 3-Wave Cashout ปิดกำไร 3 รอบ ไม่ปล่อยกำไรหนี้',
-    '✅ 6 Smart Money Filters วิเคราะห์ให้อัตโนมัติ',
-    '✅ SaaS Dashboard ดูผลเรียลไทม์ทุกที่ทุกที่',
-    '✅ Kill Switch หยุด EA ทันที ควบคุมเต็ม 100%',
-    '✅ ออกแบบมาเฉพาะ XAUUSD บน MT5',
+    '✅ 3-Wave Cashout CloseProfit 3 Round Noปล่อยProfitหThis',
+    '✅ 6 Smart Money Filters Analyzeให้Automated',
+    '✅ SaaS Dashboard ViewPerformanceเรียลไทม์AllAtAllAt',
+    '✅ Kill Switch หยุด EA ทันที Controlเต็ม 100%',
+    '✅ ออกStyleมาExclusive XAUUSD On MT5',
   ];
 
   featY += 45;
@@ -151,19 +151,19 @@ function draw() {
   textAlign(CENTER, CENTER);
   textStyle(BOLD);
   textSize(32);
-  text('🚀 เริ่มทดลอง 7 วันฟรี', W / 2, 905);
+  text('🚀 Beginnerทดลอง 7 daysFree', W / 2, 905);
 
   fill(30);
   textSize(16);
   textStyle(NORMAL);
-  text('ไม่ต้องใส่บัตรเครดิต', W / 2, 935);
+  text('Noต้องใส่Credit Card', W / 2, 935);
 
   // Pricing tiers
   let tierY = 990;
   const tiers = [
-    { name: 'Starter', price: '990฿', features: '1 EA • Basic Filters', color: GREEN },
-    { name: 'Pro', price: '2,490฿', features: 'All Filters • Dashboard', color: GOLD, popular: true },
-    { name: 'Elite', price: '4,990฿', features: 'All Features • Priority', color: AMBER },
+    { name: 'Starter', price: '990$', features: '1 EA • Basic Filters', color: GREEN },
+    { name: 'Pro', price: '2,490$', features: 'All Filters • Dashboard', color: GOLD, popular: true },
+    { name: 'Elite', price: '4,990$', features: 'All Features • Priority', color: AMBER },
   ];
 
   let tierW = 300;
@@ -204,7 +204,7 @@ function draw() {
     fill(120);
     textSize(13);
     textStyle(NORMAL);
-    text('/เดือน', tx + tierW / 2, tierY + 78);
+    text('/month', tx + tierW / 2, tierY + 78);
     text(t.features, tx + tierW / 2, tierY + 100);
   }
 

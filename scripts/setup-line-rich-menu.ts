@@ -16,26 +16,26 @@ const headers = {
 const richMenu = {
   size: { width: 2500, height: 1686 },
   name: 'TradeCandle v12 Menu',
-  chatBarText: 'เมนู',
+  chatBarText: 'Menu',
   selected: false,
   areas: [
-    // Row 1: กลับหน้าแชท | ดูราคา
+    // Row 1: Sign Up | View Pricing
     {
       bounds: { x: 0, y: 0, width: 1250, height: 843 },
-      action: { type: 'uri', label: 'สมัครใช้', uri: 'https://tradecandle.ai/register' },
+      action: { type: 'uri', label: 'Sign Up to Use', uri: 'https://tradecandle.ai/register' },
     },
     {
       bounds: { x: 1250, y: 0, width: 1250, height: 843 },
-      action: { type: 'uri', label: 'ดูราคา', uri: 'https://tradecandle.ai/#pricing' },
+      action: { type: 'uri', label: 'ViewPrice', uri: 'https://tradecandle.ai/#pricing' },
     },
-    // Row 2: Dashboard | ช่วยเหลือ
+    // Row 2: Dashboard | Help
     {
       bounds: { x: 0, y: 843, width: 1250, height: 843 },
       action: { type: 'uri', label: 'Dashboard', uri: 'https://tradecandle.ai/dashboard' },
     },
     {
       bounds: { x: 1250, y: 843, width: 1250, height: 843 },
-      action: { type: 'message', label: 'ช่วยเหลือ', text: 'ช่วย' },
+      action: { type: 'message', label: 'Help', text: 'help' },
     },
   ],
 };
@@ -85,20 +85,20 @@ async function setupRichMenu() {
   // For now, we'll use a placeholder — you'll need to upload an actual image
   console.log(`
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📷 ขั้นตอนต่อไป: อัปโหลดรูป Rich Menu
+📷 Next Step: Upload Rich Menu Image
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-สร้างรูปขนาด 2500x1686 พิกเซล แบ่งเป็น 4 ช่อง:
+Create an image sized 2500x1686 pixels divided into 4 sections:
 
 ┌─────────────┬─────────────┐
-│  สมัครใช้    │  ดูราคา      │
-│  (ส้ม)       │  (ทอง)      │
+│  Sign Up to Use    │  View Pricing      │
+│  (Orange)       │  (Gold)         │
 ├─────────────┼─────────────┤
-│  Dashboard  │  ช่วยเหลือ    │
-│  (เขียว)     │  (น้ำเงิน)    │
+│  Dashboard    │  Help    │
+│  (Green)      │  (Blue)       │
 └─────────────┴─────────────┘
 
-อัปโหลดรูป:
+Upload the image:
 
 curl -X POST \\
   -H "Authorization: Bearer \${LINE_CHANNEL_ACCESS_TOKEN}" \\
@@ -106,7 +106,7 @@ curl -X POST \\
   --data-binary @rich-menu-image.png \\
   "https://api.line.me/v2/bot/richmenu/${richMenuId}/content"
 
-กำหนดเป็นdefault:
+Set as default:
 
 curl -X POST \\
   -H "Authorization: Bearer \${LINE_CHANNEL_ACCESS_TOKEN}" \\
@@ -115,7 +115,7 @@ curl -X POST \\
 
   // 5. Print Rich Menu ID for reference
   console.log(`\n🆔 Rich Menu ID: ${richMenuId}`);
-  console.log('\n✅ Rich Menu สร้างเรียบร้อย! อัปโหลดรูปและตั้งเป็น default แล้วใช้ได้เลย');
+  console.log('\n✅ Rich Menu created successfully! Upload the image and set it as default to start using it right away.');
 }
 
 setupRichMenu().catch(console.error);

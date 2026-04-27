@@ -42,11 +42,9 @@ export async function POST(request: NextRequest) {
         paymentMemo: result.paymentMemo,
         packageName: result.packageName,
         instructions: {
-          th: `โอน ${result.amount} USDT (${result.network}) ไปยังแอดเดรสด้านล่าง ภายใน ${DEPOSIT_TIMEOUT_MINUTES} นาที`,
-          en: `Send ${result.amount} USDT via ${result.network} to the address below within 30 minutes`,
+          en: `Send ${result.amount} USDT via ${result.network} to the address below within ${DEPOSIT_TIMEOUT_MINUTES} minutes`,
         },
         warning: {
-          th: '⚠️ โอนเฉพาะ USDT บนเน็ตเวิร์กที่ระบุเท่านั้น — โอนผิดเน็ตเวิร์กจะสูญหาย',
           en: '⚠️ Only send USDT on the specified network — wrong network transfers will be lost',
         },
       },

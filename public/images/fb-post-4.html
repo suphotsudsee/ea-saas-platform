@@ -34,12 +34,12 @@ function draw() {
   textAlign(CENTER, TOP);
   textStyle(BOLD);
   textSize(40);
-  text('EA ทั่วไป vs TradeCandle v11', W / 2, 30);
+  text('EA General vs TradeCandle v11', W / 2, 30);
 
   fill(180);
   textSize(20);
   textStyle(NORMAL);
-  text('เปรียบเทียบแบบเห็นชัด ๆ', W / 2, 80);
+  text('CompareClearly Visible ๆ', W / 2, 80);
 
   // Divider line in the middle
   stroke(GOLD);
@@ -56,7 +56,7 @@ function draw() {
   textSize(24);
   text('VS', W / 2, 127);
 
-  // ==== LEFT: EA ทั่วไป (Red/Dark theme) ====
+  // ==== LEFT: EA General (Red/Dark theme) ====
   let leftX = 40, leftW = W / 2 - 70;
 
   // Header
@@ -67,17 +67,17 @@ function draw() {
   textAlign(CENTER, CENTER);
   textSize(24);
   textStyle(BOLD);
-  text('❌ EA ทั่วไป', leftX + leftW / 2, 155);
+  text('❌ EA General', leftX + leftW / 2, 155);
 
   // Comparison items - left side (bad)
   const leftItems = [
-    { icon: '📉', text: 'รอ TP จนราคากลับ' },
-    { icon: '🎲', text: 'เปิดเทรดสุ่ม ๆ' },
-    { icon: '🔍', text: 'ไม่มี Smart Money Filter' },
-    { icon: '🖥️', text: 'ต้องเฝ้าหน้าจอ 24 ชม.' },
-    { icon: '💸', text: 'Drawdown สูง ขาดทุนง่าย' },
-    { icon: '⚠️', text: 'ไม่มี Kill Switch หยุดยาก' },
-    { icon: '❓', text: 'ไม่มี Dashboard ดูยาก' },
+    { icon: '📉', text: 'รอ TP จนPriceReturn/Reverse' },
+    { icon: '🎲', text: 'OpenTradingสุ่ม ๆ' },
+    { icon: '🔍', text: 'NoHas Smart Money Filter' },
+    { icon: '🖥️', text: 'ต้องเฝ้าPageจอ 24 ชม.' },
+    { icon: '💸', text: 'Drawdown High Lossง่าย' },
+    { icon: '⚠️', text: 'NoHas Kill Switch หยุดยาก' },
+    { icon: '❓', text: 'NoHas Dashboard Viewยาก' },
   ];
 
   let itemY = 210;
@@ -119,13 +119,13 @@ function draw() {
 
   // Comparison items - right side (good)
   const rightItems = [
-    { icon: '🎯', text: '3-Wave Cashout ปิดกำไร 3 รอบ' },
-    { icon: '🧠', text: '6 Smart Money Filters อัตโนมัติ' },
-    { icon: '📊', text: 'อ่านโครงสร้างตลาดด้วย AI' },
-    { icon: '😴', text: 'ตื่นมาเห็นกำไร ไม่ต้องเฝ้า' },
-    { icon: '🛡️', text: 'Drawdown ต่ำ Win Rate สูง' },
+    { icon: '🎯', text: '3-Wave Cashout CloseProfit 3 Round' },
+    { icon: '🧠', text: '6 Smart Money Filters Automated' },
+    { icon: '📊', text: 'ReadโครงCreateตลาดด้วย AI' },
+    { icon: '😴', text: 'Wake Up and SeeProfit Noต้องเฝ้า' },
+    { icon: '🛡️', text: 'Drawdown ต่ำ Win Rate High' },
     { icon: '🛑', text: 'Kill Switch หยุดทันที 1 คลิก' },
-    { icon: '📱', text: 'SaaS Dashboard ดูผล Real-time' },
+    { icon: '📱', text: 'SaaS Dashboard ViewPerformance Real-time' },
   ];
 
   itemY = 210;
@@ -160,7 +160,7 @@ function draw() {
   textAlign(CENTER, CENTER);
   textSize(26);
   textStyle(BOLD);
-  text('เลือกที่ดีกว่า → 7 วันฟรี เริ่มต้น 990฿/เดือน', W / 2, 1095);
+  text('เลือกAtดีกว่า → 7 daysFree Get Started 990$/month', W / 2, 1095);
 
   fill(130);
   textSize(14);
@@ -170,7 +170,7 @@ function draw() {
   // Pricing hint
   fill(90);
   textSize(13);
-  text('Starter 990฿ • Pro 2,490฿ • Elite 4,990฿', W / 2, 1178);
+  text('Starter 990$ • Pro 2,490$ • Elite 4,990$', W / 2, 1178);
 }
 
 function drawPainChart(x, y, w, h) {

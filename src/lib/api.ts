@@ -36,11 +36,11 @@ export function getApiErrorMessage(error: unknown, fallback = 'Something went wr
     .filter(Boolean);
 
   if (validationDetails?.length) {
-    return `ข้อมูลไม่ถูกต้อง: ${validationDetails.join(', ')}`;
+    return `Invalid input: ${validationDetails.join(', ')}`;
   }
 
   if (payload?.error === 'Validation failed') {
-    return 'ข้อมูลที่กรอกไม่ถูกต้อง กรุณาตรวจสอบข้อมูลแล้วลองใหม่อีกครั้ง';
+    return 'The information you entered is not valid. Please check your details and try again.';
   }
 
   return payload?.error || payload?.message || error.message || fallback;

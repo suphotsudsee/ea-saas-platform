@@ -203,7 +203,7 @@ async function main() {
     where: { id: 'pkg_starter' },
     update: {
       name: 'Starter',
-      description: 'สำหรับเทรดเดอร์เริ่มต้น 1 บัญชี MT5 — 3-Wave Cashout + Dashboard',
+      description: 'For Beginner Traders 1 MT5 Accounts — 3-Wave Cashout + Dashboard',
       priceCents: 99000, // 990 THB
       currency: 'THB',
       billingCycle: 'MONTHLY',
@@ -212,7 +212,7 @@ async function main() {
         strategyIds: [tradecandleV12.id],
         maxAccounts: 1,
         features: [
-          '1 บัญชี MT5',
+          '1 MT5 Accounts',
           'SaaS Dashboard',
           'Heartbeat Monitor',
           'Email Support',
@@ -228,7 +228,7 @@ async function main() {
     create: {
       id: 'pkg_starter',
       name: 'Starter',
-      description: 'สำหรับเทรดเดอร์เริ่มต้น 1 บัญชี MT5 — 3-Wave Cashout + Dashboard',
+      description: 'For Beginner Traders 1 MT5 Accounts — 3-Wave Cashout + Dashboard',
       priceCents: 99000,
       currency: 'THB',
       billingCycle: 'MONTHLY',
@@ -237,7 +237,7 @@ async function main() {
         strategyIds: [tradecandleV12.id],
         maxAccounts: 1,
         features: [
-          '1 บัญชี MT5',
+          '1 MT5 Accounts',
           'SaaS Dashboard',
           'Heartbeat Monitor',
           'Email Support',
@@ -256,7 +256,7 @@ async function main() {
     where: { id: 'pkg_pro' },
     update: {
       name: 'Pro',
-      description: 'สำหรับเทรดเดอร์จริงจัง 3 บัญชี — Kill Switch + Risk Management + Line Support',
+      description: 'For Serious Traders 3 Accounts — Kill Switch + Risk Management + Line Support',
       priceCents: 249000, // 2,490 THB
       currency: 'THB',
       billingCycle: 'MONTHLY',
@@ -265,7 +265,7 @@ async function main() {
         strategyIds: [tradecandleV12.id],
         maxAccounts: 3,
         features: [
-          '3 บัญชี MT5',
+          '3 MT5 Accounts',
           'Dashboard + Kill Switch',
           'Heartbeat + Risk Management',
           'Line Support',
@@ -281,7 +281,7 @@ async function main() {
     create: {
       id: 'pkg_pro',
       name: 'Pro',
-      description: 'สำหรับเทรดเดอร์จริงจัง 3 บัญชี — Kill Switch + Risk Management + Line Support',
+      description: 'For Serious Traders 3 Accounts — Kill Switch + Risk Management + Line Support',
       priceCents: 249000,
       currency: 'THB',
       billingCycle: 'MONTHLY',
@@ -290,7 +290,7 @@ async function main() {
         strategyIds: [tradecandleV12.id],
         maxAccounts: 3,
         features: [
-          '3 บัญชี MT5',
+          '3 MT5 Accounts',
           'Dashboard + Kill Switch',
           'Heartbeat + Risk Management',
           'Line Support',
@@ -309,7 +309,7 @@ async function main() {
     where: { id: 'pkg_elite' },
     update: {
       name: 'Elite',
-      description: 'สำหรับมืออาชีพ 5 บัญชี — Custom Config + VIP Line + 1-on-1 Setup Call',
+      description: 'For Professional Traders — 5 Accounts: Custom Config + VIP Line + 1-on-1 Setup Call',
       priceCents: 499000, // 4,990 THB
       currency: 'THB',
       billingCycle: 'MONTHLY',
@@ -318,8 +318,8 @@ async function main() {
         strategyIds: [tradecandleV12.id],
         maxAccounts: 5,
         features: [
-          '5 บัญชี MT5',
-          'ทุกอย่างใน Pro',
+          '5 MT5 Accounts',
+          'Everything in Pro',
           'Custom EA Config',
           'VIP Line + 1-on-1 Setup Call',
           '3-Wave Cashout',
@@ -334,7 +334,7 @@ async function main() {
     create: {
       id: 'pkg_elite',
       name: 'Elite',
-      description: 'สำหรับมืออาชีพ 5 บัญชี — Custom Config + VIP Line + 1-on-1 Setup Call',
+      description: 'For Professional Traders — 5 Accounts: Custom Config + VIP Line + 1-on-1 Setup Call',
       priceCents: 499000,
       currency: 'THB',
       billingCycle: 'MONTHLY',
@@ -343,8 +343,8 @@ async function main() {
         strategyIds: [tradecandleV12.id],
         maxAccounts: 5,
         features: [
-          '5 บัญชี MT5',
-          'ทุกอย่างใน Pro',
+          '5 MT5 Accounts',
+          'Everything in Pro',
           'Custom EA Config',
           'VIP Line + 1-on-1 Setup Call',
           '3-Wave Cashout',

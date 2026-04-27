@@ -6,8 +6,8 @@ import { NextRequest, NextResponse } from 'next/server';
 
 // ─── Line API Config ────────────────────────────────────────────────────────
 
-const LINE_CHANNEL_ACCESS_TOKEN = process.env.LINE_CHANNEL_ACCESS_TOKEN || '';
-const LINE_CHANNEL_SECRET = process.env.LINE_CHANNEL_SECRET || '';
+const LINE_CHANNEL_ACCESS_TOKEN=process.env.LINE_CHANNEL_ACCESS_TOKEN || '';
+const LINE_CHANNEL_SECRET=process.env.LINE_CHANNEL_SECRET || '';
 const LINE_API_BASE = 'https://api.line.me/v2/bot';
 
 function getLineHeaders() {
@@ -74,23 +74,23 @@ export const LineTemplates = {
       type: 'text',
       text: `━━━━━━━━━━━━━━━━━━
 
-🔥 มีของดีจะประกาศ!
+🔥 Great News!
 
-ใครเทรดทองแล้วเคย:
-❌ กำไรหายไประหว่างทาง
-❌ นั่งดูจอทั้งวัน พลาดจังหวะ
-❌ ซื้อ EA มาใช้แล้วขาดทุน
+Trading gold and ever experienced:
+❌ Profits wiped out mid-trade
+❌ Staring at charts all day, missing entries
+❌ Buying EAs that just lose money
 
-พรุ่งนี้มีคำตอบ 🔓
+Tomorrow we have the answer 🔓
 
-อย่าพลาด! ติดตามพรุ่งนี้ 10:00
+Don't miss it! Watch tomorrow at 10:00
 
 ━━━━━━━━━━━━━━━━━━`,
     },
     {
       type: 'imagemap',
       baseUrl: 'https://tradecandle.ai/images/line-teaser', // replace with actual image URL
-      altText: 'TradeCandle v12 — เปิดตัวพรุ่งนี้!',
+      altText: 'TradeCandle v12 — Launching tomorrow!',
       baseSize: { width: 1040, height: 560 },
       actions: [
         {
@@ -106,43 +106,43 @@ export const LineTemplates = {
   launch: () => [
     {
       type: 'text',
-      text: `🚀 เปิดตัวแล้ว!
+      text: `🚀 We're Live!
 TradeCandle v12
-— AI เทรดทองอัตโนมัติ —
+— AI Automated Gold Trading —
 
 ✅ 3-Wave Cashout
-   ปิดกำไรเป็น 3 รอบ ไม่รอเต็ม 100%
+   Close profit in 3 rounds — no need to wait for 100% TP
 
 ✅ 6 Smart Money Filters
-   อ่านทรงสตรัคเจอร์อัตโนมัติ
+   Reads market structure automatically
 
 ✅ SaaS Dashboard + Kill Switch
-   ควบคุมจากมือถือ ทุกที่ ทุกเวลา
+   Control from your phone anytime, anywhere
 
-⭐ ทดลอง 1 เดือนฟรี — ไม่ต้องใส่บัตร`,
+⭐ Try 1 month free — no credit card required`,
     },
     {
       type: 'template',
-      altText: 'เลือกแพ็คเกจ',
+      altText: 'Choose a Plan',
       template: {
         type: 'buttons',
         thumbnailImageUrl: 'https://tradecandle.ai/images/line-launch.jpg', // replace
         title: 'TradeCandle v12',
-        text: 'AI เทรดทองอัตโนมัติ',
+        text: 'AI Automated Gold Trading',
         actions: [
           {
             type: 'uri',
-            label: '🚀 เริ่มต้น 1 เดือนฟรี',
+            label: '🚀 Get Started — 1 Month Free',
             uri: 'https://tradecandle.ai/register',
           },
           {
             type: 'uri',
-            label: '📊 ดูแพ็คเกจ',
+            label: '📊 View Plans',
             uri: 'https://tradecandle.ai/#pricing',
           },
           {
             type: 'uri',
-            label: '💬 สอบถาม',
+            label: '💬 Ask Us',
             uri: 'https://lin.ee/tradecandle',
           },
         ],
@@ -154,38 +154,38 @@ TradeCandle v12
   urgency: (promoCode: string, endDate: string) => [
     {
       type: 'text',
-      text: `⏰ สุดท้าย! หมดเขต ${endDate}
+      text: `⏰ Last chance! Expires ${endDate}
 
-รับส่วนลด 20% ทุกแพ็คเกจ
-ใช้โค้ด: ${promoCode}
+Get 20% off all plans
+Use code: ${promoCode}
 
-Starter  990฿ → 792฿/เดือน
-Pro      2,490฿ → 1,992฿/เดือน
-Elite    4,990฿ → 3,992฿/เดือน
+Starter  $9.90 → $7.92/month
+Pro      $24.90 → $19.92/month
+Elite    $49.90 → $39.92/month
 
-ทดลอง 1 เดือนฟรี + ส่วนลด 20%
-ยกเลิกได้ทุกเมื่อ 🔓`,
+Try 1 month free + 20% discount
+Cancel anytime 🔓`,
     },
     {
       type: 'template',
-      altText: 'รับส่วนลด 20%',
+      altText: 'Get 20% off',
       template: {
         type: 'buttons',
-        text: 'เลือกแพ็คเกจ',
+        text: 'Choose a Plan',
         actions: [
           {
             type: 'uri',
-            label: 'Starter 792฿',
+            label: 'Starter $7.92',
             uri: `https://tradecandle.ai/register?plan=starter&promo=${promoCode}`,
           },
           {
             type: 'uri',
-            label: 'Pro 1,992฿ ⭐',
+            label: 'Pro $19.92 ⭐',
             uri: `https://tradecandle.ai/register?plan=pro&promo=${promoCode}`,
           },
           {
             type: 'uri',
-            label: 'Elite 3,992฿',
+            label: 'Elite $39.92',
             uri: `https://tradecandle.ai/register?plan=elite&promo=${promoCode}`,
           },
         ],
@@ -197,29 +197,29 @@ Elite    4,990฿ → 3,992฿/เดือน
   monthlyReport: (data: { winRate: string; profitLoss: string; trades: number }) => [
     {
       type: 'text',
-      text: `📊 รายงานประจำเดือน — TradeCandle v12
+      text: `📊 Monthly Report — TradeCandle v12
 
 📈 Win Rate: ${data.winRate}
 💰 P&L: ${data.profitLoss}
-🔢 จำนวนเทรด: ${data.trades}
+🔢 Total Trades: ${data.trades}
 
-ดูรายละเอียดเพิ่มเติมได้ที่ Dashboard ↓`,
+View more details on your Dashboard ↓`,
     },
     {
       type: 'template',
-      altText: 'เปิด Dashboard',
+      altText: 'Open Dashboard',
       template: {
         type: 'buttons',
-        text: 'จัดการ EA ของคุณ',
+        text: 'Manage Your EA',
         actions: [
           {
             type: 'uri',
-            label: '📊 เปิด Dashboard',
+            label: '📊 Open Dashboard',
             uri: 'https://tradecandle.ai/dashboard',
           },
           {
             type: 'uri',
-            label: '💬 สอบถาม',
+            label: '💬 Ask Us',
             uri: 'https://lin.ee/tradecandle',
           },
         ],
@@ -243,51 +243,51 @@ export async function handleLineWebhook(request: NextRequest) {
       // Auto-reply logic
       let replyText = '';
 
-      if (userMessage.includes('ราคา') || userMessage.includes('price') || userMessage.includes('แพ็คเกจ')) {
-        replyText = `💰 ราคา TradeCandle v12
+      if (userMessage.includes('price') || userMessage.includes('package')) {
+        replyText = `💰 TradeCandle v12 Pricing
 
-Starter: 990฿/เดือน (1 บัญชี)
-Pro:     2,490฿/เดือน (3 บัญชี) ⭐
-Elite:   4,990฿/เดือน (5 บัญชี)
+Starter: $9.90/month (1 Account)
+Pro:     $24.90/month (3 Accounts) ⭐
+Elite:   $49.90/month (5 Accounts)
 
-⭐ ทดลอง 1 เดือนฟรี!
+⭐ Try 1 month free!
 👉 https://tradecandle.ai/register`;
-      } else if (userMessage.includes('ทดลอง') || userMessage.includes('trial') || userMessage.includes('free')) {
-        replyText = `⭐ ทดลองฟรี 1 เดือน!
+      } else if (userMessage.includes('trial') || userMessage.includes('free')) {
+        replyText = `⭐ Try 1 month free!
 
-1. สมัครที่: https://tradecandle.ai/register
-2. รับ License Key ทันที
-3. วางใน MT5 → เริ่มเทรด
+1. Sign up at: https://tradecandle.ai/register
+2. Receive your License Key immediately
+3. Paste it in MT5 → Start trading
 
-ไม่ต้องใส่บัตร! ยกเลิกได้ทุกเมื่อ 🔓`;
-      } else if (userMessage.includes('ช่วย') || userMessage.includes('help') || userMessage.includes('?') || userMessage.includes('สอบถาม')) {
-        replyText = `สวัสดีครับ! 👋
+No credit card required! Cancel anytime 🔓`;
+      } else if (userMessage.includes('help') || userMessage.includes('?')) {
+        replyText = `Hello! 👋
 
-ผมช่วยอะไรได้บ้าง?
-• พิมพ์ "ราคา" — ดูแพ็คเกจ
-• พิมพ์ "ทดลอง" — ทดลองฟรี 1 เดือน
-• พิมพ์ "วิธีใช้" — คู่มือเริ่มต้น
-• หรือถามอะไรก็ได้ครับ! 💬`;
-      } else if (userMessage.includes('วิธีใช้') || userMessage.includes('how') || userMessage.includes('guide') || userMessage.includes('เริ่ม')) {
-        replyText = `📖 วิธีใช้ TradeCandle v12
+How can I help you?
+• Type "Price" — View plans
+• Type "Trial" — Try 1 month free
+• Type "Guide" — Getting started guide
+• Or ask anything! 💬`;
+      } else if (userMessage.includes('how') || userMessage.includes('guide') || userMessage.includes('start')) {
+        replyText = `📖 How to Use TradeCandle v12
 
-1️⃣ สมัครที่ tradecandle.ai
-2️⃣ รับ License Key ทันที
-3️⃣ ดาวน์โหลด EA → วาง Key ใน MT5
-4️⃣ เทรดอัตโนมัติ 24/5!
-5️⃣ ดูผลจาก Dashboard บนมือถือ
+1️⃣ Sign up at tradecandle.ai
+2️⃣ Receive your License Key immediately
+3️⃣ Download EA → Paste Key in MT5
+4️⃣ Automated trading 24/5!
+5️⃣ Monitor performance from the dashboard on your phone
 
 👉 https://tradecandle.ai/register`;
       } else {
         // Default reply
-        replyText = `สวัสดีครับ! 🙏 ขอบคุณที่ติดต่อ TradeCandle
+        replyText = `Hello! 🙏 Thank you for contacting TradeCandle
 
-ผมช่วยอะไรได้บ้าง?
-• "ราคา" — ดูแพ็คเกจ
-• "ทดลอง" — ทดลองฟรี 1 เดือน
-• "วิธีใช้" — คู่มือเริ่มต้น
+How can I help you?
+• "Price" — View plans
+• "Trial" — Try 1 month free
+• "Guide" — Getting started guide
 
-หรือพิมพ์คำถามได้เลยครับ! 💬`;
+Or just type your question! 💬`;
       }
 
       // Reply to user
@@ -309,14 +309,14 @@ Elite:   4,990฿/เดือน (5 บัญชี)
     } else if (event.type === 'follow') {
       // User added the bot as friend
       const userId = event.source.userId;
-      const welcomeMessage = `ยินดีต้อนรับสู่ TradeCandle! 🎉
+      const welcomeMessage = `Welcome to TradeCandle! 🎉
 
-AI เทรดทองคำอัตโนมัติ — ปิดกำไรเป็น 3 คลื่น
+AI Automated Gold Trading — Close profit in 3 waves
 
-พิมพ์ "ราคา" เพื่อดูแพ็คเกจ
-พิมพ์ "ทดลอง" เพื่อทดลองฟรี 1 เดือน
+Type "Price" to view plans
+Type "Trial" to try 1 month free
 
-มีคำถาม? ถามได้เลยครับ! 💬`;
+Got questions? Just ask! 💬`;
 
       try {
         await fetch(`${LINE_API_BASE}/message/reply`, {

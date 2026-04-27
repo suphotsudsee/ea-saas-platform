@@ -1,82 +1,82 @@
-# 7F — Trial Email Sequence (5 อีเมล)
-## TradeCandle v11 — ส่งอัตโนมัติทุกช่วงของการทดลอง
+# 7F — Trial Email Sequence (5 Email)
+## TradeCandle v11 — SubmitAutomatically EveryPeriodของการทดลอง
 
 ---
 
-## 📧 Email 1: Welcome (Day 0 — สมัครทันที)
+## 📧 Email 1: Welcome (Day 0 — Sign Up Now)
 
-**Subject:** 🎉 ยินดีต้อนรับ! TradeCandle v11 — 7 วันฟรีเริ่มแล้ว
+**Subject:** 🎉 Welcome! TradeCandle v11 — 7 daysFreeStarted
 
 ```
-สวัสดี [ชื่อ],
+สวัสดี [Name],
 
-ยินดีต้อนรับสู่ TradeCandle v11! 🎉
+Welcome to TradeCandle v11! 🎉
 
-คุณได้รับสิทธิ์ทดลองใช้ 7 วันฟรี (10 วันสำหรับสมาชิก Line ⭐)
+Youได้รับสิทธิ์Trial 7 daysFree (10 daysForMember Line ⭐)
 
-นี่คือสิ่งที่คุณจะได้:
-✅ 3-Wave Cashout — ปิดกำไร 3 รอบอัตโนมัติ
-✅ 6 Smart Money ฟิลเตอร์ — อ่านทรงสตรัคเจอร์ให้
-✅ SaaS Dashboard — ดูทุกอย่างจากมือถือ
-✅ Kill Switch — หยุด EA ทันทีถ้าตลาดผิดปกติ
+นี่คือสิ่งAtYouจะได้:
+✅ 3-Wave Cashout — CloseProfit 3 RoundAutomated
+✅ 6 Smart Money Filter — ReadStructureให้
+✅ SaaS Dashboard — ViewAllอย่างfromมือถือ
+✅ Kill Switch — หยุด EA ทันทีIfตลาดผิดปกติ
 
-📌 ขั้นตอนเริ่มต้น 3 ขั้นตอน:
+📌 ขั้นEpisodeGet Started 3 ขั้นEpisode:
 
-1. เปิด MT5 → ดาวน์โหลด EA จาก Dashboard
+1. Open MT5 → Download EA from Dashboard
    👉 https://tradecandle.ai/dashboard?utm_source=email&utm_medium=welcome&utm_campaign=trial
 
-2. วาง License Key ใน EA Settings
-   🔑 Key ของคุณ: [LICENSE_KEY]
+2. Paste License Key ใน EA Settings
+   🔑 Key ของYou: [LICENSE_KEY]
 
-3. เปิด Dashboard ดูผลลัพธ์แบบเรียลไทม์
+3. Open Dashboard ViewResultStyleเรียลไทม์
    👉 https://tradecandle.ai/dashboard?utm_source=email&utm_medium=welcome&utm_campaign=trial
 
-💡 เคล็ดลับ: เริ่มจาก Demo Account ก่อน รู้จัก EA แล้วค่อยเปลี่ยนเป็น Live
+💡 เคล็ดลับ: Beginnerfrom Demo Account ก่อน รู้จัก EA Alreadyค่อยเปลี่ยนเป็น Live
 
-มีคำถาม? ตอบอีเมลนี้ได้เลย หรือทัพ Line @tradecandle
+HasQuestion? ตอบEmailThisRight Away Orทัพ Line @tradecandle
 
-สวัสดีการเทรดที่ดีขึ้น,
+สวัสดีการTradingAtดีUp,
 ทีม TradeCandle
 
 ---
 https://tradecandle.ai?utm_source=email&utm_medium=welcome&utm_campaign=trial
-ถ้าไม่ต้องการรับอีเมล: [Unsubscribe]
+IfNoต้องการรับEmail: [Unsubscribe]
 ```
 
 ---
 
-## 📧 Email 2: Day 3 — สอนใช้ + ผลลัพธ์
+## 📧 Email 2: Day 3 — สอนUse + Result
 
-**Subject:** 📊 ผลลัพธ์ 3 วันแรกของคุณ + เคล็ดลับที่หลายคนมองข้าม
+**Subject:** 📊 Result 3 daysFirstของYou + เคล็ดลับAtหลายคนมองข้าม
 
 ```
-สวัสดี [ชื่อ],
+สวัสดี [Name],
 
-ผ่านไป 3 วันแล้ว! เช็คผลลัพธ์ของคุณได้ที่ Dashboard:
+ผ่านไป 3 daysAlready! เช็คResultของYouได้At Dashboard:
 
 👉 https://tradecandle.ai/dashboard?utm_source=email&utm_medium=day3&utm_campaign=trial
 
-💡 3 เคล็ดลับที่หลายคนมองข้าม:
+💡 3 เคล็ดลับAtหลายคนมองข้าม:
 
-1️⃣ เปิด Dashboard ดู Heartbeat ว่า EA กำลังทำงาน
-   — ถ้าเห็นเขียว = ทุกอย่างปกติ ✅
-   — ถ้าเห็นแดง = ตรวจสอบ MT5 connection ❌
+1️⃣ Open Dashboard View Heartbeat ว่า EA Running
+   — Ifเห็นเขียว = Allอย่างปกติ ✅
+   — Ifเห็นแดง = ตรวจสอบ MT5 connection ❌
 
-2️⃣ ดู Trading Activity ในช่วงเวลาที่ทองมีสภาวะคล่องตัว
+2️⃣ View Trading Activity ในPeriodTimeAtGoldHasสภาวะคล่องItem
    — เซสชันลอนดอน: 15:00-18:30 น.
    — เซสชันนิวยอร์ก: 20:00-23:30 น.
-   → EA จะทำงานหนักในช่วงเวลาเหล่านี้
+   → EA จะทำงานหนักในPeriodTimeเหล่าThis
 
-3️⃣ อย่าปิด EA ระหว่างที่มี position เปิด
-   — ให้ใช้ Kill Switch แทน (จาก Dashboard)
-   — Kill Switch จะปิด position + หยุด EA อย่างปลอดภัย
+3️⃣ อย่าClose EA ระหว่างAtHas position Open
+   — ให้Use Kill Switch Instead (from Dashboard)
+   — Kill Switch จะClose position + หยุด EA อย่างปลอดภัย
 
-เหลืออีก 4 วัน! 🕐
+เหลืออีก 4 days! 🕐
 
-ถ้าชอบแล้ว สมัครต่อเลยรับส่วนลด 20%:
+IfชอบAlready Sign Upต่อเลยรับส่วนลด 20%:
 👉 https://tradecandle.ai/#pricing?utm_source=email&utm_medium=day3&utm_campaign=trial
 
-สวัสดีการเทรดที่ดีขึ้น,
+สวัสดีการTradingAtดีUp,
 ทีม TradeCandle
 
 ---
@@ -88,33 +88,33 @@ https://tradecandle.ai?utm_source=email&utm_medium=day3&utm_campaign=trial
 
 ## 📧 Email 3: Day 5 — Urgency + Results
 
-**Subject:** 🔥 เหลือ 2 วัน! ผลลัพธ์ของคุณรออยู่
+**Subject:** 🔥 เหลือ 2 days! ResultของYouรออยู่
 
 ```
-สวัสดี [ชื่อ],
+สวัสดี [Name],
 
-เหลืออีก 2 วันทดลองใช้! 🕐
+เหลืออีก 2 daysTrial! 🕐
 
-เช็คผลลัพธ์ของคุณตอนนี้:
+เช็คResultของYouEpisodeThis:
 👉 https://tradecandle.ai/dashboard?utm_source=email&utm_medium=day5&utm_campaign=trial
 
-ถ้าคุณเห็น:
-✅ 3-Wave Cashout ปิดกำไรให้อัตโนมัติ
-✅ Smart Money ฟิลเตอร์เข้าท่าที่มีโอกาสชนะสูง
-✅ Dashboard แสดงทุกอย่างให้
+IfYouเห็น:
+✅ 3-Wave Cashout CloseProfitให้Automated
+✅ Smart Money FilterEnterท่าAtHasโอกาสชนะHigh
+✅ Dashboard ShowAllอย่างให้
 
-แสดงว่าคุณพร้อมสมัครแล้ว! 🎯
+Showว่าYouReadyAlready Signed Up! 🎯
 
-⚡ ส่วนลด 20% สำหรับผู้ทดลองใช้:
-Starter: 990 → 792 ฿/เดือน
-Pro ⭐: 2,490 → 1,992 ฿/เดือน
-Elite: 4,990 → 3,992 ฿/เดือน
+⚡ ส่วนลด 20% Forผู้Trial:
+Starter: 990 → 792 $/month
+Pro ⭐: 2,490 → 1,992 $/month
+Elite: 4,990 → 3,992 $/month
 
-👉 สมัครต่อ: https://tradecandle.ai/#pricing?utm_source=email&utm_medium=day5&utm_campaign=trial
+👉 Sign Upต่อ: https://tradecandle.ai/#pricing?utm_source=email&utm_medium=day5&utm_campaign=trial
 
-ยังไม่แน่ใจ? ถามเราได้:
+ยังNoแน่ใจ? ถามเราได้:
 💬 Line: @tradecandle
-📧 ตอบอีเมลนี้ได้เลย
+📧 ตอบEmailThisRight Away
 
 ทีม TradeCandle
 
@@ -127,32 +127,32 @@ https://tradecandle.ai?utm_source=email&utm_medium=day5&utm_campaign=trial
 
 ## 📧 Email 4: Day 7 — Last Day + Deadline
 
-**Subject:** ⏰ วันสุดท้าย! Trial หมดวันนี้ — สมัครเลยหรือขยายอีก 3 วัน?
+**Subject:** ⏰ daysLast! Trial หมดdaysThis — Subscribe NowOrExpandอีก 3 days?
 
 ```
-สวัสดี [ชื่อ],
+สวัสดี [Name],
 
-วันนี้คือวันสุดท้ายของการทดลองใช้! ⏰
+daysThisคือdaysLastของการTrial! ⏰
 
-คุณมี 2 ทางเลือก:
+YouHas 2 ทางเลือก:
 
-✅ สมัครต่อเลย — รับส่วนลด 20%:
+✅ Sign Upต่อเลย — รับส่วนลด 20%:
    👉 https://tradecandle.ai/#pricing?utm_source=email&utm_medium=day7&utm_campaign=trial
 
-✅ ขยายเวลาอีก 3 วัน — ฟรี! (ยืนยันด้านล่าง)
+✅ ExpandTimeอีก 3 days — Free! (ConfirmBelow)
    👉 https://tradecandle.ai/extend-trial?utm_source=email&utm_medium=day7&utm_campaign=trial
 
-ถ้าไม่สมัคร:
-❌ EA จะหยุดทำงานหลัง 7 วัน
-❌ Dashboard จะเข้าไม่ได้
-❌ ข้อมูลการเทรดจะถูกลบหลัง 30 วัน
+IfNoSign Up:
+❌ EA จะStoppedหลัง 7 days
+❌ Dashboard จะEnterNoได้
+❌ InformationการTradingจะถูกDeleteหลัง 30 days
 
-แต่เราเชื่อว่าคุณจะเห็นผลลัพธ์แล้ว 💪
+แต่เราเNameว่าYouจะเห็นResultAlready 💪
 
-ขยายเวลาอีก 3 วัน (ฟรี, ไม่ต้องจ่ายก่อน):
+ExpandTimeอีก 3 days (Free, Noต้องจ่ายก่อน):
 👉 https://tradecandle.ai/extend-trial?utm_source=email&utm_medium=day7&utm_campaign=trial
 
-หรือสมัครเลย:
+OrSubscribe Now:
 👉 https://tradecandle.ai/#pricing?utm_source=email&utm_medium=day7&utm_campaign=trial
 
 ทีม TradeCandle
@@ -166,29 +166,29 @@ https://tradecandle.ai?utm_source=email&utm_medium=day7&utm_campaign=trial
 
 ## 📧 Email 5: Day 14 — Post-Trial Upsell
 
-**Subject:** 💡 เราเห็นว่าคุณมีผลลัพธ์ดี — กลับมาได้ในราคาพิเศษ
+**Subject:** 💡 เราเห็นว่าYouHasResultดี — Return/Reverseมาได้ในPriceพิเศษ
 
 ```
-สวัสดี [ชื่อ],
+สวัสดี [Name],
 
-เราเห็นว่าคุณใช้ TradeCandle แล้วได้ผลลัพธ์ดี 📊
+เราเห็นว่าYouUse TradeCandle Alreadyได้Resultดี 📊
 
-ตอนทดลอง คุณมี:
-✅ [X] ครั้งที่ 3-Wave Cashout ปิดกำไรให้
+Episodeทดลอง YouHas:
+✅ [X] ครั้งAt 3-Wave Cashout CloseProfitให้
 ✅ Win Rate [Y]%
-✅ กำไรสะสม $[Z]
+✅ Profitสะสม $[Z]
 
-กลับมาได้ในราคาพิเศษสำหรับคนที่เคยทดลอง:
+Return/Reverseมาได้ในPriceพิเศษForคนAtเคยทดลอง:
 
-⚡ ส่วนลด 30% สำหรับผู้ทดลองเท่านั้น!
-Starter: 990 → 693 ฿/เดือน
-Pro ⭐: 2,490 → 1,743 ฿/เดือน
-Elite: 4,990 → 3,493 ฿/เดือน
+⚡ ส่วนลด 30% Forผู้ทดลองOnly!
+Starter: 990 → 693 $/month
+Pro ⭐: 2,490 → 1,743 $/month
+Elite: 4,990 → 3,493 $/month
 
 รหัสส่วนลด: COMEBACK30
-👉 ใช้รหัสที่: https://tradecandle.ai/#pricing?utm_source=email&utm_medium=post_trial&utm_campaign=comeback
+👉 UseรหัสAt: https://tradecandle.ai/#pricing?utm_source=email&utm_medium=post_trial&utm_campaign=comeback
 
-คุณเคยได้กำไรจาก TradeCandle แล้ว
+Youเคยได้Profitfrom TradeCandle Already
 อย่าให้โอกาสนั้นหายไป 📈
 
 ทีม TradeCandle
@@ -202,15 +202,15 @@ https://tradecandle.ai?utm_source=email&utm_medium=post_trial&utm_campaign=comeb
 
 ## 📋 Email Setup Checklist
 
-- [ ] ตั้งค่า email service (Resend / SendGrid / Mailgun)
-- [ ] เพิ่ม email templates ในระบบ
-- [ ] ตั้ง trigger ส่งอัตโนมัติ:
-  - [ ] Email 1: ส่งเมื่อ user สมัคร trial (Day 0)
-  - [ ] Email 2: ส่ง 3 วันหลังสมัคร (Day 3)
-  - [ ] Email 3: ส่ง 5 วันหลังสมัคร (Day 5)
-  - [ ] Email 4: ส่ง 7 วันหลังสมัคร (Day 7 — last day)
-  - [ ] Email 5: ส่ง 14 วันหลัง trial หมด (Day 14)
-- [ ] ตั้งค่า `[LICENSE_KEY]` variable ใน template
-- [ ] ตั้งค่า `[ชื่อ]` variable ใน template
-- [ ] Test ส่งอีเมลตัวเองทั้ง 5 ฉบับ
+- [ ] Settings email service (Resend / SendGrid / Mailgun)
+- [ ] Add email templates ในระบบ
+- [ ] ตั้ง trigger SubmitAutomated:
+  - [ ] Email 1: Submitเมื่อ user Sign Up trial (Day 0)
+  - [ ] Email 2: Submit 3 daysหลังSign Up (Day 3)
+  - [ ] Email 3: Submit 5 daysหลังSign Up (Day 5)
+  - [ ] Email 4: Submit 7 daysหลังSign Up (Day 7 — last day)
+  - [ ] Email 5: Submit 14 daysหลัง trial หมด (Day 14)
+- [ ] Settings `[LICENSE_KEY]` variable ใน template
+- [ ] Settings `[Name]` variable ใน template
+- [ ] Test SubmitEmailItemเองAll 5 ฉบับ
 - [ ] ตรวจสอบว่า Unsubscribe link ทำงาน

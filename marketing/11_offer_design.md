@@ -2,410 +2,410 @@
 
 ---
 
-## 💰 สถาปัตยกรรมข้อเสนอ — TradeCandle EA v12
+## 💰 Offer Architecture — TradeCandle EA v12
 
 ---
 
-## 1. ราคาสมาชิก (Pricing Tiers)
+## 1. PriceMember (Pricing Tiers)
 
-### 🥉 Starter — 990฿/เดือน
+### 🥉 Starter — 990$/month
 
-**ตลาดเป้าหมาย:** เทรดเดอร์มือใหม่ที่เพิ่งเริ่มต้น
-**เป้าหมาย:** ให้ลองใช้ผลิตภัณฑ์ สร้างความคุ้นเคย
+**ตลาดGoal:** Tradingเดอร์มือใหม่Atเพิ่งGet Started
+**Goal:** ให้ลองUsePerformanceิตภัณฑ์ Createความคุ้นเคย
 
-| ฟีเจอร์ | รายละเอียด |
+| Feature | Details |
 |---|---|
 | EA v12 เวอร์ชันเต็ม | ✅ รวม |
-| บัญชี MT5 | 1 บัญชี |
-| SaaS Dashboard | ✅ พื้นฐาน (สถานะการเทรด, PnL) |
+| MT5 Accounts | 1 Accounts |
+| SaaS Dashboard | ✅ Basic (StatusการTrading, PnL) |
 | Kill Switch | ✅ รวม |
 | Auto Risk Management | ✅ รวม |
 | Line OA สนับสนุน | ✅ ตอบภายใน 24 ชม. |
-| 6 PA/SMC Smart Money Filters | ❌ ไม่รวม (ใช้ 3 ฟิลเตอร์พื้นฐาน) |
-| 3-Wave Cashout Pro | ❌ ไม่รวม (ใช้ TP เดียว) |
-| สัมมนาออนไลน์ | ❌ ไม่รวม |
-| Coaching | ❌ ไม่รวม |
+| 6 PA/SMC Smart Money Filters | ❌ Noรวม (Use 3 FilterBasic) |
+| 3-Wave Cashout Pro | ❌ Noรวม (Use TP Single) |
+| สัมมนาOnline | ❌ Noรวม |
+| Coaching | ❌ Noรวม |
 
-**ราคาเปรียบเทียบ:**
-- 990฿/เดือน = 33฿/วัน = "ราคากาแฟ 1 แก้วต่อวัน"
+**PriceCompare:**
+- 990$/month = 33$/days = "Priceกาแฟ 1 แก้วต่อdays"
 
 ---
 
-### ⭐ Pro — 2,490฿/เดือน (แนะนำ!)
+### ⭐ Pro — 2,490$/month (แนะนำ!)
 
-**ตลาดเป้าหมาย:** เทรดเดอร์ระดับกลางที่ต้องการฟีเจอร์ครบ
-**เป้าหมาย:** แพ็กเกจหลัก สร้างรายได้ส่วนใหญ่
+**ตลาดGoal:** Tradingเดอร์ระดับกลางAtต้องการFeatureครบ
+**Goal:** แพ็กเกจหลัก Create Deposit Orderได้ส่วนใหญ่
 
-| ฟีเจอร์ | รายละเอียด |
+| Feature | Details |
 |---|---|
 | EA v12 เวอร์ชันเต็ม | ✅ รวม |
-| บัญชี MT5 | 3 บัญชี |
-| SaaS Dashboard | ✅ เต็มรูปแบบ (ครบทุกฟังก์ชัน) |
+| MT5 Accounts | 3 Accounts |
+| SaaS Dashboard | ✅ เต็มFormat (ครบAllFunction) |
 | Kill Switch | ✅ รวม |
 | Auto Risk Management | ✅ รวม |
 | Line OA สนับสนุน | ✅ Priority ตอบภายใน 4 ชม. |
-| 6 PA/SMC Smart Money Filters | ✅ รวมทั้ง 6 ฟิลเตอร์ |
+| 6 PA/SMC Smart Money Filters | ✅ รวมAll 6 Filter |
 | 3-Wave Cashout Pro | ✅ รวม |
-| สัมมนาออนไลน์ | ✅ รายเดือน (1 ครั้ง/เดือน) |
-| Coaching | ❌ ไม่รวม |
+| สัมมนาOnline | ✅ รายmonth (1 ครั้ง/month) |
+| Coaching | ❌ Noรวม |
 
-**ราคาเปรียบเทียบ:**
-- 2,490฿/เดือน = 83฿/วัน = "ราคาอาหารกลางวัน 1 มื้อต่อวัน"
-- ประหยัดกว่า Starter 3 บัญชี: 990 x 3 = 2,970฿ (ประหยัด 480฿)
+**PriceCompare:**
+- 2,490$/month = 83$/days = "Priceอาหารกลางdays 1 มื้อต่อdays"
+- ประหยัดกว่า Starter 3 Accounts: 990 x 3 = 2,970$ (ประหยัด 480$)
 
 ---
 
-### 💎 Elite — 4,990฿/เดือน
+### 💎 Elite — 4,990$/month
 
-**ตลาดเป้าหมาย:** เทรดเดอร์มืออาชีพและผู้ลงทุนระดับสูง
-**เป้าหมาย:** บริการระดับพรีเมียม สร้างความภักดี
+**ตลาดGoal:** Tradingเดอร์Professionalandผู้ลงทุนระดับHigh
+**Goal:** บริการระดับพรีเHasยม Createความภักดี
 
-| ฟีเจอร์ | รายละเอียด |
+| Feature | Details |
 |---|---|
 | EA v12 เวอร์ชันเต็ม | ✅ รวม |
-| บัญชี MT5 | 10 บัญชี |
-| SaaS Dashboard | ✅ VIP (ครบ + รายงานพิเศษ) |
+| MT5 Accounts | 10 Accounts |
+| SaaS Dashboard | ✅ VIP (ครบ + Reportsพิเศษ) |
 | Kill Switch | ✅ รวม |
 | Auto Risk Management | ✅ รวม |
 | Line OA สนับสนุน | ✅ VIP 24/7 ตอบภายใน 1 ชม. |
-| 6 PA/SMC Smart Money Filters | ✅ รวมทั้ง 6 ฟิลเตอร์ |
+| 6 PA/SMC Smart Money Filters | ✅ รวมAll 6 Filter |
 | 3-Wave Cashout Pro | ✅ รวม |
-| สัมมนาออนไลน์ | ✅ ไม่จำกัด |
-| 1-on-1 Coaching | ✅ 2 ชม./เดือน |
+| สัมมนาOnline | ✅ NoLimited |
+| 1-on-1 Coaching | ✅ 2 ชม./month |
 | กลยุทธ์พิเศษ Elite | ✅ รวม |
-| Early Access ฟีเจอร์ใหม่ | ✅ รวม |
-| VIP Community | ✅ กลุ่ม Line VIP |
+| Early Access Featureใหม่ | ✅ รวม |
+| VIP Community | ✅ Group Line VIP |
 
-**ราคาเปรียบเทียบ:**
-- 4,990฿/เดือน = 166฿/วัน = "ราคาดินเนอร์ 1 มื้อต่อวัน"
-- Coaching เทียบกับภายนอก: ประหยัดกว่าจ้าง Coach แยก (2,000-5,000฿/ชม.)
-
----
-
-## 2. โบนัสและของแถม (Bonuses)
-
-### 🎁 โบนัสสมัครใหม่ (ทุกแพ็กเกจ)
-
-| โบนัส | รายละเอียด | มูลค่า |
-|---|---|---|
-| ทดลองใช้ฟรี 14 วัน | ไม่ต้องผูกบัตรเครดิต | 330-1,663฿ |
-| คู่มือ "เทรดทองคำฉบับมืออาชีพ" | PDF 30 หน้า | 490฿ |
-| วิดีโอ "ตั้งค่า EA ใน 10 นาที" | วิดีโอสอนตั้งค่า | 290฿ |
-
-### 🎁 โบนัสเฉพาะ Pro
-
-| โบนัส | รายละเอียด | มูลค่า |
-|---|---|---|
-| สัมมนา "Smart Money กับทองคำ" | ออนไลน์ 1 ชม. | 990฿ |
-| เทมเพลต Risk Management | Google Sheet | 290฿ |
-
-### 🎁 โบนัสเฉพาะ Elite
-
-| โบนัส | รายละเอียด | มูลค่า |
-|---|---|---|
-| 1-on-1 Coaching 2 ชม. | ปรึกษากลยุทธ์เฉพาะตัว | 4,000฿ |
-| กลุ่ม Line VIP | แลกเปลี่ยนกับสมาชิก Elite | ไม่มีมูลค่า |
-| Early Access v13 | ใช้ฟีเจอร์ใหม่ก่อนใคร | ไม่มีมูลค่า |
-
-**มูลค่าโบนัสรวม:**
-- Starter: 1,110฿ (มูลค่าโบนัส > ค่าสมัชิก 1 เดือน!)
-- Pro: 2,090฿ (โบนัสเกือบเท่าค่าสมัชิก)
-- Elite: 5,090฿ (โบนัสเกินค่าสมัชิก!)
+**PriceCompare:**
+- 4,990$/month = 166$/days = "Priceดินเนอร์ 1 มื้อต่อdays"
+- Coaching เทียบกับภายนอก: ประหยัดกว่าจ้าง Coach แยก (2,000-5,000$/ชม.)
 
 ---
 
-## 3. Upsell Path (เส้นทางเพิ่มยอดขาย)
+## 2. โOnัสandของแถม (Bonuses)
 
-### 3.1 Upsell Ladder (บันไดเพิ่มยอดขาย)
+### 🎁 โOnัสSign Upใหม่ (Allแพ็กเกจ)
+
+| โOnัส | Details | มูลค่า |
+|---|---|---|
+| Free Trial 14 days | Noต้องผูกCredit Card | 330-1,663$ |
+| คู่มือ "TradingGoldฉบับProfessional" | PDF 30 Page | 490$ |
+| วิดีโอ "Settings EA ใน 10 minutes" | วิดีโอสอนSettings | 290$ |
+
+### 🎁 โOnัสExclusive Pro
+
+| โOnัส | Details | มูลค่า |
+|---|---|---|
+| สัมมนา "Smart Money กับGold" | Online 1 ชม. | 990$ |
+| เทมเพลต Risk Management | Google Sheet | 290$ |
+
+### 🎁 โOnัสExclusive Elite
+
+| โOnัส | Details | มูลค่า |
+|---|---|---|
+| 1-on-1 Coaching 2 ชม. | ปรึกษากลยุทธ์ExclusiveItem | 4,000$ |
+| Group Line VIP | แลกเปลี่ยนกับMember Elite | NoHasมูลค่า |
+| Early Access v13 | UseFeatureใหม่ก่อนใคร | NoHasมูลค่า |
+
+**มูลค่าโOnัสรวม:**
+- Starter: 1,110$ (มูลค่าโOnัส > ค่าสมัชิก 1 month!)
+- Pro: 2,090$ (โOnัสเกือบเท่าค่าสมัชิก)
+- Elite: 5,090$ (โOnัสเกินค่าสมัชิก!)
+
+---
+
+## 3. Upsell Path (เส้นทางAddยอดขาย)
+
+### 3.1 Upsell Ladder (บันไดAddยอดขาย)
 
 ```
-Starter (990฿/เดือน)
-    ↓ หลัง 1-2 เดือน: เห็นว่า 3 ฟิลเตอร์ไม่พอ
-Pro (2,490฿/เดือน)
-    ↓ หลัง 3-4 เดือน: ต้องการบัญชีเพิ่ม + Coaching
-Elite (4,990฿/เดือน)
+Starter (990$/month)
+    ↓ หลัง 1-2 month: เห็นว่า 3 FilterNoพอ
+Pro (2,490$/month)
+    ↓ หลัง 3-4 month: ต้องการAccountsAdd + Coaching
+Elite (4,990$/month)
 ```
 
 ### 3.2 จังหวะ Upsell
 
 | จังหวะ | วิธีการ | เงื่อนไข |
 |---|---|---|
-| ทันทีหลังสมัคร | One-Time Offer: ลด 20% สมัชิก 6 เดือน | สมัคร Starter/Pro |
-| หลังใช้ 7 วัน | เสนอ Upgrade → Pro มี 6 Filters + 3-Wave | สมาชิก Starter |
-| หลังใช้ 30 วัน | เสนอ Upgrade → Elite มี Coaching | สมาชิก Pro |
-| หลังใช้ 90 วัน | เสนอสมัชิกปี ลด 25% | สมาชิกทุกระดับ |
-| เมื่อใกล้หมดTrial | เสนอสมัชิกพร้อมโบนัสเพิ่ม | Trial User |
+| ทันทีหลังSign Up | One-Time Offer: ลด 20% สมัชิก 6 month | Sign Up Starter/Pro |
+| หลังUse 7 days | เสนอ Upgrade → Pro Has 6 Filters + 3-Wave | Member Starter |
+| หลังUse 30 days | เสนอ Upgrade → Elite Has Coaching | Member Pro |
+| หลังUse 90 days | เสนอสมัชิกปี ลด 25% | MemberAllระดับ |
+| เมื่อใกล้หมดTrial | เสนอสมัชิกReadyโOnัสAdd | Trial User |
 
 ### 3.3 Cross-Sell (ขายเสริม)
 
-| ผลิตภัณฑ์เสริม | ราคา | เสนอเมื่อ |
+| Performanceิตภัณฑ์เสริม | Price | เสนอเมื่อ |
 |---|---|---|
-| คอร์ส "Smart Money Mastery" | 2,990฿ (One-time) | สมัชิก Starter ทุกคน |
-| บริการตั้งค่า MT5 + EA | 500฿ (One-time) | สมัชิกใหม่ทุกคน |
-| VPS สำหรับ MT5 | 490฿/เดือน | สมาชิกที่ต้องการรัน 24/7 |
-| Custom Risk Profile | 1,490฿ (One-time) | สมาชิก Pro/Elite |
+| คอร์ส "Smart Money Mastery" | 2,990$ (One-time) | สมัชิก Starter Allคน |
+| บริMT5 Settings + EA | 500$ (One-time) | สมัชิกใหม่Allคน |
+| VPS For MT5 | 490$/month | MemberAtต้องการรัน 24/7 |
+| Custom Risk Profile | 1,490$ (One-time) | Member Pro/Elite |
 
 ---
 
-## 4. การรับประกัน (Guarantee)
+## 4. การรับประTogether (Guarantee)
 
-### 🛡️ "ทดลองใช้ฟรี 14 วัน — ไม่พอใจคืนเงิน"
+### 🛡️ "Free Trial 14 days — Noพอใจคืนเงิน"
 
-**นโยบายรับประกัน:**
+**นโยบายรับประTogether:**
 
 ```
-✅ ทดลองใช้ฟรี 14 วัน ก่อนตัดสินใจสมัชิก
-✅ ไม่ต้องผูกบัตรเครดิตตอนทดลอง
-✅ หลังสมัชิก: คืนเงิน 100% ภายใน 7 วันแรก
-✅ ไม่มีคำถาม — แค่แจ้งผ่าน Line หรืออีเมล
-✅ ยกเลิกได้ทุกเวลา ไม่มีสัญญาผูกพัน
+✅ Free Trial 14 days ก่อนตัดสินใจสมัชิก
+✅ Noต้องผูกCredit CardEpisodeทดลอง
+✅ หลังสมัชิก: คืนเงิน 100% ภายใน 7 daysFirst
+✅ NoHasQuestion — แค่แจ้งผ่าน Line OrEmail
+✅ Cancelได้AllTime NoHasสัญญาผูกพัน
 ```
 
 **เงื่อนไข:**
-- ทดลองใช้ฟรี 14 วัน: ไม่มีค่าใช้จ่าย ไม่ต้องผูกบัตร
-- คืนเงิน 100%: ภายใน 7 วันหลังสมัชิก ไม่มีเงื่อนไข
-- หลัง 7 วัน: สามารถยกเลิกได้ แต่ไม่คืนเงินเดือนนั้น
+- Free Trial 14 days: NoHasค่าUseจ่าย Noต้องผูกบัตร
+- คืนเงิน 100%: ภายใน 7 daysหลังสมัชิก NoHasเงื่อนไข
+- หลัง 7 days: สามารถCancelได้ แต่Noคืนเงินmonthนั้น
 
-**ข้อความการตลาด:**
+**Messageการตลาด:**
 ```
-🛡️ ไม่มีความเสี่ยง! 
-ทดลองใช้ฟรี 14 วัน ไม่ต้องผูกบัตร
-หลังสมัชิก: คืนเงิน 100% ภายใน 7 วัน
-ไม่พอใจ? คืนเงินทันที ไม่มีคำถาม
+🛡️ NoHasความเสี่ยง! 
+Free Trial 14 days Noต้องผูกบัตร
+หลังสมัชิก: คืนเงิน 100% ภายใน 7 days
+Noพอใจ? คืนเงินทันที NoHasQuestion
 ```
 
 ---
 
-## 5. ตัวกระตุ้นความเร่งด่วน (Scarcity Triggers)
+## 5. ItemTriggerความเร่งด่วน (Scarcity Triggers)
 
-### ⏰ ตัวกระตุ้นประเภทต่างๆ
+### ⏰ ItemTriggerTypeต่างๆ
 
-#### 5.1 จำนวนจำกัด (Quantity Scarcity)
-
-```
-🔥 เปิดรับสมาชิกใหม่จำกัด เดือนนี้เพียง 100 คน
-เพื่อรักษาคุณภาพการสนับสนุน
-เมื่อครบ 100 คน จะปิดรับชั่วคราว
-
-[เหลือ 67 ที่นั่ง] ← อัปเดตเรียลไทม์
-```
-
-**กลไก:** ประกาศจำนวนจำกัด 100 คน/เดือน แสดงจำนวนที่เหลือบนเว็บ
-
-#### 5.2 เวลาจำกัด (Time Scarcity)
+#### 5.1 AmountLimited (Quantity Scarcity)
 
 ```
-⏰ ข้อเสนอเปิดตัวสิ้นสุดใน:
+🔥 OpenรับMemberใหม่Limited monthThisเพียง 100 คน
+toรักษาYouภาพการสนับสนุน
+เมื่อครบ 100 คน จะCloseรับชั่วคราว
 
-[COUNTDOWN TIMER: วัน ชม. นาท. วินาที]
-
-หลังวันที่ __/__/____ ราคาจะกลับเป็นปกติ
-Starter: 990฿ → 1,490฿
-Pro: 2,490฿ → 3,490฿
-Elite: 4,990฿ → 6,990฿
+[เหลือ 67 Atนั่ง] ← Updateเรียลไทม์
 ```
 
-**กลไก:** ลดราคาเปิดตัว 30-40% สำหรับผู้สมัชิกยุคแรก
+**กลไก:** ประกาศAmountLimited 100 คน/month ShowAmountAtเหลือOnWebsite
 
-#### 5.3 โบนัสจำกัดเวลา (Bonus Scarcity)
-
-```
-🎁 โบนัสพิเศษสำหรับ 50 คนแรก:
-✅ คู่มือ "เทรดทองคำฉบับมืออาชีพ" (มูลค่า 490฿)
-✅ วิดีโอ "ตั้งค่า EA ใน 10 นาที" (มูลค่า 290฿)
-✅ เทมเพลต Risk Management (มูลค่า 290฿)
-
-รวมมูลค่า 1,070฿ → ฟรี! (เฉพาะ 50 คนแรก)
-```
-
-**กลไก:** ให้โบนัสพิเศษสำหรับผู้สมัชิกยุคแรก
-
-#### 5.4 ราคา Founding Member (Price Lock)
+#### 5.2 TimeLimited (Time Scarcity)
 
 ```
-🌟 สมัชิกยุคแรก = ราคาสมาชิกตลอดชีพ!
+⏰ OfferOpenItemสิ้นสุดใน:
 
-สมัชิก 100 คนแรกจะได้ราคา Founding Member
-ราคานี้จะไม่เพิ่มตลอดอายุสมาชิก
-แม้ว่าราคาปกติจะเพิ่มในอนาคต
+[COUNTDOWN TIMER: days ชม. นาท. seconds]
 
-✅ Starter Founding: 990฿ (ราคาปกติ 1,490฿)
-✅ Pro Founding: 2,490฿ (ราคาปกติ 3,490฿)
-✅ Elite Founding: 4,990฿ (ราคาปกติ 6,990฿)
+หลังDate __/__/____ PriceจะReturn/Reverseเป็นปกติ
+Starter: 990$ → 1,490$
+Pro: 2,490$ → 3,490$
+Elite: 4,990$ → 6,990$
 ```
 
-**กลไก:** ล็อกราคาสมาชิกตลอดชีพสำหรับผู้สมัชิกยุคแรก
+**กลไก:** ลดPriceOpenItem 30-40% Forผู้สมัชิกยุคFirst
+
+#### 5.3 โOnัสLimitedTime (Bonus Scarcity)
+
+```
+🎁 โOnัสพิเศษFor 50 คนFirst:
+✅ คู่มือ "TradingGoldฉบับProfessional" (มูลค่า 490$)
+✅ วิดีโอ "Settings EA ใน 10 minutes" (มูลค่า 290$)
+✅ เทมเพลต Risk Management (มูลค่า 290$)
+
+รวมมูลค่า 1,070$ → Free! (Exclusive 50 คนFirst)
+```
+
+**กลไก:** ให้โOnัสพิเศษForผู้สมัชิกยุคFirst
+
+#### 5.4 Price Founding Member (Price Lock)
+
+```
+🌟 สมัชิกยุคFirst = PriceMemberตลอดชีพ!
+
+สมัชิก 100 คนFirstจะได้Price Founding Member
+PriceThisจะNoAddตลอดอายุMember
+แม้ว่าPriceปกติจะAddในอนาคต
+
+✅ Starter Founding: 990$ (Priceปกติ 1,490$)
+✅ Pro Founding: 2,490$ (Priceปกติ 3,490$)
+✅ Elite Founding: 4,990$ (Priceปกติ 6,990$)
+```
+
+**กลไก:** ล็อกPriceMemberตลอดชีพForผู้สมัชิกยุคFirst
 
 ---
 
-## 6. สถาปัตยกรรมข้อเสนอแบบเต็ม (Complete Offer Architecture)
+## 6. Offer ArchitectureStyleเต็ม (Complete Offer Architecture)
 
 ### ภาพรวม Offer Stack
 
 ```
 ┌─────────────────────────────────────────┐
-│  💎 ELITE — 4,990฿/เดือน              │
+│  💎 ELITE — 4,990$/month              │
 │  ┌─────────────────────────────────────┐│
-│  │  ⭐ PRO — 2,490฿/เดือน            ││
+│  │  ⭐ PRO — 2,490$/month            ││
 │  │  ┌─────────────────────────────────┐││
-│  │  │  🥉 STARTER — 990฿/เดือน       │││
+│  │  │  🥉 STARTER — 990$/month       │││
 │  │  │  ┌─────────────────────────────┐│││
-│  │  │  │  🆓 TRIAL — ฟรี 14 วัน    ││││
-│  │  │  │  • EA v12 (3 ฟิลเตอร์)     ││││
-│  │  │  │  • 1 บัญชี MT5              ││││
-│  │  │  │  • Dashboard พื้นฐาน       ││││
+│  │  │  │  🆓 TRIAL — Free 14 days    ││││
+│  │  │  │  • EA v12 (3 Filter)     ││││
+│  │  │  │  • 1 MT5 Accounts              ││││
+│  │  │  │  • Dashboard Basic       ││││
 │  │  │  │  • Kill Switch              ││││
 │  │  │  └─────────────────────────────┘│││
-│  │  │  + 6 Filters + 3-Wave + 3 บัญชี│││
+│  │  │  + 6 Filters + 3-Wave + 3 Accounts│││
 │  │  └─────────────────────────────────┘││
-│  │  + Coaching + VIP + 10 บัญชี        ││
+│  │  + Coaching + VIP + 10 Accounts        ││
 │  └─────────────────────────────────────┘│
-│  + โบนัส + รับประกัน + ตัวกระตุ้น    │
+│  + โOnัส + รับประTogether + ItemTrigger    │
 └─────────────────────────────────────────┘
 ```
 
 ### ลำดับการนำเสนอ (Offer Sequence)
 
-**ขั้นที่ 1: ทดลองฟรี 14 วัน**
-→ ไม่มีความเสี่ยง ลองใช้ก่อน
+**ขั้นAt 1: ทดลองFree 14 days**
+→ NoHasความเสี่ยง ลองUseก่อน
 
-**ขั้นที่ 2: Starter 990฿/เดือน**
-→ เริ่มต้นเข้าถึงได้ง่าย
+**ขั้นAt 2: Starter 990$/month**
+→ Get StartedEnterถึงได้ง่าย
 
-**ขั้นที่ 3: Pro 2,490฿/เดือน (แนะนำ!)**
-→ ฟีเจอร์ครบ คุ้มค่าที่สุด
+**ขั้นAt 3: Pro 2,490$/month (แนะนำ!)**
+→ Featureครบ คุ้มค่าAtสุด
 
-**ขั้นที่ 4: Elite 4,990฿/เดือน**
-→ สำหรับมืออาชีพที่ต้องการทุกอย่าง
+**ขั้นAt 4: Elite 4,990$/month**
+→ ForProfessionalAtต้องการAllอย่าง
 
-**ขั้นที่ 5: Upsell / Cross-sell**
-→ หลังสมัชิกแล้ว ตามด้วยข้อเสนอเพิ่ม
+**ขั้นAt 5: Upsell / Cross-sell**
+→ หลังสมัชิกAlready ตามด้วยOfferAdd
 
 ---
 
-## 7. กลยุทธ์ราคาเชิงจิตวิทยา (Pricing Psychology)
+## 7. กลยุทธ์Priceเชิงจิตวิทยา (Pricing Psychology)
 
 ### 7.1 Anchoring Effect
 
 ```
-❌ ค่าสมัชิกรายเดือน: 990฿ - 4,990฿
-❌ ค่าสมัชิกรายปี (คำนวณเป็นเดือน): 743฿ - 3,743฿
+❌ ค่าสมัชิกรายmonth: 990$ - 4,990$
+❌ ค่าสมัชิกรายปี (คำนวณเป็นmonth): 743$ - 3,743$
 
-✅ แสดงราคารายปีพร้อมส่วนลด:
-Starter: 990฿/เดือน → 7,430฿/ปี (ประหยัด 4,450฿!)
-Pro: 2,490฿/เดือน → 19,900฿/ปี (ประหยัด 9,880฿!)
-Elite: 4,990฿/เดือน → 39,900฿/ปี (ประหยัด 19,880฿!)
+✅ ShowPriceรายปีReadyส่วนลด:
+Starter: 990$/month → 7,430$/ปี (ประหยัด 4,450$!)
+Pro: 2,490$/month → 19,900$/ปี (ประหยัด 9,880$!)
+Elite: 4,990$/month → 39,900$/ปี (ประหยัด 19,880$!)
 ```
 
 ### 7.2 Decoy Effect
 
 ```
-Starter: 990฿/เดือน — 1 บัญชี, 3 ฟิลเตอร์
-Pro: 2,490฿/เดือน — 3 บัญชี, 6 ฟิลเตอร์, 3-Wave Cashout ← คุ้มที่สุด!
-Elite: 4,990฿/เดือน — 10 บัญชี, VIP, Coaching
+Starter: 990$/month — 1 Accounts, 3 Filter
+Pro: 2,490$/month — 3 Accounts, 6 Filter, 3-Wave Cashout ← คุ้มAtสุด!
+Elite: 4,990$/month — 10 Accounts, VIP, Coaching
 
-→ Pro ดูคุ้มที่สุดเมื่อเทียบกับ Starter ที่ได้น้อยกว่ามาก
-   และ Elite ที่แพงกว่า 2 เท่า
+→ Pro Viewคุ้มAtสุดเมื่อเทียบกับ Starter Atได้น้อยกว่ามาก
+   and Elite Atแพงกว่า 2 เท่า
 ```
 
 ### 7.3 Price Comparison
 
 ```
-เปรียบเทียบราคา TradeCandle กับทางเลือกอื่น:
+ComparePrice TradeCandle กับทางเลือกอื่น:
 
-📚 คอร์สเทรด: 5,000-50,000฿ (ครั้งเดียว, ยังต้องเทรดเอง)
-📱 สัญญาณเทรด: 500-5,000฿/เดือน (ต้องรอสัญญาณ, ล่าช้า)
-🌍 EA ต่างประเทศ: 3,500-17,500฿ (ซื้อขาด, ไม่มีภาษาไทย)
-📊 Copy Trading: ค่าธรรมเนียม 20-30% ของกำไร
+📚 คอร์สTrading: 5,000-50,000$ (ครั้งSingle, ยังต้องTradingเอง)
+📱 SignalsTrading: 500-5,000$/month (ต้องรอSignals, ล่าช้า)
+🌍 EA ต่างCountry: 3,500-17,500$ (Buyขาด, NoHasLanguageThai)
+📊 Copy Trading: ค่าธรรมเนียม 20-30% ของProfit
 
-🥇 TradeCandle: เริ่ม 990฿/เดือน (อัตโนมัติ, ภาษาไทย, Dashboard)
+🥇 TradeCandle: Beginner 990$/month (Automated, LanguageThai, Dashboard)
 ```
 
 ### 7.4 Daily Cost Framing
 
 ```
-Starter: 990฿/เดือน = 33฿/วัน = แก้วกาแฟ 1 แก้ว
-Pro: 2,490฿/เดือน = 83฿/วัน = ข้าวกลางวัน 1 มื้อ
-Elite: 4,990฿/เดือน = 166฿/วัน = ขนมปัง+กาแฟยามบ่าย
+Starter: 990$/month = 33$/days = แก้วกาแฟ 1 แก้ว
+Pro: 2,490$/month = 83$/days = ข้าวกลางdays 1 มื้อ
+Elite: 4,990$/month = 166$/days = ขนมปัง+กาแฟยามบ่าย
 ```
 
 ---
 
-## 8. ข้อเสนอตามช่วงเวลา (Time-Based Offers)
+## 8. OfferตามPeriodTime (Time-Based Offers)
 
-### 8.1 ช่วงเปิดตัว (Launch Period)
-
-```
-🎁 ข้อเสนอเปิดตัว — สำหรับ 100 คนแรก:
-✅ ทดลองฟรี 14 วัน (ปกติ 7 วัน)
-✅ ราคา Founding Member ล็อกตลอดชีพ
-✅ โบนัสเพิ่ม: เทมเพลต Risk Management (มูลค่า 290฿)
-✅ ไม่ต้องผูกบัตรเครดิต
-```
-
-### 8.2 ช่วงเทศกาล (Seasonal Promotions)
+### 8.1 PeriodOpenItem (Launch Period)
 
 ```
-🎁 ส่งเสริมการขายช่วงเทศกาล:
+🎁 OfferOpenItem — For 100 คนFirst:
+✅ ทดลองFree 14 days (ปกติ 7 days)
+✅ Price Founding Member ล็อกตลอดชีพ
+✅ โOnัสAdd: เทมเพลต Risk Management (มูลค่า 290$)
+✅ Noต้องผูกCredit Card
+```
 
-🎵 สงกรานต์ (เมษายน): ลด 20% สมัชิก 3 เดือน
-👨 วันพ่อ (ธันวาคม): ลด 15% สมัชิก 6 เดือน
+### 8.2 Periodเทศกาล (Seasonal Promotions)
+
+```
+🎁 SubmitเสริมการขายPeriodเทศกาล:
+
+🎵 สงกรานต์ (April): ลด 20% สมัชิก 3 month
+👨 daysพ่อ (ธันวาคม): ลด 15% สมัชิก 6 month
 🎄 ปีใหม่ (มกราคม): ลด 25% สมัชิกปี
-🪷 วันสำคัญทองคำขึ้น: โปรโมชั่นพิเศษ
+🪷 daysสำคัญGoldUp: โปรโมชั่นพิเศษ
 ```
 
-### 8.3 ช่วง Retention (กลับมาใช้ใหม่)
+### 8.3 Period Retention (Return/ReverseมาUseใหม่)
 
 ```
-🎁 กลับมาใช้ TradeCandle อีกครั้ง!
+🎁 Return/ReverseมาUse TradeCandle อีกครั้ง!
 
-เราเห็นว่าคุณหยุดสมัชิกมา ___ วันแล้ว
-เราอยากให้คุณกลับมาด้วยข้อเสนอพิเศษ:
+เราเห็นว่าYouหยุดสมัชิกมา ___ daysAlready
+เราอยากให้YouReturn/Reverseมาด้วยOfferพิเศษ:
 
-✅ ลด 30% เดือนแรก
-✅ ฟรี Coaching 1 ชม. (มูลค่า 2,000฿)
-✅ ไม่มีค่าสมัครซ้ำ
+✅ ลด 30% monthFirst
+✅ Free Coaching 1 ชม. (มูลค่า 2,000$)
+✅ NoHasค่าSign Upซ้ำ
 
-→ กดเพื่อกลับมาใช้ใหม่: tradecandle.ai/comeback
+→ กดtoReturn/ReverseมาUseใหม่: tradecandle.ai/comeback
 ```
 
 ---
 
-## 9. การสื่อสารข้อเสนอ (Offer Messaging Framework)
+## 9. การสื่อสารOffer (Offer Messaging Framework)
 
-### 9.1 สูตรข้อความหลัก (Core Offer Message)
+### 9.1 สูตรMessageหลัก (Core Offer Message)
 
 ```
-TradeCandle EA v12 ช่วยให้คุณเทรดทองคำอัตโนมัติ
+TradeCandle EA v12 ช่วยให้YouTradingGoldAutomated
 ด้วย 6 Smart Money Filters + 3-Wave Cashout + SaaS Dashboard
-กำไร $4,858 | ชนะ 74.75% | Max Drawdown $544
-เริ่มต้น 990฿/เดือน — ทดลองฟรี 14 วัน!
+Profit $4,858 | ชนะ 74.75% | Max Drawdown $544
+Get Started 990$/month — ทดลองFree 14 days!
 ```
 
-### 9.2 สูตร Elevator Pitch (30 วินาที)
+### 9.2 สูตร Elevator Pitch (30 seconds)
 
 ```
-TradeCandle v12 คือระบบเทรดทองคำอัตโนมัติบน MT5
-ที่ใช้ 6 ฟิลเตอร์ Smart Money วิเคราะห์จุดเข้าแม่นย์
-ปิดกำไรเป็น 3 คลื่นกับ 3-Wave Cashout
-และมี Dashboard ควบคุมเรียลไทม์พร้อม Kill Switch ฉุกเฉิน
-ทดลองฟรี 14 วัน เริ่มต้น 990฿/เดือน
+TradeCandle v12 คือระบบTradingGoldAutomated on MT5
+AtUse 6 Filter Smart Money AnalyzePointEnterแม่นย์
+CloseProfitเป็น 3 คลื่นกับ 3-Wave Cashout
+andHas Dashboard Controlเรียลไทม์Ready Kill Switch ฉุกเฉิน
+ทดลองFree 14 days Get Started 990$/month
 ```
 
-### 9.3 สูตรข้อความขาย (Sales Message)
+### 9.3 สูตรMessageขาย (Sales Message)
 
 ```
-ปัญหา: เทรดทองคำขาดทุน เพราะเข้าผิดจุด กำไรน้อย นั่งเฝ้าจอเหนื่อย
+Problem: TradingGoldLoss เพราะEnterผิดPoint Profitน้อย นั่งเฝ้าจอเหนื่อย
 
 ทางออก: TradeCandle EA v12
-• 6 Smart Money Filters → เข้าจุดแม่นย์
-• 3-Wave Cashout → ปิดกำไร 3 ระดับ ไม่โลภจนเสียหมด
-• SaaS Dashboard → ดูสถานะเรียลไทม์ ไม่ต้องเฝ้าจอ
-• Kill Switch → กดปุ่มเดียวปิดทั้งระบบ
+• 6 Smart Money Filters → EnterPointแม่นย์
+• 3-Wave Cashout → CloseProfit 3 ระดับ Noโลภจนเสียหมด
+• SaaS Dashboard → ViewStatusเรียลไทม์ Noต้องเฝ้าจอ
+• Kill Switch → กดButtonSingleCloseAllระบบ
 
-หลักฐาน: 819 รอบ Backtest | กำไร $4,858 | WR 74.75%
+หลักฐาน: 819 Round Backtest | Profit $4,858 | WR 74.75%
 
-ข้อเสนอ: ทดลองฟรี 14 วัน | เริ่ม 990฿/เดือน | คืนเงิน 7 วัน
+Offer: ทดลองFree 14 days | Beginner 990$/month | คืนเงิน 7 days
 
-→ ตัดสินใจที่: tradecandle.ai
+→ ตัดสินใจAt: tradecandle.ai
 ```

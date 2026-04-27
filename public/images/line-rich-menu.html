@@ -14,7 +14,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/p5.min.js"></script>
 <script>
 // ─── Line OA Rich Menu — 2500x1686 px ────────────────────────
-// 4 zones: สมัครใช้ | ดูราคา | Dashboard | ช่วยเหลือ
+// 4 zones: Sign Up to Use | ViewPrice | Dashboard | Help
 
 const W = 2500, H = 1686;
 
@@ -45,20 +45,20 @@ function draw() {
   let halfH = H / 2;
   let halfW = W / 2;
   
-  // Zone 1: สมัครใช้ (top-left) — Gold accent
+  // Zone 1: Sign Up to Use (top-left) — Gold accent
   drawZone(0, 0, halfW, halfH, {
     icon: '🚀',
-    title: 'สมัครใช้',
-    subtitle: '7 วันฟรี',
+    title: 'Sign Up to Use',
+    subtitle: '7 daysFree',
     color: PALETTE.gold,
     darkBg: PALETTE.dark2,
   });
   
-  // Zone 2: ดูราคา (top-right) — Green accent
+  // Zone 2: ViewPrice (top-right) — Green accent
   drawZone(halfW, 0, halfW, halfH, {
     icon: '💰',
-    title: 'ดูราคา',
-    subtitle: '990฿ — 4,990฿',
+    title: 'ViewPrice',
+    subtitle: '990$ — 4,990$',
     color: PALETTE.green,
     darkBg: PALETTE.dark3,
   });
@@ -73,16 +73,16 @@ function draw() {
   drawZone(0, halfH, halfW, halfH, {
     icon: '📊',
     title: 'Dashboard',
-    subtitle: 'ดูผล Real-time',
+    subtitle: 'ViewPerformance Real-time',
     color: '#06B6D4',
     darkBg: PALETTE.dark4,
   });
   
-  // Zone 4: ช่วยเหลือ (bottom-right) — Amber accent
+  // Zone 4: Help (bottom-right) — Amber accent
   drawZone(halfW, halfH, halfW, halfH, {
     icon: '💬',
-    title: 'ช่วยเหลือ',
-    subtitle: 'พิมพ์ "ช่วย"',
+    title: 'Help',
+    subtitle: 'Print "ช่วย"',
     color: PALETTE.amber,
     darkBg: PALETTE.dark1,
   });

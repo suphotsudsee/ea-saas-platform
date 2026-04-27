@@ -51,7 +51,7 @@ export default function RegisterPage() {
             : activePackages[0]?.id ?? ''
         );
       } catch (err) {
-        if (mounted) setError(getApiErrorMessage(err, 'โหลดแพ็กเกจทดลองไม่สำเร็จ'));
+        if (mounted) setError(getApiErrorMessage(err, 'Failed to load trial packages'));
       } finally {
         if (mounted) setIsLoadingPackages(false);
       }
@@ -79,7 +79,7 @@ export default function RegisterPage() {
     }
 
     if (!selectedPackageId) {
-      setError('กรุณาเลือกแพ็กเกจทดลองก่อนสมัคร');
+      setError('Please select a trial package before signing up');
       return;
     }
 
@@ -92,7 +92,7 @@ export default function RegisterPage() {
         packageId: selectedPackageId,
       });
 
-      setSuccess('สมัครสำเร็จ ระบบสร้าง license ทดลองให้แล้ว');
+      setSuccess('Registration successful! Your trial license has been created.');
       window.location.href = '/login';
     } catch (err) {
       setError(getApiErrorMessage(err, 'Failed to create account'));
@@ -103,13 +103,13 @@ export default function RegisterPage() {
 
   return (
     <AuthShell
-      badge="ทดลองใช้งาน 1 เดือน"
-      title="เริ่มทดลองใช้ฟรี"
-      description="สร้างบัญชีเพื่อรับสิทธิ์ทดลอง 1 เดือน TradeCandle v12 และเริ่มจัดการ AI Gold Bot ของคุณ"
-      sideTitle="ปิดกำไรเป็น 3 คลื่น ไม่ต้องนั่งดูจอ"
-      sideDescription="ระบบ 3-Wave Cashout + PA/SMC Confluence + Time Filter สำหรับ XAUUSD บน MT5 — ทดลองใช้ 1 เดือน"
+      badge="1-Month Free Trial"
+      title="Free Trial"
+      description="Create an account to get a 1-month free trial of TradeCandle v12 and start managing your AI Gold Bot"
+      sideTitle="Close profits in 3 waves — no screen watching required"
+      sideDescription="3-Wave Cashout + PA/SMC Confluence + Time Filter for XAUUSD on MT5 — 1-month free trial"
       sideStats={[
-        { label: 'Trial length', value: '1 เดือน' },
+        { label: 'Trial length', value: '1 month' },
         { label: 'USDT only', value: 'No card' },
         { label: 'Primary pair', value: 'XAUUSD' },
       ]}
@@ -118,14 +118,14 @@ export default function RegisterPage() {
         <CardContent className="space-y-5 p-6">
           <div className="space-y-3">
             <div>
-              <label className="text-sm font-medium text-slate-300">เลือกแพ็กเกจทดลองฟรี</label>
+              <label className="text-sm font-medium text-slate-300">Select a free trial package</label>
               <p className="mt-1 text-xs text-slate-500">
-                ระบบจะสร้าง license ตามจำนวนบัญชีของแพ็กเกจที่เลือกทันทีหลังสมัคร
+                A license will be created immediately after sign-up based on the number of accounts in your selected package.
               </p>
             </div>
             {isLoadingPackages ? (
               <div className="rounded-xl border border-amber-900/30 bg-slate-950 p-4 text-sm text-slate-400">
-                กำลังโหลดแพ็กเกจ...
+                Loading packages...
               </div>
             ) : packages.length > 0 ? (
               <div className="grid gap-3">
@@ -145,10 +145,10 @@ export default function RegisterPage() {
                       <div className="flex items-start justify-between gap-3">
                         <div>
                           <div className="font-semibold">{pkg.name}</div>
-                          <div className="mt-1 text-xs text-slate-400">{pkg.maxAccounts} บัญชี MT5 ต่อ License Key</div>
+                          <div className="mt-1 text-xs text-slate-400">{pkg.maxAccounts} MT5 account(s) per License Key</div>
                         </div>
                         <div className="text-sm font-bold text-amber-300">
-                          {(pkg.priceCents / 100).toLocaleString()} {pkg.currency}/เดือน
+                          {(pkg.priceCents / 100).toLocaleString()} {pkg.currency}/month
                         </div>
                       </div>
                       {pkg.description ? <p className="mt-2 text-xs leading-relaxed text-slate-500">{pkg.description}</p> : null}
@@ -158,17 +158,17 @@ export default function RegisterPage() {
               </div>
             ) : (
               <div className="rounded-xl border border-rose-900/30 bg-rose-950/20 p-4 text-sm text-rose-200">
-                ยังไม่มีแพ็กเกจที่เปิดให้ทดลอง กรุณาติดต่อผู้ดูแลระบบ
+                No trial packages are currently available. Please contact support.
               </div>
             )}
             {selectedPackage ? (
               <div className="rounded-xl border border-amber-900/30 bg-amber-950/20 p-3 text-xs text-amber-100">
-                🔑 Trial 1 เดือน: {selectedPackage.name} ใช้ได้สูงสุด {selectedPackage.maxAccounts} บัญชี MT5
+                🔑 1-month trial: {selectedPackage.name} — up to {selectedPackage.maxAccounts} MT5 account(s)
               </div>
             ) : null}
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-300">ชื่อ</label>
+            <label className="text-sm font-medium text-slate-300">Name</label>
             <Input
               type="text"
               placeholder="John Doe"
@@ -179,7 +179,7 @@ export default function RegisterPage() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-300">อีเมล</label>
+            <label className="text-sm font-medium text-slate-300">Email</label>
             <Input
               type="email"
               placeholder="name@email.com"
@@ -190,7 +190,7 @@ export default function RegisterPage() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-300">รหัสผ่าน</label>
+            <label className="text-sm font-medium text-slate-300">Password</label>
             <Input
               type="password"
               className="h-11 rounded-xl border-amber-900/30 bg-slate-950 text-white focus:ring-amber-500"
@@ -200,7 +200,7 @@ export default function RegisterPage() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-300">ยืนยันรหัสผ่าน</label>
+            <label className="text-sm font-medium text-slate-300">Confirm Password</label>
             <Input
               type="password"
               className="h-11 rounded-xl border-amber-900/30 bg-slate-950 text-white focus:ring-amber-500"
@@ -214,12 +214,12 @@ export default function RegisterPage() {
         </CardContent>
         <CardFooter className="flex flex-col gap-4 p-6 pt-0">
           <Button disabled={isLoading || isLoadingPackages || !selectedPackageId} className="h-11 w-full rounded-xl bg-gradient-to-r from-amber-500 to-yellow-600 font-bold text-black shadow-lg shadow-amber-900/30 hover:from-amber-400 hover:to-yellow-500">
-            {isLoading ? 'กำลังสร้างบัญชี...' : 'สร้างบัญชี'}
+            {isLoading ? 'Creating account...' : 'Create Account'}
           </Button>
           <div className="text-center text-sm text-slate-400">
-            มีบัญชีอยู่แล้ว?{' '}
+            Already have an account?{' '}
             <Link href="/login" className="text-amber-400 hover:text-amber-300 hover:underline">
-              เข้าสู่ระบบ
+              Log In
             </Link>
           </div>
         </CardFooter>

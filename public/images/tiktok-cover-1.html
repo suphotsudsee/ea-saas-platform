@@ -46,14 +46,14 @@ function draw() {
 
   fill(255);
   textSize(80);
-  text('เคยเป็นไหม?', W / 2, 80);
+  text('Have You Ever?', W / 2, 80);
 
   fill(GOLD);
   textSize(36);
   textStyle(NORMAL);
-  text('เทรดทอง ขึ้น +$60', W / 2, 190);
+  text('Gold Trading Up +$60', W / 2, 190);
   fill(RED);
-  text('แต่รอ TP แล้วราคากลับ 💔', W / 2, 235);
+  text('แต่รอ TP AlreadyPriceReturn/Reverse 💔', W / 2, 235);
 
   fill(255);
   textSize(28);
@@ -74,7 +74,7 @@ function draw() {
   textAlign(LEFT, TOP);
   textSize(18);
   textStyle(BOLD);
-  text('❌ แบบเดิม: รอ TP ไม่ถึง ราคากลับ', chartX + 20, chartY + 15);
+  text('❌ Styleเดิม: รอ TP Noถึง PriceReturn/Reverse', chartX + 20, chartY + 15);
 
   // Y-axis labels
   fill(100);
@@ -124,14 +124,14 @@ function draw() {
   noStroke();
   textAlign(LEFT, CENTER);
   textSize(14);
-  text('TP ← ไม่ถึง!', chartX + chartW - 170, chartY + 95);
+  text('TP ← Noถึง!', chartX + chartW - 170, chartY + 95);
 
   // Crash annotation
   fill(RED);
   textAlign(CENTER, CENTER);
   textSize(20);
   textStyle(BOLD);
-  text('💥 ราคากลับ!', chartX + chartW - 120, chartY + chartH - 60);
+  text('💥 PriceReturn/Reverse!', chartX + chartW - 120, chartY + chartH - 60);
 
   // === 3-Wave Cashout section ===
   let waveY = chartY + chartH + 60;
@@ -148,9 +148,9 @@ function draw() {
 
   // 3 wave cards
   const waves = [
-    { label: 'Wave 1', pct: '25%', desc: 'ปิดกำไรแรก\nล็อคกำไรไว้', color: GREEN },
-    { label: 'Wave 2', pct: '50%', desc: 'ปิดเพิ่มอีก\nปลอดภัยขึ้น', color: AMBER },
-    { label: 'Wave 3', pct: 'Trail', desc: 'ตามราคา\nกำไรสูงสุด', color: GOLD },
+    { label: 'Wave 1', pct: '25%', desc: 'CloseProfitFirst\nLockProfitไว้', color: GREEN },
+    { label: 'Wave 2', pct: '50%', desc: 'CloseAddอีก\nปลอดภัยUp', color: AMBER },
+    { label: 'Wave 3', pct: 'Trail', desc: 'ตามPrice\nMax Profit', color: GOLD },
   ];
 
   let wCardW = (chartW - 60) / 3;
@@ -205,10 +205,10 @@ function draw() {
   textAlign(CENTER, CENTER);
   textStyle(BOLD);
   textSize(30);
-  text('ทดลอง 7 วันฟรี', W / 2, ctaY + 30);
+  text('ทดลอง 7 daysFree', W / 2, ctaY + 30);
   textSize(18);
   textStyle(NORMAL);
-  text('ไม่ต้องใส่บัตรเครดิต', W / 2, ctaY + 60);
+  text('Noต้องใส่Credit Card', W / 2, ctaY + 60);
 
   // Brand
   fill(100);
@@ -218,7 +218,7 @@ function draw() {
   // Pricing quick
   fill(70);
   textSize(14);
-  text('Starter 990฿ • Pro 2,490฿ • Elite 4,990฿', W / 2, ctaY + 165);
+  text('Starter 990$ • Pro 2,490$ • Elite 4,990$', W / 2, ctaY + 165);
 
   // Bottom gold bar
   fill(GOLD);

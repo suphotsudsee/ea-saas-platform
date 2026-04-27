@@ -30,10 +30,10 @@ export default function LoginPage() {
   return (
     <AuthShell
       badge="AI Gold Trading Bot"
-      title="เข้าสู่ระบบ"
-      description="เข้าใช้งาน dashboard เพื่อจัดการ License Key, EA และบัญชีเทรดของคุณ"
-      sideTitle="AI เทรดทองคำอัตโนมัติ"
-      sideDescription="3-Wave Cashout + 6 Smart Money Filters บน MT5 พร้อม dashboard สำหรับควบคุม license, risk และสถานะบัญชีแบบเรียลไทม์."
+      title="Log In"
+      description="Log in to your dashboard to manage license keys, EA settings, and trading accounts"
+      sideTitle="Automated AI Gold Trading"
+      sideDescription="3-Wave Cashout + 6 Smart Money Filters on MT5. Dashboard for real-time license management, risk control, and account status monitoring."
       sideStats={[
         { label: 'XAUUSD', value: 'MT5' },
         { label: 'Smart filters', value: '6' },
@@ -43,7 +43,7 @@ export default function LoginPage() {
       <form onSubmit={handleSubmit}>
         <CardContent className="space-y-5 p-6">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-300">อีเมล</label>
+            <label className="text-sm font-medium text-slate-300">Email</label>
             <Input
               type="email"
               placeholder="name@email.com"
@@ -55,9 +55,9 @@ export default function LoginPage() {
           </div>
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <label className="text-sm font-medium text-slate-300">รหัสผ่าน</label>
+              <label className="text-sm font-medium text-slate-300">Password</label>
               <Link href="/forgot-password" className="text-xs text-amber-400 hover:text-amber-300">
-                ลืมรหัสผ่าน?
+                Forgot Password?
               </Link>
             </div>
             <Input
@@ -71,7 +71,7 @@ export default function LoginPage() {
         </CardContent>
         <CardFooter className="flex flex-col gap-4 p-6 pt-0">
           <Button disabled={isLoading} className="h-11 w-full rounded-xl bg-gradient-to-r from-amber-500 to-yellow-600 font-bold text-black shadow-lg shadow-amber-900/30 hover:from-amber-400 hover:to-yellow-500">
-            {isLoading ? 'กำลังเข้าสู่ระบบ...' : 'เข้าสู่ระบบ'}
+            {isLoading ? 'Logging in...' : 'Log In'}
           </Button>
           <Link
             href="/admin/login"
@@ -81,9 +81,9 @@ export default function LoginPage() {
             Admin login
           </Link>
           <div className="text-center text-sm text-slate-400">
-            ยังไม่มีบัญชี?{' '}
+            Don't have an account?{' '}
             <Link href="/register" className="text-amber-400 hover:text-amber-300 hover:underline">
-              ทดลองใช้ฟรี
+              Free Trial
             </Link>
           </div>
         </CardFooter>

@@ -17,16 +17,16 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata = {
-  title: 'TradeCandle v12 — AI เทรดทองอัตโนมัติ | 3-Wave Cashout + Smart Money Filters',
-  description: 'AI Expert Advisor สำหรับ XAUUSD บน MT5 — ปิดกำไรเป็น 3 คลื่น, 6 Smart Money Filters, Dashboard คุมจากมือถือ, Kill Switch หยุดทันที ทดลอง 1 เดือนฟรี',
-  keywords: ['EA', 'Expert Advisor', 'XAUUSD', 'ทอง', 'Gold Trading', 'MT5', 'MetaTrader', 'Smart Money', 'SMC', '3-Wave Cashout', 'TradeCandle', 'เทรดทอง', 'AI Trading'],
+  title: 'TradeCandle v12 — AI Automated Gold Trading | 3-Wave Cashout + Smart Money Filters',
+  description: 'AI Expert Advisor for XAUUSD on MT5 — Close profit in 3 waves, 6 Smart Money Filters, Mobile Dashboard Control, Instant Kill Switch. Try 1 month free',
+  keywords: ['EA', 'Expert Advisor', 'XAUUSD', 'Gold', 'Gold Trading', 'MT5', 'MetaTrader', 'Smart Money', 'SMC', '3-Wave Cashout', 'TradeCandle', 'Gold Trading', 'AI Trading'],
   icons: {
     icon: '/images/icon-512.svg',
     apple: '/images/icon-512.svg',
   },
   openGraph: {
-    title: 'TradeCandle v12 — AI เทรดทองอัตโนมัติ',
-    description: '3-Wave Cashout ปิดกำไรเป็น 3 รอบ + 6 Smart Money Filters อ่านทรงสตรัคเจอร์อัตโนมัติ | ทดลอง 1 เดือนฟรี',
+    title: 'TradeCandle v12 — AI Automated Gold Trading',
+    description: '3-Wave Cashout: Close profit in 3 rounds + 6 Smart Money Filters with Auto Structure Detection | Try 1 month free',
     type: 'website',
     url: 'https://tradecandle.ai',
     siteName: 'TradeCandle',
@@ -41,8 +41,8 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'TradeCandle v12 — AI เทรดทองอัตโนมัติ',
-    description: '3-Wave Cashout + Smart Money Filters | ทดลอง 1 เดือนฟรี',
+    title: 'TradeCandle v12 — AI Automated Gold Trading',
+    description: '3-Wave Cashout + Smart Money Filters | Try 1 month free',
     images: ['/images/hero-banner.html'],
   },
   robots: {
@@ -57,7 +57,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="th" className="dark">
+    <html lang="en" className="dark">
       <head>
         {/* Google Tag Manager — head script */}
         <GoogleTagManagerHead />

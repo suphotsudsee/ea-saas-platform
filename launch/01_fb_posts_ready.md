@@ -1,173 +1,173 @@
-# 7A — 5 โพสต์ Facebook ภาษาไทย (โพสต์ได้เลย)
-## TradeCandle v11 — Copy → Paste → โพสต์
+# 7A — 5 Post Facebook LanguageThai (PostRight Away)
+## TradeCandle v11 — Copy → Paste → Post
 
 ---
 
-## 📌 โพสต์ 1: Pain-Point (วันจันทร์ 19:00)
+## 📌 Post 1: Pain-Point (daysMonday 19:00)
 
 ```
-เคยเป็นไหม? 🤔
+Have You Ever? 🤔
 
-เปิด position ทองไป กำไร 500$ → ตื่นมากลายเป็น -200$
-เพราะ..."กลัวกำไรหาย เลยปิดเร็วไป"
-แต่พอปิดเร็ว → ทองวิ่งต่อ 1,000$ → ไม่ได้อีก 😭
+Open position Goldไป Profit 500$ → ตื่นมากลายเป็น -200$
+เพราะ..."กลัวProfitหาย เลยCloseเร็วไป"
+แต่พอCloseเร็ว → Goldวิ่งต่อ 1,000$ → Noได้อีก 😭
 
-ปัญหาเดิมๆ ของเทรดเดอร์ทอง:
-❌ กำไรหายระหว่างทาง
-❌ ไม่รู้จะปิดตอนไหน
-❌ ดูกราฟเสียเวลา แต่ก็ไม่เก่งขึ้น
-❌ โลวหูข่าว ตามซื้อ-ตามขายไม่ทัน
+Problemเดิมๆ ของTradingเดอร์Gold:
+❌ Profitหายระหว่างทาง
+❌ Noรู้จะCloseEpisodeไหน
+❌ ViewChartเสียTime แต่ก็Noเก่งUp
+❌ โลวหูข่าว ตามBuy-ตามขายNoทัน
 
-แล้วถ้า...มี AI จัดการปิดกำไรเป็น 3 รอบให้ล่ะ?
+AlreadyIf...Has AI ManageCloseProfitเป็น 3 Roundให้ล่ะ?
 
-🔥 3-Wave Cashout — ปิดกำไรที่ 25% → 50% → Trailing
-รับกำไรทุกรอบ ไม่พลาดทุกจังหวัน
+🔥 3-Wave Cashout — CloseProfitAt 25% → 50% → Trailing
+รับProfitAllRound NoพลาดAllจังหdays
 
-เร็วๆ นี้ บน MT5 ✨
+เร็วๆ This On MT5 ✨
 
-#TradeCandle #EAทอง #เทรดทอง #XAUUSD #MT5 #TradingBot
+#TradeCandle #EAGold #Gold Trading #XAUUSD #MT5 #TradingBot
 ```
 
 **📌 แนบรูป:** `public/images/3wave-infographic.html` → export เป็น PNG
-**📌 ลิงก์:** `https://tradecandle.ai/?utm_source=fb&utm_medium=organic&utm_campaign=launch_week1&utm_content=post1_pain`
+**📌 Link:** `https://tradecandle.ai/?utm_source=fb&utm_medium=organic&utm_campaign=launch_week1&utm_content=post1_pain`
 
 ---
 
-## 📌 โพสต์ 2: Educational — Smart Money (วันพุธ 10:00)
+## 📌 Post 2: Educational — Smart Money (daysWednesday 10:00)
 
 ```
 Smart Money ยากไหม? 🧠
 
-หลายคนเคยได้ยิน SMC (Smart Money Concepts) แต่อ่านแล้วงง?
+หลายคนเคยได้ยิน SMC (Smart Money Concepts) แต่ReadAlreadyงง?
 
-เอาจริงๆ SMC มี 6 ฟิลเตอร์หลักที่สำคัญ:
-1️⃣ BOS (Break of Structure) — ทิศทางเข้าสู่รอบใหม่
-2️⃣ CHoCH (Change of Character) — สัญญาณเปลี่ยนเทรนด์
-3️⃣ Order Block — โซนที่เงินใหญ่เคยเข้า
-4️⃣ FVG (Fair Value Gap) — ช่องว่างราคาที่ต้องกลับมาเติม
-5️⃣ Liquidity Sweep — เขี่ยจุดหยุดก่อนกลับทาง
+เอาจริงๆ SMC Has 6 FilterหลักAtสำคัญ:
+1️⃣ BOS (Break of Structure) — ทิศทางEnterสู่Roundใหม่
+2️⃣ CHoCH (Change of Character) — Signalsเปลี่ยนTrend
+3️⃣ Order Block — โซนAtเงินใหญ่เคยEnter
+4️⃣ FVG (Fair Value Gap) — SpacePriceAtต้องReturn/Reverseมาเติม
+5️⃣ Liquidity Sweep — เขี่ยPointหยุดก่อนReturn/Reverseทาง
 6️⃣ Supply/Demand — โซนอุปสงค์-อุปทาน
 
-ปัญหาคือ...ดู 6 อย่างพร้อมกัน มนุษย์ทำไม่ได้! 🤯
+Problemคือ...View 6 อย่างReadyTogether มนุษย์ทำNoได้! 🤯
 
-แต่ AI ทำได้ — TradeCandle v11 อ่านทุกฟิลเตอร์ให้ พร้อมส่งสัญญาณเข้าเทรดที่โอกาสชนะสูงสุด ✅
+แต่ AI ทำได้ — TradeCandle v11 ReadAllFilterให้ ReadySubmitSignalsEnterTradingAtโอกาสชนะMaximum ✅
 
-ไม่ต้องนั่งดูกราฟ ไม่ต้องตีความเอง
-AI ทำให้ คุณแค่ดู Dashboard 👀
+Noต้องนั่งViewChart Noต้องตีความเอง
+AI ทำให้ Youแค่View Dashboard 👀
 
-เริ่มต้น 990฿/เดือน | ทดลอง 7 วันฟรี 👇
+Get Started 990$/month | ทดลอง 7 daysFree 👇
 https://tradecandle.ai/?utm_source=fb&utm_medium=organic&utm_campaign=launch_week1&utm_content=post2_edu
 
 #SmartMoney #SMC #PA #TradingBot #XAUUSD #MT5 #EA #TradeCandle
 ```
 
 **📌 แนบรูป:** `public/images/smc-filters-infographic.html` → export เป็น PNG
-**📌 ลิงก์:** ใส่ UTM ตามด้านบน
+**📌 Link:** ใส่ UTM ตามด้านOn
 
 ---
 
-## 📌 โพสต์ 3: Social Proof (วันศุกร์ 12:00)
+## 📌 Post 3: Social Proof (daysFriday 12:00)
 
 ```
-เลขไม่โกหก 📊
+เลขNoโกหก 📊
 
-ก่อนใช้ TradeCandle:
-❌ กำไรเฉลี่ย 45$ / เดือน
+ก่อนUse TradeCandle:
+❌ Profitเฉลี่ย 45$ / month
 ❌ Win Rate 48%
-❌ ถือขาดทุนเฉลี่ย 3.2 hours
-❌ ตื่นมาดูกราฟ 4 ครั้ง/วัน
+❌ ถือLossเฉลี่ย 3.2 hours
+❌ ตื่นมาViewChart 4 ครั้ง/days
 
-หลังใช้ TradeCandle v11:
-✅ กำไรเฉลี่ย 380$ / เดือน (+744%)
+หลังUse TradeCandle v11:
+✅ Profitเฉลี่ย 380$ / month (+744%)
 ✅ Win Rate 68% 📈
-✅ 3-Wave Cashout ปิดกำไรอัตโนมัติ
-✅ ไม่ต้องดูกราฟเลย — Dashboard ดูให้
+✅ 3-Wave Cashout CloseProfitAutomated
+✅ Noต้องViewChartเลย — Dashboard Viewให้
 
-"ครึ่งเดือนแรก กำไรเท่า 6 เดือนที่แล้วเลยครับ"
-— ทดลองใช้ 7 วัน Pro Plan
+"ครึ่งmonthFirst Profitเท่า 6 monthAtAlreadyเลยครับ"
+— Trial 7 days Pro Plan
 
-เริ่มต้น 990฿/เดือน | ไม่ต้องใส่USDT
+Get Started 990$/month | Noต้องใส่USDT
 👉 https://tradecandle.ai/?utm_source=fb&utm_medium=organic&utm_campaign=launch_week1&utm_content=post3_proof
 
-#TradeCandle #EAขายทอง #กำไร #XAUUSD #MT5
+#TradeCandle #EAขายGold #Profit #XAUUSD #MT5
 ```
 
-**📌 แนบรูป:** สร้าง Before/After infographic (ก่อน-หลังใช้)
-**📌 ลิงก์:** UTM ตามด้านบน
+**📌 แนบรูป:** Create Before/After infographic (ก่อน-หลังUse)
+**📌 Link:** UTM ตามด้านOn
 
 ---
 
-## 📌 โพสต์ 4: Myth-Busting (วันอาทิตย์ 10:00)
+## 📌 Post 4: Myth-Busting (daysSunday 10:00)
 
 ```
-❌ EA ขายทอง = ขาดทุนแน่ ← เท็จ!
+❌ EA ขายGold = Lossแน่ ← เท็จ!
 
-3 myths ที่เทรดเดอร์ไทยเชื่อผิด:
+3 myths AtTradingเดอร์ThaiเNameผิด:
 
-🔴 Myth 1: "EA ต้องใช้ Grid/Martingale → รวนแน่นอน"
-→ TradeCandle ไม่ใช้ Grid! ใช้ 3-Wave Cashout ปิดกำไรเป็นรอบ
-→ + 6 ฟิลเตอร์ Smart Money คัดกรองสัญญาณให้
+🔴 Myth 1: "EA ต้องUse Grid/Martingale → รวนแน่นอน"
+→ TradeCandle NoUse Grid! Use 3-Wave Cashout CloseProfitเป็นRound
+→ + 6 Filter Smart Money คัดFilterSignalsให้
 
-🔴 Myth 2: "EA ไม่ยืดหยุ่น ตลาดเปลี่ยนก็พัง"
+🔴 Myth 2: "EA Noยืดหยุ่น ตลาดเปลี่ยนก็พัง"
 → TradeCandle อัพเดท config ผ่าน Dashboard ได้เรียลไทม์
-→ + Kill Switch หยุดทันทีถ้าตลาดผิดปกติ
+→ + Kill Switch หยุดทันทีIfตลาดผิดปกติ
 
-🔴 Myth 3: "ซื้อ EA ทีเดียวแพง ไม่คุ้ม"
-→ ไม่ต้องซื้อ! สมัครรายเดือนเริ่ม 990฿
-→ ทดลอง 7 วันฟรี ไม่ต้องจ่ายก่อน
-→ ยกเลิกได้ทุกเมื่อ
+🔴 Myth 3: "Buy EA ทีSingleแพง Noคุ้ม"
+→ Noต้องBuy! Sign UpรายmonthBeginner 990$
+→ ทดลอง 7 daysFree Noต้องจ่ายก่อน
+→ Cancelได้Allเมื่อ
 
-ตลาดทองคำมีโอกาสทุกวัน 🔥
-แต่คนที่เอากำไรไปคือคนที่มีระบบ ✅
+Gold MarketHasโอกาสAlldays 🔥
+แต่คนAtเอาProfitไปคือคนAtHasระบบ ✅
 
-เริ่มต้น 990฿/เดือน | ทดลองฟรี
+Get Started 990$/month | ทดลองFree
 👉 https://tradecandle.ai/?utm_source=fb&utm_medium=organic&utm_campaign=launch_week1&utm_content=post4_myth
 
-#EAเทรดทอง #MythBuster #TradingBot #XAUUSD
+#EAGold Trading #MythBuster #TradingBot #XAUUSD
 ```
 
 **📌 แนบรูป:** Myth vs Fact card (สีแดง ❌ → สีเขียว ✅)
-**📌 ลิงก์:** UTM ตามด้านบน
+**📌 Link:** UTM ตามด้านOn
 
 ---
 
-## 📌 โพสต์ 5: Urgency / Promo (วันจันทร์ถัดไป 19:00)
+## 📌 Post 5: Urgency / Promo (daysMondayNext 19:00)
 
 ```
-⚡ ลด 20% หมดเขตวันนี้!
+⚡ ลด 20% หมดเขตdaysThis!
 
-Starter: 990 → 792 ฿/เดือน
-Pro: 2,490 → 1,992 ฿/เดือน ⭐
-Elite: 4,990 → 3,992 ฿/เดือน
+Starter: 990 → 792 $/month
+Pro: 2,490 → 1,992 $/month ⭐
+Elite: 4,990 → 3,992 $/month
 
-ไม่ต้องใส่USDT ทดลอง 7 วันฟรีก่อน
-ชอบแล้วค่อยสมัคร ✅
+Noต้องใส่USDT ทดลอง 7 daysFreeก่อน
+ชอบAlreadyค่อยSign Up ✅
 
-3 อย่างที่ได้:
-✅ 3-Wave Cashout — ปิดกำไร 3 รอบอัตโนมัติ
-✅ 6 Smart Money ฟิลเตอร์ — อ่านทรงสตรัคเจอร์ให้
-✅ SaaS Dashboard — ดูทุกอย่างจากมือถือ + Kill Switch
+3 อย่างAtได้:
+✅ 3-Wave Cashout — CloseProfit 3 RoundAutomated
+✅ 6 Smart Money Filter — ReadStructureให้
+✅ SaaS Dashboard — ViewAllอย่างfromมือถือ + Kill Switch
 
-ระยะเวลาจำกัด ⏰
-เท่านั้น! พรุ่งนี้ราคาปกติ
+DurationTimeLimited ⏰
+Only! พรุ่งThisPriceปกติ
 
 👉 https://tradecandle.ai/?utm_source=fb&utm_medium=organic&utm_campaign=launch_week1&utm_content=post5_urgency
 
-🥇 สมัครผ่าน Line OA รับฟรีเพิ่ม 3 วัน (รวม 10 วันฟรี!)
+🥇 Sign Upผ่าน Line OA รับFreeAdd 3 days (รวม 10 daysFree!)
 👉 @tradecandle
 
-#TradeCandle #ส่วนลด #EAทอง #เทรดทอง #XAUUSD #MT5
+#TradeCandle #ส่วนลด #EAGold #Gold Trading #XAUUSD #MT5
 ```
 
 **📌 แนบรูป:** `public/images/pricing-cards.html` → export เป็น PNG
-**📌 ลิงก์:** UTM ตามด้านบน + เพิ่ม Line OA link
+**📌 Link:** UTM ตามด้านOn + Add Line OA link
 
 ---
 
-## 💡 Tips สำหรับโพสต์
+## 💡 Tips ForPost
 
-1. **ตอบคอมเมนต์ทุกข้อภายใน 30 นาที** = reach เพิ่ม 3x
-2. **อย่าลิงก์ในโพสต์แรก** — ใส่ในคอมเมนต์แรกแทน (FB ให้ reach มากกว่า)
-3. **Boost โพสต์ที่มี engagement สูง** ≥50 reactions → 300฿ boost
-4. **ถ่ายรูปหน้าจอ MT5** มาแนบ → credible มากขึ้น
-5. **โพสต์ช่วง 19:00-21:00** = prime time เทรดเดอร์ไทย
+1. **ตอบคอมเมนต์Allข้อภายใน 30 minutes** = reach Add 3x
+2. **อย่าLinkในPostFirst** — ใส่ในคอมเมนต์FirstInstead (FB ให้ reach มากกว่า)
+3. **Boost PostAtHas engagement High** ≥50 reactions → 300$ boost
+4. **ถ่ายรูปPageจอ MT5** มาแนบ → credible มากUp
+5. **PostPeriod 19:00-21:00** = prime time Tradingเดอร์Thai

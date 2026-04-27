@@ -45,17 +45,17 @@ function draw() {
 
   fill(255);
   textSize(32);
-  text('เรื่องเข้าใจผิด #1', W / 2, 65);
+  text('AboutMisunderstanding #1', W / 2, 65);
 
   fill(RED);
   textSize(72);
   textStyle(BOLD);
-  text('"EA ขาดทุนจริงหรอ?"', W / 2, 110);
+  text('"EA LossReally??"', W / 2, 110);
 
   fill(180);
   textSize(26);
   textStyle(NORMAL);
-  text('มาเช็คข้อเท็จจริงกัน 👇', W / 2, 210);
+  text('Come CheckFactsTogether 👇', W / 2, 210);
 
   fill(255);
   textSize(24);
@@ -65,23 +65,23 @@ function draw() {
   let cardStartY = 310;
   const myths = [
     {
-      myth: '❌ "EA เทรดสุ่ม ๆ ไม่มีหลักการ"',
-      reality: '✅ TradeCandle ใช้ 6 Smart Money Filters\nวิเคราะห์ทรงสตรัคเจอร์อัตโนมัติ',
+      myth: '❌ "EA Tradingสุ่ม ๆ NoHasPrinciples"',
+      reality: '✅ TradeCandle Use 6 Smart Money Filters\nAnalyzeStructureAutomated',
       color: '#8B5CF6'
     },
     {
-      myth: '❌ "ใช้ EA แล้วขาดทุนทุกที"',
-      reality: '✅ 3-Wave Cashout ปิดกำไรเป็นรอบ\nไม่ปล่อยให้กำไรหนี',
+      myth: '❌ "Use EA AlreadyLossAllที"',
+      reality: '✅ 3-Wave Cashout CloseProfitเป็นRound\nNoปล่อยให้Profitหนี',
       color: GREEN
     },
     {
-      myth: '❌ "EA ทำงานคนเดียว คุมไม่ได้"',
-      reality: '✅ Kill Switch หยุดทันที 1 คลิก\nDashboard ดูผล Real-time',
+      myth: '❌ "EA ทำงานคนSingle ControlNoได้"',
+      reality: '✅ Kill Switch หยุดทันที 1 คลิก\nDashboard ViewPerformance Real-time',
       color: RED
     },
     {
-      myth: '❌ "เซ็ตแล้วลืม ขาดทุนไม่รู้ตัว"',
-      reality: '✅ SaaS Dashboard แจ้งเตือน\nตรวจสอบได้ทุกที่ทุกเวลา',
+      myth: '❌ "เซ็ตAlreadyลืม LossNoรู้Item"',
+      reality: '✅ SaaS Dashboard Notification\nตรวจสอบได้AllAtAllTime',
       color: AMBER
     },
   ];
@@ -137,8 +137,8 @@ function draw() {
     textStyle(NORMAL);
     if (i === 0) text('BOS • CHoCH • Order Block • FVG • Liquidity Sweep • S/D Zone', 85, cy + ch - 25);
     if (i === 1) text('Wave 1: 25% • Wave 2: 50% • Wave 3: Trail', 85, cy + ch - 25);
-    if (i === 2) text('ควบคุมเต็ม 100% หยุดได้ทุกเมื่อ', 85, cy + ch - 25);
-    if (i === 3) text('ตรวจสอบได้จากมือถือ ทุกที่ทุกเวลา', 85, cy + ch - 25);
+    if (i === 2) text('Controlเต็ม 100% หยุดได้Allเมื่อ', 85, cy + ch - 25);
+    if (i === 3) text('ตรวจสอบได้fromมือถือ AllAtAllTime', 85, cy + ch - 25);
   }
 
   // === Result summary ===
@@ -161,11 +161,11 @@ function draw() {
   textStyle(BOLD);
   textSize(28);
   noStroke();
-  text('EA ไม่ได้ขาดทุนเสมอ', W / 2, summaryY + 30);
+  text('EA Noได้Lossเสมอ', W / 2, summaryY + 30);
   fill(200);
   textSize(18);
   textStyle(NORMAL);
-  text('ใช้ฟิลเตอร์ดี + บริหารความเสี่ยง = กำไรสม่ำเสมอ', W / 2, summaryY + 65);
+  text('UseFilterดี + บริหารความเสี่ยง = Profitสม่ำเสมอ', W / 2, summaryY + 65);
 
   // === CTA Button ===
   let ctaY = summaryY + 140;
@@ -175,12 +175,12 @@ function draw() {
   textAlign(CENTER, CENTER);
   textStyle(BOLD);
   textSize(28);
-  text('🚀 พิสูจน์ด้วยตัวเอง 7 วันฟรี', W / 2, ctaY + 42);
+  text('🚀 พิสูจน์ด้วยItemเอง 7 daysFree', W / 2, ctaY + 42);
 
   fill(100);
   textSize(16);
   textStyle(NORMAL);
-  text('ไม่ต้องใส่บัตรเครดิต • เริ่มต้น 990฿/เดือน', W / 2, ctaY + 110);
+  text('Noต้องใส่Credit Card • Get Started 990$/month', W / 2, ctaY + 110);
 
   // Brand
   fill(80);

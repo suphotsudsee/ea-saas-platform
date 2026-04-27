@@ -2,81 +2,81 @@
 
 ---
 
-## 🎬 สคริปต์วิดีโอ 1: สั้น 30 วินาที (Short/Reels/TikTok)
+## 🎬 Scriptวิดีโอ 1: Short 30 seconds (Short/Reels/TikTok)
 
-**ชื่อวิดีโอ:** "ทองคำขึ้นลง คุณยังนั่งเฝ้าจออยู่?"
+**Nameวิดีโอ:** "GoldVolatility Youยังนั่งเฝ้าจออยู่?"
 
-**รูปแบบ:** ผู้พูดตากล้อง + B-roll หน้าจอ MT5 + ภาพ Dashboard
+**Format:** Talking Head + B-roll Pageจอ MT5 + ภาพ Dashboard
 
 ---
 
-| วินาที | ภาพ (Visual) | เสียงบรรยาย (Voiceover) |
+| seconds | ภาพ (Visual) | Voiceover (Voiceover) |
 |---|---|---|
-| 0-3 | คนนั่งเครียดหน้าจอ มือกดแป้น หน้าผากย่น → ขึ้นคำว่า "เคยเป็นไหม?" | นั่งเฝ้าจอทองคำทั้งคืน ยังขาดทุน?? |
-| 3-8 | ภาพกราฟทองคำขึ้นลน มีลูกศรแดงชี้จุดเข้าผิด → ภาพเปลี่ยนเป็นหน้า Dashboard TradeCandle เรืองแสงสีทอง | ทองคำขึ้นลงรุนแรง เข้าจุดผิดก็โดน Stop Loss ก่อนจะไปทิศทางที่ถูก! |
-| 8-18 | ภาพ EA วิเคราะห์ 6 Filters แฟลชขึ้นทีละอัน: OB → FVG → Liquidity → BOS → CHOCH → Orderflow → จอเปลี่ยนเป็น 3-Wave Cashout ปิดกำไร 3 ช่วง | TradeCandle EA v12 ใช้ 6 ฟิลเตอร์ Smart Money วิเคราะห์จุดเข้าแม่นย์ พร้อมระบบ 3-Wave Cashout ปิดกำไรทีละคลื่น ไม่โลภจนเสียทั้งหมด |
-| 18-24 | ภาพ Dashboard แสดงผลลัพธ์: กำไร $4,858 / WR 74.75% / 819 รอบ → ตัวเลขเลื่อนขึ้นแบบ counter animation | Backtest 819 รอบ กำไร $4,858 ชนะ 74.75% |
-| 24-30 | ภาพมือกดปุ่ม Kill Switch + โลโก้ TradeCandle + ข้อความ CTA | หยุดเฝ้าจอ! ให้ TradeCandle ทำให้ → ค้นหา tradecandle.ai หรือเพิ่ม Line @tradecandle |
+| 0-3 | คนนั่งเครียดPageจอ มือกดแป้น Pageผากย่น → Upคำว่า "Have You Ever?" | นั่งเฝ้าจอGoldAllคืน ยังLoss?? |
+| 3-8 | ภาพChartGoldUpลน Hasลูกศรแดงชี้PointEnterผิด → ภาพเปลี่ยนเป็นPage Dashboard TradeCandle เรืองแสงสีGold | GoldVolatilityรุนแรง EnterPointผิดก็โดน Stop Loss ก่อนจะไปทิศทางAtถูก! |
+| 8-18 | ภาพ EA Analyze 6 Filters แฟลชUpทีละอัน: OB → FVG → Liquidity → BOS → CHOCH → Orderflow → จอเปลี่ยนเป็น 3-Wave Cashout CloseProfit 3 Period | TradeCandle EA v12 Use 6 Filter Smart Money AnalyzePointEnterแม่นย์ Readyระบบ 3-Wave Cashout CloseProfitOne Wave at a Time NoโลภจนเสียAll |
+| 18-24 | ภาพ Dashboard ShowResult: Profit $4,858 / WR 74.75% / 819 Round → Itemเลขเลื่อนUpStyle counter animation | Backtest 819 Round Profit $4,858 ชนะ 74.75% |
+| 24-30 | ภาพมือกดButton Kill Switch + Logo TradeCandle + Message CTA | หยุดเฝ้าจอ! ให้ TradeCandle ทำให้ → Search tradecandle.ai OrAdd Line @tradecandle |
 
-**ข้อความบนภาพ (Overlay Text):**
-- วินาที 0-3: ❌ เฝ้าจอทั้งคืน ก็ยังขาดทุน
-- วินาที 8-18: ✅ 6 Smart Money Filters + 3-Wave Cashout
-- วินาที 18-24: 📊 กำไร $4,858 | WR 74.75% | 819 รอบ
-- วินาที 24-30: 🚀 ทดลองใช้ฟรี 14 วัน → tradecandle.ai
+**MessageOnภาพ (Overlay Text):**
+- seconds 0-3: ❌ เฝ้าจอAllคืน ก็ยังLoss
+- seconds 8-18: ✅ 6 Smart Money Filters + 3-Wave Cashout
+- seconds 18-24: 📊 Profit $4,858 | WR 74.75% | 819 Round
+- seconds 24-30: 🚀 Free Trial 14 days → tradecandle.ai
 
-**เสียงเพลง:** เพลงฮิปฮอปทำนองเร็ว หนักแน่น เน้นกลอง หรือ lo-fi gold ambient
-**ความเร็ววิดีโอ:** เร็ว ตัดภาพทุก 2-3 วินาที จังหวะรวดเร็ว
-
----
-
-## 🎬 สคริปต์วิดีโอ 2: ยาว 60 วินาที (YouTube Preroll/详细介绍)
-
-**ชื่อวิดีโอ:** "TradeCandle EA v12 ระบบเทรดทองคำอัตโนมัติ ที่คนไทยรอคอย"
-
-**รูปแบบ:** ผู้พูดตากล้อง ผสม Screen Recording + Motion Graphics
+**SoundMusic:** Musicฮิปฮอปทำนองเร็ว หนักแน่น เน้นกลอง Or lo-fi gold ambient
+**ความเร็ววิดีโอ:** เร็ว ตัดภาพAll 2-3 seconds จังหวะรวดเร็ว
 
 ---
 
-| วินาที | ภาพ (Visual) | เสียงบรรยาย (Voiceover) |
+## 🎬 Scriptวิดีโอ 2: ยาว 60 seconds (YouTube Preroll/详细介绍)
+
+**Nameวิดีโอ:** "TradeCandle EA v12 ระบบTradingGoldAutomated AtคนThaiรอคอย"
+
+**Format:** Talking Head ผสม Screen Recording + Motion Graphics
+
+---
+
+| seconds | ภาพ (Visual) | Voiceover (Voiceover) |
 |---|---|---|
-| 0-5 | ผู้พูดตากล้อง หน้าจริงจัง → ภาพเปลี่ยนเป็นกราฟทองคำร่วง มีจำนวนเงินลดลง | ถ้าคุณเคยเทรดทองคำแล้วขาดทุน วันนี้ผมจะพาไปดูสิ่งที่จะเปลี่ยนเกมเทรดของคุณ |
-| 5-15 | ภาพผู้พูดพูดต่อ พร้อมภาพประกอบ: กราฟทองคำขึ้นลง จุดเข้าผิด จุด Stop Loss โดนกวาด | ปัญหาทองคำคือ ขึ้นลงรุนแรง เข้าจุดผิดก็โดน Stop Loss ก่อนจะไปทิศทางที่ถูก หรือเข้าจุดถูกแต่ออกเร็วเกินไป กำไรเหลือน้อยกว่าที่ควรได้ |
-| 15-25 | โลโก้ TradeCandle ปรากฏพร้อมแสงสีทอง → ภาพ EA ทำงาน: วิเคราะห์กราฟ ส่งสัญญาณ เปิดสถานะอัตโนมัติ | แนะนำ TradeCandle EA v12 ระบบเทรดทองคำอัตโนมัติบน MT5 ที่รวมพลัง Price Action และ Smart Money Concepts เข้าด้วยกัน |
-| 25-35 | Motion Graphics แสดง 6 Filters ทีละอัน: (1) Order Block (2) Fair Value Gap (3) Liquidity Sweep (4) Break of Structure (5) Change of Character (6) Orderflow Bias → แต่ละอันมีภาพประกอบบนกราฟ | สิ่งที่ทำให้ TradeCandle แตกต่าง คือระบบ 6 ฟิลเตอร์ Smart Money ที่วิเคราะห์หาจุดที่เงินฉลาดเข้า Order Block, Fair Value Gap, Liquidity Sweep, Break of Structure, Change of Character และ Orderflow Bias ทั้ง 6 ตัวกรองต้องผ่านพร้อมกัน ถึงจะเปิดสถานะ |
-| 35-45 | ภาพ 3-Wave Cashout ทำงาน: เปิดสถานะ → ปิด 1/3 ที่ TP1 → ปิด 1/3 ที่ TP2 → ปิดที่เหลือที่ TP3 พร้อมตัวเลขกำไรเพิ่มขึ้น | พอเข้าจุดแล้ว ระบบ 3-Wave Cashout จะปิดกำไรเป็น 3 คลื่น คลื่นแรกล็อคกำไรเบื้องต้น คลื่นสองปล่อยให้วิ่งต่อ คลื่นสุดท้ายเก็บกำไรสูงสุด ไม่ต้องนั่งตัดสินใจเอง |
-| 45-52 | Screen Recording Dashboard SaaS: แสดงสถานะการเทรด กำไรขาดทุน ปุ่ม Kill Switch → กดปุ่ม Kill Switch ปิดทุกสถานะทันที | แถมด้วย SaaS Dashboard ควบคุมการเทรดแบบเรียลไทม์ จากที่ไหนก็เข้าได้ และ Kill Switch ฉุกเฉิน กดปุ่มเดียวปิดทุกสถานะทันที ความเสี่ยงคุณควบคุม |
-| 52-58 | ภาพผล Backtest: Equity Curve สีทองเส้นขึ้น ตัวเลข: 819 รอบ / $4,858 / 74.75% / PF 1.23 / MaxDD $544 | ผล Backtest 819 รอบ กำไรสุทธิ $4,858 Win Rate 74.75% Profit Factor 1.23 และ Max Drawdown เพียง $544 |
-| 58-60 | โลโก้ TradeCandle + ปุ่ม CTA ข้อความ "ทดลองใช้ฟรี 14 วัน" | เริ่มต้นวันนี้ → tradecandle.ai หรือเพิ่ม Line @tradecandle |
+| 0-5 | Talking Head PageSerious → ภาพเปลี่ยนเป็นChartGoldร่วง HasAmountเงินลดลง | IfYouเคยTradingGoldAlreadyLoss daysThisผมจะพาไปViewสิ่งAtจะเปลี่ยนเกมTradingของYou |
+| 5-15 | ภาพผู้พูดพูดต่อ Readyภาพประกอบ: ChartGoldVolatility PointEnterผิด Point Stop Loss โดนกวาด | ProblemGoldคือ Volatilityรุนแรง EnterPointผิดก็โดน Stop Loss ก่อนจะไปทิศทางAtถูก OrEnterPointถูกแต่ออกเร็วเกินไป Profitเหลือน้อยกว่าAtควรได้ |
+| 15-25 | Logo TradeCandle ปรากฏReadyแสงสีGold → ภาพ EA ทำงาน: AnalyzeChart SubmitSignals OpenStatusAutomated | แนะนำ TradeCandle EA v12 ระบบTradingGoldAutomated on MT5 Atรวมพลัง Price Action and Smart Money Concepts Enterด้วยTogether |
+| 25-35 | Motion Graphics Show 6 Filters ทีละอัน: (1) Order Block (2) Fair Value Gap (3) Liquidity Sweep (4) Break of Structure (5) Change of Character (6) Orderflow Bias → แต่ละอันHasภาพประกอบOnChart | สิ่งAtทำให้ TradeCandle Breakต่าง คือระบบ 6 Filter Smart Money AtAnalyzeหาPointAtเงินฉลาดEnter Order Block, Fair Value Gap, Liquidity Sweep, Break of Structure, Change of Character and Orderflow Bias All 6 ItemFilterต้องผ่านReadyTogether ถึงจะOpenStatus |
+| 35-45 | ภาพ 3-Wave Cashout ทำงาน: OpenStatus → Close 1/3 At TP1 → Close 1/3 At TP2 → CloseAtเหลือAt TP3 ReadyItemเลขProfitAddUp | พอEnterPointAlready ระบบ 3-Wave Cashout จะCloseProfitเป็น 3 คลื่น คลื่นFirstLockProfitเบื้องต้น คลื่นสองปล่อยให้วิ่งต่อ คลื่นLastเก็บMax Profit Noต้องนั่งตัดสินใจเอง |
+| 45-52 | Screen Recording Dashboard SaaS: ShowStatusการTrading ProfitLoss Button Kill Switch → กดButton Kill Switch CloseAllStatusทันที | แถมด้วย SaaS Dashboard ControlการTradingStyleเรียลไทม์ fromAtไหนก็Enterได้ and Kill Switch ฉุกเฉิน กดButtonSingleCloseAllStatusทันที ความเสี่ยงYouControl |
+| 52-58 | ภาพPerformance Backtest: Equity Curve สีGoldเส้นUp Itemเลข: 819 Round / $4,858 / 74.75% / PF 1.23 / MaxDD $544 | Performance Backtest 819 Round Profitสุทธิ $4,858 Win Rate 74.75% Profit Factor 1.23 and Max Drawdown เพียง $544 |
+| 58-60 | Logo TradeCandle + Button CTA Message "Free Trial 14 days" | Get StarteddaysThis → tradecandle.ai OrAdd Line @tradecandle |
 
-**ข้อความบนภาพ (Overlay Text):**
-- วินาที 0-5: ❓ เคยเทรดทองคำแล้วขาดทุนไหม?
-- วินาที 15-25: 🏆 TradeCandle EA v12 — เทรดทองคำอัตโนมัติบน MT5
-- วินาที 25-35: 🧠 6 Smart Money Filters กรองจุดเข้าแม่นยำ
-- วินาที 35-45: 🌊 3-Wave Cashout ปิดกำไร 3 คลื่น
-- วินาที 45-52: 📊 Dashboard เรียลไทม์ + 🛑 Kill Switch ฉุกเฉิน
-- วินาที 52-58: 📊 819 รอบ | กำไร $4,858 | WR 74.75%
-- วินาที 58-60: 🚀 ทดลองฟรี 14 วัน → tradecandle.ai
+**MessageOnภาพ (Overlay Text):**
+- seconds 0-5: ❓ เคยTradingGoldAlreadyLossไหม?
+- seconds 15-25: 🏆 TradeCandle EA v12 — TradingGoldAutomated on MT5
+- seconds 25-35: 🧠 6 Smart Money Filters FilterPointEnterแม่นยำ
+- seconds 35-45: 🌊 3-Wave Cashout CloseProfit 3 คลื่น
+- seconds 45-52: 📊 Dashboard เรียลไทม์ + 🛑 Kill Switch ฉุกเฉิน
+- seconds 52-58: 📊 819 Round | Profit $4,858 | WR 74.75%
+- seconds 58-60: 🚀 ทดลองFree 14 days → tradecandle.ai
 
-**เพลงประกอบ:** เพลงทำนองสร้างความน่าเชื่อถือ เริ่มจากสบายๆ จังหวะเร่งขึ้นตอนกลาง จบด้วย upbeat
-**เทมโพ:** เริ่มช้า 70 BPM → เร่งเป็น 100 BPM ตอนแสดงฟีเจอร์ → ลงท้าย 85 BPM
+**Musicประกอบ:** MusicทำนองCreateความน่าเNameถือ Beginnerfromสบายๆ จังหวะเร่งUpEpisodeกลาง จบด้วย upbeat
+**เทมโพ:** Beginnerช้า 70 BPM → เร่งเป็น 100 BPM EpisodeShowFeature → ลงท้าย 85 BPM
 
 ---
 
-## 📋 หมายเหตุการผลิต
+## 📋 NoteการPerformanceิต
 
-**อุปกรณ์ที่แนะนำ:**
-- กล้อง: สมาร์ทโฟนรุ่นใหม่ขึ้นไป (iPhone 13+ / Samsung S22+)
-- ไมโครโฟน: Lavalier mic หรือ EarPods
-- ไฟ: Ring light หรือแสงธรรมชาติหน้าต่าง
-- พื้นหลัง: ห้องมืด + แสงไฟสีทอง/เขียว หรือหน้าจอกราฟ
+**อุปกรณ์Atแนะนำ:**
+- กล้อง: สมาร์ทโฟนรุ่นใหม่Upไป (iPhone 13+ / Samsung S22+)
+- ไมโครโฟน: Lavalier mic Or EarPods
+- ไฟ: Ring light OrแสงธรรมชาติPageต่าง
+- Background: ห้องมืด + แสงไฟสีGold/เขียว OrPageจอChart
 
 **ข้อควรระวัง:**
-- ห้ามใช้สีฟ้า/น้ำเงินในวิดีโอทุกชนิด
-- ใส่คำเตือนความเสี่ยงทุกคลิป: "การเทรดมีความเสี่ยง ผลลัพธ์อดีตไม่รับประกันอนาคต"
-- ตัวอย่าง Backtest ต้องระบุชัดเจนว่าเป็นข้อมูลทดสอบย้อนหลัง
-- ไม่สัญญากำไร ใช้คำว่า "ผลลัพธ์อาจแตกต่างจากการใช้งานจริง"
+- Do Not Useสีฟ้า/น้ำเงินในวิดีโอAllชนิด
+- ใส่คำWarningความเสี่ยงAllclip: "การTradingHasความเสี่ยง ResultอดีตNoรับประTogetherอนาคต"
+- Example Backtest ต้องระบุชัดเจนว่าเป็นInformationTestย้อนหลัง
+- NoสัญญาProfit Useคำว่า "ResultอาจBreakต่างfromUsageจริง"
 
-**รูปแบบไฟล์:**
-- สั้น 30s: 9:16 (แนวตั้ง) MP4 1080x1920
+**FormatFile:**
+- Short 30s: 9:16 (แนวตั้ง) MP4 1080x1920
 - ยาว 60s: 16:9 (แนวนอน) MP4 1920x1080
-- SRT subtitle แยกเป็นไฟล์ .srt
+- SRT subtitle แยกเป็นFile .srt

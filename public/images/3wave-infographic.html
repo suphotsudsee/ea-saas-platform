@@ -76,7 +76,7 @@ function drawHeader() {
   fill(PALETTE.goldLight);
   textSize(24);
   textStyle(NORMAL);
-  text('ปิดกำไรเป็น 3 รอบ — ยังไงก็ได้กำไร', W/2, 150);
+  text('CloseProfitเป็น 3 Round — ยังไงก็ได้Profit', W/2, 150);
   
   // Decorative line
   stroke(PALETTE.gold);
@@ -93,12 +93,12 @@ function drawTraditionalEA() {
   textAlign(LEFT);
   textSize(20);
   textStyle(BOLD);
-  text('❌ EA ทั่วไป', 60, y);
+  text('❌ EA General', 60, y);
   
   fill(PALETTE.textGray);
   textSize(14);
   textStyle(NORMAL);
-  text('รอ TP เต็ม 100% หรือ SL → ราคากลับ = ขาดทุน', 60, y + 28);
+  text('รอ TP เต็ม 100% Or SL → PriceReturn/Reverse = Loss', 60, y + 28);
   
   // Mini chart showing loss scenario
   y += 50;
@@ -153,14 +153,14 @@ function drawTraditionalEA() {
   fill(PALETTE.green + '80');
   textSize(11);
   textAlign(LEFT);
-  text('TP (ไม่ถึง)', chartX + 30, peakPrice - 28);
+  text('TP (Noถึง)', chartX + 30, peakPrice - 28);
   
   // Loss label
   fill(PALETTE.red);
   textSize(16);
   textStyle(BOLD);
   textAlign(CENTER);
-  text('-$340 ขาดทุน 😤', chartX + chartW/2, exitPrice + 25);
+  text('-$340 Loss 😤', chartX + chartW/2, exitPrice + 25);
   
   textStyle(NORMAL);
 }
@@ -178,7 +178,7 @@ function drawWaveDiagram() {
   fill(PALETTE.textGray);
   textSize(14);
   textStyle(NORMAL);
-  text('ปิดกำไรทยอย 3 รอบ → ราคากลับก็ยังได้กำไร', 60, y + 28);
+  text('CloseProfitทยอย 3 Round → PriceReturn/Reverseก็ยังได้Profit', 60, y + 28);
   
   // Main chart
   y += 55;
@@ -280,26 +280,26 @@ function drawComparison() {
   textAlign(CENTER);
   textSize(22);
   textStyle(BOLD);
-  text('เปรียบเทียบผลลัพธ์', W/2, y);
+  text('CompareResult', W/2, y);
   textStyle(NORMAL);
   
   y += 30;
   let colW = (W - 150) / 2;
   
   // EA Tradisional box
-  drawComparisonBox(75, y, colW, '❌ EA ทั่วไป', [
+  drawComparisonBox(75, y, colW, '❌ EA General', [
     'รอ TP เต็ม 100%',
-    'ราคากลับ = ขาดทุน',
-    'กำไร: $0 หรือ -$340',
-    'นั่งดูจอทั้งวัน',
+    'PriceReturn/Reverse = Loss',
+    'Profit: $0 Or -$340',
+    'นั่งViewจอAlldays',
   ], PALETTE.red, PALETTE.redLight);
   
   // TradeCandle box
   drawComparisonBox(75 + colW + 40, y, colW, '✅ 3-Wave Cashout', [
-    'ปิดทยอย 25% → 50% → Trail',
-    'ราคากลับก็ยังได้กำไร',
-    'กำไร: +$525 ขั้นต่ำ',
-    'ไม่ต้องดูจอ ทำอัตโนมัติ',
+    'Closeทยอย 25% → 50% → Trail',
+    'PriceReturn/Reverseก็ยังได้Profit',
+    'Profit: +$525 ขั้นต่ำ',
+    'Noต้องViewจอ ทำAutomated',
   ], PALETTE.green, PALETTE.greenLight);
 }
 
@@ -341,7 +341,7 @@ function drawThreeWaves() {
   textAlign(CENTER);
   textSize(22);
   textStyle(BOLD);
-  text('รายละเอียด 3 คลื่น', W/2, y);
+  text('Details 3 คลื่น', W/2, y);
   textStyle(NORMAL);
   
   y += 35;
@@ -350,24 +350,24 @@ function drawThreeWaves() {
   let waveData = [
     {
       title: 'Wave 1',
-      subtitle: 'ปิด 25% ของ TP',
+      subtitle: 'Close 25% ของ TP',
       color: PALETTE.green,
       darkColor: '#0A2E1F',
-      details: ['ล็อคกำไรแรกทันที', '+15 จุด = ~$150', 'ปิด 0.25 lot', 'ราคายังไม่ถึง TP'],
+      details: ['LockProfitFirstทันที', '+15 Point = ~$150', 'Close 0.25 lot', 'PriceยังNoถึง TP'],
     },
     {
       title: 'Wave 2',
-      subtitle: 'ปิด 50% ของ TP',
+      subtitle: 'Close 50% ของ TP',
       color: PALETTE.goldLight,
       darkColor: '#1A1505',
-      details: ['กำไรเพิ่มขึ้น', '+35 จุด = ~$525', 'ปิด 0.25 lot เพิ่ม', 'สะสมกำไรแล้ว 75%'],
+      details: ['ProfitAddUp', '+35 Point = ~$525', 'Close 0.25 lot Add', 'สะสมProfitAlready 75%'],
     },
     {
       title: 'Wave 3',
       subtitle: 'Trailing Stop',
       color: PALETTE.amber,
       darkColor: '#1A0F05',
-      details: ['ไล่ตามเทรนด์', 'ไม่จำกัดกำไรสูงสุด', 'Breakeven + Trail', '+65 จุดขึ้นไป'],
+      details: ['ไล่ตามTrend', 'NoLimitedMax Profit', 'Breakeven + Trail', '+65 PointUpไป'],
     },
   ];
   
@@ -430,7 +430,7 @@ function drawSummary() {
   textAlign(CENTER);
   textSize(18);
   textStyle(BOLD);
-  text('💡 สรุป: ยังไงก็ได้กำไรบางส่วน — ไม่ต้องรอ TP เต็ม 100%', W/2, y + 32);
+  text('💡 สรุป: ยังไงก็ได้Profitบางส่วน — Noต้องรอ TP เต็ม 100%', W/2, y + 32);
   textStyle(NORMAL);
 }
 

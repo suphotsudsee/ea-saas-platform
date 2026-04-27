@@ -115,10 +115,10 @@ function ConsentBanner({ onAccept }: { onAccept: (prefs: ConsentPreferences) => 
           <div className="text-2xl">🍪</div>
           <div className="flex-1">
             <h3 className="text-white font-bold text-lg mb-1">
-              เราใช้ Cookies เพื่อปรับปรุงประสบการณ์
+              We Use Cookies to Improve Your Experience
             </h3>
             <p className="text-gray-400 text-sm">
-              Cookies ช่วยเราวิเคราะห์การใช้งาน, ปรับประ่งโฆษณา, และให้บริการที่ดีขึ้น
+              Cookies help us analyze usage, optimize ads, and deliver better services.
             </p>
           </div>
         </div>
@@ -134,8 +134,8 @@ function ConsentBanner({ onAccept }: { onAccept: (prefs: ConsentPreferences) => 
                 className="w-4 h-4 rounded border-gray-600 accent-[#D4AF37]"
               />
               <div>
-                <span className="text-white text-sm font-medium">ฟังก์ชันการใช้งาน</span>
-                <span className="text-gray-500 text-xs ml-2">จำเป็น — ไม่สามารถปิดได้</span>
+                <span className="text-white text-sm font-medium">Functional</span>
+                <span className="text-gray-500 text-xs ml-2">Required — cannot be disabled</span>
               </div>
             </label>
             <label className="flex items-center gap-3 cursor-pointer">
@@ -146,8 +146,8 @@ function ConsentBanner({ onAccept }: { onAccept: (prefs: ConsentPreferences) => 
                 className="w-4 h-4 rounded border-gray-600 accent-[#D4AF37]"
               />
               <div>
-                <span className="text-white text-sm font-medium">การวิเคราะห์</span>
-                <span className="text-gray-500 text-xs ml-2">Google Analytics — ช่วยเราเข้าใจการใช้งาน</span>
+                <span className="text-white text-sm font-medium">Analytics</span>
+                <span className="text-gray-500 text-xs ml-2">Google Analytics — helps us understand usage</span>
               </div>
             </label>
             <label className="flex items-center gap-3 cursor-pointer">
@@ -158,8 +158,8 @@ function ConsentBanner({ onAccept }: { onAccept: (prefs: ConsentPreferences) => 
                 className="w-4 h-4 rounded border-gray-600 accent-[#D4AF37]"
               />
               <div>
-                <span className="text-white text-sm font-medium">การตลาด</span>
-                <span className="text-gray-500 text-xs ml-2">Facebook Pixel — ปรับปรุงโฆษณา</span>
+                <span className="text-white text-sm font-medium">Marketing</span>
+                <span className="text-gray-500 text-xs ml-2">Facebook Pixel — improves ad targeting</span>
               </div>
             </label>
           </div>
@@ -171,7 +171,7 @@ function ConsentBanner({ onAccept }: { onAccept: (prefs: ConsentPreferences) => 
             onClick={() => onAccept(DEFAULT_CONSENT)}
             className="px-5 py-2.5 bg-[#D4AF37] text-[#0A0A0A] font-bold rounded-lg hover:bg-[#F5C842] transition-colors text-sm"
           >
-            ยอมรับทั้งหมด
+            Accept All
           </button>
           <button
             onClick={() => {
@@ -183,13 +183,13 @@ function ConsentBanner({ onAccept }: { onAccept: (prefs: ConsentPreferences) => 
             }}
             className="px-5 py-2.5 border border-[#D4AF37]/50 text-[#D4AF37] font-medium rounded-lg hover:bg-[#D4AF37]/10 transition-colors text-sm"
           >
-            {showDetails ? 'บันทึกการตั้งค่า' : 'ปรับแต่ง'}
+            {showDetails ? 'Save Settings' : 'Customize'}
           </button>
           <button
             onClick={() => onAccept({ analytics: false, marketing: false, functional: true })}
             className="px-5 py-2.5 text-gray-500 hover:text-gray-300 transition-colors text-sm"
           >
-            ปฏิเสธ
+            Decline
           </button>
         </div>
       </div>

@@ -1,108 +1,108 @@
 # Line OA Setup — TradeCandle v11
 
-## ขั้นตอนตั้ง Line Official Account
+## Setup Steps Line Official Account
 
-### 1. สร้าง Line OA
+### 1. Create Line OA
 
-1. ไปที่ [Line Official Account Manager](https://manager.line.biz/)
-2. สร้างบัญชีใหม่ — ชื่อ: **TradeCandle**
-3. เลือกแผน: **Standard** (ฟรี ข้อความได้ไม่จำกัด)
-4. กรอกข้อมูล:
-   - ชื่อแสดง: `TradeCandle`
-   - หมวดหมู่: การเงิน/ลงทุน
-   - อีเมล: support@tradecandle.ai
-   - รูปโปรไฟล์: โลโก้ TradeCandle
+1. Go to [Line Official Account Manager](https://manager.line.biz/)
+2. Create a new account — Name: **TradeCandle**
+3. Choose plan: **Standard** (Free unlimited messages)
+4. Fill in information:
+   - Display Name: `TradeCandle`
+   - Category: Finance/Investment
+   - Email: support@tradecandle.ai
+   - Profile Picture: Logo TradeCandle
 
-### 2. เปิด Messaging API
+### 2. Open Messaging API
 
-1. ไปที่ **Settings → Messaging API**
-2. เปิดใช้ Messaging API
-3. เลือกแผน: **Developer (ฟรี)** หรือ **Pro** (ถ้าต้องการข้อความมากกว่า)
-4. คัดลอกค่า:
-   - **Channel Access Token** → `.env` ใส่เป็น `LINE_CHANNEL_ACCESS_TOKEN`
-   - **Channel Secret** → `.env` ใส่เป็น `LINE_CHANNEL_SECRET`
+1. Go to **Settings → Messaging API**
+2. Enable Messaging API
+3. Choose plan: **Developer (Free)** or **Pro** (if you need more messages)
+4. Copy values:
+   - **Channel Access Token** → `.env` set as `LINE_CHANNEL_ACCESS_TOKEN`
+   - **Channel Secret** → `.env` set as `LINE_CHANNEL_SECRET`
 
-### 3. ตั้ง Webhook URL
+### 3. Set Webhook URL
 
-1. ใน Messaging API Settings:
+1. In Messaging API Settings:
    - Webhook URL: `https://tradecandle.ai/api/line/webhook`
-   - เปิด **Use webhook**: ✅
-   - เปิด **Auto-reply messages**: ❌ (ปิด! เราจะตอบเอง)
-   - เปิด **Greeting messages**: ❌ (ปิด! เราจะส่งเอง)
+   - Enable **Use webhook**: ✅
+   - Enable **Auto-reply messages**: ❌ (Disable — we will handle replies ourselves)
+   - Enable **Greeting messages**: ❌ (Disable — we will send our own)
 
-2. ถ้า dev ที่ local:
+2. If dev on local:
    ```
    ngrok http 3000
-   # วาง webhook URL: https://<ngrok-id>.ngrok-free.app/api/line/webhook
+   # Paste webhook URL: https://<ngrok-id>.ngrok-free.app/api/line/webhook
    ```
 
-### 4. เพิ่ม Environment Variables
+### 4. Add Environment Variables
 
-เพิ่มใน `.env`:
+Add in `.env`:
 
 ```env
 # Line OA
-LINE_CHANNEL_ACCESS_TOKEN=your_channel_access_token_here
-LINE_CHANNEL_SECRET=your_channel_secret_here
-ADMIN_API_KEY=tc-admin-secret-change-this
+LINE_CHANNEL_ACCESS_TOKEN=your_c...here
+LINE_CHANNEL_SECRET=your_c...here
+ADMIN_API_KEY=tc-adm...this
 ```
 
-### 5. สร้าง Rich Menu
+### 5. Create Rich Menu
 
 ```bash
 cd /mnt/c/fullstack/ea-saas-platform
 npx tsx scripts/setup-line-rich-menu.ts
 ```
 
-สร้างรูป Rich Menu ขนาด 2500x1686 px:
+Create Rich Menu image size 2500x1686 px:
 
 ```
 ┌─────────────────┬─────────────────┐
-│    สมัครใช้       │    ดูราคา        │
+│    Sign Up to Use       │    ViewPrice        │
 │  tradecandle.ai  │  #pricing       │
-│   (ส้ม/ทอง)       │   (ทอง/เขียว)    │
+│   (Orange/Gold)       │   (Gold/Green)    │
 ├─────────────────┼─────────────────┤
-│   Dashboard      │    ช่วยเหลือ      │
-│   /dashboard     │  พิมพ์ "ช่วย"     │
-│   (เขียว)        │   (น้ำเงิน)       │
+│   Dashboard      │    Help      │
+│   /dashboard     │  Print "help"     │
+│   (Green)        │   (Blue)       │
 └─────────────────┴─────────────────┘
 ```
 
-อัปโหลดรูป:
+Upload image:
 
 ```bash
 curl -X POST \
-  -H "Authorization: Bearer $LINE_CHANNEL_ACCESS_TOKEN" \
+  -H "Authorization: Bearer $LINE_...KEN" \
   -H "Content-Type: image/png" \
   --data-binary @rich-menu-image.png \
   "https://api.line.me/v2/bot/richmenu/{RICH_MENU_ID}/content"
 ```
 
-ตั้งเป็น default:
+Set as default:
 
 ```bash
 curl -X POST \
-  -H "Authorization: Bearer $LINE_CHANNEL_ACCESS_TOKEN" \
+  -H "Authorization: Bearer $LINE_...KEN" \
   "https://api.line.me/v2/bot/user/all/richmenu/{RICH_MENU_ID}"
 ```
 
-### 6. ทดสอบ Webhook
+### 6. Test Webhook
 
 ```bash
-# ทดสอบ GET endpoint
+# Test GET endpoint
 curl https://tradecandle.ai/api/line/webhook
 
-# ทดสอบ broadcast (ต้องมี server รัน)
+# Test broadcast (requires server running)
 curl -X POST http://localhost:3000/api/line/broadcast \
   -H "x-api-key: tc-admin-secret-change-this" \
   -H "Content-Type: application/json" \
-  -d '{"type": "custom", "text": "สวัสดีจาก TradeCandle!"}'
+  -d '{"type": "custom", "text": "Hello from TradeCandle!"}'
 ```
 
-### 7. ส่ง Broadcast ตามแคมเปญ
+### 7. Send Broadcast per Campaign
 
 ```bash
-# Teaser (ก่อนเปิดตัว 2 วัน)
+# Teaser (2 days before launch)
 curl -X POST http://localhost:3000/api/line/broadcast \
   -H "x-api-key: tc-admin-secret" \
   -H "Content-Type: application/json" \
@@ -118,7 +118,7 @@ curl -X POST http://localhost:3000/api/line/broadcast \
 curl -X POST http://localhost:3000/api/line/broadcast \
   -H "x-api-key: tc-admin-secret" \
   -H "Content-Type: application/json" \
-  -d '{"type": "urgency", "promoCode": "LAUNCH20", "endDate": "30 เมษายน 2568"}'
+  -d '{"type": "urgency", "promoCode": "LAUNCH20", "endDate": "30 April 2025"}'
 
 # Monthly Report
 curl -X POST http://localhost:3000/api/line/broadcast \
@@ -135,32 +135,32 @@ curl -X PUT http://localhost:3000/api/line/broadcast \
 
 ### 8. Auto-Reply Features
 
-เมื่อคีย์เวิร์ดในแชท:
-- `ราคา` / `price` / `แพ็คเกจ` → แสดงตารางราคา
-- `ทดลอง` / `trial` / `free` → แสดงวิธีทดลองฟรี 7 วัน
-- `ช่วย` / `help` / `?` → แสดงเมนูช่วยเหลือ
-- `วิธีใช้` / `how` / `guide` → แสดงคู่มือเริ่มต้น
-- เพิ่มเพื่อน → ส่งข้อความต้อนรับ
+When keywords are sent in chat:
+- `Price` / `price` / `Package` → Show pricing plans
+- `trial` / `free` → Show free trial guide (7 days)
+- `help` / `?` → Show help menu
+- `how` / `guide` → Show Getting Started guide
+- Add Friend → Send welcome message
 
-### 9. QR Code + เพิ่มเพื่อน
+### 9. QR Code + Add Friends
 
-เอา Line OA QR Code ไปวางบน:
-- Landing Page (`https://tradecandle.ai`) → เพิ่มปุ่ม "Add Line"
-- Facebook Page → วาง QR ในโพสต์
-- ใบปลิว/นามบัตร
+Put the Line OA QR Code on:
+- Landing Page (`https://tradecandle.ai`) → Add "Add Line" button
+- Facebook Page → Paste QR in posts
+- Flyers/business cards
 
 ```
-Line OA Link: https://lin.ee/tradecandle  (ตั้งใน Line OA Manager)
-QR Code: สร้างได้จาก Line OA Manager → Settings → Add Friends
+Line OA Link: https://lin.ee/tradecandle  (configure in Line OA Manager)
+QR Code: Create from Line OA Manager → Settings → Add Friends
 ```
 
-## ไฟล์ที่สร้าง
+## Files Created
 
-| ไฟล์ | หน้าที่ |
+| File | Purpose |
 |------|---------|
 | `src/api/services/line.service.ts` | Line API service (push, broadcast, templates, webhook handler) |
-| `src/api/routes/line/webhook/route.ts` | Webhook endpoint (รับ events จาก Line) |
-| `src/api/routes/line/broadcast/route.ts` | Broadcast API (ส่งข้อความถึงทุกคนหรือคนใดคน) |
-| `scripts/setup-line-rich-menu.ts` | สร้าง Rich Menu |
-| `scripts/line-manage.ts` | CLI ส่ง broadcast, ดู followers, ฯลฯ |
-| `docs/LINE_OA_SETUP.md` | คู่มือนี้ |
+| `src/api/routes/line/webhook/route.ts` | Webhook endpoint (receive events from Line) |
+| `src/api/routes/line/broadcast/route.ts` | Broadcast API (send messages to all or specific users) |
+| `scripts/setup-line-rich-menu.ts` | Create Rich Menu |
+| `scripts/line-manage.ts` | CLI send broadcast, view followers, etc. |
+| `docs/LINE_OA_SETUP.md` | This guide |

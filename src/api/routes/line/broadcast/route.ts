@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
       case 'urgency':
         messages = LineTemplates.urgency(
           params.promoCode || 'LAUNCH20',
-          params.endDate || '30 เมษายน 2568'
+          params.endDate || 'April 30, 2025'
         );
         break;
       case 'monthly':
@@ -91,7 +91,7 @@ export async function PUT(request: NextRequest) {
         messages = LineTemplates.launch();
         break;
       case 'urgency':
-        messages = LineTemplates.urgency(params.promoCode || 'LAUNCH20', params.endDate || '30 เมษายน 2568');
+        messages = LineTemplates.urgency(params.promoCode || 'LAUNCH20', params.endDate || 'April 30, 2025');
         break;
       case 'monthly':
         messages = LineTemplates.monthlyReport(params);

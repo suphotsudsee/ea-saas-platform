@@ -2,274 +2,274 @@
 
 ---
 
-## 💬 ข้อความ Line Broadcast 3 ชุด
+## 💬 Message Line Broadcast 3 Set
 
 **Line OA:** @tradecandle
-**รูปแบบ:** ข้อความ + รูปภาพ (ถ้าเหมาะสม)
-**ความยาวสูงสุด:** 1,000 ตัวอักษรต่อข้อความ
+**Format:** Message + Image (Ifเหมาะสม)
+**LengthMaximum:** 1,000 Itemcharactersต่อMessage
 
 ---
 
-## 💬 ชุดที่ 1: Welcome Series (ลำดับต้อนรับ)
+## 💬 SetAt 1: Welcome Series (ลำดับต้อนรับ)
 
-### 📩 ข้อความวันที่ 0 (ทันทีที่เพิ่มเพื่อน)
+### 📩 MessageDate 0 (ทันทีAtAddFriends)
 
-**เวลาส่ง:** ทันทีที่ผู้ใช้เพิ่มเพื่อน Line OA
-**วัตถุประสงค์:** ต้อนรับ + แนะนำตัว + ให้ของฟรี
+**TimeSubmit:** ทันทีAtผู้UseAddFriends Line OA
+**วัตถุประสงค์:** ต้อนรับ + แนะนำItem + ให้ของFree
 
 ---
 
-🎉 **ยินดีต้อนรับสู่ TradeCandle!**
+🎉 **Welcome to TradeCandle!**
 
-สวัสดีครับ/ค่ะ! ขอบคุณที่เพิ่มเพื่อน TradeCandle 🙏
+Hello/ค่ะ! Thank YouAtAddFriends TradeCandle 🙏
 
-เราคือระบบเทรดทองคำอัตโนมัติบน MT5
-ที่ใช้ 6 Smart Money Filters + 3-Wave Cashout
+เราคือระบบTradingGoldAutomated on MT5
+AtUse 6 Smart Money Filters + 3-Wave Cashout
 
 🎁 **ของขวัญต้อนรับ:**
-📥 คู่มือ "เทรดทองคำฉบับมืออาชีพ" (PDF)
-📥 วิดีโอ "ตั้งค่า EA ใน 10 นาที"
+📥 คู่มือ "TradingGoldฉบับProfessional" (PDF)
+📥 วิดีโอ "Settings EA ใน 10 minutes"
 
-→ กดลิงก์ดาวน์โหลด: tradecandle.ai/welcome
+→ กดLinkDownload: tradecandle.ai/welcome
 
-📊 **ผล Backtest TradeCandle v12:**
-819 รอบ | กำไร $4,858 | ชนะ 74.75%
+📊 **Performance Backtest TradeCandle v12:**
+819 Round | Profit $4,858 | ชนะ 74.75%
 Max Drawdown เพียง $544
 
-⚠️ ผลอดีตไม่รับประกันอนาคต
+⚠️ PerformanceอดีตNoรับประTogetherอนาคต
 
-🆓 **ทดลองใช้ฟรี 14 วัน**
-ไม่ต้องผูกบัตรเครดิต → tradecandle.ai
+🆓 **Free Trial 14 days**
+Noต้องผูกCredit Card → tradecandle.ai
 
-พิมพ์ "ช่วยเหลือ" เพื่อดูเมนูคำสั่ง
-หรือทักถามได้เลย เราตอบทุกข้อความ! 💬
-
----
-
-### 📩 ข้อความวันที่ 3 (3 วันหลังเพิ่มเพื่อน)
-
-**เวลาส่ง:** 3 วันหลังเพิ่มเพื่อน (เช้า 9:00)
-**วัตถุประสงค์:** ให้ความรู้ + สร้างความสนใจ
+Print "Help" toViewMenuคำสั่ง
+OrทักถามRight Away เราตอบAllMessage! 💬
 
 ---
 
-🧠 **6 Smart Money Filters ที่ TradeCandle ใช้**
+### 📩 MessageDate 3 (3 daysหลังAddFriends)
 
-EA ทั่วไปใช้ Indicator ธรรมดา (MA, RSI, MACD)
-แต่ TradeCandle ใช้สิ่งที่สถาบันใช้จริง:
+**TimeSubmit:** 3 daysหลังAddFriends (เช้า 9:00)
+**วัตถุประสงค์:** ให้ความรู้ + Createความสนใจ
 
-1️⃣ Order Block — โซนที่สถาบันสะสมสถานะ
-2️⃣ Fair Value Gap — ช่องว่างราคาจากการวิ่งฉุด
-3️⃣ Liquidity Sweep — กวาดจุด Stop Loss รายย่อย
-4️⃣ Break of Structure — ทลายโครงสร้างราคาเดิม
-5️⃣ Change of Character — สัญญาณเปลี่ยนเทรนด์
+---
+
+🧠 **6 Smart Money Filters At TradeCandle Use**
+
+EA GeneralUse Indicator ธรรมดา (MA, RSI, MACD)
+แต่ TradeCandle Useสิ่งAtสถาบันUseจริง:
+
+1️⃣ Order Block — โซนAtสถาบันสะสมStatus
+2️⃣ Fair Value Gap — SpacePricefromการวิ่งฉุด
+3️⃣ Liquidity Sweep — กวาดPoint Stop Loss รายCollapseย
+4️⃣ Break of Structure — ทลายโครงCreatePriceเดิม
+5️⃣ Change of Character — Signalsเปลี่ยนTrend
 6️⃣ Orderflow Bias — ทิศทางเงินฉลาดไหลรวม
 
-ทั้ง 6 ต้องผ่านพร้อมกัน ถึงจะเปิดสถานะ!
-ไม่ใช่เปิดทุกรอบ แต่เมื่อเปิด → จุดเข้าแม่นย์มาก
+All 6 ต้องผ่านReadyTogether ถึงจะOpenStatus!
+NoYesOpenAllRound แต่เมื่อOpen → PointEnterแม่นย์มาก
 
-อยากดูวิดีโอสาธิตฟิลเตอร์ทั้ง 6?
+อยากViewวิดีโอสาธิตFilterAll 6?
 → tradecandle.ai/blog/smart-money-filters
 
-ทดลองใช้ฟรี 14 วัน → tradecandle.ai
-💬 มีคำถาม? ทักได้เลย!
+Free Trial 14 days → tradecandle.ai
+💬 HasQuestion? ทักRight Away!
 
 ---
 
-### 📩 ข้อความวันที่ 7 (7 วันหลังเพิ่มเพื่อน)
+### 📩 MessageDate 7 (7 daysหลังAddFriends)
 
-**เวลาส่ง:** 7 วันหลังเพิ่มเพื่อน (เช้า 9:00)
-**วัตถุประสงค์:** เร่งกระตุ้น + CTA ชัดเจน
-
----
-
-🌊 **3-Wave Cashout — ปิดกำไร 3 คลื่น**
-
-สัปดาห์ที่แล้วเราพูดถึง 6 Smart Money Filters
-วันนี้มาดูอีกฟีเจอร์สำคัญ: 3-Wave Cashout
-
-EA ทั่วไป: เปิดสถานะ → รอ TP → ปิดทั้งหมด
-ปัญหา? ราคามาถึงใกล้ TP แล้วกลับ → ขาดทุน
-
-TradeCandle: เปิดสถานะ → ปิด 3 คลื่น:
-🌊 คลื่น 1: ปิด 1/3 ที่ TP1 → ล็อคกำไรเบื้องต้น
-🌊 คลื่น 2: ปิด 1/3 ที่ TP2 → กำไรเพิ่มขึ้น
-🌊 คลื่น 3: ปิดที่เหลือที่ TP3 → เก็บกำไรสูงสุด
-
-ผลลัพธ์: กำไรสม่ำเสมอ ไม่โลภจนเสียหมด
-
-อยากลองใช้จริง?
-🆓 ทดลองฟรี 14 วัน → tradecandle.ai
-ไม่ต้องผูกบัตร ยกเลิกได้ทุกเวลา
-
-⏰ ข้อเสนอ Founding Member สำหรับ 100 คนแรก:
-ราคาล็อกตลอดชีพ! เริ่ม 990฿/เดือน
-
-💬 สนใจ? พิมพ์ "สมัคร" เพื่อรับลิงก์สมัคร
+**TimeSubmit:** 7 daysหลังAddFriends (เช้า 9:00)
+**วัตถุประสงค์:** เร่งTrigger + CTA ชัดเจน
 
 ---
 
-## 💬 ชุดที่ 2: ข้อความประกาศ (Announcement)
+🌊 **3-Wave Cashout — CloseProfit 3 คลื่น**
 
-### 📩 ประกาศเปิดตัว / ฟีเจอร์ใหม่
+สัปดาห์AtAlreadyเราพูดถึง 6 Smart Money Filters
+daysThisมาViewอีกFeatureสำคัญ: 3-Wave Cashout
 
-**เวลาส่ง:** วันเปิดตัว (9:00)
-**วัตถุประสงค์:** แจ้งข่าวสำคัญ + กระตุ้นการสมัคร
+EA General: OpenStatus → รอ TP → CloseAll
+Problem? Priceมาถึงใกล้ TP AlreadyReturn/Reverse → Loss
+
+TradeCandle: OpenStatus → Close 3 คลื่น:
+🌊 คลื่น 1: Close 1/3 At TP1 → LockProfitเบื้องต้น
+🌊 คลื่น 2: Close 1/3 At TP2 → ProfitAddUp
+🌊 คลื่น 3: CloseAtเหลือAt TP3 → เก็บMax Profit
+
+Result: Profitสม่ำเสมอ Noโลภจนเสียหมด
+
+อยากลองUseจริง?
+🆓 ทดลองFree 14 days → tradecandle.ai
+Noต้องผูกบัตร Cancelได้AllTime
+
+⏰ Offer Founding Member For 100 คนFirst:
+Priceล็อกตลอดชีพ! Beginner 990$/month
+
+💬 สนใจ? Print "Sign Up" toรับLinkSign Up
 
 ---
 
-🚀 **เปิดตัวแล้ว! TradeCandle EA v12**
+## 💬 SetAt 2: Messageประกาศ (Announcement)
 
-ระบบเทรดทองคำอัตโนมัติบน MT5
-ที่รวมทุกสิ่งที่เทรดเดอร์ทองต้องการ:
+### 📩 ประกาศOpenItem / Featureใหม่
 
-🧠 6 Smart Money Filters — วิเคราะห์จุดเข้าแม่นยำ
-🌊 3-Wave Cashout — ปิดกำไร 3 คลื่น
-📊 SaaS Dashboard — ควบคุมเรียลไทม์
-🛑 Kill Switch — ปุ่มฉุกเฉิน กดปุ่มเดียวปิดทั้งระบบ
+**TimeSubmit:** daysOpenItem (9:00)
+**วัตถุประสงค์:** แจ้งข่าวสำคัญ + TriggerการSign Up
 
-📊 ผล Backtest:
-819 รอบ | กำไร $4,858 | ชนะ 74.75%
+---
+
+🚀 **OpenItemAlready! TradeCandle EA v12**
+
+ระบบTradingGoldAutomated on MT5
+AtรวมAllสิ่งAtTradingเดอร์Goldต้องการ:
+
+🧠 6 Smart Money Filters — AnalyzePointEnterแม่นยำ
+🌊 3-Wave Cashout — CloseProfit 3 คลื่น
+📊 SaaS Dashboard — Controlเรียลไทม์
+🛑 Kill Switch — Buttonฉุกเฉิน กดButtonSingleCloseAllระบบ
+
+📊 Performance Backtest:
+819 Round | Profit $4,858 | ชนะ 74.75%
 Profit Factor 1.23 | Max DD $544
 
-⚠️ ผลอดีตไม่รับประกันอนาคต
+⚠️ PerformanceอดีตNoรับประTogetherอนาคต
 
-🎁 ข้อเสนอเปิดตัว (100 คนแรก):
-✅ ทดลองฟรี 14 วัน
-✅ ราคา Founding Member ล็อกตลอดชีพ
-✅ โบนัสคู่มือ + วิดีโอฟรี
+🎁 OfferOpenItem (100 คนFirst):
+✅ ทดลองFree 14 days
+✅ Price Founding Member ล็อกตลอดชีพ
+✅ โOnัสคู่มือ + วิดีโอFree
 
-เริ่มต้น 990฿/เดือน:
+Get Started 990$/month:
 → tradecandle.ai
 
-⭐ Pro 2,490฿/เดือน (แนะนำ!)
-ฟีเจอร์ครบ 3 บัญชี + 6 Filters + 3-Wave
+⭐ Pro 2,490$/month (แนะนำ!)
+Featureครบ 3 Accounts + 6 Filters + 3-Wave
 
-💬 พิมพ์ "สมัคร" เพื่อรับลิงก์
-หรือทักสอบถามได้เลย!
-
----
-
-## 💬 ชุดที่ 3: Retention / Win-Back (รักษาลูกค้า / ดึงกลับ)
-
-### 📩 ข้อความสำหรับลูกค้าที่หยุดสมัชิก (Win-Back)
-
-**เวลาส่ง:** 7-14 วันหลังหยุดสมัชิก
-**วัตถุประสงค์:** ดึงลูกค้ากลับมาใช้ใหม่
+💬 Print "Sign Up" toรับLink
+OrทักสอบถามRight Away!
 
 ---
 
-👋 **คิดถึงคุณ! อยากให้กลับมาเทรดกับ TradeCandle**
+## 💬 SetAt 3: Retention / Win-Back (รักษาลูกค้า / ดึงReturn/Reverse)
 
-เราเห็นว่าคุณหยุดสมาชิกมา ___ วันแล้ว
-เราอยากให้คุณกลับมาด้วยข้อเสนอพิเศษ!
+### 📩 MessageForลูกค้าAtหยุดสมัชิก (Win-Back)
 
-🎁 **ข้อเสนอ Comeback:**
-✅ ลด 30% เดือนแรก
-✅ ฟรี Coaching 1 ชม. (มูลค่า 2,000฿)
-✅ ไม่มีค่าสมัครซ้ำ
+**TimeSubmit:** 7-14 daysหลังหยุดสมัชิก
+**วัตถุประสงค์:** ดึงลูกค้าReturn/ReverseมาUseใหม่
 
-เราได้อัปเดต TradeCandle v12 ใหม่ๆ:
-🆕 ปรับปรุง Smart Money Filters เพิ่มความแม่นยำ
-🆕 Dashboard เพิ่มรายงานสรุปรายสัปดาห์
-🆕 ฟีเจอร์ใหม่: การแจ้งเตือนผ่าน Line
+---
+
+👋 **คิดถึงYou! อยากให้Return/ReverseมาTradingกับ TradeCandle**
+
+เราเห็นว่าYouหยุดMemberมา ___ daysAlready
+เราอยากให้YouReturn/Reverseมาด้วยOfferพิเศษ!
+
+🎁 **Offer Comeback:**
+✅ ลด 30% monthFirst
+✅ Free Coaching 1 ชม. (มูลค่า 2,000$)
+✅ NoHasค่าSign Upซ้ำ
+
+เราได้Update TradeCandle v12 ใหม่ๆ:
+🆕 Improve Smart Money Filters Addความแม่นยำ
+🆕 Dashboard AddReportsสรุปรายสัปดาห์
+🆕 Featureใหม่: การNotificationผ่าน Line
 
 อยากลองใหม่?
-พิมพ์ "กลับมา" เพื่อรับข้อเสนอพิเศษ
-หรือคลิก: tradecandle.ai/comeback
+Print "Return/Reverseมา" toรับOfferพิเศษ
+Orคลิก: tradecandle.ai/comeback
 
-💬 มีคำถาม? ทักได้เลย เรายินดีช่วยเสมอ
-
----
-
-### 📩 ข้อความรักษาลูกค้า (Retention) — ส่งเมื่อใกล้หมดสมาชิก
-
-**เวลาส่ง:** 3 วันก่อนหมดสมาชิกปัจจุบัน
-**วัตถุประสงค์:** กระตุ้นให้ต่ออายุสมาชิก
+💬 HasQuestion? ทักRight Away เรายินดีช่วยเสมอ
 
 ---
 
-⏰ **สมาชิก TradeCandle ของคุณจะหมดลงในอีก 3 วัน!**
+### 📩 Messageรักษาลูกค้า (Retention) — Submitเมื่อใกล้หมดMember
 
-เราหวังว่าคุณจะพอใจกับ TradeCandle v12
-นี่คือสรุปผลของคุณตั้งแต่สมัชิก:
+**TimeSubmit:** 3 daysก่อนหมดMemberCurrent
+**วัตถุประสงค์:** Triggerให้RenewMember
 
-📊 จำนวนรอบการเทรด: ___ รอบ
-💰 กำไร/ขาดทุนรวม: $___
+---
+
+⏰ **Member TradeCandle ของYouจะหมดลงในอีก 3 days!**
+
+เราหวังว่าYouจะพอใจกับ TradeCandle v12
+นี่คือสรุปPerformanceของYouตั้งแต่สมัชิก:
+
+📊 AmountTrading Round: ___ Round
+💰 Profit/Lossรวม: $___
 🎯 Win Rate: ___%
 
-🎁 **ต่ออายุวันนี้ รับโบนัสพิเศษ:**
-✅ ลด 10% เมื่อต่ออายุ 6 เดือน
-✅ ลด 20% เมื่อต่ออายุ 1 ปี
-✅ ฟรี Coaching 30 นาที
+🎁 **RenewdaysThis รับโOnัสพิเศษ:**
+✅ ลด 10% เมื่อRenew 6 month
+✅ ลด 20% เมื่อRenew 1 ปี
+✅ Free Coaching 30 minutes
 
-⭐ **อัปเกรดเป็น Pro เพิ่มอีกเพียง 1,500฿/เดือน**
-ได้ 6 Smart Money Filters เต็มรูปแบบ + 3-Wave Cashout
+⭐ **อัปเกรดเป็น Pro Addอีกเพียง 1,500$/month**
+ได้ 6 Smart Money Filters เต็มFormat + 3-Wave Cashout
 
-พิมพ์ "ต่ออายุ" เพื่อรับข้อเสนอ
-หรือคลิก: tradecandle.ai/renew
+Print "Renew" toรับOffer
+Orคลิก: tradecandle.ai/renew
 
-💬 ต้องการปรึกษา? ทักได้เลย!
-
----
-
-### 📩 ข้อความดึงกลับที่หยุดระยะยาว (Deep Win-Back)
-
-**เวลาส่ง:** 30+ วันหลังหยุดสมัชิก
-**วัตถุประสงค์:** ดึงลูกค้าที่หายไปนานกลับมา
+💬 ต้องการปรึกษา? ทักRight Away!
 
 ---
 
-🌟 **เราคิดถึงคุณ!**
+### 📩 MessageดึงReturn/ReverseAtหยุดDurationยาว (Deep Win-Back)
 
-คุณเคยใช้ TradeCandle v12 และเราหวังว่าจะเป็นประสบการณ์ที่ดี
-
-ตั้งแต่คุณหยุดสมาชิก เราได้อัปเดตหลายอย่าง:
-🆕 v12.1: ปรับปรุง 6 Filters เพิ่มความแม่นยำ 15%
-🆕 Dashboard ใหม่: สวยขึ้น เร็วขึ้น ใช้ง่ายขึ้น
-🆕 ฟีเจอร์: การแจ้งเตือนผ่าน Line
-🆕 สัมมนาออนไลน์: สรุปเทรนด์ทองคำรายสัปดาห์
-
-🎁 **ข้อเสนอพิเศษสำหรับคุณ:**
-✅ ทดลองฟรี 14 วัน (เริ่มใหม่ได้!)
-✅ ลด 40% เดือนแรก
-✅ ฟรี Coaching 1 ชม. (มูลค่า 2,000฿)
-
-พร้อมกลับมาเทรดทองคำกับเรา?
-พิมพ์ "กลับมา" หรือคลิก: tradecandle.ai/comeback
-
-💬 มีคำถาม? ทักได้เลย เรายินดีช่วย! 😊
+**TimeSubmit:** 30+ daysหลังหยุดสมัชิก
+**วัตถุประสงค์:** ดึงลูกค้าAtหายไปนานReturn/Reverseมา
 
 ---
 
-## 📋 หมายเหตุการใช้งาน
+🌟 **เราคิดถึงYou!**
 
-### กฎการส่งข้อความ Line Broadcast:
+YouเคยUse TradeCandle v12 andเราหวังว่าจะเป็นประสบการณ์Atดี
 
-1. **ความถี่:** ไม่เกิน 2 ข้อความต่อวัน
-2. **เวลาส่ง:** 9:00-20:00 (ห้ามส่งกลางคืน)
-3. **ความยาว:** ไม่เกิน 1,000 ตัวอักษร
-4. **CTA:** ทุกข้อความต้องมี Call-to-Action ชัดเจน
-5. **Opt-out:** ทุกข้อความต้องแจ้งว่า "พิมพ์ 'หยุด' เพื่อไม่รับข้อความ"
-6. **ส่วนตัว:** ใช้ชื่อลูกค้าถ้าเป็นไปได้ (Dynamic Field)
-7. **คำเตือน:** ใส่ "การเทรดมีความเสี่ยง" เมื่อกล่าวถึงผลลัพธ์
+ตั้งแต่YouหยุดMember เราได้Updateหลายอย่าง:
+🆕 v12.1: Improve 6 Filters Addความแม่นยำ 15%
+🆕 Dashboard ใหม่: สวยUp เร็วUp Useง่ายUp
+🆕 Feature: การNotificationผ่าน Line
+🆕 สัมมนาOnline: สรุปTrendGoldรายสัปดาห์
 
-### ประเภทข้อความและความถี่:
+🎁 **OfferพิเศษForYou:**
+✅ ทดลองFree 14 days (Beginnerใหม่ได้!)
+✅ ลด 40% monthFirst
+✅ Free Coaching 1 ชม. (มูลค่า 2,000$)
 
-| ประเภท | ความถี่ | ตัวอย่าง |
+ReadyReturn/ReverseมาTradingGoldกับเรา?
+Print "Return/Reverseมา" Orคลิก: tradecandle.ai/comeback
+
+💬 HasQuestion? ทักRight Away เรายินดีช่วย! 😊
+
+---
+
+## 📋 NoteUsage
+
+### กฎการSend Message Line Broadcast:
+
+1. **ความถี่:** Noเกิน 2 Messageต่อdays
+2. **TimeSubmit:** 9:00-20:00 (ห้ามSubmitกลางคืน)
+3. **Length:** Noเกิน 1,000 Itemcharacters
+4. **CTA:** AllMessageต้องHas Call-to-Action ชัดเจน
+5. **Opt-out:** AllMessageต้องแจ้งว่า "Print 'หยุด' toNoรับMessage"
+6. **ส่วนItem:** UseNameลูกค้าIfเป็นไปได้ (Dynamic Field)
+7. **คำWarning:** ใส่ "การTradingHasความเสี่ยง" เมื่อกล่าวถึงResult
+
+### TypeMessageandความถี่:
+
+| Type | ความถี่ | Example |
 |---|---|---|
-| Welcome | 1 ครั้ง (เมื่อเพิ่มเพื่อน) | ข้อความต้อนรับ |
-| Educational | 1-2 ครั้ง/สัปดาห์ | เจาะลึกฟีเจอร์, ให้ความรู้ |
-| Promotional | 1 ครั้ง/สัปดาห์ | ข้อเสนอพิเศษ, ส่วนลด |
-| Announcement | ตามเหตุการณ์ | เปิดตัว, อัปเดต, ประกาศ |
-| Retention | ตามจังหวะ | ใกล้หมดสมาชิก, หยุดสมาชิก |
-| Win-Back | 7, 14, 30+ วันหลังหยุด | ข้อเสนอกลับมา |
+| Welcome | 1 ครั้ง (เมื่อAddFriends) | Messageต้อนรับ |
+| Educational | 1-2 ครั้ง/สัปดาห์ | เจาะลึกFeature, ให้ความรู้ |
+| Promotional | 1 ครั้ง/สัปดาห์ | Offerพิเศษ, ส่วนลด |
+| Announcement | ตามเหตุการณ์ | OpenItem, Update, ประกาศ |
+| Retention | ตามจังหวะ | ใกล้หมดMember, หยุดMember |
+| Win-Back | 7, 14, 30+ daysหลังหยุด | OfferReturn/Reverseมา |
 
-### วิธีวัดผลข้อความ Line:
+### วิธีวัดPerformanceMessage Line:
 
-| ตัวชี้วัด | วิธีวัด | เป้าหมาย |
+| Itemชี้วัด | วิธีวัด | Goal |
 |---|---|---|
-| อัตราเปิดอ่าน | Line OA Analytics | 60%+ |
-| อัตราคลิกลิงก์ | UTM Tracking | 10%+ |
-| อัตราตอบกลับ | จำนวนข้อความเข้า | 5%+ |
-| Conversion | จำนวนสมัครจากลิงก์ | 2%+ |
+| อัตราOpenRead | Line OA Analytics | 60%+ |
+| อัตราคลิกLink | UTM Tracking | 10%+ |
+| อัตราตอบReturn/Reverse | AmountMessageEnter | 5%+ |
+| Conversion | AmountSign UpfromLink | 2%+ |

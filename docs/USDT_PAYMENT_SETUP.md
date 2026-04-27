@@ -1,25 +1,25 @@
 # 💰 USDT Payment Setup Guide — TradeCandle
-## ระบบชำระเงินด้วย USDT (ERC-20 / TRC-20 / BEP-20) แทนบัตรเครดิต
+## USDT Payment System (ERC-20 / TRC-20 / BEP-20) Instead of Credit Card
 
 ---
 
-## 1. ภาพรวมระบบ
+## 1. System Overview
 
-เมื่อผู้ใช้เลือกแพ็คเกจ → ระบบสร้าง **Deposit Address** → ผู้ใช้โอน USDT ไปยัง address → 
-ระบบตรวจสอบ on-chain → activate license ทันที
+When the user chooses a plan → the system creates a **Deposit Address** → the user sends USDT to the address → 
+the system verifies on-chain → activates the license immediately
 
-**เครือข่ายหลัก:** ERC-20 (Ethereum) — wallet `0x7b0bCf03c2f622bcb4e5e1B0f4A243a66A3f9b90`
-**เครือข่ายสำรอง:** TRC-20 (Tron), BEP-20 (BSC)
+**Primary network:** ERC-20 (Ethereum) — wallet `0x7b0bCf03c2f622bcb4e5e1B0f4A243a66A3f9b90`
+**Backup networks:** TRC-20 (Tron), BEP-20 (BSC)
 
-### ข้อดีของ USDT แทนบัตรเครดิต
-- ❌ ไม่มี Stripe fees (2.9% + 30¢)
-- ❌ ไม่ต้องจ่ายค่า chargeback
-- ✅ รับเงินทันทีใน wallet
-- ✅ เหมาะกับตลาด crypto trading
+### Advantages of USDT over Credit Card
+- ❌ No Stripe fees (2.9% + 30¢)
+- ❌ No chargeback costs
+- ✅ Receive funds instantly in wallet
+- ✅ Ideal for the crypto trading market
 
 ---
 
-## 2. ตั้งค่า `.env`
+## 2. Settings `.env`
 
 ```env
 # ─── USDT Payment (ERC-20 Ethereum) ─────────────────
@@ -35,28 +35,27 @@ USDT_BEP20_ADDRESS=
 USDT_TRC20_CONTRACT=TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t
 
 # Webhook / Verification
-TRONGRID_WEBHOOK_SECRET=
-ETHERSCAN_API_KEY=            # Etherscan API key for auto-verification
-ADMIN_API_KEY=change_me_admin_api_key_2024
+TRONGRID_WEBHOOK_SECRET=ETH...KEY=            # Etherscan API key for auto-verification
+ADMIN_API_KEY=change...2024
 ```
 
 ---
 
 ## 3. ERC-20 Auto-Verification (Etherscan API)
 
-### 3.1 สมัคร Etherscan API Key
-1. ไปที่ https://etherscan.io/register
-2. สร้าง account → My API Keys → Add
-3. ใส่ API Key ใน `.env` → `ETHERSCAN_API_KEY`
+### 3.1 Sign Up for Etherscan API Key
+1. Go to https://etherscan.io/register
+2. Create account → My API Keys → Add
+3. Enter the API Key in `.env` → `ETHERSCAN_API_KEY`
 
-### 3.2 วิธี Verify อัตโนมัติ
-1. เมื่อผู้ใช้โอน USDT มาที่ wallet `0x7b0b...9b90`
-2. ระบบ poll Etherscan API ทุก 30 วินาที เพื่อตรวจสอบ transaction ใหม่
-3. ตรวจสอบ: tx to = wallet address + amount ตรง + confirmations ≥ 12
-4. อัตโนมัติ activate subscription
+### 3.2 Auto Verification Method
+1. When the user sends USDT to wallet `0x7b0b...9b90`
+2. The system polls Etherscan API every 30 seconds to check for new transactions
+3. Verify: tx to = wallet address + matching amount + confirmations ≥ 12
+4. Automatically activate subscription
 
-### 3.3 Cron Job สำหรับ Auto-Verify
-เพิ่มใน `next.config.js` หรือใช้ `node-cron`:
+### 3.3 Cron Job For Auto-Verify
+Add in `next.config.js` or use `node-cron`:
 
 ```typescript
 // src/api/services/usdt-verify-cron.ts
@@ -67,12 +66,12 @@ ADMIN_API_KEY=change_me_admin_api_key_2024
 
 ## 4. Manual Verification (Admin API)
 
-หากไม่ได้ใช้ Etherscan auto-verify สามารถ verify ด้วยตนเอง:
+If not using Etherscan auto-verify, you can verify manually:
 
 ```bash
 # Verify deposit manually
 curl -X POST https://tradecandle.ai/api/payments/verify \
-  -H "Authorization: Bearer ADMIN_API_KEY" \
+  -H "Authorization: Bearer *** \
   -H "Content-Type: application/json" \
   -d '{
     "paymentId": "clxxx...",
@@ -87,12 +86,12 @@ curl -X POST https://tradecandle.ai/api/payments/verify \
 ## 5. API Endpoints
 
 ### POST `/api/payments/create-deposit`
-สร้าง deposit request (เลือก network)
+Create deposit request (choose network)
 
 ```json
 {
   "packageId": "pkg_starter",
-  "network": "ERC-20"    // หรือ "TRC-20", "BEP-20"
+  "network": "ERC-20"    // or "TRC-20", "BEP-20"
 }
 ```
 
@@ -113,32 +112,32 @@ Response:
 Verify deposit (admin)
 
 ### GET `/api/payments/history`
-ดูประวัติการชำระเงิน
+View Payment History
 
 ### POST `/api/payments/webhook/tron`
-TronGrid webhook (สำหรับ TRC-20 auto-verify)
+TronGrid webhook (for TRC-20 auto-verify)
 
-### POST `/api/payments/webhook/eth` (เพิ่มในอนาคต)
-Etherscan webhook สำหรับ ERC-20 auto-verify
+### POST `/api/payments/webhook/eth` (to be added in the future)
+Etherscan webhook for ERC-20 auto-verify
 
 ---
 
-## 6. ราคาแพ็คเกจ (USDT)
+## 6. Pricing Plans (USDT)
 
-| แพ็คเกจ | ราคา/เดือน | USDT (ERC-20) |
+| Package | Price/month | USDT (ERC-20) |
 |---------|-----------|---------------|
-| Starter | 990 ฿ | ~29.90 USDT |
-| Pro | 2,490 ฿ | ~74.90 USDT |
-| Elite | 4,990 ฿ | ~149.90 USDT |
+| Starter | 990 $ | ~29.90 USDT |
+| Pro | 2,490 $ | ~74.90 USDT |
+| Elite | 4,990 $ | ~149.90 USDT |
 
-> 💡 ราคา USDT คำนวณจากอัตราแลกเปลี่ยน 1 USDT ≈ 33.15 ฿ (ปรับอัตโนมัติได้)
+> 💡 USDT price calculated from exchange rate 1 USDT ≈ 33.15 $ (can be adjusted automatically)
 
 ---
 
-## 7. ข้อควรระวัง
+## 7. Important Notes
 
-- **Gas fees:** ERC-20 USDT มี gas fees สูงกว่า TRC-20 (≈ $2-5 ต่อ transaction) — แจ้งผู้ใช้ให้คำนึงถึง gas fees
-- **Confirmations:** รอ 12 confirmations (≈ 3 นาที) ก่อน activate
-- **Address verification:** ตรวจสอบ address ให้ถูกต้อง — Ethereum address ขึ้นต้นด้วย `0x`
-- **Amount matching:** ผู้ใช้ต้องโอน USDT ในจำนวนที่ตรงกับ amount ที่ระบุ (ยอมรับ ±1%)
-- **Wallet security:** เก็บ private key ของ wallet อย่างปลอดภัย — ใช้ hardware wallet สำหรับ production
+- **Gas fees:** ERC-20 USDT has higher gas fees than TRC-20 (≈ $2-5 per transaction) — inform users about gas fees
+- **Confirmations:** Wait for 12 confirmations (≈ 3 minutes) before activating
+- **Address verification:** Verify the address carefully — Ethereum addresses start with `0x`
+- **Amount matching:** The user must transfer USDT in the exact amount specified (accept ±1%)
+- **Wallet security:** Keep the wallet private key secure — use a hardware wallet for production

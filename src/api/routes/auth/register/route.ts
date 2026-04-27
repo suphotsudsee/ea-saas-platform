@@ -67,8 +67,8 @@ export async function POST(request: NextRequest) {
     if (!selectedPackage) {
       return NextResponse.json(
         {
-          error: 'กรุณาเลือกแพ็กเกจทดลอง',
-          message: 'ไม่พบแพ็กเกจที่เลือก หรือแพ็กเกจนี้ปิดใช้งานแล้ว',
+          error: 'Please select a trial package',
+          message: 'No matching package was found, or this package is currently unavailable',
         },
         { status: 400 }
       );
@@ -78,8 +78,8 @@ export async function POST(request: NextRequest) {
     if (strategyIds.length === 0) {
       return NextResponse.json(
         {
-          error: 'แพ็กเกจนี้ยังไม่พร้อมใช้งาน',
-          message: 'แพ็กเกจที่เลือกยังไม่มี strategy สำหรับสร้าง license กรุณาติดต่อผู้ดูแลระบบ',
+          error: 'This package is currently unavailable',
+          message: 'The selected package has no strategies configured for license creation. Please contact support.',
         },
         { status: 400 }
       );
@@ -93,8 +93,8 @@ export async function POST(request: NextRequest) {
     if (activeStrategies.length === 0) {
       return NextResponse.json(
         {
-          error: 'แพ็กเกจนี้ยังไม่พร้อมใช้งาน',
-          message: 'ไม่พบ strategy ที่เปิดใช้งานสำหรับแพ็กเกจนี้',
+          error: 'This package is currently unavailable',
+          message: 'No active strategies were found for this package.',
         },
         { status: 400 }
       );
@@ -103,7 +103,7 @@ export async function POST(request: NextRequest) {
     // Hash password
     const passwordHash = await bcrypt.hash(validated.password, 12);
     const now = new Date();
-    const trialEndsAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 1 เดือนทดลองใช้
+    const trialEndsAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 1-month trial
 
     // Create user + trial subscription + licenses together.
     const { user, subscription, licenses } = await prisma.$transaction(async (tx) => {
@@ -189,8 +189,8 @@ export async function POST(request: NextRequest) {
       console.error('Registration database error:', error);
       return NextResponse.json(
         {
-          error: 'ระบบสมัครสมาชิกยังไม่พร้อมใช้งาน',
-          message: 'ไม่สามารถเชื่อมต่อฐานข้อมูลได้ กรุณาติดต่อผู้ดูแลระบบหรือลองใหม่ภายหลัง',
+          error: 'Registration temporarily unavailable',
+          message: 'Unable to connect to the database. Please contact support or try again later.',
         },
         { status: 503 }
       );
@@ -199,8 +199,8 @@ export async function POST(request: NextRequest) {
     console.error('Registration error:', error);
     return NextResponse.json(
       {
-        error: 'สมัครสมาชิกไม่สำเร็จ',
-        message: 'ระบบไม่สามารถสร้างบัญชีได้ในขณะนี้ กรุณาลองใหม่อีกครั้ง',
+        error: 'Registration unsuccessful',
+        message: 'Unable to create an account at this time. Please try again later.',
       },
       { status: 500 }
     );

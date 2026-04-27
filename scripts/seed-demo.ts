@@ -97,7 +97,7 @@ async function main() {
   const starterPkg = await prisma.package.create({
     data: {
       name: 'Starter',
-      description: 'สำหรับเทรดเดอร์เริ่มต้น 1 บัญชี MT5 — 3-Wave Cashout + Dashboard',
+      description: 'For Beginner Traders 1 MT5 Accounts — 3-Wave Cashout + Dashboard',
       priceCents: 99000,
       currency: 'THB',
       billingCycle: BillingCycle.MONTHLY,
@@ -106,7 +106,7 @@ async function main() {
         maxAccounts: 1,
         strategyIds: [strategy.id],
         features: [
-          '1 บัญชี MT5',
+          '1 MT5 Accounts',
           'SaaS Dashboard',
           'Heartbeat Monitor',
           'Email Support',
@@ -124,7 +124,7 @@ async function main() {
   const proPkg = await prisma.package.create({
     data: {
       name: 'Pro',
-      description: 'สำหรับเทรดเดอร์จริงจัง 3 บัญชี — Kill Switch + Risk Management + Line Support',
+      description: 'For Serious Traders 3 Accounts — Kill Switch + Risk Management + Line Support',
       priceCents: 249000,
       currency: 'THB',
       billingCycle: BillingCycle.MONTHLY,
@@ -133,7 +133,7 @@ async function main() {
         maxAccounts: 3,
         strategyIds: [strategy.id],
         features: [
-          '3 บัญชี MT5',
+          '3 MT5 Accounts',
           'Dashboard + Kill Switch',
           'Heartbeat + Risk Management',
           'Line Support',
@@ -151,7 +151,7 @@ async function main() {
   const elitePkg = await prisma.package.create({
     data: {
       name: 'Elite',
-      description: 'สำหรับมืออาชีพ 5 บัญชี — Custom Config + VIP Line + 1-on-1 Setup Call',
+      description: 'For Professional Traders — 5 Accounts: Custom Config + VIP Line + 1-on-1 Setup Call',
       priceCents: 499000,
       currency: 'THB',
       billingCycle: BillingCycle.MONTHLY,
@@ -160,8 +160,8 @@ async function main() {
         maxAccounts: 5,
         strategyIds: [strategy.id],
         features: [
-          '5 บัญชี MT5',
-          'ทุกอย่างใน Pro',
+          '5 MT5 Accounts',
+          'Everything in Pro',
           'Custom EA Config',
           'VIP Line + 1-on-1 Setup Call',
           '3-Wave Cashout',
@@ -352,7 +352,7 @@ async function main() {
   console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
   console.log('');
   console.log('📋 Strategy:    TradeCandle v12 (XAUUSD/MT5)');
-  console.log('💰 Packages:    Starter (990฿) / Pro (2,490฿) / Elite (4,990฿)');
+  console.log('💰 Packages:    Starter (990$) / Pro (2,490$) / Elite (4,990$)');
   console.log('');
   console.log('👤 Test Accounts:');
   console.log('   demo@tradecandle.ai     — Pro TRIAL (7 days)');

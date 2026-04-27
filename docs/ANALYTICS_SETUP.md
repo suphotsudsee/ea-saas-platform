@@ -1,44 +1,44 @@
 # 📊 Analytics Setup Guide — TradeCandle
 
-คู่มือตั้งค่า Google Analytics 4 + Facebook Pixel + Google Tag Manager สำหรับเว็บ tradecandle.ai
+Guide for setting up Google Analytics 4 + Facebook Pixel + Google Tag Manager for website tradecandle.ai
 
 ---
 
 ## 1. Google Analytics 4 (GA4)
 
-### สร้าง GA4 Property
-1. เข้า [Google Analytics](https://analytics.google.com/)
-2. คลิก **Create Account** → ตั้งชื่อ `TradeCandle`
-3. เลือก **Web** → ใส่ URL `tradecandle.ai`
-4. ได้ **Measurement ID** รูปแบบ `G-XXXXXXXXXX`
+### Create GA4 Property
+1. Go to [Google Analytics](https://analytics.google.com/)
+2. Click **Create Account** → Set name `TradeCandle`
+3. Select **Web** → Enter URL `tradecandle.ai`
+4. Get **Measurement ID** in format `G-XXXXXXXXXX`
 
-### ใส่ค่าใน `.env`
+### Enter values in `.env`
 ```bash
 NEXT_PUBLIC_GA4_MEASUREMENT_ID=G-XXXXXXXXXX
 ```
 
-### เชื่อมกับ Search Console (SEO)
-1. เข้า GA4 → **Admin** → **Property settings** → **Search Console**
-2. Link Google Search Console → เลือก `tradecandle.ai`
-3. จะเห็นข้อมูล organic search ใน GA4 ภายใน 24-48 ชม.
+### Link with Search Console (SEO)
+1. Go to GA4 → **Admin** → **Property settings** → **Search Console**
+2. Link Google Search Console → select `tradecandle.ai`
+3. You will see organic search data in GA4 within 24-48 hours
 
-### Events ที่ติดมาอัตโนมัติ
-| Event | ตอนไหน | ค่า |
-|-------|---------|-----|
-| `cta_click` | กดปุ่ม CTA ทุกปุ่ม | `cta_name`, `cta_location` |
-| `begin_checkout` | กดเลือกแพ็กเกจ | `plan`, `value` |
-| `purchase` | จ่ายเงินสำเร็จ | `value`, `currency`, `plan` |
-| `subscribe` | สมัครสำเร็จ | `plan`, `value` |
-| `trial_start` | เริ่มทดลองใช้ | `plan`, `user_id` |
-| `sign_up` | สมัครสมาชิก | `method`, `plan` |
-| `video_play` | เล่นวิดีโอ | `video_name` |
-| `line_add_friend` | กดเพิ่มเพื่อน Line | — |
-| `kill_switch` | กด Kill Switch | `action`, `account_id` |
-| `dashboard_view` | เข้าแดชบอร์ด | `section` |
+### Auto-tracked Events
+| Event | When | Parameters |
+|-------|------|------------|
+| `cta_click` | Click any CTA button | `cta_name`, `cta_location` |
+| `begin_checkout` | Click select package | `plan`, `value` |
+| `purchase` | Payment successful | `value`, `currency`, `plan` |
+| `subscribe` | Sign up successful | `plan`, `value` |
+| `trial_start` | Start trial | `plan`, `user_id` |
+| `sign_up` | Register | `method`, `plan` |
+| `video_play` | Play video | `video_name` |
+| `line_add_friend` | Click Add Line Friend | — |
+| `kill_switch` | Click Kill Switch | `action`, `account_id` |
+| `dashboard_view` | Enter dashboard | `section` |
 
-### สร้าง Custom Conversions ใน GA4
-1. เข้า **Admin** → **Conversions** → **New conversion event**
-2. เพิ่ม events เหล่านี้เป็น conversion:
+### Create Custom Conversions in GA4
+1. Go to **Admin** → **Conversions** → **New conversion event**
+2. Add these events as conversions:
    - `purchase`
    - `subscribe`
    - `trial_start`
@@ -49,21 +49,21 @@ NEXT_PUBLIC_GA4_MEASUREMENT_ID=G-XXXXXXXXXX
 
 ## 2. Facebook Pixel
 
-### สร้าง FB Pixel
-1. เข้า [Meta Business Suite](https://business.facebook.com/)
+### Create FB Pixel
+1. Go to [Meta Business Suite](https://business.facebook.com/)
 2. **Events Manager** → **Connect Data** → **Web** → **Facebook Pixel**
-3. ตั้งชื่อ `TradeCandle Pixel` → เลือก `Manual Install`
-4. ได้ **Pixel ID** รูปแบบตัวเลข เช่น `123456789012345`
+3. Set name `TradeCandle Pixel` → select `Manual Install`
+4. Get **Pixel ID** — a number like `123456789012345`
 
-### ใส่ค่าใน `.env`
+### Enter values in `.env`
 ```bash
 NEXT_PUBLIC_FB_PIXEL_ID=123456789012345
 ```
 
-### Standard Events ที่ติดอัตโนมัติ
-| FB Event | Mapping จาก Analytics |
+### Standard Auto-tracked Events
+| FB Event | Mapping from Analytics |
 |----------|----------------------|
-| `PageView` | ทุกหน้า |
+| `PageView` | All pages |
 | `CompleteRegistration` | `sign_up` |
 | `InitiateCheckout` | `begin_checkout` |
 | `Purchase` | `purchase` |
@@ -73,74 +73,74 @@ NEXT_PUBLIC_FB_PIXEL_ID=123456789012345
 | `Contact` | `contact` |
 | `AddToWishlist` | `line_add_friend` |
 
-### สร้าง Custom Conversions ใน FB
+### Create Custom Conversions in FB
 1. **Events Manager** → **Custom Conversions** → **Create**
-2. สร้าง:
+2. Create:
    - `Purchase THB`: event `Purchase`, rule `value > 0`
    - `Trial Signup`: event `StartTrial`
    - `Line Friend`: event `AddToWishlist`
 
-### Conversions API (CAPI) — แนะนำทำ
-เพื่อรับข้อมูลแม่นขึ้น (โดยเฉพาะหลัง iOS 14.5):
+### Conversions API (CAPI) — Recommended
+For more accurate data (especially after iOS 14.5):
 1. **Events Manager** → **Conversions API** → **Set up manually**
-2. ใส่ Access Token ใน `.env`:
+2. Enter Access Token in `.env`:
 ```bash
-FB_CAPI_ACCESS_TOKEN=your_access_token_here
+FB_CAPI_ACCESS_TOKEN=your_a...here
 ```
-3. Server-side events จะถูกส่งจาก `/api/webhooks/stripe` อัตโนมัติเมื่อจ่ายเงินสำเร็จ
+3. Server-side events will be sent from `/api/webhooks/stripe` automatically when payment is successful
 
 ---
 
 ## 3. Google Tag Manager (Optional)
 
-GTM ช่วยจัดการ tags ทั้งหมดจากที่เดียว แนะนำถ้ามีหลาย ads platform
+GTM helps manage all tags from one place — recommended if using multiple ad platforms
 
-### สร้าง GTM Container
-1. เข้า [Google Tag Manager](https://tagmanager.google.com/)
-2. สร้าง Account → Container `tradecandle.ai` → **Web**
-3. ได้ **GTM ID** รูปแบบ `GTM-XXXXXXX`
+### Create GTM Container
+1. Go to [Google Tag Manager](https://tagmanager.google.com/)
+2. Create Account → Container `tradecandle.ai` → **Web**
+3. Get **GTM ID** in format `GTM-XXXXXXX`
 
-### ใส่ค่าใน `.env`
+### Enter values in `.env`
 ```bash
 NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 ```
 
-### ใส่ GA4 + FB Pixel ใน GTM
-1. **Tags** → **New** → เลือก **Google Analytics: GA4 Configuration**
+### Add GA4 + FB Pixel in GTM
+1. **Tags** → **New** → select **Google Analytics: GA4 Configuration**
    - Measurement ID: `G-XXXXXXXXXX`
-2. **Tags** → **New** → เลือก **Custom HTML**
-   - วาง FB Pixel code
+2. **Tags** → **New** → select **Custom HTML**
+   - Paste FB Pixel code
 3. **Triggers**: All Pages
 
 ---
 
-## 4. ตรวจสอบว่าติดแล้ว
+## 4. Verify Installation
 
-### วิธีทดสอบ GA4
+### How to Test GA4
 ```bash
-# เปิดเว็บ localhost:3000
-# เปิด DevTools → Network → กรอง "google-analytics"
-# จะเห็น request ส่งข้อมูลไป GA4
+# Open website localhost:3000
+# Open DevTools → Network → Filter "google-analytics"
+# You will see requests sending data to GA4
 ```
 
-### วิธีทดสอบ FB Pixel
+### How to Test FB Pixel
 ```bash
-# ติดตั้ง Facebook Pixel Helper extension
-# เปิดเว็บ → จะเห็น Pixel ID + PageView event
+# Install Facebook Pixel Helper extension
+# Open website → You will see Pixel ID + PageView event
 ```
 
-### วิธีทดสอบ Events
+### How to Test Events
 ```bash
-# เปิด DevTools → Console
-# จะเห็น log: [Analytics] cta_click {cta_name: "hero_free_trial", ...}
-# (ในโหมด development เท่านั้น)
+# Open DevTools → Console
+# You will see log: [Analytics] cta_click {cta_name: "hero_free_trial", ...}
+# (in development mode only)
 ```
 
-### ทดสอบด้วย gtag console
+### Test with gtag console
 ```javascript
-// เปิด DevTools Console แล้วพิมพ์:
+// Open DevTools Console and run:
 window.gtag('event', 'test_event', { test_param: 'hello' });
-// → ดูใน GA4 DebugView
+// → View in GA4 DebugView
 ```
 
 ---
@@ -148,42 +148,42 @@ window.gtag('event', 'test_event', { test_param: 'hello' });
 ## 5. Retargeting Setup
 
 ### FB Custom Audiences
-หลังติด Pixel แล้ว สร้าง Custom Audiences:
-1. **All Website Visitors** — 180 วัน
+After installing Pixel, create Custom Audiences:
+1. **All Website Visitors** — 180 days
 2. **Pricing Page Visitors** — rule: `url contains /#pricing`
 3. **Checkout Starters** — event: `InitiateCheckout`
 4. **Trial Users** — event: `StartTrial`
 5. **Purchasers** — event: `Purchase`
 
 ### Lookalike Audiences
-สร้างจาก:
+Create from:
 - Purchasers (1% Thailand)
 - Trial Users (1% Thailand)
 
 ---
 
-## 6. สรุป `.env` ที่ต้องตั้งค่า
+## 6. Summary of `.env` settings needed
 
 ```bash
 # ─── Analytics ────────────────────────────
-NEXT_PUBLIC_GA4_MEASUREMENT_ID=G-XXXXXXXXXX    # ← เปลี่ยนเป็นของจริง
-NEXT_PUBLIC_FB_PIXEL_ID=000000000000000         # ← เปลี่ยนเป็นของจริง
-NEXT_PUBLIC_GTM_ID=                             # ← ถ้าใช้ GTM ใส่ GTM-XXXXXXX
+NEXT_PUBLIC_GA4_MEASUREMENT_ID=G-XXXXXXXXXX    # ← Replace with real value
+NEXT_PUBLIC_FB_PIXEL_ID=000000000000000         # ← Replace with real value
+NEXT_PUBLIC_GTM_ID=                             # ← If using GTM, enter GTM-XXXXXXX
 NEXT_PUBLIC_SITE_URL=https://tradecandle.ai
 
 # ─── FB Conversions API (optional) ───────
-FB_CAPI_ACCESS_TOKEN=                           # ← ถ้าใช้ CAPI
+FB_CAPI_ACCESS_TOKEN=*** ← If using CAPI
 ```
 
 ---
 
-## 📁 ไฟล์ที่เกี่ยวข้อง
+## 📁 Related Files
 
-| ไฟล์ | หน้าที่ |
+| File | Purpose |
 |------|---------|
 | `src/lib/analytics.tsx` | Provider + Hooks + Script components |
 | `src/lib/consent.tsx` | Cookie consent banner (GDPR/CCPA) |
 | `src/lib/landing-tracking.ts` | Landing page + Dashboard + Conversion tracking hooks |
-| `src/app/layout.tsx` | เรียก Analytics ที่ root layout |
-| `next.config.js` | CSP headers สำหรับ GA4 + FB Pixel |
+| `src/app/layout.tsx` | Called from root layout |
+| `next.config.js` | CSP headers for GA4 + FB Pixel |
 | `.env` | Analytics IDs |

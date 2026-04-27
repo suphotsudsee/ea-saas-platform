@@ -54,9 +54,9 @@ export async function GET() {
     // Step 4: Create Trial Package (1 month = 30 days)
     const trial = await prisma.package.create({
       data: {
-        name: 'ทดลองใช้ 1 เดือน',
-        description: 'ทดลองใช้ TradeCandle Gold Scalper v12 ฟรี 30 วัน — 1 บัญชี MT5 + Dashboard + 3-Wave Cashout',
-        priceCents: 0, // ฟรี
+        name: '1-Month Free Trial',
+        description: 'Trial TradeCandle Gold Scalper v12 Free 30 days — 1 MT5 Accounts + Dashboard + 3-Wave Cashout',
+        priceCents: 0, // Free
         currency: 'THB',
         billingCycle: BillingCycle.MONTHLY,
         maxAccounts: 1,
@@ -66,18 +66,18 @@ export async function GET() {
           strategyIds: [strategy.id],
           maxAccounts: 1,
           features: [
-            '1 บัญชี MT5',
+            '1 MT5 Accounts',
             'SaaS Dashboard',
             '3-Wave Cashout',
             '6 Smart Money Filters',
             'Time Filter',
-            'ทดลองใช้ฟรี 30 วัน',
+            'Free Trial 30 days',
             'Email Support',
           ],
           support: 'email',
         },
         isActive: true,
-        sortOrder: 0, // แสดงก่อนแพ็กเกจอื่น
+        sortOrder: 0, // Show before other packages
       },
     });
 
@@ -85,7 +85,7 @@ export async function GET() {
     const starter = await prisma.package.create({
       data: {
         name: 'Starter',
-        description: 'สำหรับเทรดเดอร์เริ่มต้น 1 บัญชี MT5 — 3-Wave Cashout + Dashboard',
+        description: 'For Beginner Traders 1 MT5 Accounts — 3-Wave Cashout + Dashboard',
         priceCents: 99000, // 990 THB
         currency: 'THB',
         billingCycle: BillingCycle.MONTHLY,
@@ -96,7 +96,7 @@ export async function GET() {
           strategyIds: [strategy.id],
           maxAccounts: 1,
           features: [
-            '1 บัญชี MT5',
+            '1 MT5 Accounts',
             'SaaS Dashboard',
             '3-Wave Cashout',
             '6 Smart Money Filters',
@@ -114,7 +114,7 @@ export async function GET() {
     const pro = await prisma.package.create({
       data: {
         name: 'Pro',
-        description: 'สำหรับเทรดเดอร์จริงจัง 3 บัญชี — Kill Switch + Risk Management + Line Support',
+        description: 'For Serious Traders 3 Accounts — Kill Switch + Risk Management + Line Support',
         priceCents: 249000, // 2,490 THB
         currency: 'THB',
         billingCycle: BillingCycle.MONTHLY,
@@ -125,7 +125,7 @@ export async function GET() {
           strategyIds: [strategy.id],
           maxAccounts: 3,
           features: [
-            '3 บัญชี MT5',
+            '3 MT5 Accounts',
             'Dashboard + Kill Switch',
             '3-Wave Cashout + 6 PA/SMC Filters',
             'Time Filter',
@@ -143,7 +143,7 @@ export async function GET() {
     const elite = await prisma.package.create({
       data: {
         name: 'Elite',
-        description: 'สำหรับมืออาชีพ 5 บัญชี — Custom Config + VIP Line + 1-on-1 Setup Call',
+        description: 'For Professional Traders — 5 Accounts: Custom Config + VIP Line + 1-on-1 Setup Call',
         priceCents: 499000, // 4,990 THB
         currency: 'THB',
         billingCycle: BillingCycle.MONTHLY,
@@ -154,8 +154,8 @@ export async function GET() {
           strategyIds: [strategy.id],
           maxAccounts: 5,
           features: [
-            '5 บัญชี MT5',
-            'ทุกอย่างใน Pro',
+            '5 MT5 Accounts',
+            'Everything in Pro',
             'Custom EA Config',
             'VIP Line + 1-on-1 Setup Call',
             '3-Wave Cashout + 6 PA/SMC Filters',

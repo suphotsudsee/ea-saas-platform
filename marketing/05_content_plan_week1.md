@@ -2,407 +2,407 @@
 
 ---
 
-## 📅 แผนผลิตคอนเทนต์ 7 วัน (จันทร์-อาทิตย์)
+## 📅 Content Production Plan 7 days (Monday-Sunday)
 
-**ช่วงเวลา:** สัปดาห์แรกหลัง Launch
-**เป้าหมาย:** สร้างการรับรู้ (Awareness) + ดึงดึงการสนใจ (Interest) + สร้าง Lead
-**ช่องทางหลัก:** Facebook, TikTok, Line OA, YouTube
+**PeriodTime:** สัปดาห์Firstหลัง Launch
+**Goal:** CreateAwareness (Awareness) + ดึงดึงการสนใจ (Interest) + Create Lead
+**Channelหลัก:** Facebook, TikTok, Line OA, YouTube
 
 ---
 
 ## 📊 ภาพรวมสัปดาห์
 
-| วัน | หัวข้อหลัก | รูปแบบ | ช่องทาง | KPI |
+| days | หัวข้อหลัก | Format | Channel | KPI |
 |---|---|---|---|---|
-| จันทร์ | ปัญหาการเทรดทองคำ | คลิปสั้น + โพสต์ FB | TikTok, FB | Views 1,000+ |
-| อังคาร | แนะนำ TradeCandle v12 | คลิปยาว + บทความ | YouTube, Blog | Views 500+ |
-| พุธ | 6 Smart Money Filters เจาะลึก | คาร์ดอินโฟกราฟิก + คลิปสั้น | FB, Line, TikTok | Engagement 3%+ |
-| พฤหัสบดี | 3-Wave Cashout ทำงานยังไง | คลิป Demo + อินโฟกราฟิก | YouTube, FB | Views 800+ |
-| ศุกร์ | ผล Backtest เปิดเผย | ภาพ Equity Curve + คลิปสั้น | FB, Line, TikTok | Click 50+ |
-| เสาร์ | Kill Switch + Dashboard Demo | สกรีนแคสต์ + คลิปสั้น | YouTube, FB, Line | Sign-up 20+ |
-| อาทิตย์ | ข้อเสนอพิเศษ + CTA | โพสต์ขาย + คลิปสั้น | ทุกช่องทาง | Trial 30+ |
+| Monday | ProblemการTradingGold | clipShort + Post FB | TikTok, FB | Views 1,000+ |
+| Tuesday | แนะนำ TradeCandle v12 | clipยาว + Articles | YouTube, Blog | Views 500+ |
+| Wednesday | 6 Smart Money Filters เจาะลึก | คาร์ดอินโฟChartิก + clipShort | FB, Line, TikTok | Engagement 3%+ |
+| Thursday | 3-Wave Cashout ทำงานยังไง | clip Demo + อินโฟChartิก | YouTube, FB | Views 800+ |
+| Friday | Performance Backtest Openเผย | ภาพ Equity Curve + clipShort | FB, Line, TikTok | Click 50+ |
+| Saturday | Kill Switch + Dashboard Demo | สกรีนแคสต์ + clipShort | YouTube, FB, Line | Sign-up 20+ |
+| Sunday | Offerพิเศษ + CTA | Postขาย + clipShort | AllChannel | Trial 30+ |
 
 ---
 
-## 📝 รายละเอียดประจำวัน
+## 📝 Detailsประจำdays
 
 ---
 
-### 🔴 วันจันทร์ — "ปัญหาการเทรดทองคำ"
+### 🔴 daysMonday — "ProblemการTradingGold"
 
-**หัวข้อ:** เทรดทองคำ 3 ปัญหาใหญ่ที่ทำให้คนขาดทุน
+**หัวข้อ:** TradingGold 3 Problemใหญ่Atทำให้คนLoss
 
 **9:00 — Facebook Post**
 ```
-🤯 เทรดทองคำขาดทุน มาจาก 3 สาเหตุนี้:
+🤯 TradingGoldLoss มาfrom 3 สาเหตุThis:
 
-1️⃣ เข้าผิดจุด — ทองขึ้นลงรุนแรง ไม่ดูจุดเข้ากดซื้อ-ขาย โดน Stop Loss ก่อนจะไปทิศทางที่ถูก
+1️⃣ EnterผิดPoint — GoldVolatilityรุนแรง NoViewPointEnterกดBuy-ขาย โดน Stop Loss ก่อนจะไปทิศทางAtถูก
 
-2️⃣ โลภจนเสียหมด — กำไรแล้วไม่ปิด รอให้มากกว่านี้ สุดท้ายกลับกลายเป็นขาดทุน
+2️⃣ โลภจนเสียหมด — ProfitAlreadyNoClose รอให้มากกว่าThis LastReturn/Reverseกลายเป็นLoss
 
-3️⃣ ไม่มีระบบ — วันนี้เทรดแบบนี้ พรุ่งนี้เทรดแบบนั้น ไม่มีกฏเกณฑ์ชัดเจน
+3️⃣ NoHasระบบ — daysThisTradingStyleThis พรุ่งThisTradingStyleนั้น NoHasกฏเกณฑ์ชัดเจน
 
-✅ ทั้ง 3 ปัญหาแก้ได้ด้วยระบบอัตโนมัติที่มีกลยุทธ์ชัดเจน
+✅ All 3 Problemแก้ได้ด้วยระบบAutomatedAtHasกลยุทธ์ชัดเจน
 
-👉 พรุ่งนี้เราจะมาแนะนำคำตอบ
+👉 พรุ่งThisเราจะมาแนะนำคำตอบ
 
-#TradeCandle #เทรดทองคำ #XAUUSD #SmartMoney
+#TradeCandle #TradingGold #XAUUSD #SmartMoney
 ```
 
-**12:00 — TikTok/Reels (30 วินาที)**
-- สคริปต์: Hook "เทรดทอง 3 สาเหตุที่ทำให้ขาดทุน" → อธิบาย 3 จุดเร็วๆ → CTA "พรุ่งนี้มีคำตอบ"
-- รูปแบบ: ผู้พูดตากล้อง + ข้อความขึ้นทีละข้อ
+**12:00 — TikTok/Reels (30 seconds)**
+- Script: Hook "Gold Trading 3 สาเหตุAtทำให้Loss" → อธิบาย 3 Pointเร็วๆ → CTA "พรุ่งThisHasคำตอบ"
+- Format: Talking Head + MessageUpทีละข้อ
 
 **18:00 — Line Broadcast**
 ```
-🔥 สัปดาห์นี้พิเศษ!
-เราจะพาไปดูระบบเทรดทองคำอัตโนมัติใหม่ล่าสุด
-ที่แก้ปัญหาทุกอย่างที่เทรดเดอร์ทองเจอ
+🔥 สัปดาห์Thisพิเศษ!
+เราจะพาไปViewระบบTradingGoldAutomatedใหม่ล่าสุด
+Atแก้ProblemAllอย่างAtTradingเดอร์Goldเจอ
 
-พรุ่งนี้เปิดตัว! อย่าพลาด 🚀
+พรุ่งThisOpenItem! อย่าพลาด 🚀
 ```
 
 ---
 
-### 🟠 วันอังคาร — "แนะนำ TradeCandle v12"
+### 🟠 daysTuesday — "แนะนำ TradeCandle v12"
 
-**หัวข้อ:** TradeCandle EA v12 — แนะนำระบบเทรดทองคำอัตโนมัติครบวงจร
+**หัวข้อ:** TradeCandle EA v12 — แนะนำระบบTradingGoldAutomatedครบวงจร
 
 **9:00 — Blog Post (1,500 คำ)**
 ```
-หัวข้อ: "TradeCandle EA v12 — ระบบเทรดทองคำอัตโนมัติ ที่รวมพลัง Smart Money + 3-Wave Cashout"
+หัวข้อ: "TradeCandle EA v12 — ระบบTradingGoldAutomated Atรวมพลัง Smart Money + 3-Wave Cashout"
 
-โครงสร้าง:
-- Hook: ปัญหาเทรดทองคำ
+โครงCreate:
+- Hook: ProblemTradingGold
 - แนะนำ TradeCandle v12
-- ฟีเจอร์หลัก 6 ข้อ
-- ผล Backtest
+- Key Features 6 ข้อ
+- Performance Backtest
 - สรุป + CTA
 
-SEO Keywords: เทรดทองคำอัตโนมัติ, EA XAUUSD, Smart Money EA, TradeCandle
+SEO Keywords: TradingGoldAutomated, EA XAUUSD, Smart Money EA, TradeCandle
 ```
 
-**12:00 — YouTube Video (60 วินาที)**
-- สคริปต์: ใช้สคริปต์ 04_video_scripts.md ฉบับ 60 วินาที
-- รูปแบบ: ผู้พูด + Screen Recording + Motion Graphics
+**12:00 — YouTube Video (60 seconds)**
+- Script: UseScript 04_video_scripts.md ฉบับ 60 seconds
+- Format: ผู้พูด + Screen Recording + Motion Graphics
 
 **18:00 — Facebook Post**
 ```
-🚀 เปิดตัวแล้ว! TradeCandle EA v12
+🚀 OpenItemAlready! TradeCandle EA v12
 
-ระบบเทรดทองคำอัตโนมัติบน MT5 ที่รวมทุกสิ่งที่เทรดเดอร์ทองต้องการ:
+ระบบTradingGoldAutomated on MT5 AtรวมAllสิ่งAtTradingเดอร์Goldต้องการ:
 
-🧠 6 Smart Money Filters — วิเคราะห์จุดเข้าแม่นยำ
-🌊 3-Wave Cashout — ปิดกำไร 3 คลื่น ล็อคกำไรทุกระดับ
-📊 SaaS Dashboard — ควบคุมการเทรดแบบเรียลไทม์
-🛑 Kill Switch — ปุ่มดับฉุกเฉิน กดปุ่มเดียวปิดทั้งระบบ
+🧠 6 Smart Money Filters — AnalyzePointEnterแม่นยำ
+🌊 3-Wave Cashout — CloseProfit 3 คลื่น LockProfitAllระดับ
+📊 SaaS Dashboard — ControlการTradingStyleเรียลไทม์
+🛑 Kill Switch — Buttonดับฉุกเฉิน กดButtonSingleCloseAllระบบ
 
-ผล Backtest: 819 รอบ | กำไร $4,858 | WR 74.75%
+Performance Backtest: 819 Round | Profit $4,858 | WR 74.75%
 
-👉 ทดลองใช้ฟรี 14 วัน: tradecandle.ai
+👉 Free Trial 14 days: tradecandle.ai
 💬 สอบถาม: Line @tradecandle
 
-#TradeCandle #EAทองคำ #XAUUSD #SmartMoney #MT5
+#TradeCandle #EAGold #XAUUSD #SmartMoney #MT5
 ```
 
 ---
 
-### 🟡 วันพุธ — "6 Smart Money Filters เจาะลึก"
+### 🟡 daysWednesday — "6 Smart Money Filters เจาะลึก"
 
-**หัวข้อ:** 6 ฟิลเตอร์ Smart Money ที่ทำให้ TradeCandle เทรดแม่นกว่า
+**หัวข้อ:** 6 Filter Smart Money Atทำให้ TradeCandle Tradingแม่นกว่า
 
 **9:00 — Facebook Carousel Post (6 การ์ด)**
 
 การ์ด 1: Order Block
 ```
 🟥 Order Block
-โซนที่สถาบันเคยสะสมสถานะ
-จุดที่ราคามักจะวิ่งกลับมาทดสอบ
-TradeCandle ใช้เป็นจุดเข้าหลัก
+โซนAtสถาบันเคยสะสมStatus
+PointAtPriceมักจะวิ่งReturn/ReverseมาTest
+TradeCandle Useเป็นPointEnterหลัก
 ```
 
 การ์ด 2: Fair Value Gap (FVG)
 ```
 🟧 Fair Value Gap
-ช่องว่างราคาที่เกิดจากการวิ่งฉุด
-ราคามักกลับมาเติมช่องว่าง
-TradeCandle ใช้เป็นจุดยืนยัน
+SpacePriceAtเกิดfromการวิ่งฉุด
+PriceมักReturn/ReverseมาเติมSpace
+TradeCandle Useเป็นPointConfirm
 ```
 
 การ์ด 3: Liquidity Sweep
 ```
 🟨 Liquidity Sweep
-การกวาดจุด Stop Loss ของรายย่อย
+การกวาดPoint Stop Loss ของรายCollapseย
 ก่อนจะวิ่งทิศทางจริง
-TradeCandle รอให้กวาดเสร็จก่อนเข้า
+TradeCandle รอให้กวาดเสร็จก่อนEnter
 ```
 
 การ์ด 4: Break of Structure (BOS)
 ```
 🟩 Break of Structure
-การทลายโครงสร้างราคาเดิม
-สัญญาณเปลี่ยนเทรนด์
-TradeCandle ยืนยันด้วย BOS ก่อนเปิดสถานะ
+การทลายโครงCreatePriceเดิม
+Signalsเปลี่ยนTrend
+TradeCandle Confirmด้วย BOS ก่อนOpenStatus
 ```
 
 การ์ด 5: Change of Character (CHOCH)
 ```
-🟦 Change of Character — สัญญาณเปลี่ยนเทรนด์ก่อน BOS
-เกิดก่อน BOS ให้สัญญาณเตือนล่วงหน้า
-TradeCandle ใช้เป็นตัวกรองเพิ่มเติม
+🟦 Change of Character — Signalsเปลี่ยนTrendก่อน BOS
+เกิดก่อน BOS ให้SignalsWarningล่วงPage
+TradeCandle Useเป็นItemFilterMore
 
-⚠️ หมายเหตุ: ห้ามใช้สีฟ้าในการ์ดจริง ใช้สีเขียวเข้มแทน
+⚠️ Note: Do Not Useสีฟ้าในการ์ดจริง Useสีเขียวเข้มInstead
 ```
 
 การ์ด 6: Orderflow Bias
 ```
 🟪 Orderflow Bias — ทิศทางเงินไหลรวม
-ดูว่าเงินฉลาดเข้าฝั่งไหน
-TradeCandle เทรดตามทิศทางเงินฉลาดเท่านั้น
+Viewว่าเงินฉลาดEnterฝั่งไหน
+TradeCandle TradingตามทิศทางเงินฉลาดOnly
 
-⚠️ หมายเหตุ: ห้ามใช้สีม่วงในการ์ดจริง ใช้สีทอง/เขียวแทน
+⚠️ Note: Do Not Useสีม่วงในการ์ดจริง UseสีGold/เขียวInstead
 ```
 
-**12:00 — TikTok/Reels (30 วินาที)**
-- สคริปต์: "EA ทั่วไปใช้ Indicator ธรรมดา TradeCandle ใช้ 6 Smart Money Filters ที่สถาบันใช้จริง"
-- ภาพ: Flash แสดง 6 ฟิลเตอร์ทีละอัน พร้อมกราฟประกอบ
+**12:00 — TikTok/Reels (30 seconds)**
+- Script: "EA GeneralUse Indicator ธรรมดา TradeCandle Use 6 Smart Money Filters AtสถาบันUseจริง"
+- ภาพ: Flash Show 6 Filterทีละอัน ReadyChartประกอบ
 
 **18:00 — Line Broadcast**
 ```
-🧠 วันนี้เจาะลึก 6 Smart Money Filters ที่ TradeCandle v12 ใช้
+🧠 daysThisเจาะลึก 6 Smart Money Filters At TradeCandle v12 Use
 
 1. Order Block — โซนสถาบัน
-2. Fair Value Gap — ช่องว่างราคา
-3. Liquidity Sweep — กวาดจุดหยุด
-4. Break of Structure — ทลายโครงสร้าง
-5. Change of Character — เปลี่ยนเทรนด์
+2. Fair Value Gap — SpacePrice
+3. Liquidity Sweep — กวาดPointหยุด
+4. Break of Structure — ทลายโครงCreate
+5. Change of Character — เปลี่ยนTrend
 6. Orderflow Bias — ทิศทางเงิน
 
-ทั้ง 6 ต้องผ่านพร้อมกัน ถึงจะเปิดสถานะ!
+All 6 ต้องผ่านReadyTogether ถึงจะOpenStatus!
 
-ดูรายละเอียด: tradecandle.ai
+ViewDetails: tradecandle.ai
 ```
 
 ---
 
-### 🟢 วันพฤหัสบดี — "3-Wave Cashout ทำงานยังไง"
+### 🟢 daysThursday — "3-Wave Cashout ทำงานยังไง"
 
-**หัวข้อ:** 3-Wave Cashout — ปิดกำไร 3 คลื่น ไม่โลภจนเสียหมด
+**หัวข้อ:** 3-Wave Cashout — CloseProfit 3 คลื่น Noโลภจนเสียหมด
 
-**9:00 — YouTube Short (45 วินาที)**
-- สคริปต์: แสดงวิธีทำงานของ 3-Wave Cashout แบบสเต็ป-by-สเต็ป
-- ภาพ: กราฟทองคำ เปิดสถานะ → ปิด 1/3 → ย้าย SL → ปิด 1/3 → ย้าย SL → ปิดที่เหลือ
+**9:00 — YouTube Short (45 seconds)**
+- Script: Showวิธีทำงานของ 3-Wave Cashout Styleสเต็ป-by-สเต็ป
+- ภาพ: ChartGold OpenStatus → Close 1/3 → ย้าย SL → Close 1/3 → ย้าย SL → CloseAtเหลือ
 
-**12:00 — Facebook Post + อินโฟกราฟิก**
+**12:00 — Facebook Post + อินโฟChartิก**
 ```
 🌊 3-Wave Cashout ทำงานยังไง?
 
-คลื่นที่ 1️⃣ — ปิด 1/3 สถานะที่ TP1
-→ ล็อคกำไรเบื้องต้น ไม่ให้กลับเป็นขาดทุน
+คลื่นAt 1️⃣ — Close 1/3 StatusAt TP1
+→ LockProfitเบื้องต้น Noให้Return/Reverseเป็นLoss
 
-คลื่นที่ 2️⃣ — ปิด 1/3 สถานะที่ TP2
-→ ย้าย Stop Loss เป็น Breakeven กำไรเพิ่มขึ้น
+คลื่นAt 2️⃣ — Close 1/3 StatusAt TP2
+→ ย้าย Stop Loss เป็น Breakeven ProfitAddUp
 
-คลื่นที่ 3️⃣ — ปิดสถานะที่เหลือที่ TP3
-→ เก็บกำไรสูงสุด ปล่อยให้ราคาวิ่งเต็มที่
+คลื่นAt 3️⃣ — CloseStatusAtเหลือAt TP3
+→ เก็บMax Profit ปล่อยให้Priceวิ่งเต็มAt
 
-✅ ผลลัพธ์: กำไรสม่ำเสมอ ไม่โลภ ไม่ตกใจ
+✅ Result: Profitสม่ำเสมอ Noโลภ Noตกใจ
 
-💡 ต่างจาก EA ทั่วไปที่เปิด-ปิดทีเดียว
-จุดพีกระหว่างทาง? ไม่เคยเกิดกับ 3-Wave Cashout
+💡 ต่างfrom EA GeneralAtOpen-CloseทีSingle
+Pointพีกระหว่างทาง? Noเคยเกิดกับ 3-Wave Cashout
 
-→ ดู Demo: tradecandle.ai
+→ View Demo: tradecandle.ai
 ```
 
 **18:00 — Blog Post (800 คำ)**
 ```
-หัวข้อ: "3-Wave Cashout vs TP เดียว: ทำไมปิดกำไรทีละคลื่นดีกว่า"
+หัวข้อ: "3-Wave Cashout vs TP Single: ทำไมCloseProfitOne Wave at a Timeดีกว่า"
 
-เปรียบเทียบ:
-- TP เดียว: กำไรน้อยหรือโดน SL ก่อนถึง TP
-- 3-Wave: ล็อคกำไรเร็ว + ปล่อยให้วิ่งต่อ
-- ตัวอย่างตัวเลขจริงจาก Backtest
+Compare:
+- TP Single: Profitน้อยOrโดน SL ก่อนถึง TP
+- 3-Wave: LockProfitเร็ว + ปล่อยให้วิ่งต่อ
+- ExampleItemเลขจริงfrom Backtest
 ```
 
 ---
 
-### 🔵 วันศุกร์ — "ผล Backtest เปิดเผย"
+### 🔵 daysFriday — "Performance Backtest Openเผย"
 
-**หัวข้อ:** ผล Backtest TradeCandle v12 — 819 รอบ กำไร $4,858
+**หัวข้อ:** Performance Backtest TradeCandle v12 — 819 Round Profit $4,858
 
-⚠️ **หมายเหตุ:** ใช้สีเขียวแทนสีฟ้าในช่องทางจริง
+⚠️ **Note:** UseสีเขียวInsteadสีฟ้าในChannelจริง
 
 **9:00 — Facebook Post (ภาพ Equity Curve)**
 ```
-📊 ผล Backtest TradeCandle EA v12 เปิดเผย!
+📊 Performance Backtest TradeCandle EA v12 Openเผย!
 
-819 รอบการเทรด | 3 ปีข้อมูล XAUUSD H1
+819 Trading Round | 3 ปีInformation XAUUSD H1
 
-💰 กำไรสุทธิ: $4,858
+💰 Profitสุทธิ: $4,858
 🎯 Win Rate: 74.75%
 📈 Profit Factor: 1.23
-🛡️ Max Drawdown: $544 เท่านั้น
+🛡️ Max Drawdown: $544 Only
 
-สิ่งสำคัญ: กำไรที่สม่ำเสมอ ไม่ใช่แค่มาก
-Max Drawdown ต่ำ = ความเสี่ยงควบคุมได้
+สิ่งสำคัญ: ProfitAtสม่ำเสมอ NoYesแค่มาก
+Max Drawdown ต่ำ = ความเสี่ยงControlได้
 
-⚠️ ผล Backtest อ้างอิงจากข้อมูลในอดีต
-ผลลัพธ์จริงอาจแตกต่าง
+⚠️ Performance Backtest อ้างอิงfromInformationในอดีต
+ResultจริงอาจBreakต่าง
 
-ต้องการดูรายละเอียด? → tradecandle.ai
+ต้องการViewDetails? → tradecandle.ai
 💬 สอบถาม: Line @tradecandle
 
 #TradeCandle #Backtest #XAUUSD #EA
 ```
 
-**12:00 — TikTok/Reels (30 วินาที)**
-- สคริปต์: แสดงตัวเลข Backtest แบบ counter animation
-- Hook: "819 รอบ Backtest ผลออกมาเป็นยังไง?"
-- ปิด: "ทดลองใช้ฟรี → ลิงก์ใน Bio"
+**12:00 — TikTok/Reels (30 seconds)**
+- Script: ShowItemเลข Backtest Style counter animation
+- Hook: "819 Round Backtest Performanceออกมาเป็นยังไง?"
+- Close: "Free Trial → Linkใน Bio"
 
 **18:00 — Line Broadcast**
 ```
-📊 ผล Backtest TradeCandle v12
+📊 Performance Backtest TradeCandle v12
 
-819 รอบ | กำไร $4,858 | ชนะ 74.75%
+819 Round | Profit $4,858 | ชนะ 74.75%
 Max Drawdown เพียง $544
 
-สิ่งที่น่าสนใจ:
-✅ กำไรสม่ำเสมอ ไม่มีช่วงขาดทุนยาวนาน
-✅ Profit Factor 1.23 บวกทุกปี
-✅ Max DD ต่ำ = ความเสี่ยงควบคุมได้
+สิ่งAtน่าสนใจ:
+✅ Profitสม่ำเสมอ NoHasPeriodLossยาวนาน
+✅ Profit Factor 1.23 บวกAllปี
+✅ Max DD ต่ำ = ความเสี่ยงControlได้
 
-⚠️ ผลอดีตไม่รับประกันอนาคต
+⚠️ PerformanceอดีตNoรับประTogetherอนาคต
 
-ดูกราฟ Equity Curve เต็ม: tradecandle.ai
+ViewChart Equity Curve เต็ม: tradecandle.ai
 ```
 
 ---
 
-### 🟣 วันเสาร์ — "Kill Switch + Dashboard Demo"
+### 🟣 daysSaturday — "Kill Switch + Dashboard Demo"
 
-**หัวข้อ:** Dashboard ควบคุมเรียลไทม์ + Kill Switch ฉุกเฉิน
+**หัวข้อ:** Dashboard Controlเรียลไทม์ + Kill Switch ฉุกเฉิน
 
-⚠️ **หมายเหตุ:** ใช้สีทอง/เขียวแทนสีม่วงในช่องทางจริง
+⚠️ **Note:** UseสีGold/เขียวInsteadสีม่วงในChannelจริง
 
-**9:00 — YouTube Video (3 นาที) — Screen Recording**
+**9:00 — YouTube Video (3 minutes) — Screen Recording**
 ```
 หัวข้อ: "Demo TradeCandle Dashboard + Kill Switch ฉุกเฉิน"
 
-โครงสร้าง:
-0:00-0:30 Hook: ทำไมต้องมี Dashboard
-0:30-1:30 แสดง Dashboard: สถานะการเทรด, PnL, ประวัติ
-1:30-2:15 แสดง Kill Switch: กดปุ่ม ปิดทุกสถานะทันที
-2:15-2:45 เปรียบเทียบ: มี Dashboard vs ไม่มี
-2:45-3:00 CTA: ทดลองใช้ฟรี
+โครงCreate:
+0:00-0:30 Hook: ทำไมต้องHas Dashboard
+0:30-1:30 Show Dashboard: StatusการTrading, PnL, ประวัติ
+1:30-2:15 Show Kill Switch: กดButton CloseAllStatusทันที
+2:15-2:45 Compare: Has Dashboard vs NoHas
+2:45-3:00 CTA: Free Trial
 ```
 
 **12:00 — Facebook Post**
 ```
-🛑 วันไหนตลาดวุ่นวาย กดปุ่มเดียว ปิดทั้งระบบ
+🛑 daysไหนตลาดวุ่นวาย กดButtonSingle CloseAllระบบ
 
-Kill Switch คือปุ่มฉุกเฉินที่คุณควบคุม:
+Kill Switch คือButtonฉุกเฉินAtYouControl:
 
-✅ กดปุ่มเดียว ปิดทุกสถานะทันที
-✅ ไม่ต้องเปิด MT5 ทำผ่าน Dashboard
-✅ ใช้จากมือถือได้ทุกที่ทุกเวลา
+✅ กดButtonSingle CloseAllStatusทันที
+✅ Noต้องOpen MT5 ทำผ่าน Dashboard
+✅ Usefromมือถือได้AllAtAllTime
 
-รวมกับ SaaS Dashboard ที่แสดง:
-📊 สถานะการเทรดแบบเรียลไทม์
-📈 กำไร/ขาดทุนรวม
-📋 ประวัติการเทรดทั้งหมด
+รวมกับ SaaS Dashboard AtShow:
+📊 StatusการTradingStyleเรียลไทม์
+📈 Profit/Lossรวม
+📋 ประวัติการTradingAll
 
-→ ไม่ต้องนั่งเฝ้าจออีกต่อไป!
+→ Noต้องนั่งเฝ้าจออีกต่อไป!
 
-ดู Demo: tradecandle.ai
+View Demo: tradecandle.ai
 💬 Line: @tradecandle
 ```
 
 **18:00 — Line Broadcast**
 ```
-🛑 กดปุ่มเดียว ปิดทั้งระบบ!
+🛑 กดButtonSingle CloseAllระบบ!
 
-Kill Switch คือฟีเจอร์ฉุกเฉินของ TradeCandle v12
+Kill Switch คือFeatureฉุกเฉินของ TradeCandle v12
 
-วันไหนตลาดวุ่นวาย → เปิด Dashboard → กด Kill Switch → ปิดทุกสถานะทันที
+daysไหนตลาดวุ่นวาย → Open Dashboard → กด Kill Switch → CloseAllStatusทันที
 
-ไม่ต้อง:
-❌ เปิด MT5
-❌ หาสถานะทีละอัน
-❌ นั่งกดปิดเอง
+Noต้อง:
+❌ Open MT5
+❌ หาStatusทีละอัน
+❌ นั่งกดCloseเอง
 
-กดปุ่มเดียว เสร็จ!
+กดButtonSingle เสร็จ!
 
-ดูวิธีใช้: tradecandle.ai
+ViewวิธีUse: tradecandle.ai
 ```
 
 ---
 
-### ⚪ วันอาทิตย์ — "ข้อเสนอพิเศษ + CTA"
+### ⚪ daysSunday — "Offerพิเศษ + CTA"
 
-**หัวข้อ:** ทดลองใช้ฟรี 14 วัน — เริ่มสร้างกำไรจากทองคำวันนี้
+**หัวข้อ:** Free Trial 14 days — BeginnerCreateProfitfromGolddaysThis
 
 **9:00 — Facebook Post (ขาย)**
 ```
-⏰ เริ่มต้นเทรดทองคำอัตโนมัติ ตั้งแต่ 990฿/เดือน
+⏰ Get StartedTradingGoldAutomated ตั้งแต่ 990$/month
 
-Starter 990฿/เดือน — เริ่มต้น 1 บัญชี
-Pro 2,490฿/เดือน — แนะนำ! 3 บัญชี + 6 Filters + 3-Wave Cashout
-Elite 4,990฿/เดือน — VIP 10 บัญชี + Coaching
+Starter 990$/month — Get Started 1 Accounts
+Pro 2,490$/month — แนะนำ! 3 Accounts + 6 Filters + 3-Wave Cashout
+Elite 4,990$/month — VIP 10 Accounts + Coaching
 
-🎁 ข้อเสนอพิเศษสัปดาห์เปิดตัว:
-✅ ทดลองใช้ฟรี 14 วัน
-✅ ไม่ต้องผูกบัตรเครดิต
-✅ ยกเลิกได้ทุกเวลา
+🎁 Offerพิเศษสัปดาห์OpenItem:
+✅ Free Trial 14 days
+✅ Noต้องผูกCredit Card
+✅ Cancelได้AllTime
 
-เริ่มต้นวันนี้ → tradecandle.ai
+Get StarteddaysThis → tradecandle.ai
 💬 สอบถาม: Line @tradecandle
 
-#TradeCandle #เทรดทองคำ #EA #XAUUSD
+#TradeCandle #TradingGold #EA #XAUUSD
 ```
 
-**12:00 — TikTok/Reels (30 วินาที)**
-- สคริปต์: Hook "ทองคำขึ้น คุณได้กำไรไหม?" → แนะนำ TradeCandle → ราคาเริ่ม 990฿ → ทดลองฟรี 14 วัน → CTA
+**12:00 — TikTok/Reels (30 seconds)**
+- Script: Hook "GoldUp Youได้Profitไหม?" → แนะนำ TradeCandle → PriceBeginner 990$ → ทดลองFree 14 days → CTA
 
 **18:00 — Line Broadcast**
 ```
-🎉 ข้อเสนอพิเศษสัปดาห์เปิดตัว!
+🎉 Offerพิเศษสัปดาห์OpenItem!
 
-ทดลองใช้ TradeCandle EA v12 ฟรี 14 วัน
-ไม่ต้องผูกบัตร ยกเลิกได้ทุกเวลา
+Trial TradeCandle EA v12 Free 14 days
+Noต้องผูกบัตร Cancelได้AllTime
 
 แพ็กเกจ:
-🥉 Starter 990฿/เดือน
-⭐ Pro 2,490฿/เดือน (แนะนำ!)
-💎 Elite 4,990฿/เดือน
+🥉 Starter 990$/month
+⭐ Pro 2,490$/month (แนะนำ!)
+💎 Elite 4,990$/month
 
-เริ่มต้นวันนี้: tradecandle.ai
+Get StarteddaysThis: tradecandle.ai
 ```
 
-**20:00 — สรุปสัปดาห์ (ทุกช่องทาง)**
+**20:00 — สรุปสัปดาห์ (AllChannel)**
 ```
-📊 สรุปสัปดาห์แรก TradeCandle v12
+📊 สรุปสัปดาห์First TradeCandle v12
 
-ขอบคุณทุกคนที่ติดตาม! สัปดาห์นี้เราได้พูดถึง:
+Thank YouAllคนAtMonitor! สัปดาห์Thisเราได้พูดถึง:
 
-จันทร์: ปัญหาเทรดทองคำ
-อังคาร: แนะนำ TradeCandle v12
-พุธ: 6 Smart Money Filters
+Monday: ProblemTradingGold
+Tuesday: แนะนำ TradeCandle v12
+Wednesday: 6 Smart Money Filters
 พฤหัส: 3-Wave Cashout
-ศุกร์: ผล Backtest
-เสาร์: Dashboard + Kill Switch
+Friday: Performance Backtest
+Saturday: Dashboard + Kill Switch
 
-สัปดาห์หน้าเราจะเจาะลึกมากกว่านี้!
-ติดตามต่อ: tradecandle.ai
+สัปดาห์Pageเราจะเจาะลึกมากกว่าThis!
+Monitorต่อ: tradecandle.ai
 ```
 
 ---
 
-## 📏 กฎการสร้างคอนเทนต์
+## 📏 กฎการContent Creation
 
-1. **สี:** ใช้ทอง/เหลืองอำพัน + ดำ + เขียวเท่านั้น ห้ามฟ้า/น้ำเงิน
-2. **คำเตือน:** ทุกโพสต์ที่กล่าวถึงผลลัพธ์ ต้องใส่ "การเทรดมีความเสี่ยง"
-3. **CTA:** ทุกโพสต์ต้องมี CTA ชัดเจน (ลิงก์ + Line OA)
-4. **ภาพ:** ใช้ภาพคุณภาพสูง ไม่ใช้ภาพ stock ทั่วไป
-5. **เวลาโพสต์:** 9:00, 12:00, 18:00 (เวลาไทย)
-6. **Hashtag:** #TradeCandle #XAUUSD #เทรดทองคำ #SmartMoney #EA #MT5
+1. **สี:** UseGold/เหลืองอำพัน + Black + เขียวOnly ห้ามฟ้า/น้ำเงิน
+2. **คำWarning:** AllPostAtกล่าวถึงResult ต้องใส่ "การTradingHasความเสี่ยง"
+3. **CTA:** AllPostต้องHas CTA ชัดเจน (Link + Line OA)
+4. **ภาพ:** UseภาพYouภาพHigh NoUseภาพ stock General
+5. **TimePost:** 9:00, 12:00, 18:00 (TimeThai)
+6. **Hashtag:** #TradeCandle #XAUUSD #TradingGold #SmartMoney #EA #MT5

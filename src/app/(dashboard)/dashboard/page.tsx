@@ -190,10 +190,10 @@ export default function DashboardPage() {
           </div>
 
           <h2 className="mt-5 max-w-2xl text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-            คุม AI เทรดทองคำและ License Key จาก dashboard เดียว.
+            Control AI Gold Trading and License Key from a single dashboard.
           </h2>
           <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-400 sm:text-base">
-            ติดตาม P&L, heartbeat, license และ risk guardrails สำหรับ XAUUSD บน MT5 โดยไม่ต้องเปิด terminal แต่ละเครื่องเอง.
+            Monitor P&L, heartbeat, license, and risk guardrails for XAUUSD on MT5 — no need to open each terminal individually.
           </p>
 
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">

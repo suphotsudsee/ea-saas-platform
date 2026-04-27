@@ -4,7 +4,7 @@
 
 ## 🏠 TradeCandle EA v12 — Landing Page
 
-**Theme:** Gold/Amber + Black + Green (ห้ามใช้ Blue/Indigo)
+**Theme:** Gold/Amber + Black + Green (Do Not Use Blue/Indigo)
 **Font:** Prompt / Kanit (Thai web fonts)
 **URL:** https://tradecandle.ai
 
@@ -13,7 +13,7 @@
 ## 🔝 Header / Navigation Bar
 
 ```
-[โลโก้ TradeCandle]   ฟีเจอร์ | ผล Backtest | ราคา | คำถามยอดฮิต | [เริ่มทดลองใช้ฟรี]
+[Logo TradeCandle]   Feature | Performance Backtest | Price | Questionยอดฮิต | [BeginnerFree Trial]
 ```
 
 ---
@@ -21,23 +21,23 @@
 ## 🎯 Hero Section
 
 ### Desktop Layout:
-- ซ้าย: ข้อความ + CTA
-- ขวา: ภาพ Dashboard SaaS + กราฟ PnL สีทอง
+- Left: Message + CTA
+- Right: ภาพ Dashboard SaaS + Chart PnL สีGold
 
 ### Hero Copy:
 
 ```
-🔥 TradeCandle EA v12 — ระบบเทรดทองคำอัตโนมัติ ที่เทรดเderอยกว่าคุณ
+🔥 TradeCandle EA v12 — ระบบTradingGoldAutomated AtTradingเderอยกว่าYou
 
-รวมพลัง 6 ฟิลเตอร์ PA/SMC Smart Money + ระบบ 3-Wave Cashout
-กำไร $4,858 | ชนะ 74.75% | Max Drawdown เพียง $544
+รวมพลัง 6 Filter PA/SMC Smart Money + ระบบ 3-Wave Cashout
+Profit $4,858 | ชนะ 74.75% | Max Drawdown เพียง $544
 
-[🚀 เริ่มทดลองใช้ฟรี 14 วัน]   [📺 ดู Demo]
+[🚀 BeginnerFree Trial 14 days]   [📺 View Demo]
 ```
 
 ### Hero Background:
-- สีดำ gradient มุมขวาล่าง
-- เส้นไลน์สีทองระฆังทอง
+- สีBlack gradient มุมRightล่าง
+- เส้นไลน์สีGoldระฆังGold
 - Glow effect สีเขียวอ่อน
 
 ---
@@ -45,221 +45,221 @@
 ## ⚡ Trust Bar (ใต้ Hero)
 
 ```
-✅ 819 รอบ Backtest ผ่านการพิสูจน์ | ✅ Profit Factor 1.23 | ✅ Win Rate 74.75% | ✅ Max DD $544 เท่านั้น
+✅ 819 Round Backtest ผ่านการพิสูจน์ | ✅ Profit Factor 1.23 | ✅ Win Rate 74.75% | ✅ Max DD $544 Only
 ```
 
 ---
 
-## 🏆 Features Section — "ทำไม TradeCandle v12 ถึงแตกต่าง?"
+## 🏆 Features Section — "ทำไม TradeCandle v12 ถึงBreakต่าง?"
 
-### ฟีเจอร์การ์ด 6 ใบ (Grid 3x2)
+### Featureการ์ด 6 ใบ (Grid 3x2)
 
 **การ์ด 1: 3-Wave Cashout** 🌊
 ```
-ระบบปิดสถานะ 3 คลื่น
-กำไรแบ่งออก 3 ช่วง ล็อคกำไรทุกระดับ
-ไม่ต้องนั่งมองจอเฝ้าจุดพีก
+ระบบCloseStatus 3 คลื่น
+Profitแบ่งออก 3 Period LockProfitAllระดับ
+Noต้องนั่งมองจอเฝ้าPointพีก
 ```
 
 **การ์ด 2: 6 PA/SMC Filters** 🧠
 ```
-6 ฟิลเตอร์ Smart Money Concepts
+6 Filter Smart Money Concepts
 Order Block + FVG + Liquidity Sweep
-เข้าจุดที่เงินฉลาดเข้า ออกก่อนโดนหุ้นกวาด
+EnterPointAtเงินฉลาดEnter ออกก่อนโดนหุ้นกวาด
 ```
 
 **การ์ด 3: SaaS Dashboard** 📊
 ```
-แดชบอร์ดควบคุมแบบเรียลไทม์
-ดูสถานะการเทรด กำไร/ขาดทุน ทุกวินาที
-จากที่ไหนก็เข้าได้ ไม่ต้องเปิด MT5
+แดชบอร์ดControlStyleเรียลไทม์
+ViewStatusการTrading Profit/Loss Allseconds
+fromAtไหนก็Enterได้ Noต้องOpen MT5
 ```
 
 **การ์ด 4: Kill Switch** 🛑
 ```
-ปุ่มดับระบบฉุกเฉิน
-กดปุ่มเดียว ปิดทุกสถานะทันที
-ป้องกันขาดทุนฉุกเฉิน ควบคุมความเสี่ยงเต็มที่
+Buttonดับระบบฉุกเฉิน
+กดButtonSingle CloseAllStatusทันที
+ป้องTogetherLossฉุกเฉิน Controlความเสี่ยงเต็มAt
 ```
 
 **การ์ด 5: Auto Risk Management** ⚖️
 ```
-คำนวณ Lot Size อัตโนมัติ
-ปรับขนาดสถานะตาม Balance
-จัดการความเสี่ยงแบบมืออาชีพ
+คำนวณ Lot Size Automated
+ปรับSizeStatusตาม Balance
+Risk ManagementStyleProfessional
 ```
 
 **การ์ด 6: XAUUSD Specialist** 🥇
 ```
-ออกแบบมาเพื่อทองคำโดยเฉพาะ
-เข้าใจพฤติกรรมราคาทอง
-ไม่ใช่ EA แบบสูตรเดียวใช้ทุกคู่เงิน
+ออกStyleมาtoGoldbyExclusive
+EnterใจพฤติกรรมGold Price
+NoYes EA StyleสูตรSingleUseAllคู่เงิน
 ```
 
 ---
 
-## 📊 Backtest Results Section — "ผล Backtest ที่พิสูจน์ได้"
+## 📊 Backtest Results Section — "Performance Backtest Atพิสูจน์ได้"
 
-### Layout: กราฟ Equity Curve + ตัวเลข 4 ช่อง
+### Layout: Chart Equity Curve + Itemเลข 4 ช่อง
 
-**ตัวเลข 4 ช่อง (Grid 2x2):**
+**Itemเลข 4 ช่อง (Grid 2x2):**
 
-| ตัวเลข | คำอธิบาย |
+| Itemเลข | Description |
 |---|---|
-| **819** | จำนวนรอบการเทรด |
-| **$4,858** | กำไรสุทธิ |
+| **819** | AmountTrading Round |
+| **$4,858** | Profitสุทธิ |
 | **74.75%** | Win Rate |
 | **$544** | Max Drawdown |
 
-**กราฟ Equity Curve:** เส้นสีทอง พื้นหลังสีดำ แสดงการเติบโตกำไร
+**Chart Equity Curve:** เส้นสีGold BackgroundสีBlack ShowการเติบโตProfit
 
-**หมายเหตุ:**
+**Note:**
 ```
-*ผล Backtest อ้างอิงจากข้อมูลในอดีต ไม่ได้รับประกันผลลัพธ์ในอนาคต
-ข้อมูลการทดสอบ: XAUUSD H1, ช่วงข้อมูล 3 ปี
+*Performance Backtest อ้างอิงfromInformationในอดีต Noได้รับประTogetherResultในอนาคต
+InformationการTest: XAUUSD H1, PeriodInformation 3 ปี
 ```
 
 ---
 
-## 💰 Pricing Section — "เลือกแพ็กเกจที่ใช่สำหรับคุณ"
+## 💰 Pricing Section — "เลือกแพ็กเกจAtYesForYou"
 
 ### 3 Pricing Cards (Grid แนวนอน)
 
-**Starter — 990฿/เดือน** 🥉
+**Starter — 990$/month** 🥉
 ```
 ✅ EA v12 เวอร์ชันเต็ม
-✅ 1 บัญชี MT5
-✅ SaaS Dashboard พื้นฐาน
+✅ 1 MT5 Accounts
+✅ SaaS Dashboard Basic
 ✅ Kill Switch ฉุกเฉิน
 ✅ การสนับสนุนผ่าน Line OA
-❌ ไม่รวม 6 PA/SMC Filters ขั้นสูง
-❌ ไม่รวม 3-Wave Cashout Pro
+❌ Noรวม 6 PA/SMC Filters ขั้นHigh
+❌ Noรวม 3-Wave Cashout Pro
 
-[เริ่มทดลองใช้ฟรี]
+[BeginnerFree Trial]
 ```
 
-**Pro — 2,490฿/เดือน** ⭐ (แนะนำ!)
+**Pro — 2,490$/month** ⭐ (แนะนำ!)
 ```
 ✅ EA v12 เวอร์ชันเต็ม
-✅ 3 บัญชี MT5
-✅ SaaS Dashboard เต็มรูปแบบ
+✅ 3 MT5 Accounts
+✅ SaaS Dashboard เต็มFormat
 ✅ Kill Switch ฉุกเฉิน
 ✅ 6 PA/SMC Smart Money Filters
 ✅ 3-Wave Cashout Pro
 ✅ การสนับสนุน Priority Line OA
-✅ สัมมนาออนไลน์รายเดือน
+✅ สัมมนาOnlineรายmonth
 
-[เริ่มทดลองใช้ฟรี] ← ปุ่มสีทอง ขนาดใหญ่
+[BeginnerFree Trial] ← ButtonสีGold Sizeใหญ่
 ```
 
-**Elite — 4,990฿/เดือน** 💎
+**Elite — 4,990$/month** 💎
 ```
-✅ ทุกอย่างใน Pro
-✅ 10 บัญชี MT5
+✅ Allอย่างใน Pro
+✅ 10 MT5 Accounts
 ✅ VIP SaaS Dashboard
-✅ 1-on-1 Coaching 2 ชม./เดือน
-✅ กลยุทธ์พิเศษเฉพาะ Elite
-✅ การสนับสนุนแบบ VIP 24/7
-✅ Early Access ฟีเจอร์ใหม่
+✅ 1-on-1 Coaching 2 ชม./month
+✅ กลยุทธ์พิเศษExclusive Elite
+✅ การสนับสนุนStyle VIP 24/7
+✅ Early Access Featureใหม่
 
-[เริ่มทดลองใช้ฟรี]
+[BeginnerFree Trial]
 ```
 
-### หมายเหตุใต้ Pricing:
+### Noteใต้ Pricing:
 ```
-✓ ทดลองใช้ฟรี 14 วัน ✓ ยกเลิกได้ทุกเวลา ✓ ไม่มีค่าสมัครซ่อน
+✓ Free Trial 14 days ✓ Cancelได้AllTime ✓ NoHasค่าSign UpHide
 ```
 
 ---
 
-## ❓ FAQ Section — "คำถามยอดฮิต"
+## ❓ FAQ Section — "Questionยอดฮิต"
 
 ### Accordion 6 ข้อ:
 
 **Q1: TradeCandle EA v12 คืออะไร?**
 ```
-TradeCandle EA v12 คือระบบเทรดทองคำอัตโนมัติบน MT5 ที่ใช้กลยุทธ์ Price Action และ Smart Money Concepts ในการวิเคราะห์จุดเข้า-ออก พร้อมระบบ SaaS Dashboard ควบคุมการเทรดแบบเรียลไทม์
+TradeCandle EA v12 คือระบบTradingGoldAutomated on MT5 AtUseกลยุทธ์ Price Action and Smart Money Concepts ในการAnalyzePointEnter-ออก Readyระบบ SaaS Dashboard ControlการTradingStyleเรียลไทม์
 ```
 
-**Q2: ต้องมีความรู้เทรดไหม?**
+**Q2: ต้องHasความรู้Tradingไหม?**
 ```
-ไม่จำเป็น! EA ทำงานอัตโนมัติ คุณแค่ตั้งค่าเบื้องต้นและเฝ้าดูผ่าน Dashboard อย่างไรก็ตาม ควรมีความเข้าใจพื้นฐานเกี่ยวกับความเสี่ยงในการเทรด
-```
-
-**Q3: ทำไมถึงเทรดแค่ XAUUSD?**
-```
-ทองค้ามีพฤติกรรมราคาเฉพาะตัว เราออกแบบ EA ให้เชี่ยวชาญทองคำโดยเฉพาะ แทนที่จะทำ EA หลายคู่เงินที่ไม่เก่งเรื่องไหนเลย
+Noจำเป็น! EA ทำงานAutomated Youแค่Settingsเบื้องต้นandเฝ้าViewผ่าน Dashboard อย่างไรก็ตาม ควรHasความEnterใจBasicเกี่ยวกับความเสี่ยงในการTrading
 ```
 
-**Q4: ผล Backtest การันตีกำไรไหม?**
+**Q3: ทำไมถึงTradingแค่ XAUUSD?**
 ```
-ไม่! ผล Backtest อ้างอิงจากข้อมูลในอดีต ผลลัพธ์จริงอาจแตกต่าง แต่เรามั่นใจว่ากลยุทธ์มีความแข็งแกร่งจากการทดสอบ 819 รอบ ผ่านสภาวะตลาดหลายรูปแบบ
-```
-
-**Q5: ถ้าตลาดพัง จะป้องกันยังไง?**
-```
-มี Kill Switch กดปุ่มเดียวปิดทุกสถานะทันที + ระบบ Stop Loss อัตโนมัติ + การจัดการความเสี่ยงแบบมืออาชีพ คุณควบคุมได้เสมอ
+Goldค้าHasพฤติกรรมPriceExclusiveItem เราออกStyle EA ให้เชี่ยวชาญGoldbyExclusive InsteadAtจะทำ EA หลายคู่เงินAtNoเก่งAboutไหนเลย
 ```
 
-**Q6: สามารถยกเลิกได้ไหม?**
+**Q4: Performance Backtest การันตีProfitไหม?**
 ```
-ได้! ยกเลิกได้ทุกเวลา ไม่มีสัญญาผูกพัน ทดลองใช้ฟรี 14 วันก่อนตัดสินใจ
+No! Performance Backtest อ้างอิงfromInformationในอดีต ResultจริงอาจBreakต่าง แต่เรามั่นใจว่ากลยุทธ์Hasความแข็งแกร่งfromการTest 819 Round ผ่านสภาวะตลาดหลายFormat
+```
+
+**Q5: Ifตลาดพัง จะป้องTogetherยังไง?**
+```
+Has Kill Switch กดButtonSingleCloseAllStatusทันที + ระบบ Stop Loss Automated + การRisk ManagementStyleProfessional YouControlได้เสมอ
+```
+
+**Q6: สามารถCancelได้ไหม?**
+```
+ได้! Cancelได้AllTime NoHasสัญญาผูกพัน Free Trial 14 daysก่อนตัดสินใจ
 ```
 
 ---
 
-## 📢 Social Proof Section — "เสียงจากผู้ใช้"
+## 📢 Social Proof Section — "Soundfromผู้Use"
 
 ### 3 Testimonial Cards:
 
-**คุณสมชาย — เทรดเดอ์อิสระ**
+**Youสมชาย — Tradingเดอ์อิสระ**
 ```
-"เคยเสียเงินจาก EA ที่เป็นสูตรมาร์ติ้งเกล ตั้งแต่ใช้ TradeCandle กำไรสม่ำเสมอ ชอบ 3-Wave Cashout มาก ปิดกำไรแบ่งเป็นช่วง ไม่โลภจนเสีย"
-```
-
-**คุณวิภา — พนักงานบริษัท**
-```
-"ไม่มีเวลาเฝ้าจอ แต่อยากลงทุนทองคำ ตอนนี้แค่เปิด Dashboard ดูสรุปผลวันละครั้ง สบายมาก!"
+"เคยเสียเงินfrom EA Atเป็นสูตรมาร์ติ้งเกล ตั้งแต่Use TradeCandle Profitสม่ำเสมอ ชอบ 3-Wave Cashout มาก CloseProfitแบ่งเป็นPeriod Noโลภจนเสีย"
 ```
 
-**คุณธนกร — นักลงทุน part-time**
+**Youวิภา — พนักงานบริษัท**
 ```
-"Kill Switch คือฟีเจอร์ที่ทำให้สบายใจที่สุด วันไหนตลาดวุ่นวาย กดปุ่มเดียวปิดหมด ขาดทุนน้อยมากเมื่อเทียบกับเมื่อก่อน"
+"NoHasTimeเฝ้าจอ แต่อยากลงทุนGold EpisodeThisแค่Open Dashboard ViewสรุปPerformancedaysละครั้ง สบายมาก!"
+```
+
+**Youธนกร — นักลงทุน part-time**
+```
+"Kill Switch คือFeatureAtทำให้สบายใจAtสุด daysไหนตลาดวุ่นวาย กดButtonSingleCloseหมด Lossน้อยมากเมื่อเทียบกับเมื่อก่อน"
 ```
 
 ---
 
-## 📞 CTA Section — "เริ่มสร้างกำไรจากทองคำวันนี้"
+## 📞 CTA Section — "BeginnerCreateProfitfromGolddaysThis"
 
-### Layout: ข้อความกลางจอ + ปุ่ม CTA ขนาดใหญ่
+### Layout: Messageกลางจอ + Button CTA Sizeใหญ่
 
 ```
-เริ่มต้นด้วยทดลองใช้ฟรี 14 วัน
-ไม่ต้องผูกบัตรเครดิต • ยกเลิกได้ทุกเวลา
+Get Startedด้วยFree Trial 14 days
+Noต้องผูกCredit Card • Cancelได้AllTime
 
-[🚀 เริ่มทดลองใช้ฟรี 14 วัน]   [💬 สอบถาม Line OA]
+[🚀 BeginnerFree Trial 14 days]   [💬 สอบถาม Line OA]
 
-💡 สแกน QR Code เพิ่มเพื่อน Line: @tradecandle
+💡 สแกน QR Code AddFriends Line: @tradecandle
 ```
 
-**สีพื้นหลัง:** สีดำ gradient gold glow
+**สีBackground:** สีBlack gradient gold glow
 
 ---
 
 ## 🦶 Footer
 
 ```
-TradeCandle EA v12 | ระบบเทรดทองคำอัตโนมัติบน MT5
+TradeCandle EA v12 | ระบบTradingGoldAutomated on MT5
 
-ลิงก์:
-หน้าหลัก | ฟีเจอร์ | ราคา | บล็อก | คำถามยอดฮิต | นโยบายความเป็นส่วนตัว | เงื่อนไขการใช้งาน
+Link:
+Home | Feature | Price | Blog | Questionยอดฮิต | Privacy Policy | เงื่อนไขUsage
 
-ติดตามเรา:
+Follow Us:
 [Facebook] [YouTube] [TikTok] [Twitter/X]
 
 Line OA: @tradecandle
 
-⚠️ คำเตือน: การเทรดมีความเสี่ยง ผลลัพธ์ในอดีตไม่รับประกันผลลัพธ์ในอนาคต ควรศึกษาข้อมูลก่อนตัดสินใจลงทุน
+⚠️ คำWarning: การTradingHasความเสี่ยง ResultในอดีตNoรับประTogetherResultในอนาคต ควรศึกษาInformationก่อนตัดสินใจลงทุน
 
 © 2024 TradeCandle. All rights reserved.
 ```
@@ -271,18 +271,18 @@ Line OA: @tradecandle
 **สีหลัก:**
 - Gold/Amber: `#D4A017`, `#FFD700`
 - Black: `#0A0A0A`, `#1A1A1A`
-- Green (กำไร/CTA): `#00C853`, `#4CAF50`
-- Gray (ข้อความรอง): `#888888`
-- Red (ขาดทุน/แจ้งเตือน): `#FF4444`
+- Green (Profit/CTA): `#00C853`, `#4CAF50`
+- Gray (Messageรอง): `#888888`
+- Red (Loss/Notification): `#FF4444`
 
-**ห้ามใช้:** สีฟ้า (Blue), สีม่วงน้ำเงิน (Indigo) ทุกชนิด
+**Do Not Use:** สีฟ้า (Blue), สีม่วงน้ำเงิน (Indigo) Allชนิด
 
 **Typography:**
 - หัวข้อ: Prompt Bold
 - เนื้อความ: Kanit Regular
-- ตัวเลข: Inter Bold
+- Itemเลข: Inter Bold
 
 **Animation:**
-- Scroll-reveal สำหรับการ์ดฟีเจอร์
-- Number counter animation สำหรับตัวเลขผล Backtest
-- Hover glow effect สำหรับปุ่ม CTA
+- Scroll-reveal Forการ์ดFeature
+- Number counter animation ForItemเลขPerformance Backtest
+- Hover glow effect ForButton CTA

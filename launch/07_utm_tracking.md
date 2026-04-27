@@ -1,5 +1,5 @@
 # 7G — UTM Parameters + Tracking Setup
-## TradeCandle v11 — ติดตามทุกช่องทาง
+## TradeCandle v11 — Track All Channels
 
 ---
 
@@ -11,9 +11,9 @@ https://tradecandle.ai/?utm_source={source}&utm_medium={medium}&utm_campaign={ca
 ```
 
 ### Rules
-- ใช้ตัวพิมพ์เล็ก (lowercase) เท่านั้น
-- ใช้ underscore `_` แทนช่องว่าง
-- ไม่ต้องใส่ `?` ซ้ำ — ใส่ `&` ต่อท้าย
+- UseItemPrintเล็ก (lowercase) Only
+- Use underscore `_` InsteadSpace
+- Noต้องใส่ `?` ซ้ำ — ใส่ `&` ต่อท้าย
 
 ---
 
@@ -31,7 +31,7 @@ https://tradecandle.ai/?utm_source={source}&utm_medium={medium}&utm_campaign={ca
 ### FB Groups
 | Group | Link |
 |-------|------|
-| โพสต์ในกลุ่ม | `?utm_source=fb_group&utm_medium=organic&utm_campaign=launch_week1&utm_content=post1_pain_group` |
+| PostในGroup | `?utm_source=fb_group&utm_medium=organic&utm_campaign=launch_week1&utm_content=post1_pain_group` |
 
 ### FB Ads
 | Ad | Link |
@@ -53,8 +53,8 @@ https://tradecandle.ai/?utm_source={source}&utm_medium={medium}&utm_campaign={ca
 | Broadcast 1 (Teaser) | `?utm_source=line&utm_medium=broadcast&utm_campaign=launch_teaser` |
 | Broadcast 2 (Launch) | `?utm_source=line&utm_medium=broadcast&utm_campaign=launch_day&utm_content=line_exclusive` |
 | Broadcast 3 (Urgency) | `?utm_source=line&utm_medium=broadcast&utm_campaign=launch_urgency` |
-| Line Rich Menu: สมัคร | `?utm_source=line&utm_medium=rich_menu&utm_campaign=ongoing&utm_content=signup` |
-| Line Rich Menu: สอนเทรด | `?utm_source=line&utm_medium=rich_menu&utm_campaign=ongoing&utm_content=learn` |
+| Line Rich Menu: Sign Up | `?utm_source=line&utm_medium=rich_menu&utm_campaign=ongoing&utm_content=signup` |
+| Line Rich Menu: สอนTrading | `?utm_source=line&utm_medium=rich_menu&utm_campaign=ongoing&utm_content=learn` |
 
 ### Emails
 | Email | Link |
@@ -154,12 +154,12 @@ trackEvent('contact', { contact_method: 'line' });
 ## 📊 Daily Tracking Checklist
 
 ### FB Ads Manager (เช็คเช้า + เย็น)
-- [ ] Spend (฿)
+- [ ] Spend ($)
 - [ ] Impressions
 - [ ] CTR (%)
-- [ ] CPC (฿)
+- [ ] CPC ($)
 - [ ] Conversions
-- [ ] Cost per Conversion (฿)
+- [ ] Cost per Conversion ($)
 - [ ] ROAS
 
 ### GA4 (เช็คเช้า)
@@ -170,7 +170,7 @@ trackEvent('contact', { contact_method: 'line' });
 - [ ] Events fired
 
 ### Line OA (เช็คเย็น)
-- [ ] New friends (วันนี้)
+- [ ] New friends (daysThis)
 - [ ] Messages received
 - [ ] Broadcast open rate
 - [ ] Link click rate
@@ -178,7 +178,7 @@ trackEvent('contact', { contact_method: 'line' });
 ### Blockchain Explorer (เช็คเย็น)
 - [ ] New trials
 - [ ] New paid subscriptions
-- [ ] Revenue (฿)
+- [ ] Revenue ($)
 - [ ] Churned subscriptions
 
 ---
@@ -194,15 +194,15 @@ trackEvent('contact', { contact_method: 'line' });
 | LP Visits | [target] | [actual] | [%] |
 | Trial Signups | [target] | [actual] | [%] |
 | Paid Conversions | [target] | [actual] | [%] |
-| Revenue | [target]฿ | [actual]฿ | [%] |
+| Revenue | [target]$ | [actual]$ | [%] |
 | ROAS | ≥3x | [actual]x | [%] |
 
 ## Ad Performance
 | Ad | Spend | Impressions | CTR | CPC | Conversions | Cost/Conv |
 |-----|-------|------------|-----|-----|------------|-----------|
-| Ad 1 | ฿ | | % | ฿ | | ฿ |
-| Ad 2 | ฿ | | % | ฿ | | ฿ |
-| Ad 3 | ฿ | | % | ฿ | | ฿ |
+| Ad 1 | $ | | % | $ | | $ |
+| Ad 2 | $ | | % | $ | | $ |
+| Ad 3 | $ | | % | $ | | $ |
 
 ## Top Content
 | Content | Views | Clicks | Signups |

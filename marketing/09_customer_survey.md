@@ -2,22 +2,22 @@
 
 ---
 
-## 📋 แบบสำรวจความต้องการเทรดเดอร์ทองคำ
+## 📋 SurveyNeedsTradingเดอร์Gold
 
-**ชื่อแบบสำรวจ:** แบบสำรวจความต้องการเทรดเดอร์ XAUUSD
-**ระยะเวลาประเมิน:** 3-5 นาที
-**จำนวนข้อ:** 15 ข้อ
-**เป้าหมาย:** เข้าใจความต้องการของเทรดเดอร์ทองคำเพื่อปรับปรุงผลิตภัณฑ์
-
----
-
-## 📍 Section 1: ข้อมูลส่วนตัว (Demographics)
+**Survey Name:** SurveyNeedsTradingเดอร์ XAUUSD
+**DurationTimeEvaluation:** 3-5 minutes
+**Amountข้อ:** 15 ข้อ
+**Goal:** EnterใจNeedsของTradingเดอร์GoldtoImprovePerformanceิตภัณฑ์
 
 ---
 
-### ข้อที่ 1: คุณอยู่ในช่วงอายุใด?
+## 📍 Section 1: Informationส่วนItem (Demographics)
 
-**ประเภท:** Multiple Choice (เลือก 1 คำตอบ)
+---
+
+### ข้อAt 1: YouLocated InPeriodอายุใด?
+
+**Type:** Multiple Choice (เลือก 1 คำตอบ)
 
 - [ ] ต่ำกว่า 20 ปี
 - [ ] 20-25 ปี
@@ -29,155 +29,155 @@
 
 ---
 
-### ข้อที่ 2: อาชีพปัจจุบันของคุณคืออะไร?
+### ข้อAt 2: อาชีพCurrentของYouคืออะไร?
 
-**ประเภท:** Multiple Choice (เลือก 1 คำตอบ)
+**Type:** Multiple Choice (เลือก 1 คำตอบ)
 
 - [ ] พนักงานบริษัท (Private Sector)
 - [ ] ข้าราชการ / รัฐวิสาหิก (Government / SOE)
-- [ ] ธุรกิจส่วนตัว (Business Owner)
-- [ ] ฟรีแลนซ์ / รับจ้าง (Freelancer)
+- [ ] ธุรกิจส่วนItem (Business Owner)
+- [ ] Freeแลนซ์ / รับจ้าง (Freelancer)
 - [ ] นักเรียน / นักศึกษา (Student)
-- [ ] ไม่ได้ทำงาน / เกษียณ (Unemployed / Retired)
+- [ ] Noได้ทำงาน / เกษียณ (Unemployed / Retired)
 - [ ] อื่นๆ: _____________
 
 ---
 
-### ข้อที่ 3: รายได้ต่อเดือนของคุณอยู่ในช่วงใด?
+### ข้อAt 3: รายได้/monthของYouLocated InPeriodใด?
 
-**ประเภท:** Multiple Choice (เลือก 1 คำตอบ)
+**Type:** Multiple Choice (เลือก 1 คำตอบ)
 
-- [ ] ต่ำกว่า 15,000 ฿
-- [ ] 15,001 - 25,000 ฿
-- [ ] 25,001 - 35,000 ฿
-- [ ] 35,001 - 50,000 ฿
-- [ ] 50,001 - 75,000 ฿
-- [ ] 75,001 - 100,000 ฿
-- [ ] มากกว่า 100,000 ฿
-
----
-
-## 📍 Section 2: ประสบการณ์การเทรด (Trading Experience)
+- [ ] ต่ำกว่า 15,000 $
+- [ ] 15,001 - 25,000 $
+- [ ] 25,001 - 35,000 $
+- [ ] 35,001 - 50,000 $
+- [ ] 50,001 - 75,000 $
+- [ ] 75,001 - 100,000 $
+- [ ] มากกว่า 100,000 $
 
 ---
 
-### ข้อที่ 4: คุณเทรดมานานเท่าไหร่?
+## 📍 Section 2: ประสบการณ์การTrading (Trading Experience)
 
-**ประเภท:** Multiple Choice (เลือก 1 คำตอบ)
+---
 
-- [ ] ยังไม่เคยเทรด (หาข้อมูลอยู่)
-- [ ] น้อยกว่า 6 เดือน
-- [ ] 6 เดือน - 1 ปี
+### ข้อAt 4: YouTradingมานานเท่าไหร่?
+
+**Type:** Multiple Choice (เลือก 1 คำตอบ)
+
+- [ ] ยังNoเคยTrading (หาInformationอยู่)
+- [ ] น้อยกว่า 6 month
+- [ ] 6 month - 1 ปี
 - [ ] 1-3 ปี
 - [ ] 3-5 ปี
 - [ ] มากกว่า 5 ปี
 
 ---
 
-### ข้อที่ 5: คุณเทรดคู่เงิน / สินทรัพย์อะไรบ้าง? (เลือกได้มากกว่า 1 ข้อ)
+### ข้อAt 5: YouTradingคู่เงิน / สินทรัพย์อะไรบ้าง? (เลือกได้มากกว่า 1 ข้อ)
 
-**ประเภท:** Checkboxes (เลือกได้มากกว่า 1 คำตอบ)
+**Type:** Checkboxes (เลือกได้มากกว่า 1 คำตอบ)
 
-- [ ] XAUUSD (ทองคำ)
+- [ ] XAUUSD (Gold)
 - [ ] EUR/USD
 - [ ] GBP/USD
 - [ ] USD/JPY
 - [ ] USD/THB
-- [ ] คริปโตเคอร์เรนซี (BTC, ETH ฯลฯ)
-- [ ] หุ้นไทย
-- [ ] หุ้นต่างประเทศ
-- [ ] น้ำมัน / สินค้าโภคภัณฑ์อื่น
+- [ ] Cryptocurrencyเคอร์เรนซี (BTC, ETH ฯลฯ)
+- [ ] หุ้นThai
+- [ ] หุ้นต่างCountry
+- [ ] น้ำมัน / Productโภคภัณฑ์อื่น
 - [ ] อื่นๆ: _____________
 
 ---
 
-### ข้อที่ 6: คุณใช้แพลตฟอร์มเทรดอะไร?
+### ข้อAt 6: YouUseแพลตฟอร์มTradingอะไร?
 
-**ประเภท:** Multiple Choice (เลือก 1 คำตอบ)
+**Type:** Multiple Choice (เลือก 1 คำตอบ)
 
 - [ ] MT4 (MetaTrader 4)
 - [ ] MT5 (MetaTrader 5)
 - [ ] TradingView
 - [ ] cTrader
-- [ ] โบรกเกอร์เฉพาะ (ตัวอย่าง: Exness, XM, FBS)
+- [ ] โบรกเกอร์Exclusive (Example: Exness, XM, FBS)
 - [ ] หลายแพลตฟอร์ม
-- [ ] ยังไม่ได้ใช้
+- [ ] ยังNoได้Use
 
 ---
 
-## 📍 Section 3: Pain Points / ปัญหาที่เจอ (Pain Points)
+## 📍 Section 3: Pain Points / ProblemAtเจอ (Pain Points)
 
 ---
 
-### ข้อที่ 7: ปัญหาใหญ่ที่สุดที่คุณเจอเวลาเทรดทองคำคืออะไร? (เลือกได้มากกว่า 1 ข้อ)
+### ข้อAt 7: Problemใหญ่AtสุดAtYouเจอTimeTradingGoldคืออะไร? (เลือกได้มากกว่า 1 ข้อ)
 
-**ประเภท:** Checkboxes (เลือกได้มากกว่า 1 คำตอบ)
+**Type:** Checkboxes (เลือกได้มากกว่า 1 คำตอบ)
 
-- [ ] หาจุดเข้าไม่ถูก เข้าผิดจุดบ่อย
-- [ ] กำไรน้อย ออกเร็วเกินไป
-- [ ] ขาดทุนบ่อย ไม่มีระบบชัดเจน
-- [ ] นั่งเฝ้าจอเหนื่อย ไม่มีเวลา
-- [ ] ควบคุมอารมณ์ไม่ได้ (FOMO, โลภ, กลัว)
-- [ ] ไม่รู้จะตั้ง Stop Loss ที่ไหน
-- [ ] ไม่เข้าใจ Smart Money / การวิเคราะห์ธนาคาร
-- [ ] ใช้ EA แล้วขาดทุน (Martingale, สูตรเสีย)
-- [ ] ไม่มีเวลาเฝ้าจอ เป็นพนักงานเต็มเวลา
+- [ ] หาPointEnterNoถูก EnterผิดPointบ่อย
+- [ ] Profitน้อย ออกเร็วเกินไป
+- [ ] Lossบ่อย NoHasระบบชัดเจน
+- [ ] นั่งเฝ้าจอเหนื่อย NoHasTime
+- [ ] ControlEmotionNoได้ (FOMO, โลภ, กลัว)
+- [ ] Noรู้จะตั้ง Stop Loss Atไหน
+- [ ] NoEnterใจ Smart Money / การAnalyzeธนาคาร
+- [ ] Use EA AlreadyLoss (Martingale, สูตรเสีย)
+- [ ] NoHasTimeเฝ้าจอ เป็นพนักงานเต็มTime
 - [ ] อื่นๆ: _____________
 
 ---
 
-### ข้อที่ 8: คุณเคยใช้ EA (Expert Advisor) หรือระบบเทรดอัตโนมัติไหม?
+### ข้อAt 8: YouเคยUse EA (Expert Advisor) OrระบบAutomated Tradingไหม?
 
-**ประเภท:** Multiple Choice (เลือก 1 คำตอบ)
+**Type:** Multiple Choice (เลือก 1 คำตอบ)
 
-- [ ] เคยใช้และผลดี
-- [ ] เคยใช้และผลแย่ / ขาดทุน
-- [ ] เคยใช้หลายตัว ผลมั่วคือบ้าดีบ้าร้าย
-- [ ] ไม่เคยใช้ แต่สนใจอยากลอง
-- [ ] ไม่เคยใช้ และไม่สนใจ
-
----
-
-### ข้อที่ 9: ถ้าคุณเคยใช้ EA และผลไม่ดี เหตุผลหลักคืออะไร?
-
-**ประเภท:** Checkboxes (เลือกได้มากกว่า 1 คำตอบ)
-
-- [ ] ใช้ Martingale / เพิ่ม Lot จนพังบัญชี
-- [ ] ไม่มี Stop Loss / Stop Loss กว้างเกินไป
-- [ ] ผลลัพธ์ไม่ตรงกับ Backtest
-- [ ] ไม่มีคนสนับสนุนเวลาเจอปัญหา
-- [ ] ใช้บนคู่เงินที่ EA ไม่เชี่ยวชาญ
-- [ ] ไม่เข้าใจวิธีตั้งค่า
-- [ ] ไม่มี Dashboard ดูสถานะไม่ได้
-- [ ] ไม่ได้ใช้ / ข้ามข้อนี้
+- [ ] เคยUseandPerformanceดี
+- [ ] เคยUseandPerformanceแย่ / Loss
+- [ ] เคยUseหลายItem Performanceมั่วคือบ้าดีบ้าร้าย
+- [ ] NoเคยUse แต่สนใจอยากลอง
+- [ ] NoเคยUse andNoสนใจ
 
 ---
 
-## 📍 Section 4: ความต้องการฟีเจอร์ (Feature Preferences)
+### ข้อAt 9: IfYouเคยUse EA andPerformanceNoดี เหตุPerformanceหลักคืออะไร?
+
+**Type:** Checkboxes (เลือกได้มากกว่า 1 คำตอบ)
+
+- [ ] Use Martingale / Add Lot จนพังAccounts
+- [ ] NoHas Stop Loss / Stop Loss กว้างเกินไป
+- [ ] ResultNoตรงกับ Backtest
+- [ ] NoHasคนสนับสนุนTimeเจอProblem
+- [ ] UseOnคู่เงินAt EA Noเชี่ยวชาญ
+- [ ] NoEnterใจวิธีSettings
+- [ ] NoHas Dashboard ViewStatusNoได้
+- [ ] Noได้Use / ข้ามข้อThis
 
 ---
 
-### ข้อที่ 10: ฟีเจอร์ใดที่คุณสนใจมากที่สุดใน EA เทรดทองคำ? (เลือกได้มากกว่า 1 ข้อ)
+## 📍 Section 4: NeedsFeature (Feature Preferences)
 
-**ประเภท:** Checkboxes (เลือกได้มากกว่า 1 คำตอบ)
+---
 
-- [ ] Smart Money Concepts / PA Filters (วิเคราะห์จุดเข้าแม่นยำ)
-- [ ] ระบบปิดกำไรหลายระดับ (เช่น 3-Wave Cashout)
-- [ ] SaaS Dashboard (ดูสถานะการเทรดแบบเรียลไทม์)
-- [ ] Kill Switch ฉุกเฉิน (ปิดทุกสถานะทันที)
-- [ ] Auto Risk Management (จัดการ Lot Size อัตโนมัติ)
-- [ ] รองรับหลายบัญชี MT5
-- [ ] การแจ้งเตือนผ่าน Line / Telegram
-- [ ] รายงานสรุปผลรายสัปดาห์/เดือน
+### ข้อAt 10: FeatureใดAtYouสนใจมากAtสุดใน EA TradingGold? (เลือกได้มากกว่า 1 ข้อ)
+
+**Type:** Checkboxes (เลือกได้มากกว่า 1 คำตอบ)
+
+- [ ] Smart Money Concepts / PA Filters (AnalyzePointEnterแม่นยำ)
+- [ ] ระบบCloseProfitหลายระดับ (เช่น 3-Wave Cashout)
+- [ ] SaaS Dashboard (ViewStatusการTradingStyleเรียลไทม์)
+- [ ] Kill Switch ฉุกเฉิน (CloseAllStatusทันที)
+- [ ] Auto Risk Management (Manage Lot Size Automated)
+- [ ] รองรับหลายMT5 Accounts
+- [ ] การNotificationผ่าน Line / Telegram
+- [ ] ReportsสรุปPerformanceรายสัปดาห์/month
 - [ ] อื่นๆ: _____________
 
 ---
 
-### ข้อที่ 11: คุณต้องการให้ EA เทรดคู่เงินใดนอกจาก XAUUSD? (เลือกได้มากกว่า 1 ข้อ)
+### ข้อAt 11: Youต้องการให้ EA Tradingคู่เงินใดนอกfrom XAUUSD? (เลือกได้มากกว่า 1 ข้อ)
 
-**ประเภท:** Checkboxes (เลือกได้มากกว่า 1 คำตอบ)
+**Type:** Checkboxes (เลือกได้มากกว่า 1 คำตอบ)
 
-- [ ] ไม่ต้องการ เทรด XAUUSD อย่างเดียวพอ
+- [ ] Noต้องการ Trading XAUUSD อย่างSingleพอ
 - [ ] EUR/USD
 - [ ] GBP/USD
 - [ ] USD/JPY
@@ -187,12 +187,12 @@
 
 ---
 
-### ข้อที่ 12: คุณใช้เวลาเฝ้าจอเทรดวันละเท่าไหร่?
+### ข้อAt 12: YouUseTimeเฝ้าจอTradingdaysละเท่าไหร่?
 
-**ประเภท:** Multiple Choice (เลือก 1 คำตอบ)
+**Type:** Multiple Choice (เลือก 1 คำตอบ)
 
-- [ ] น้อยกว่า 30 นาที (แทบไม่ได้เฝ้า)
-- [ ] 30 นาที - 1 ชั่วโมง
+- [ ] น้อยกว่า 30 minutes (แทบNoได้เฝ้า)
+- [ ] 30 minutes - 1 ชั่วโมง
 - [ ] 1-2 ชั่วโมง
 - [ ] 2-4 ชั่วโมง
 - [ ] 4-6 ชั่วโมง
@@ -200,96 +200,96 @@
 
 ---
 
-## 📍 Section 5: ราคาและการตัดสินใจ (Pricing & Decision)
+## 📍 Section 5: Priceandการตัดสินใจ (Pricing & Decision)
 
 ---
 
-### ข้อที่ 13: คุณยินดีจ่ายเท่าไหร่ต่อเดือนสำหรับ EA เทรดทองคำอัตโนมัติที่ดี?
+### ข้อAt 13: Youยินดีจ่ายเท่าไหร่/monthFor EA TradingGoldAutomatedAtดี?
 
-**ประเภท:** Multiple Choice (เลือก 1 คำตอบ)
+**Type:** Multiple Choice (เลือก 1 คำตอบ)
 
-- [ ] น้อยกว่า 500 ฿/เดือน
-- [ ] 500 - 1,000 ฿/เดือน
-- [ ] 1,001 - 2,500 ฿/เดือน
-- [ ] 2,501 - 5,000 ฿/เดือน
-- [ ] 5,001 - 10,000 ฿/เดือน
-- [ ] มากกว่า 10,000 ฿/เดือน
-- [ ] ต้องการใช้ฟรีเท่านั้น
+- [ ] น้อยกว่า 500 $/month
+- [ ] 500 - 1,000 $/month
+- [ ] 1,001 - 2,500 $/month
+- [ ] 2,501 - 5,000 $/month
+- [ ] 5,001 - 10,000 $/month
+- [ ] มากกว่า 10,000 $/month
+- [ ] ต้องการUseFreeOnly
 
 ---
 
-### ข้อที่ 14: ปัจจัยใดสำคัญที่สุดเวลาตัดสินใจซื้อ EA? (เรียงลำดับความสำคัญ 1 = สำคัญที่สุด)
+### ข้อAt 14: ปัจจัยใดสำคัญAtสุดTimeตัดสินใจBuy EA? (Sortความสำคัญ 1 = สำคัญAtสุด)
 
-**ประเภท:** Ranking (จัดอันดับ 1-5)
+**Type:** Ranking (จัดอันดับ 1-5)
 
-- [ ] ผล Backtest ที่โปร่งใสและตรวจสอบได้
-- [ ] ราคาที่เหมาะสม
+- [ ] Performance Backtest Atโปร่งใสandตรวจสอบได้
+- [ ] PriceAtเหมาะสม
 - [ ] การสนับสนุนหลังขาย (สอบถามได้)
-- [ ] ฟีเจอร์ที่ตอบโจทย์ความต้องการ
-- [ ] รีวิว/คำแนะนำจากผู้ใช้จริง
+- [ ] FeatureAtตอบโจทย์Needs
+- [ ] รีวิว/คำแนะนำfromผู้Useจริง
 
 ---
 
-### ข้อที่ 15: คุณต้องการรับข้อมูล/อัปเดตเกี่ยวกับ EA ผ่านช่องทางใด? (เลือกได้มากกว่า 1 ข้อ)
+### ข้อAt 15: Youต้องการรับInformation/Updateเกี่ยวกับ EA ผ่านChannelใด? (เลือกได้มากกว่า 1 ข้อ)
 
-**ประเภท:** Checkboxes (เลือกได้มากกว่า 1 คำตอบ)
+**Type:** Checkboxes (เลือกได้มากกว่า 1 คำตอบ)
 
 - [ ] Line OA
-- [ ] Facebook Page / กลุ่ม Facebook
+- [ ] Facebook Page / Group Facebook
 - [ ] YouTube
 - [ ] TikTok
 - [ ] Telegram
-- [ ] อีเมล
-- [ ] เว็บไซต์ / บล็อก
+- [ ] Email
+- [ ] Website / Blog
 - [ ] Twitter/X
 - [ ] อื่นๆ: _____________
 
 ---
 
-## 📍 หน้าขอบคุณ (Thank You Page)
+## 📍 PageThank You (Thank You Page)
 
 ```
-ขอบคุณที่สละเวลาตอบแบบสำรวจ! 🙏
+Thank YouAtสละTimeตอบSurvey! 🙏
 
-ความคิดเห็นของคุณจะช่วยเราปรับปรุงผลิตภัณฑ์ให้ตอบโจทย์เทรดเดอร์ทองคำมากขึ้น
+ความคิดเห็นของYouจะช่วยเราImprovePerformanceิตภัณฑ์ให้ตอบโจทย์Tradingเดอร์GoldมากUp
 
-🎁 ของขวัญพิเศษ: รหัสส่วนลด 10% สำหรับสมัชิก TradeCandle
-รหัส: SURVEY10 (ใช้ได้ถึง 30 วัน)
+🎁 ของขวัญพิเศษ: รหัสส่วนลด 10% Forสมัชิก TradeCandle
+รหัส: SURVEY10 (Useได้ถึง 30 days)
 
-👉 สนใจทดลองใช้ฟรี 14 วัน: tradecandle.ai
-💬 สอบถามเพิ่มเติม: Line @tradecandle
+👉 สนใจFree Trial 14 days: tradecandle.ai
+💬 สอบถามMore: Line @tradecandle
 ```
 
 ---
 
-## 📊 วิธีวิเคราะห์ผลแบบสำรวจ
+## 📊 วิธีAnalyzePerformanceSurvey
 
-### ข้อมูลที่คาดว่าจะได้:
+### InformationAtคาดว่าจะได้:
 
-| ข้อ | ข้อมูลที่ได้ | การนำไปใช้ |
+| ข้อ | InformationAtได้ | การนำไปUse |
 |---|---|---|
-| 1-3 (Demographics) | อายุ, อาชีพ, รายได้ | กำหนดกลุ่มเป้าหมายและราคา |
-| 4 (ประสบการณ์) | ระดับความเชี่ยวชาญ | ปรับเนื้อหาการตลาด |
-| 5-6 (คู่เงิน/แพลตฟอร์ม) | พฤติกรรมการเทรด | กำหนดฟีเจอร์ |
-| 7 (Pain Points) | ปัญหาหลัก | ใช้เป็น Copy การตลาด |
-| 8-9 (ประสบการณ์ EA) | ประสบการณ์ EA เดิม | กำหนดจุดขาย |
-| 10 (ฟีเจอร์) | ฟีเจอร์ที่ต้องการ | จัดลำดับพัฒนา |
-| 11 (คู่เงินเพิ่ม) | ศักยภาพขยายตลาด | แผน Roadmap |
-| 12 (เวลาเฝ้าจอ) | ความต้องการอัตโนมัติ | เน้นเสียงการตลาด |
-| 13 (ราคา) | Willingness to Pay | กำหนดราคาสมาชิก |
-| 14 (ปัจจัยตัดสินใจ) | ลำดับความสำคัญ | จัดลำดับข้อความการตลาด |
-| 15 (ช่องทาง) | ช่องทางสื่อ | จัดสรรงบประมาณโฆษณา |
+| 1-3 (Demographics) | อายุ, อาชีพ, รายได้ | กำหนดGroupGoalandPrice |
+| 4 (ประสบการณ์) | ระดับความเชี่ยวชาญ | ปรับContentการตลาด |
+| 5-6 (คู่เงิน/แพลตฟอร์ม) | พฤติกรรมการTrading | กำหนดFeature |
+| 7 (Pain Points) | Problemหลัก | Useเป็น Copy การตลาด |
+| 8-9 (ประสบการณ์ EA) | ประสบการณ์ EA เดิม | กำหนดPointขาย |
+| 10 (Feature) | FeatureAtต้องการ | จัดลำดับพัฒนา |
+| 11 (คู่เงินAdd) | ศักยภาพExpandตลาด | แผน Roadmap |
+| 12 (Timeเฝ้าจอ) | NeedsAutomated | เน้นSoundการตลาด |
+| 13 (Price) | Willingness to Pay | กำหนดPriceMember |
+| 14 (ปัจจัยตัดสินใจ) | ลำดับความสำคัญ | จัดลำดับMessageการตลาด |
+| 15 (Channel) | Channelสื่อ | จัดสรรงบประมาณAdvertisement |
 
 ---
 
-## 📝 คำแนะนำการสร้าง Google Forms
+## 📝 คำแนะนำการCreate Google Forms
 
-1. **สร้าง Google Form ใหม่** → forms.google.com
-2. **ตั้งชื่อ:** "แบบสำรวจความต้องการเทรดเดอร์ XAUUSD"
-3. **เพิ่มรูป Header:** โลโก้ TradeCandle สีทอง+ดำ
-4. **แบ่ง Section** ตามด้านบน (5 Sections)
-5. **ตั้งค่าข้อ 14** เป็นประเภท Ranking (เปลี่ยนเป็น Multiple Choice Grid ถ้าไม่มี Ranking)
-6. **เปิด收集อีเมล** ถ้าต้องการส่งรหัสส่วนลด
-7. **เพิ่ม Logic Branching:** ข้อ 9 แสดงเมื่อข้อ 8 = เคยใช้ EA
-8. **Preview** ทดสอบก่อนเผยแพร่
-9. **แชร์ลิงก์** ผ่าน Line OA, Facebook, TikTok
+1. **Create Google Form ใหม่** → forms.google.com
+2. **ตั้งName:** "SurveyNeedsTradingเดอร์ XAUUSD"
+3. **Addรูป Header:** Logo TradeCandle สีGold+Black
+4. **แบ่ง Section** ตามด้านOn (5 Sections)
+5. **Settingsข้อ 14** เป็นType Ranking (เปลี่ยนเป็น Multiple Choice Grid IfNoHas Ranking)
+6. **Open收集Email** Ifต้องการSubmitรหัสส่วนลด
+7. **Add Logic Branching:** ข้อ 9 Showเมื่อข้อ 8 = เคยUse EA
+8. **Preview** Testก่อนเผยแพร่
+9. **ShareLink** ผ่าน Line OA, Facebook, TikTok

@@ -1,106 +1,106 @@
-# 📢 Facebook Ads — TradeCandle EA v12 (3 แบบ)
+# 📢 Facebook Ads — TradeCandle EA v12 (3 Style)
 
 ---
 
-## Ad 1: 🔥 Pain Point — "เทรดทองเอง เสียมากกว่าได้"
+## Ad 1: 🔥 Pain Point — "Trading Gold Yourself Lose More Thanได้"
 
-### หัวข้อโฆษณา
-เทรดทองเอง เสียมากกว่าได้?
+### Ad Headline
+Trading Gold Yourself Lose More Thanได้?
 
-### ข้อความหลัก
-ทุกวันนั่งดูจอ รอจังหวะเข้า เผลออารมณ์เข้าก่อน → ขาดทุน
+### Messageหลัก
+Alldaysนั่งViewจอ รอจังหวะEnter เPerformanceอEmotionEnterก่อน → Loss
 จะตั้ง SL ก็กลัวโดนหวาย จะถือขานก็หวาดเสียว
 
-TradeCandle EA v12 เทรดให้อัตโนมัติ
-✅ 3-Wave Cashout — ปิดกำไรทีละคลื่น ไม่โลภ
-✅ 6 Smart Money Filters — ยืนยันก่อนเข้า
-✅ SaaS Dashboard — ควบคุมจากเว็บ ไม่ต้องนั่งดูจอ
+TradeCandle EA v12 Tradingให้Automated
+✅ 3-Wave Cashout — CloseProfitOne Wave at a Time Noโลภ
+✅ 6 Smart Money Filters — Confirmก่อนEnter
+✅ SaaS Dashboard — ControlfromWebsite Noต้องนั่งViewจอ
 
-เริ่มต้น 990฿/เดือน → ลองฟรี 7 วัน
-👇 กดลิงก์ ดูรายละเอียด
+Get Started 990$/month → ลองFree 7 days
+👇 กดLink ViewDetails
 
-### รูปภาพ
-ทองแท่ง + กราฟ สีดำทอง มีข้อความ overlay: "ปิดกำไร 3 คลื่น ไม่ต้องนั่งดูจอ"
+### Image
+Goldแท่ง + Chart สีBlackGold HasMessage overlay: "CloseProfit 3 คลื่น Noต้องนั่งViewจอ"
 
 ### CTA
-เรียนรู้เพิ่มเติม
+เรียนรู้More
 
 ### Targeting
 - อายุ 25-50
-- สนใจ: ทอง, Forex, MT4/MT5, เทรด, การลงทุน
-- พื้นที่: ไทย
+- สนใจ: Gold, Forex, MT4/MT5, Trading, การลงทุน
+- พื้นAt: Thai
 
 ---
 
-## Ad 2: 💰 Social Proof — "กำไร 4,858$ ใน 1 ปี Backtest"
+## Ad 2: 💰 Social Proof — "Profit 4,858$ ใน 1 ปี Backtest"
 
-### หัวข้อโฆษณา
-Backtest 1 ปี: กำไร $4,858 | Win Rate 74.75%
+### Ad Headline
+Backtest 1 ปี: Profit $4,858 | Win Rate 74.75%
 
-### ข้อความหลัก
-EA เทรดทอง XAUUSD ตัวนี้ ผล Backtest 1 ปี:
-💰 กำไรสุทธิ $4,858
-📊 Win Rate 74.75% — ชนะ 3 ใน 4 รอบ
+### Messageหลัก
+EA Gold Trading XAUUSD ItemThis Performance Backtest 1 ปี:
+💰 Profitสุทธิ $4,858
+📊 Win Rate 74.75% — ชนะ 3 ใน 4 Round
 📉 Max Drawdown เพียง $544
 ⚡ Recovery Factor 8.93
 
 ยังด้วย:
-• 3-Wave Cashout™ — ปิดบางส่วนทุกระดับ
-• Smart Money 6 Filter — กรองสัญญาณกลับทิศ
-• SaaS Dashboard — คุมจากมือถือ
+• 3-Wave Cashout™ — Closeบางส่วนAllระดับ
+• Smart Money 6 Filter — FilterSignalsReturn/Reverseทิศ
+• SaaS Dashboard — Controlfromมือถือ
 
-เริ่ม 990฿/เดือน | ทดลอง 7 วันฟรี
-👇 ดู Backtest เต็ม
+Beginner 990$/month | ทดลอง 7 daysFree
+👇 View Backtest เต็ม
 
-### รูปภาพ
-Screenshot Backtest Summary พร้อมตัวเลขไฮไลท์ สีดำทอง
+### Image
+Screenshot Backtest Summary ReadyItemเลขไฮไลท์ สีBlackGold
 
 ### CTA
-ดูผล Backtest
+ViewPerformance Backtest
 
 ### Targeting
-- Lookalike จากคนที่ click ad 1
-- Retargeting คนที่เข้าเว็บแล้วไม่ซื้อ
+- Lookalike fromคนAt click ad 1
+- Retargeting คนAtEnterWebsiteAlreadyNoBuy
 
 ---
 
-## Ad 3: 🧠 Feature Focus — "Smart Money ยืนยันสัญญาณให้"
+## Ad 3: 🧠 Feature Focus — "Smart Money ConfirmSignalsให้"
 
-### หัวข้อโฆษณา
-EA ทองที่เข้าใจ Smart Money
+### Ad Headline
+EA GoldAtEnterใจ Smart Money
 
-### ข้อความหลัก
-EA ธรรมดาเข้าตา Indicator อย่างเดียว
-TradeCandle v12 ใช้ 6 PA/SMC Filter ยืนยันให้:
+### Messageหลัก
+EA ธรรมดาEnterตา Indicator อย่างSingle
+TradeCandle v12 Use 6 PA/SMC Filter Confirmให้:
 
-🔍 Break of Structure — ยืนยันเทรนด์เปลี่ยน
+🔍 Break of Structure — ConfirmTrendเปลี่ยน
 🔲 Order Block — หาโซนสถาบัน
-📐 Fair Value Gap — จับช่องว่างราคา
-💧 Liquidity Sweep — ดักจับการดูดสภาพคล่อง
+📐 Fair Value Gap — จับSpacePrice
+💧 Liquidity Sweep — ดักจับการViewดสภาพคล่อง
 📊 Supply/Demand — หาโซนอุปสงค์-อุปทาน
-🔄 CHoCH — จับจังหวะกลับทิศ
+🔄 CHoCH — จับจังหวะReturn/Reverseทิศ
 
-ทั้งหมดเป็น BONUS scoring — ไม่บล็อก ไม่ over-filter
-เข้าบวกคะแนน = มั่นใจขึ้น
+Allเป็น BONUS scoring — NoBlog No over-filter
+Enterบวกคะแนน = มั่นใจUp
 
-ลองเอง 7 วันฟรี 👇
+ลองเอง 7 daysFree 👇
 
-### รูปภาพ
-Infographic แสดง 6 filters เป็นไอคอน สีดำทอง
+### Image
+Infographic Show 6 filters เป็นIcon สีBlackGold
 
 ### CTA
-ทดลองใช้ฟรี
+Free Trial
 
 ### Targeting
 - สนใจ: Smart Money Concept, ICT, Order Block, SMC trading
-- Retargeting จาก ad 1+2
+- Retargeting from ad 1+2
 
 ---
 
 ## งบประมาณแนะนำ
-| ช่วง | งบ/วัน | วัน | รวม |
+| Period | งบ/days | days | รวม |
 |------|---------|-----|------|
-| Launch สัปดาห์ 1 | 500฿ | 7 | 3,500฿ |
-| Launch สัปดาห์ 2 | 300฿ | 7 | 2,100฿ |
-| รักษาระดับ | 200฿ | 14 | 2,800฿ |
-| **รวม 28 วัน** | | | **8,400฿** |
+| Launch สัปดาห์ 1 | 500$ | 7 | 3,500$ |
+| Launch สัปดาห์ 2 | 300$ | 7 | 2,100$ |
+| รักษาระดับ | 200$ | 14 | 2,800$ |
+| **รวม 28 days** | | | **8,400$** |

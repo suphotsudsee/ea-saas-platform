@@ -43,22 +43,22 @@ function draw() {
 
   fill(GOLD);
   textSize(28);
-  text('อ่านทรงสตรัคเจอร์อัตโนมัติ', W / 2, 95);
+  text('ReadStructureAutomated', W / 2, 95);
 
   // Subtitle
   fill(180);
   textSize(18);
   textStyle(NORMAL);
-  text('TradeCandle v11 วิเคราะห์ Smart Money ทั้ง 6 ฟิลเตอร์ให้อัตโนมัติ', W / 2, 135);
+  text('TradeCandle v11 Analyze Smart Money All 6 Filterให้Automated', W / 2, 135);
 
   // 6 filter cards
   const filters = [
-    { name: 'BOS', full: 'Break of Structure', desc: 'ตรวจจับการเปลี่ยนทิศทาง\nของเทรนด์หลัก', color: GREEN, icon: '📈' },
-    { name: 'CHoCH', full: 'Change of Character', desc: 'จับจังหวะเปลี่ยนเทรนด์\nจากบึ้งเป็นขึ้นหรือกลับกัน', color: AMBER, icon: '🔄' },
-    { name: 'Order Block', full: 'OB Zone', desc: 'ระบุโซนที่สถาบัน\nเข้าเทรดรวมกัน', color: '#8B5CF6', icon: '🧱' },
-    { name: 'FVG', full: 'Fair Value Gap', desc: 'ตรวจจับช่องว่างราคา\nที่ยังไม่ถูกเติม', color: '#EC4899', icon: '⚡' },
-    { name: 'Liquidity\nSweep', full: 'Liquidity Sweep', desc: 'จับภาพการดึงราคาไป\nเก็บสต็อปก่อนกลับทิศ', color: '#F97316', icon: '🎯' },
-    { name: 'S/D Zone', full: 'Supply & Demand', desc: 'ระบุโซนอุปสงค์-อุปทาน\nที่ราคาจะตอบสนอง', color: '#06B6D4', icon: '⚖️' }
+    { name: 'BOS', full: 'Break of Structure', desc: 'DetectDirection Changeทาง\nของTrendหลัก', color: GREEN, icon: '📈' },
+    { name: 'CHoCH', full: 'Change of Character', desc: 'จับจังหวะเปลี่ยนTrend\nfromบึ้งเป็นUpOrReturn/ReverseTogether', color: AMBER, icon: '🔄' },
+    { name: 'Order Block', full: 'OB Zone', desc: 'ระบุโซนAtสถาบัน\nEnterTradingรวมTogether', color: '#8B5CF6', icon: '🧱' },
+    { name: 'FVG', full: 'Fair Value Gap', desc: 'DetectSpacePrice\nAtยังNoถูกเติม', color: '#EC4899', icon: '⚡' },
+    { name: 'Liquidity\nSweep', full: 'Liquidity Sweep', desc: 'จับภาพการดึงPriceไป\nเก็บสต็อปก่อนReturn/Reverseทิศ', color: '#F97316', icon: '🎯' },
+    { name: 'S/D Zone', full: 'Supply & Demand', desc: 'ระบุโซนอุปสงค์-อุปทาน\nAtPriceจะตอบสนอง', color: '#06B6D4', icon: '⚖️' }
   ];
 
   const startY = 200;
@@ -132,7 +132,7 @@ function draw() {
   textAlign(CENTER, CENTER);
   textSize(26);
   textStyle(BOLD);
-  text('6 ฟิลเตอร์ทำงานร่วมกัน → สัญญาณเทรดคุณภาพสูง', W / 2, 840);
+  text('6 Filterทำงานร่วมTogether → SignalsTradingYouภาพHigh', W / 2, 840);
 
   // Mini chart visualization at bottom
   drawMiniChart(150, 930, 900, 160);
@@ -144,7 +144,7 @@ function draw() {
   textAlign(CENTER, CENTER);
   textSize(24);
   textStyle(BOLD);
-  text('เริ่ม 7 วันฟรี → No Credit Card', W / 2, 1177);
+  text('Beginner 7 daysFree → No Credit Card', W / 2, 1177);
 
   fill(130);
   textSize(14);

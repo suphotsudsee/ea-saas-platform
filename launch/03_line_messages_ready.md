@@ -1,33 +1,33 @@
-# 7C — 3 ข้อความ Line OA Broadcast (ส่งได้เลย)
-## TradeCandle v11 — Copy → วาง → ส่ง
+# 7C — 3 Message Line OA Broadcast (SubmitRight Away)
+## TradeCandle v11 — Copy → Paste → Submit
 
 ---
 
-## 💬 ข้อความที่ 1: Teaser (ก่อนเปิดตัว 2 วัน — วันจันทร์ 19:00)
+## 💬 MessageAt 1: Teaser (ก่อนOpenItem 2 days — daysMonday 19:00)
 
 ### Line Broadcast — Flex Message
 
 ```
-สวัสดีครับ 🙏
+Hello 🙏
 
-มีของดีจะประกาศวันพุธนี้! 👀
+Great News to AnnouncedaysWednesdayThis! 👀
 
-เคยเทรดทองแล้วกำไรหายไประหว่างทางไหมครับ?
-หรือนั่งดูกราฟทั้งคืนแต่ยังเทรดไม่ได้เรื่อง?
+เคยGold TradingAlreadyProfitLost Along the Wayไหมครับ?
+Orนั่งViewChartAllคืนแต่ยังTradingNoได้About?
 
-วันพุธนี้ เรามีเรื่องจะบอก 🤫
+daysWednesdayThis เราHasAboutจะบอก 🤫
 
-📌 กดเพิ่มเพื่อนเลย → จะได้รับสิทธิพิเศษก่อนใคร!
+📌 กดAddFriendsเลย → จะได้รับสิทธิพิเศษก่อนใคร!
 ```
 
-### 🔧 Line API Format (สำหรับ broadcast endpoint):
+### 🔧 Line API Format (For broadcast endpoint):
 
 ```json
 {
   "messages": [
     {
       "type": "flex",
-      "altText": "มีของดีจะประกาศวันพุธนี้!",
+      "altText": "Great News to AnnouncedaysWednesdayThis!",
       "contents": {
         "type": "bubble",
         "body": {
@@ -36,14 +36,14 @@
           "contents": [
             {
               "type": "text",
-              "text": "🔥 มีของดีจะประกาศ",
+              "text": "🔥 Great News to Announce",
               "weight": "bold",
               "size": "xl",
               "color": "#D4AF37"
             },
             {
               "type": "text",
-              "text": "วันพุธนี้!",
+              "text": "daysWednesdayThis!",
               "weight": "bold",
               "size": "lg",
               "color": "#FFFFFF",
@@ -55,7 +55,7 @@
             },
             {
               "type": "text",
-              "text": "เคยเทรดทองแล้วกำไรหายไประหว่างทาง?\nหรือนั่งดูกราฟทั้งคืนแต่ยังเทรดไม่ได้เรื่อง?\n\nเรามีคำตอบให้ 👀",
+              "text": "เคยGold TradingAlreadyProfitLost Along the Way?\nOrนั่งViewChartAllคืนแต่ยังTradingNoได้About?\n\nเราHasคำตอบให้ 👀",
               "size": "md",
               "color": "#B0B0B0",
               "margin": "lg",
@@ -89,27 +89,27 @@
 
 ---
 
-## 💬 ข้อความที่ 2: Launch Day (วันเปิดตัว — วันพุธ 10:00)
+## 💬 MessageAt 2: Launch Day (daysOpenItem — daysWednesday 10:00)
 
 ### Line Broadcast — Flex Message
 
 ```
-🚀 เปิดตัวแล้ว! TradeCandle v11
+🚀 OpenItemAlready! TradeCandle v11
 
-AI เทรดทองอัตโนมัติบน MT5
-✅ 3-Wave Cashout — ปิดกำไร 3 รอบ
-✅ 6 Smart Money ฟิลเตอร์ — อ่านทรงสตรัคเจอร์ให้
-✅ Dashboard คุมจากมือถือ + Kill Switch
+AI Automated Gold TradingOn MT5
+✅ 3-Wave Cashout — CloseProfit 3 Round
+✅ 6 Smart Money Filter — ReadStructureให้
+✅ Dashboard Controlfromมือถือ + Kill Switch
 
-⚡ ส่วนลด 20% เฉพาะ 4 วันนี้!
-Starter: 990 → 792 ฿/เดือน
-Pro ⭐: 2,490 → 1,992 ฿/เดือน
-Elite: 4,990 → 3,992 ฿/เดือน
+⚡ ส่วนลด 20% Exclusive 4 daysThis!
+Starter: 990 → 792 $/month
+Pro ⭐: 2,490 → 1,992 $/month
+Elite: 4,990 → 3,992 $/month
 
-🎁 LINE EXCLUSIVE: เพิ่ม 3 วันฟรี (รวม 10 วันฟรี!)
-ไม่ต้องใส่USDT ✅
+🎁 LINE EXCLUSIVE: Add 3 daysFree (รวม 10 daysFree!)
+Noต้องใส่USDT ✅
 
-กดลิงก์เลย 👇
+กดLinkเลย 👇
 ```
 
 ### 🔧 Line API Format:
@@ -119,7 +119,7 @@ Elite: 4,990 → 3,992 ฿/เดือน
   "messages": [
     {
       "type": "flex",
-      "altText": "🚀 TradeCandle v11 เปิดตัวแล้ว! ส่วนลด 20% + LINE Exclusive +3 วันฟรี",
+      "altText": "🚀 TradeCandle v11 OpenItemAlready! ส่วนลด 20% + LINE Exclusive +3 daysFree",
       "contents": {
         "type": "bubble",
         "hero": {
@@ -135,7 +135,7 @@ Elite: 4,990 → 3,992 ฿/เดือน
           "contents": [
             {
               "type": "text",
-              "text": "🚀 เปิดตัวแล้ว!",
+              "text": "🚀 OpenItemAlready!",
               "weight": "bold",
               "size": "xl",
               "color": "#D4AF37"
@@ -149,7 +149,7 @@ Elite: 4,990 → 3,992 ฿/เดือน
             },
             {
               "type": "text",
-              "text": "AI เทรดทองอัตโนมัติ • 3-Wave Cashout • Smart Money ฟิลเตอร์ • Dashboard + Kill Switch",
+              "text": "AI Automated Gold Trading • 3-Wave Cashout • Smart Money Filter • Dashboard + Kill Switch",
               "size": "sm",
               "color": "#B0B0B0",
               "wrap": true,
@@ -166,28 +166,28 @@ Elite: 4,990 → 3,992 ฿/เดือน
               "contents": [
                 {
                   "type": "text",
-                  "text": "⚡ ส่วนลด 20% เฉพาะ 4 วัน!",
+                  "text": "⚡ ส่วนลด 20% Exclusive 4 days!",
                   "weight": "bold",
                   "size": "md",
                   "color": "#00C853"
                 },
                 {
                   "type": "text",
-                  "text": "Starter: 990 → 792฿/เดือน",
+                  "text": "Starter: 990 → 792$/month",
                   "size": "sm",
                   "color": "#FFFFFF",
                   "margin": "sm"
                 },
                 {
                   "type": "text",
-                  "text": "Pro ⭐: 2,490 → 1,992฿/เดือน",
+                  "text": "Pro ⭐: 2,490 → 1,992$/month",
                   "size": "sm",
                   "color": "#D4AF37",
                   "margin": "sm"
                 },
                 {
                   "type": "text",
-                  "text": "Elite: 4,990 → 3,992฿/เดือน",
+                  "text": "Elite: 4,990 → 3,992$/month",
                   "size": "sm",
                   "color": "#FFFFFF",
                   "margin": "sm"
@@ -211,7 +211,7 @@ Elite: 4,990 → 3,992 ฿/เดือน
                 },
                 {
                   "type": "text",
-                  "text": "เพิ่ม 3 วันฟรี = 10 วันฟรี!\nไม่ต้องใส่USDT ✅",
+                  "text": "Add 3 daysFree = 10 daysFree!\nNoต้องใส่USDT ✅",
                   "size": "sm",
                   "color": "#FFFFFF",
                   "margin": "xs",
@@ -229,7 +229,7 @@ Elite: 4,990 → 3,992 ฿/เดือน
               "type": "button",
               "action": {
                 "type": "uri",
-                "label": "🔥 ทดลอง 10 วันฟรี (LINE Exclusive)",
+                "label": "🔥 ทดลอง 10 daysFree (LINE Exclusive)",
                 "uri": "https://tradecandle.ai/?utm_source=line&utm_medium=broadcast&utm_campaign=launch_day&utm_content=line_exclusive"
               },
               "style": "primary",
@@ -239,7 +239,7 @@ Elite: 4,990 → 3,992 ฿/เดือน
               "type": "button",
               "action": {
                 "type": "uri",
-                "label": "ดูราคาทั้งหมด",
+                "label": "ViewPriceAll",
                 "uri": "https://tradecandle.ai/#pricing?utm_source=line&utm_medium=broadcast&utm_campaign=launch_day"
               },
               "style": "secondary",
@@ -257,23 +257,23 @@ Elite: 4,990 → 3,992 ฿/เดือน
 
 ---
 
-## 💬 ข้อความที่ 3: Urgency (ก่อนหมดโปรโมชั่น 1 วัน — วันอาทิตย์ 10:00 + 18:00)
+## 💬 MessageAt 3: Urgency (ก่อนหมดโปรโมชั่น 1 days — daysSunday 10:00 + 18:00)
 
 ### Line Broadcast — Flex Message
 
 ```
 ⏰ เหลือ 24 ชั่วโมง!
 
-ส่วนลด 20% หมดเขตคืนนี้ 23:59 ⏰
+ส่วนลด 20% หมดเขตคืนThis 23:59 ⏰
 
-Starter: 792฿/เดือน (ปกติ 990฿)
-Pro ⭐: 1,992฿/เดือน (ปกติ 2,490฿)
-Elite: 3,992฿/เดือน (ปกติ 4,990฿)
+Starter: 792$/month (ปกติ 990$)
+Pro ⭐: 1,992$/month (ปกติ 2,490$)
+Elite: 3,992$/month (ปกติ 4,990$)
 
-ผ่าน LINE ได้เพิ่ม 3 วันฟรี = 10 วัน!
-ไม่ต้องจ่ายก่อน ยกเลิกได้ทุกเมื่อ
+ผ่าน LINE ได้Add 3 daysFree = 10 days!
+Noต้องจ่ายก่อน Cancelได้Allเมื่อ
 
-ถ้ายังไม่แน่ใจ ถามเราก่อนได้ 👇
+IfยังNoแน่ใจ ถามเราก่อนได้ 👇
 ```
 
 ### 🔧 Line API Format:
@@ -283,7 +283,7 @@ Elite: 3,992฿/เดือน (ปกติ 4,990฿)
   "messages": [
     {
       "type": "flex",
-      "altText": "⏰ เหลือ 24 ชม.! ส่วนลด 20% หมดเขตคืนนี้!",
+      "altText": "⏰ เหลือ 24 ชม.! ส่วนลด 20% หมดเขตคืนThis!",
       "contents": {
         "type": "bubble",
         "body": {
@@ -299,7 +299,7 @@ Elite: 3,992฿/เดือน (ปกติ 4,990฿)
             },
             {
               "type": "text",
-              "text": "ส่วนลด 20% หมดเขตคืนนี้ 23:59",
+              "text": "ส่วนลด 20% หมดเขตคืนThis 23:59",
               "weight": "bold",
               "size": "lg",
               "color": "#D4AF37",
@@ -316,21 +316,21 @@ Elite: 3,992฿/เดือน (ปกติ 4,990฿)
               "contents": [
                 {
                   "type": "text",
-                  "text": "Starter: 792฿/เดือน",
+                  "text": "Starter: 792$/month",
                   "size": "md",
                   "color": "#FFFFFF",
                   "decoration": "none"
                 },
                 {
                   "type": "text",
-                  "text": "Pro ⭐: 1,992฿/เดือน",
+                  "text": "Pro ⭐: 1,992$/month",
                   "size": "md",
                   "color": "#D4AF37",
                   "margin": "sm"
                 },
                 {
                   "type": "text",
-                  "text": "Elite: 3,992฿/เดือน",
+                  "text": "Elite: 3,992$/month",
                   "size": "md",
                   "color": "#FFFFFF",
                   "margin": "sm"
@@ -347,7 +347,7 @@ Elite: 3,992฿/เดือน (ปกติ 4,990฿)
               "contents": [
                 {
                   "type": "text",
-                  "text": "🎁 LINE Exclusive: เพิ่ม 3 วันฟรี = 10 วัน!",
+                  "text": "🎁 LINE Exclusive: Add 3 daysFree = 10 days!",
                   "weight": "bold",
                   "size": "sm",
                   "color": "#D4AF37",
@@ -355,7 +355,7 @@ Elite: 3,992฿/เดือน (ปกติ 4,990฿)
                 },
                 {
                   "type": "text",
-                  "text": "ไม่ต้องจ่ายก่อน • ยกเลิกได้ทุกเมื่อ ✅",
+                  "text": "Noต้องจ่ายก่อน • Cancelได้Allเมื่อ ✅",
                   "size": "xs",
                   "color": "#B0B0B0",
                   "margin": "xs"
@@ -372,7 +372,7 @@ Elite: 3,992฿/เดือน (ปกติ 4,990฿)
               "type": "button",
               "action": {
                 "type": "uri",
-                "label": "⚡ สมัครเลย ก่อนหมดเวลา!",
+                "label": "⚡ Subscribe Now ก่อนหมดTime!",
                 "uri": "https://tradecandle.ai/?utm_source=line&utm_medium=broadcast&utm_campaign=launch_urgency"
               },
               "style": "primary",
@@ -382,7 +382,7 @@ Elite: 3,992฿/เดือน (ปกติ 4,990฿)
               "type": "button",
               "action": {
                 "type": "uri",
-                "label": "💬 ถามก่อนสมัคร",
+                "label": "💬 ถามBefore Signing Up",
                 "uri": "https://line.me/ti/p/@tradecandle"
               },
               "style": "secondary",
@@ -396,41 +396,41 @@ Elite: 3,992฿/เดือน (ปกติ 4,990฿)
 }
 ```
 
-**📌 ส่ง 2 รอบ:** 10:00 (เช้า) + 18:00 (เย็น)
+**📌 Submit 2 Round:** 10:00 (เช้า) + 18:00 (เย็น)
 **📌 Expected:** 90% open → 20% click → 8% convert
 
 ---
 
-## 💬 ข้อความประจำเดือน (Template — ส่งทุกเดือน)
+## 💬 Messageประจำmonth (Template — SubmitAllmonth)
 
 ```
-📊 รายงานประจำเดือน [เดือน]
+📊 Reportsประจำmonth [month]
 
 Win Rate: 68% 📈
 Net Profit: +$[amount]
 Max Drawdown: [X]%
 
-💡 เคล็ดลับเดือนนี้:
-[ใส่เคล็ดลับการเทรดทอง]
+💡 เคล็ดลับmonthThis:
+[ใส่เคล็ดลับการGold Trading]
 
-ต้องการอัพเกรดแพ็กเกจ? 📈
+ต้องการUpgradeแพ็กเกจ? 📈
 https://tradecandle.ai/#pricing?utm_source=line&utm_medium=monthly
 ```
 
 ---
 
-## 📋 ส่ง Line Broadcast ผ่าน API:
+## 📋 Submit Line Broadcast ผ่าน API:
 
 ```bash
-# ส่ง broadcast message
-npx tsx scripts/line-manage.ts broadcast '{"type":"text","text":"ข้อความที่นี่"}'
+# Submit broadcast message
+npx tsx scripts/line-manage.ts broadcast '{"type":"text","text":"MessageAtนี่"}'
 
-# ส่ง Flex Message (ข้อความที่ 1, 2, หรือ 3)
-# ใช้ Line API Console หรือ broadcast endpoint
+# Submit Flex Message (MessageAt 1, 2, Or 3)
+# Use Line API Console Or broadcast endpoint
 
-# เช็คจำนวนผู้ติดตาม
+# เช็คAmountFollowers
 npx tsx scripts/line-manage.ts followers
 
-# ทดสอบส่งหาตัวเอง
+# TestSubmitหาItemเอง
 npx tsx scripts/line-manage.ts test
 ```

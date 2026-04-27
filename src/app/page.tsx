@@ -73,33 +73,33 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
           </div>
 
           <h1 className="mb-8 text-5xl font-extrabold leading-[0.92] tracking-tight text-white md:text-[6.2rem]">
-            AI เทรดทองคำ
+            AI TradingGold
             <br />
             <span className="bg-gradient-to-r from-amber-400 to-yellow-300 bg-clip-text text-transparent">
-              อัตโนมัติ
+              Automated
             </span>
           </h1>
 
           <p className="mx-auto mb-4 text-2xl font-semibold text-amber-200 md:text-3xl">
-            ปิดกำไรเป็น 3 คลื่น ไม่ต้องนั่งดูจอ
+            Close profits in 3 waves — no need to watch the screen
           </p>
 
           <p className="mx-auto mb-12 max-w-[720px] text-lg leading-relaxed text-slate-400 md:text-[1rem] md:leading-[1.65]">
-            3-Wave Cashout + 6 Smart Money Filters + Time Filter บน MT5 — ทดลอง 1 เดือน ไม่ต้องจ่ายก่อน
+            3-Wave Cashout + 6 Smart Money Filters + Time Filter on MT5 — 1-month free trial, no upfront payment
             <br />
-            ควบคุมจาก Dashboard หยุด EA ได้จากมือถือทุกที่ทุกเวลา
+            Control from Dashboard — stop EA from your phone, anytime, anywhere
           </p>
 
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button onClick={() => navigateTo('pricing')} className="w-full rounded-xl px-14 py-3.5 text-base sm:w-auto">
-              เริ่มต้น 990฿/เดือน <ArrowRight size={18} className="ml-2" />
+              Get Started 990$/month <ArrowRight size={18} className="ml-2" />
             </Button>
             <Button
               onClick={() => navigateTo('features')}
               variant="secondary"
               className="w-full rounded-xl px-12 py-3.5 text-base sm:w-auto"
             >
-              ดูวิธีทำงาน
+              See How It Works
             </Button>
           </div>
 
@@ -109,7 +109,7 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
             <span className="flex items-center gap-1"><CheckCircle size={14} className="text-amber-500" /> 24/5</span>
             <span className="flex items-center gap-1"><CheckCircle size={14} className="text-amber-500" /> SaaS Dashboard</span>
           </div>
-          <p className="mt-3 text-sm text-amber-500/70">⭐ ทดลองใช้ 1 เดือน ไม่ต้องจ่ายก่อน</p>
+          <p className="mt-3 text-sm text-amber-500/70">⭐ 1-month free trial — no upfront payment</p>
         </div>
       </section>
 
@@ -138,17 +138,17 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
       <section className="relative z-10 py-24">
         <div className="container mx-auto px-6">
           <div className="mx-auto mb-16 max-w-3xl text-center">
-            <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">เคยเป็นไหม?</h2>
+            <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">Have You Ever?</h2>
           </div>
 
           <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {[
-              { emoji: '😰', text: 'ราคาทองขึ้น +$80 แต่รอ TP เต็ม → ราคากลับ → กำไรหายหมด' },
-              { emoji: '😫', text: 'นั่งดูจอ 8 ชม. พอเผลอ 5 นาที → พลาดจังหวะ' },
-              { emoji: '😤', text: 'ตั้ง SL แน่นไป → โดน stop hunt ทุกที' },
-              { emoji: '😞', text: 'ซื้อ EA มาใช้ 3 วันก็ขาดทุน → เก็บเข้ากรุ' },
-              { emoji: '🤔', text: 'ไม่รู้ว่า EA ที่รันอยู่ตอนนี้ กำไรหรือขาดทุน?' },
-              { emoji: '😰', text: 'EA filter แรงเกิน → ไม่ยอมเปิดออเดอร์เลย' },
+              { emoji: '😰', text: 'Gold price up +$80 but waiting for full TP → price reverses → profit gone' },
+              { emoji: '😫', text: 'Watching the screen for 8 hours, looked away for 5 minutes → missed the move' },
+              { emoji: '😤', text: 'Set SL too tight → stop-hunted every time' },
+              { emoji: '😞', text: 'Bought an EA, used it for 3 days → lost money → shelved it' },
+              { emoji: '🤔', text: 'Not sure if the EA is running right now — profit or loss?' },
+              { emoji: '😰', text: 'EA filters too aggressively → never opens any orders' },
             ].map((item, i) => (
               <div key={i} className="rounded-xl border border-red-900/30 bg-red-950/10 p-6 transition-colors hover:border-red-900/50">
                 <div className="mb-3 text-2xl">{item.emoji}</div>
@@ -164,9 +164,9 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
         <div className="container mx-auto px-6">
           <div className="mx-auto mb-16 max-w-3xl text-center">
             <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">
-              💡 แก้ด้วย <span className="text-amber-400">3-Wave Cashout</span> System
+              💡 Solved with <span className="text-amber-400">3-Wave Cashout</span> System
             </h2>
-            <p className="text-slate-400">ปิดกำไรเป็น 3 รอบ — ยังไงก็ได้กำไรบางส่วน ไม่รอ TP เต็ม 100%</p>
+            <p className="text-slate-400">Close profits in 3 rounds — guaranteed partial profit, no need to wait for 100% TP</p>
           </div>
 
           <div className="relative mx-auto max-w-5xl">
@@ -176,25 +176,25 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
               {[
                 {
                   step: 'W1',
-                  title: 'Wave 1 — ล็อคแรก',
+                  title: 'Wave 1 — LockFirst',
                   pct: '25% TP',
-                  desc: 'ปิด 1/3 ของ lot ที่ 25% ของ TP — กำไรแรกล็อคแล้ว ไม่กลับมาเป็นขาดทุนได้',
+                  desc: 'Close 1/3 of lot at 25% of TP — first profit locked in, won\'t reverse to a loss',
                   color: 'from-green-600 to-green-500',
                   icon: CheckCircle,
                 },
                 {
                   step: 'W2',
-                  title: 'Wave 2 — เพิ่มกำไร',
+                  title: 'Wave 2 — AddProfit',
                   pct: '50% TP',
-                  desc: 'ปิด 1/3 ถัดไปที่ 50% ของ TP — กำไรเพิ่มขึ้น ยังเหลือ lot สุดท้าย',
+                  desc: 'Close the next 1/3 at 50% of TP — profit adds up, last lot still running',
                   color: 'from-green-500 to-emerald-400',
                   icon: TrendingUp,
                 },
                 {
                   step: 'W3',
-                  title: 'Wave 3 — ไล่เทรนด์',
+                  title: 'Wave 3 — Follow Trend',
                   pct: 'Trailing',
-                  desc: 'Breakeven + Trailing Stop — ไล่ตามเทรนด์ กำไรไม่จำกัด ถ้าราคาวิ่งต่อ',
+                  desc: 'Breakeven + Trailing Stop — follow the trend for unlimited profit if price continues',
                   color: 'from-emerald-400 to-amber-400',
                   icon: Waves,
                 },
@@ -219,12 +219,12 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
           {/* Comparison */}
           <div className="mx-auto mt-16 grid max-w-3xl grid-cols-1 gap-6 md:grid-cols-2">
             <div className="rounded-xl border border-red-900/30 bg-red-950/10 p-6 text-center">
-              <p className="mb-2 text-lg font-bold text-red-400">❌ EA ทั่วไป</p>
-              <p className="text-sm text-slate-400">รอ TP 100% → ราคากลับ → ขาดทุน</p>
+              <p className="mb-2 text-lg font-bold text-red-400">❌ EA General</p>
+              <p className="text-sm text-slate-400">Wait for 100% TP → Price reverses → Loss</p>
             </div>
             <div className="rounded-xl border border-green-900/30 bg-green-950/10 p-6 text-center">
               <p className="mb-2 text-lg font-bold text-green-400">✅ TradeCandle v12</p>
-              <p className="text-sm text-slate-400">ปิดทยอย 3 รอบ → ยังไงก็ได้กำไร</p>
+              <p className="text-sm text-slate-400">Close in 3 rounds → guaranteed partial profit</p>
             </div>
           </div>
         </div>
@@ -238,20 +238,20 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
               🔓 6 <span className="text-amber-400">Smart Money</span> Filters
             </h2>
             <p className="text-slate-400">
-              ระบบอ่านทรงสตรัคเจอร์เหมือนโปรเทรดเดอร์ แต่ทำงานอัตโนมัติทุก tick
+              Reads market structure like a professional trader, but works automatically every tick
               <br />
-              เป็น <strong className="text-amber-300">Bonus Score</strong> — ไม่บล็อกสัญญาณ
+              Acts as a <strong className="text-amber-300">Bonus Score</strong> — no lagging signals
             </p>
           </div>
 
           <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {[
-              { icon: '⚡', name: 'BOS', full: 'Break of Structure', score: '±1', desc: 'ทรงสตรัคเจอร์แตก — ราคาทะลุจุดสูง/ต่ำสุดเดิม' },
-              { icon: '🔄', name: 'CHoCH', full: 'Change of Character', score: '±2', desc: 'เทรนด์เปลี่ยนทิศ — จากขึ้นเป็นลง หรือลงเป็นขึ้น' },
-              { icon: '🧱', name: 'OB', full: 'Order Block', score: '±1', desc: 'โซนที่สถาบันเข้า position — จุดกลับราคาสำคัญ' },
-              { icon: '📐', name: 'FVG', full: 'Fair Value Gap', score: '±1', desc: 'ช่องว่างราคาที่ราคาวิ่งผ่านเร็ว — มักกลับมาเติม' },
-              { icon: '💧', name: 'Liq Sweep', full: 'Liquidity Sweep', score: '±2', desc: 'ล่าสภาพคล่อง (stop hunt) — ราคาแตะจุดแล้วกลับทิศ' },
-              { icon: '📦', name: 'S/D', full: 'Supply/Demand Zone', score: '±1', desc: 'โซนอุปสงค์-อุปทาน — จุดที่กองทุนเคยเข้า' },
+              { icon: '⚡', name: 'BOS', full: 'Break of Structure', score: '±1', desc: 'StructureBreak — PriceBreak ThroughPointHigh/Previous Low' },
+              { icon: '🔄', name: 'CHoCH', full: 'Change of Character', score: '±2', desc: 'Trend change direction — from up to down or down to up' },
+              { icon: '🧱', name: 'OB', full: 'Order Block', score: '±1', desc: 'Institutional entry zone — key price reversal point' },
+              { icon: '📐', name: 'FVG', full: 'Fair Value Gap', score: '±1', desc: 'Price gaps where price moved too fast — often retraces to fill' },
+              { icon: '💧', name: 'Liq Sweep', full: 'Liquidity Sweep', score: '±2', desc: 'Liquidity hunt (stop hunt) — price touches highs/lows then reverses' },
+              { icon: '📦', name: 'S/D', full: 'Supply/Demand Zone', score: '±1', desc: 'Supply-demand zone — where institutional capital entered' },
             ].map((filter) => (
               <div key={filter.name} className="rounded-xl border border-amber-900/20 bg-slate-900/40 p-5 transition-colors hover:border-amber-900/40 hover:bg-slate-800/40">
                 <div className="mb-3 flex items-center justify-between">
@@ -273,9 +273,9 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
           <div className="mx-auto mt-10 max-w-xl rounded-xl border border-amber-700/30 bg-amber-950/20 p-6 text-center">
             <p className="mb-2 text-lg font-bold text-amber-300">🚦 Confluence Gate</p>
             <p className="text-sm text-slate-400">
-              ต้อง ≥2 filters ชี้ข้ามเดียวกัน + ไม่มี opposing → ถึงจะเพิ่มคะแนน
+              Must have ≥2 filters confirming the same direction simultaneously + no opposing signals → then score is added
               <br />
-              กรองสัญญาณอ่อน ไม่แทรกแซงสัญญาณแข็งแกร่ง
+              Weak filter signals don't override strong signals
             </p>
           </div>
         </div>
@@ -286,19 +286,19 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
         <div className="container mx-auto px-6">
           <div className="mx-auto mb-16 max-w-3xl text-center">
             <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">
-              📱 ควบคุมจากมือถือ ทุกที่ ทุกเวลา
+              📱 Control from your phone, anytime, anywhere
             </h2>
-            <p className="text-slate-400">SaaS Dashboard ให้คุณเห็น คุม และหยุด EA ได้จากที่ไหนก็ได้</p>
+            <p className="text-slate-400">SaaS Dashboard lets you see, control, and stop EA from anywhere</p>
           </div>
 
           <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {[
-              { icon: Lock, title: '🔑 License Key รับทันที', desc: 'ซื้อ → รับ key → วางใน MT5 → เริ่มเทรด', color: 'text-amber-400' },
-              { icon: Activity, title: '💓 Heartbeat Monitoring', desc: 'รู้ทันทีว่า EA ยังรันอยู่ไหม ไม่ต้องเปิด MT5', color: 'text-green-400' },
-              { icon: BarChart3, title: '📊 Dashboard Real-time', desc: 'P&L, Win Rate, Drawdown, ทุกบัญชี ในหน้าเดียว', color: 'text-cyan-400' },
-              { icon: AlertTriangle, title: '🛑 Kill Switch', desc: 'หยุด EA ทันทีจากมือถือ ไม่ต้องเข้า VPS', color: 'text-red-400' },
-              { icon: Shield, title: '🛡️ Risk Management', desc: 'DD limit, Session filter, Spread filter จากแพลตฟอร์ม', color: 'text-yellow-400' },
-              { icon: RefreshCw, title: '🔄 Auto Config Sync', desc: 'อัปเดตพารามิเตอร์ EA จากเว็บ ไม่ต้อง restart', color: 'text-purple-400' },
+              { icon: Lock, title: '🔑 License Key Instant Delivery', desc: 'Buy → get key → paste in MT5 → start trading', color: 'text-amber-400' },
+              { icon: Activity, title: '💓 Heartbeat Monitoring', desc: 'Know immediately if your EA is still running — no need to open MT5', color: 'text-green-400' },
+              { icon: BarChart3, title: '📊 Dashboard Real-time', desc: 'P&L, Win Rate, Drawdown — all accounts on one page', color: 'text-cyan-400' },
+              { icon: AlertTriangle, title: '🛑 Kill Switch', desc: 'Stop EA instantly from your phone — no need to access VPS', color: 'text-red-400' },
+              { icon: Shield, title: '🛡️ Risk Management', desc: 'DD limit, session filter, spread filter from the platform', color: 'text-yellow-400' },
+              { icon: RefreshCw, title: '🔄 Auto Config Sync', desc: 'Update EA parameters from the website — no restart needed', color: 'text-purple-400' },
             ].map((feature) => (
               <div key={feature.title} className="rounded-xl border border-slate-800/60 bg-slate-900/40 p-6 transition-colors hover:bg-slate-800/40">
                 <feature.icon size={24} className={`mb-4 ${feature.color}`} />
@@ -315,15 +315,15 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
         <div className="container mx-auto px-6">
           <div className="mx-auto mb-16 max-w-3xl text-center">
             <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">
-              ⭐ เทรดเดอร์ทองพูดถึงเรา
+              ⭐ Gold traders talk about us
             </h2>
           </div>
 
           <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-3">
             {[
-              { quote: '"ตื่นมาเช้า เปิด MT5 เห็น +$340 ไม่ต้องทำอะไรเลย"', name: 'พี่ตู้', role: 'เทรดเดอร์ทอง 5 ปี' },
-              { quote: '"3-Wave คือเกมเชนเจอร์ ก่อนนี้ใช้ EA อื่นรอ TP เต็ม ราคากลับทุกที ตอนนี้ปิด Wave 1 ได้กำไรแล้ว"', name: 'เจม', role: 'Swing Trader' },
-              { quote: '"Dashboard ดูง่าย รู้เลยว่า EA ตัวนี้กำไรหรือขาดทุน ไม่ต้องเข้า MT5 ดูทีละบัญชี"', name: 'บอย', role: 'Full-time Trader' },
+              { quote: '"Woke up, opened MT5, saw +$340 — didn\'t have to do anything"', name: 'Tu', role: 'Gold Trader — 5 years' },
+              { quote: '"3-Wave is a game changer. Before this I used other EAs waiting for full TP, price reverses every time. Now I close Wave 1 and already have profit"', name: 'James', role: 'Swing Trader' },
+              { quote: '"Dashboard is easy to read. I know right away if the EA is profitable or not — no need to open MT5 and check each account"', name: 'Boy', role: 'Full-time Trader' },
             ].map((review, i) => (
               <div key={i} className="rounded-2xl border border-amber-900/20 bg-slate-900/60 p-8">
                 <p className="mb-6 text-sm leading-relaxed text-slate-300">{review.quote}</p>
@@ -341,8 +341,8 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
       <section className="relative z-10 border-y border-amber-900/20 bg-slate-900/30 py-24" id="pricing-section">
         <div className="container mx-auto px-6">
           <div className="mx-auto mb-16 max-w-3xl text-center">
-            <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">💰 เลือกแพ็คเกจที่ใช่</h2>
-            <p className="text-slate-400">ทดลอง 1 เดือนฟรี ไม่ต้องจ่ายก่อน — ยกเลิกได้ทุกเมื่อ</p>
+            <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">💰 Choose Your Plan</h2>
+            <p className="text-slate-400">1-month free trial, no upfront payment — cancel anytime</p>
           </div>
 
           {/**<PricingCards navigateTo={navigateTo} />**/}
@@ -354,17 +354,17 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
       <section className="relative z-10 py-24">
         <div className="container mx-auto px-6">
           <div className="mx-auto mb-16 max-w-3xl text-center">
-            <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">❓ คำถามที่พบบ่อย</h2>
+            <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">❓ Frequently Asked Questions</h2>
           </div>
 
           <div className="mx-auto max-w-3xl space-y-4">
             {[
-              { q: 'ต้องนั่งดูจอไหม?', a: 'ไม่ต้อง! EA ทำงานอัตโนมัติ 24/5 คุณดูผลจาก Dashboard ได้' },
-              { q: 'ใช้กับโบรกเกอร์ไหนได้บ้าง?', a: 'โบรกเกอร์ที่รองรับ MT5 ทุกค่าย (Exness, XM, IC Markets ฯลฯ)' },
-              { q: 'ขั้นต่ำทุนเทรดเท่าไหร่?', a: 'แนะนำ $500+ (0.01 lot) หรือ $2,000+ (0.03 lot)' },
-              { q: 'มี guarantee ไหม?', a: 'ทดลอง 1 เดือนฟรี ไม่พอใจยกเลิกได้ ไม่หักเงิน + 30 วันเงินคืน' },
-              { q: 'EA รันบนคอมผมหรือ Cloud?', a: 'รันบน MT5 ของคุณเอง (VPS แนะนำ) เราให้ license + dashboard' },
-              { q: 'ต่างจาก EA ฟรียังไง?', a: '3-Wave Cashout + Smart Money Filters + SaaS Dashboard + Thai Support' },
+              { q: 'Do I need to watch the screen?', a: 'No need! The EA runs automatically 24/5. You can view performance from the dashboard' },
+              { q: 'Which brokers are supported?', a: 'Any broker that supports MT5 (Exness, XM, IC Markets, etc.)' },
+              { q: 'What is the minimum trading capital?', a: 'Recommended $500+ (0.01 lot) or $2,000+ (0.03 lot)' },
+              { q: 'Is there a guarantee?', a: '1-month free trial — cancel if not satisfied, no charge + 30-day money back' },
+              { q: 'Does the EA run on my computer or the cloud?', a: 'It runs on your own MT5 (VPS recommended). We provide the license + dashboard' },
+              { q: 'How is this different from free EAs?', a: '3-Wave Cashout + Smart Money Filters + SaaS Dashboard + Thai Support' },
             ].map((faq, i) => (
               <details key={i} className="group rounded-xl border border-amber-900/20 bg-slate-900/40">
                 <summary className="flex cursor-pointer items-center justify-between p-5 text-base font-semibold text-white hover:text-amber-300">
@@ -382,20 +382,20 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
       <section className="relative z-10 border-t border-amber-900/20 bg-gradient-to-b from-amber-950/20 to-transparent py-24">
         <div className="container mx-auto px-6 text-center">
           <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">
-            🔥 พร้อมให้ AI เทรดทองให้คุณแล้วหรือยัง?
+            🔥 Ready to let AI Gold Trading work for you?
           </h2>
           <p className="mx-auto mb-8 max-w-xl text-slate-400">
-            เริ่มต้น 990บาท/เดือน — ทดลอง 1 เดือนฟรี ไม่ต้องจ่ายก่อน — ยกเลิกได้ทุกเมื่อ
+            Get Started 990THB/month — 1-month free trial, no upfront payment — cancel anytime
           </p>
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button onClick={() => navigateTo('register')} className="w-full rounded-xl px-14 py-3.5 text-base sm:w-auto">
-              🚀 เริ่มต้น 1 เดือนฟรี <ArrowRight size={18} className="ml-2" />
+              🚀 Get Started 1 monthFree <ArrowRight size={18} className="ml-2" />
             </Button>
             <Button variant="secondary" className="w-full rounded-xl px-12 py-3.5 text-base sm:w-auto">
-              💬 สอบถาม Line OA
+              💬 Contact Line OA
             </Button>
           </div>
-          <p className="mt-5 text-sm text-amber-500/80">⏰ สมัครเดือนนี้ รับส่วนลด 20% ทุกแพ็คเกจ!</p>
+          <p className="mt-5 text-sm text-amber-500/80">⏰ Sign up this month — get 20% off all plans!</p>
         </div>
       </section>
     </div>
@@ -409,10 +409,10 @@ function PricingPage({ embedded = false }: { embedded?: boolean }) {
       {!embedded && (
         <div className="mx-auto mb-12 max-w-3xl text-center">
           <h1 className="mb-4 text-4xl font-extrabold text-white md:text-5xl">
-            เลือกแพ็กเกจที่เหมาะกับคุณ
+            Choose the plan that fits you
           </h1>
           <p className="text-base text-slate-400 md:text-lg">
-            ทดลอง 1 เดือนฟรี จ่ายผ่าน USDT และจัดการ License ได้จาก Dashboard
+            1-month free trial, pay via USDT and manage your license from the dashboard
           </p>
         </div>
       )}
@@ -421,13 +421,13 @@ function PricingPage({ embedded = false }: { embedded?: boolean }) {
       {/* Starter */}
       <div className="rounded-2xl border border-amber-900/20 bg-slate-900 p-8 transition-colors hover:border-amber-900/40">
         <h3 className="mb-2 text-xl font-bold text-white">Starter</h3>
-        <p className="h-10 text-sm text-slate-400">สำหรับเทรดเดอร์เริ่มต้น 1 บัญชี</p>
+        <p className="h-10 text-sm text-slate-400">For Beginner Traders — 1 Account</p>
         <div className="my-6">
-          <span className="text-4xl font-bold text-white">990฿</span>
-          <span className="text-slate-500">/ เดือน</span>
+          <span className="text-4xl font-bold text-white">990$</span>
+          <span className="text-slate-500">/ month</span>
         </div>
         <ul className="mb-8 space-y-4 text-sm text-slate-300">
-          {['1 บัญชี MT5', 'SaaS Dashboard', '3-Wave Cashout', '6 Smart Money Filters', 'Time Filter', 'Email Support'].map((item, index) => (
+          {['1 MT5 Accounts', 'SaaS Dashboard', '3-Wave Cashout', '6 Smart Money Filters', 'Time Filter', 'Email Support'].map((item, index) => (
             <li key={item} className="flex items-center gap-3">
               <CheckCircle size={16} className={index === 3 ? 'text-slate-600' : 'text-amber-500'} />
               {item}
@@ -435,7 +435,7 @@ function PricingPage({ embedded = false }: { embedded?: boolean }) {
           ))}
         </ul>
         <Button variant="secondary" className="w-full" onClick={() => { window.location.href = '/register?packageId=pkg_starter'; }}>
-          ทดลอง 1 เดือน
+          1-month Free Trial
         </Button>
       </div>
 
@@ -443,36 +443,36 @@ function PricingPage({ embedded = false }: { embedded?: boolean }) {
       <div className="relative rounded-2xl border border-amber-500/50 bg-gradient-to-b from-amber-900/30 to-slate-900 p-8 shadow-2xl shadow-amber-900/20 md:-translate-y-4">
         <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
           <span className="rounded-full bg-amber-500 px-3 py-1 text-xs font-bold uppercase tracking-wider text-black">
-            ยอดนิยม
+            Most Popular
           </span>
         </div>
         <h3 className="mb-2 text-xl font-bold text-white">Pro ⭐</h3>
-        <p className="h-10 text-sm text-slate-400">สำหรับเทรดเดอร์จริงจัง 3 บัญชี</p>
+        <p className="h-10 text-sm text-slate-400">For Serious Traders — 3 Accounts</p>
         <div className="my-6">
-          <span className="text-4xl font-bold text-white">2,490฿</span>
-          <span className="text-slate-500">/ เดือน</span>
+          <span className="text-4xl font-bold text-white">2,490$</span>
+          <span className="text-slate-500">/ month</span>
         </div>
         <ul className="mb-8 space-y-4 text-sm font-medium text-white">
-          {['3 บัญชี MT5', 'Dashboard + Kill Switch', '3-Wave Cashout', '6 PA/SMC Filters', 'Time Filter', 'Line Support'].map((item) => (
+          {['3 MT5 Accounts', 'Dashboard + Kill Switch', '3-Wave Cashout', '6 PA/SMC Filters', 'Time Filter', 'Line Support'].map((item) => (
             <li key={item} className="flex items-center gap-3">
               <CheckCircle size={16} className="text-amber-400" />
               {item}
             </li>
           ))}
         </ul>
-        <Button className="w-full" onClick={() => { window.location.href = '/register?packageId=pkg_pro'; }}>ทดลอง 1 เดือน</Button>
+        <Button className="w-full" onClick={() => { window.location.href = '/register?packageId=pkg_pro'; }}>1-month Free Trial</Button>
       </div>
 
       {/* Elite */}
       <div className="rounded-2xl border border-amber-900/20 bg-slate-900 p-8 transition-colors hover:border-amber-900/40">
         <h3 className="mb-2 text-xl font-bold text-white">Elite</h3>
-        <p className="h-10 text-sm text-slate-400">สำหรับมืออาชีพ 5 บัญชี + VIP</p>
+        <p className="h-10 text-sm text-slate-400">For Professionals — 5 Accounts + VIP</p>
         <div className="my-6">
-          <span className="text-4xl font-bold text-white">4,990฿</span>
-          <span className="text-slate-500">/ เดือน</span>
+          <span className="text-4xl font-bold text-white">4,990$</span>
+          <span className="text-slate-500">/ month</span>
         </div>
         <ul className="mb-8 space-y-4 text-sm text-slate-300">
-          {['5 บัญชี MT5', 'ทุกอย่างใน Pro', 'Custom EA Config', 'VIP Line + 1-on-1 Setup Call'].map((item) => (
+          {['5 MT5 Accounts', 'Everything in Pro', 'Custom EA Config', 'VIP Line + 1-on-1 Setup Call'].map((item) => (
             <li key={item} className="flex items-center gap-3">
               <CheckCircle size={16} className="text-amber-500" />
               {item}
@@ -480,7 +480,7 @@ function PricingPage({ embedded = false }: { embedded?: boolean }) {
           ))}
         </ul>
         <Button variant="secondary" className="w-full" onClick={() => { window.location.href = '/register?packageId=pkg_elite'; }}>
-          ทดลอง 1 เดือน
+          1-month Free Trial
         </Button>
       </div>
     </div>
@@ -516,11 +516,11 @@ function BacktestPerformanceSection() {
             <span>Strategy Tester Report</span>
           </div>
           <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">
-            ผลงานทดสอบย้อนหลัง TradeCandle v12
+            Backtest Performance — TradeCandle v12
           </h2>
           <p className="text-sm leading-relaxed text-slate-400 md:text-base">
-            รายงานจาก MT5 Strategy Tester บน XAUUSD M5 ช่วง 1 เม.ย. 2025 ถึง 3 เม.ย. 2026
-            ใช้เงินเริ่มต้น $10,000 และ fixed lot 0.03
+            Report from MT5 Strategy Tester on XAUUSD M5, period April 1, 2025 to April 3, 2026
+            Starting deposit $10,000 with fixed lot 0.03
           </p>
         </div>
 
@@ -554,7 +554,7 @@ function BacktestPerformanceSection() {
           </div>
 
           <div className="rounded-2xl border border-amber-900/25 bg-slate-950/70 p-6">
-            <h3 className="mb-5 font-semibold text-white">รายละเอียดรายงาน</h3>
+            <h3 className="mb-5 font-semibold text-white">Report Details</h3>
             <div className="space-y-3">
               {reportFacts.map(([label, value]) => (
                 <div key={label} className="flex items-center justify-between gap-4 border-b border-slate-800/70 pb-3 text-sm">
@@ -564,8 +564,8 @@ function BacktestPerformanceSection() {
               ))}
             </div>
             <div className="mt-5 rounded-xl border border-amber-900/25 bg-amber-950/20 p-4 text-xs leading-relaxed text-amber-100/80">
-              ผลทดสอบย้อนหลังใช้เพื่อประกอบการพิจารณาเท่านั้น ผลลัพธ์จริงขึ้นกับ broker, spread,
-              slippage, VPS และสภาพตลาดในเวลานั้น
+              Backtesting results are for informational purposes only. Actual results may vary depending on broker, spread,
+              slippage, VPS, and market conditions at the time.
             </div>
           </div>
         </div>
@@ -595,12 +595,12 @@ function FeaturesPage() {
       <div className="container mx-auto px-6">
         <div className="mx-auto mb-20 max-w-3xl text-center">
           <h1 className="mb-6 text-4xl font-bold text-white md:text-5xl">
-            ทำไม <span className="text-amber-400">TradeCandle v12</span>
+            Why is <span className="text-amber-400">TradeCandle v12</span>
             <br />
-            ต่างจาก EA ทั่วไป
+            different from generic EAs
           </h1>
           <p className="text-lg text-slate-400">
-            ทุกฟีเจอร์ถูกออกแบบมาแก้ปัญหาจริงของเทรดเดอร์ทองคำ
+            Every feature is designed to solve real problems faced by Gold traders
           </p>
         </div>
 
@@ -609,10 +609,10 @@ function FeaturesPage() {
             <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-amber-500/10">
               <RefreshCw size={24} className="text-amber-400" />
             </div>
-            <h3 className="mb-3 text-xl font-bold text-white">กำไรไม่หายระหว่างทาง</h3>
+            <h3 className="mb-3 text-xl font-bold text-white">Profits won't disappear along the way</h3>
             <p className="leading-relaxed text-slate-400">
-              3-Wave Cashout ปิดกำไรทยอย 3 รอบ — ไม่รอ TP เต็ม 100% ที่อาจไม่ถึง
-              Wave 1 ล็อคกำไรแรก Wave 2 เพิ่ม Wave 3 ไล่เทรนด์
+              3-Wave Cashout closes profits gradually in 3 rounds — no need to wait for 100% TP that may never come
+              Wave 1 locks first profit, Wave 2 adds more, Wave 3 follows the trend
             </p>
           </div>
 
@@ -620,10 +620,10 @@ function FeaturesPage() {
             <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-green-500/10">
               <Shield size={24} className="text-green-400" />
             </div>
-            <h3 className="mb-3 text-xl font-bold text-white">Smart Money ไม่บล็อกสัญญาณ</h3>
+            <h3 className="mb-3 text-xl font-bold text-white">Smart Money — No Lagging Signals</h3>
             <p className="leading-relaxed text-slate-400">
-              6 PA/SMC Filters เป็น Bonus Score ไม่ใช่ Gate — ไม่มีปัญหา over-filter
-              Confluence Gate ต้อง ≥2 ตัวชี้ข้ามเดียวกันถึงจะเพิ่มคะแนน
+              6 PA/SMC Filters act as a Bonus Score, not a gate — no over-filtering problem
+              Confluence Gate requires ≥2 filters confirming the same direction simultaneously to add score
             </p>
           </div>
         </div>
@@ -633,33 +633,33 @@ function FeaturesPage() {
           {[
             {
               icon: Lock,
-              title: 'License Key อัตโนมัติ',
-              desc: 'ซื้อ → รับ key → วางใน MT5 → เริ่มเทรด ผูกบัญชีอัตโนมัติผ่าน Heartbeat',
+              title: 'License Key Automation',
+              desc: 'Buy → get key → paste in MT5 → start trading. Account auto-linked via Heartbeat',
             },
             {
               icon: AlertTriangle,
-              title: 'Risk Management จากแพลตฟอร์ม',
-              desc: 'DD limit, Session filter, Spread filter คุ้มครองระดับแพลตฟอร์ม ไม่ขึ้นกับ EA',
+              title: 'Risk Management from Platform',
+              desc: 'DD limit, session filter, spread filter — platform-level protection, not just from the EA',
             },
             {
               icon: BarChart3,
               title: 'Dashboard Real-time',
-              desc: 'P&L, Win Rate, Drawdown, Trade History ทุกบัญชี ในหน้าเดียว',
+              desc: 'P&L, Win Rate, Drawdown, Trade History — all accounts on one page',
             },
             {
               icon: Zap,
-              title: 'Kill Switch หยุดทันที',
-              desc: 'กดปุ่มเดียวจากมือถือ EA หยุดทันที ไม่ต้องเข้า VPS',
+              title: 'Kill Switch — Stop Instantly',
+              desc: 'One tap from your phone and EA stops — no need to access VPS',
             },
             {
               icon: Server,
-              title: 'Subscription + Billing ครบ',
-              desc: 'ชำระเงินผ่าน USDT (ERC-20), ทดลองใช้, ต่ออายุอัตโนมัติ',
+              title: 'Subscription + Billing Complete',
+              desc: 'Pay via USDT (ERC-20), free trial, auto-renewal',
             },
             {
               icon: Layers,
-              title: 'Thai Support ตอบไว',
-              desc: 'Line OA ตอบทุกคำถาม Pro+ ขึ้นไปมี Line priority support',
+              title: 'Thai Support — Fast Response',
+              desc: 'Line OA answers all questions, Pro+ gets Line priority support',
             },
           ].map((feature) => (
             <div
@@ -684,9 +684,9 @@ function WorkflowPage() {
       <div className="container mx-auto px-6">
         <div className="mx-auto mb-16 max-w-3xl text-center">
           <h1 className="mb-6 text-4xl font-bold text-white md:text-5xl">
-            เริ่มใช้ <span className="text-amber-400">3 ขั้นตอน</span>
+            Get Started in <span className="text-amber-400">3 Steps</span>
           </h1>
-          <p className="text-lg text-slate-400">จากสมัคร ถึงเทรดอัตโนมัติ ใช้เวลาไม่ถึง 10 นาที</p>
+          <p className="text-lg text-slate-400">From sign-up to automated trading in under 10 minutes</p>
         </div>
 
         <div className="relative mx-auto max-w-5xl">
@@ -696,20 +696,20 @@ function WorkflowPage() {
             {[
               {
                 step: '01',
-                title: 'สมัคร + รับ License Key',
-                desc: 'เลือกแพ็คเกจ → โอน USDT → รับ key ทันทีใน Dashboard',
+                title: 'Sign Up + Get License Key',
+                desc: 'Choose a Plan → Send USDT → Receive key instantly in Dashboard',
                 icon: Settings,
               },
               {
                 step: '02',
-                title: 'วาง Key ใน MT5',
-                desc: 'ดาวน์โหลด EA → วาง License Key → ผูกบัญชีอัตโนมัติผ่าน Heartbeat',
+                title: 'Paste Key in MT5',
+                desc: 'Download EA → Paste License Key → Link accounts automatically via Heartbeat',
                 icon: Cpu,
               },
               {
                 step: '03',
-                title: 'เทรดอัตโนมัติ + ดูผล',
-                desc: 'EA เทรด 24/5 คุณดูผลจากมือถือ หยุดได้ทันทีด้วย Kill Switch',
+                title: 'Automated Trading + ViewPerformance',
+                desc: 'EA Trading 24/5 — View performance from mobile. Stop instantly with Kill Switch',
                 icon: Activity,
               },
             ].map((item) => (
@@ -760,7 +760,7 @@ function AuthPage({
     try {
       await login(email, password);
     } catch {
-      setError('ข้อมูลไม่ถูกต้อง');
+      setError('InformationNoCorrect');
     } finally {
       setIsSubmitting(false);
     }
@@ -777,15 +777,15 @@ function AuthPage({
           </div>
         </div>
         <h2 className="mb-2 text-center text-2xl font-bold text-white">
-          {mode === 'login' ? 'เข้าสู่ระบบ' : 'เริ่มต้นทดลองฟรี'}
+          {mode === 'login' ? 'Log In' : 'Get Started — Free Trial'}
         </h2>
         <p className="mb-8 text-center text-sm text-slate-400">
-          {mode === 'login' ? 'ใส่อีเมลและรหัสผ่าน' : 'ทดลอง 1 เดือนฟรี ไม่ต้องจ่ายก่อน'}
+          {mode === 'login' ? 'Enter Email and Password' : '1-month Free Trial — No payment required upfront'}
         </p>
 
         <form className="space-y-5" onSubmit={handleSubmit}>
           <div>
-            <label className="mb-1 block text-sm font-medium text-slate-300">อีเมล</label>
+            <label className="mb-1 block text-sm font-medium text-slate-300">Email</label>
             <input
               type="email"
               placeholder="name@email.com"
@@ -795,7 +795,7 @@ function AuthPage({
             />
           </div>
           <div>
-            <label className="mb-1 block text-sm font-medium text-slate-300">รหัสผ่าน</label>
+            <label className="mb-1 block text-sm font-medium text-slate-300">Password</label>
             <input
               type="password"
               placeholder="••••••••"
@@ -808,7 +808,7 @@ function AuthPage({
           {mode === 'login' && (
             <div className="flex justify-end">
               <a href="#" className="text-sm text-amber-400 hover:text-amber-300">
-                ลืมรหัสผ่าน?
+                Forgot Password?
               </a>
             </div>
           )}
@@ -816,23 +816,23 @@ function AuthPage({
           {error && <div className="text-sm text-red-400">{error}</div>}
 
           <Button className="mt-2 w-full py-3">
-            {isSubmitting ? 'กรุณารอ...' : mode === 'login' ? 'เข้าสู่ระบบ' : 'สร้างบัญชี'}
+            {isSubmitting ? 'Please wait...' : mode === 'login' ? 'Log In' : 'Create Account'}
           </Button>
         </form>
 
         <div className="mt-6 text-center text-sm text-slate-400">
           {mode === 'login' ? (
             <>
-              ยังไม่มีบัญชี?{' '}
+              Don't have an account?{' '}
               <button onClick={() => navigateTo('register')} className="text-amber-400 hover:underline">
-                ทดลองฟรี
+                Free Trial
               </button>
             </>
           ) : (
             <>
-              มีบัญชีอยู่แล้ว?{' '}
+              Already have an account?{' '}
               <button onClick={() => navigateTo('login')} className="text-amber-400 hover:underline">
-                เข้าสู่ระบบ
+                Log In
               </button>
             </>
           )}
@@ -863,10 +863,10 @@ function Navbar({
   }, []);
 
   const navLinks: Array<{ id: PageId; label: string }> = [
-    { id: 'home', label: 'หน้าแรก' },
-    { id: 'features', label: 'ฟีเจอร์' },
-    { id: 'workflow', label: 'วิธีใช้' },
-    { id: 'pricing', label: 'ราคา' },
+    { id: 'home', label: 'Landing Page' },
+    { id: 'features', label: 'Feature' },
+    { id: 'workflow', label: 'How to Use' },
+    { id: 'pricing', label: 'Price' },
   ];
 
   return (
@@ -901,10 +901,10 @@ function Navbar({
 
         <div className="hidden items-center gap-4 md:flex">
           <Button variant="ghost" onClick={() => navigateTo('login')} className="px-4 text-sm font-semibold">
-            เข้าสู่ระบบ
+            Log In
           </Button>
           <Button onClick={() => navigateTo('register')} className="rounded-xl px-7 py-3 text-sm font-semibold">
-            ทดลองฟรี
+            Free Trial
           </Button>
         </div>
 
@@ -926,10 +926,10 @@ function Navbar({
           ))}
           <div className="my-2 h-px bg-slate-800" />
           <button onClick={() => navigateTo('login')} className="py-2 text-left text-lg font-medium text-slate-300">
-            เข้าสู่ระบบ
+            Log In
           </button>
           <Button onClick={() => navigateTo('register')} className="mt-2 w-full rounded-xl">
-            ทดลองฟรี
+            Free Trial
           </Button>
         </div>
       )}
@@ -953,7 +953,7 @@ function Footer({ navigateTo }: { navigateTo: (page: PageId) => void }) {
               </span>
             </div>
             <p className="mb-6 max-w-sm text-sm text-slate-400">
-              AI เทรดทองคำอัตโนมัติ ปิดกำไรเป็น 3 คลื่น — 3-Wave Cashout + 6 Smart Money Filters บน MT5
+              AI Gold Trading Bot — Close profit in 3 waves — 3-Wave Cashout + 6 Smart Money Filters On MT5
             </p>
             <div className="flex gap-2">
               {['MT5', 'XAUUSD', 'SaaS', 'Thai'].map((item) => (
@@ -968,37 +968,37 @@ function Footer({ navigateTo }: { navigateTo: (page: PageId) => void }) {
           </div>
 
           <div>
-            <h4 className="mb-4 font-semibold text-white">สินค้า</h4>
+            <h4 className="mb-4 font-semibold text-white">Product</h4>
             <ul className="space-y-3">
               <li>
                 <button onClick={() => navigateTo('features')} className="text-sm text-slate-400 transition-colors hover:text-white">
-                  ฟีเจอร์
+                  Feature
                 </button>
               </li>
               <li>
                 <button onClick={() => navigateTo('workflow')} className="text-sm text-slate-400 transition-colors hover:text-white">
-                  วิธีใช้
+                  How to Use
                 </button>
               </li>
               <li>
                 <button onClick={() => navigateTo('pricing')} className="text-sm text-slate-400 transition-colors hover:text-white">
-                  ราคา
+                  Price
                 </button>
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="mb-4 font-semibold text-white">เข้าถึง</h4>
+            <h4 className="mb-4 font-semibold text-white">Quick Links</h4>
             <ul className="space-y-3">
               <li>
                 <button onClick={() => navigateTo('login')} className="text-sm text-slate-400 transition-colors hover:text-white">
-                  เข้าสู่ระบบ
+                  Log In
                 </button>
               </li>
               <li>
                 <button onClick={() => navigateTo('register')} className="text-sm text-slate-400 transition-colors hover:text-white">
-                  ทดลองฟรี
+                  Free Trial
                 </button>
               </li>
             </ul>

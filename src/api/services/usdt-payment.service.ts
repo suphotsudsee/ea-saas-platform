@@ -265,8 +265,8 @@ export async function verifyDeposit(options: VerifyDepositOptions) {
   await redis.xadd(RedisKeys.notificationStream(), {
     userId: payment.userId,
     type: 'SUBSCRIPTION_ACTIVATED',
-    title: 'สมัครสำเร็จ! 🎉',
-    message: `สมัคร ${pkg.name} สำเร็จแล้ว — License Key พร้อมใช้งานใน Dashboard`,
+    title: 'Sign Up Success! 🎉',
+    message: `${pkg.name} subscription activated — License Key is ready to use in your Dashboard`,
   });
 
   return {

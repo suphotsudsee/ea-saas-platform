@@ -41,8 +41,8 @@ const filters = [
   {
     name: 'BOS',
     fullName: 'Break of Structure',
-    thai: 'ทรงสตรัคเจอร์แตก',
-    desc: 'ราคาทะลุจุดสูง/ต่ำสุดเดิม\nยืนยันเทรนด์ต่อเนื่อง',
+    thai: 'StructureBreak',
+    desc: 'PriceBreak ThroughPointHigh/Previous Low\nConfirmTrendต่อเนื่อง',
     icon: '📈',
     color: '#10B981',
     darkBg: '#0A1F15',
@@ -51,8 +51,8 @@ const filters = [
   {
     name: 'CHoCH',
     fullName: 'Change of Character',
-    thai: 'เทรนด์เปลี่ยนทิศ',
-    desc: 'จากขึ้นเป็นลง หรือลงเป็นขึ้น\nสัญญาณกลับตัวสำคัญ',
+    thai: 'TrendChange Direction',
+    desc: 'fromUpเป็นลง Orลงเป็นUp\nSignalsReturn/ReverseItemสำคัญ',
     icon: '🔄',
     color: '#F59E0B',
     darkBg: '#1A1505',
@@ -61,8 +61,8 @@ const filters = [
   {
     name: 'Order Block',
     fullName: 'Order Block Zone',
-    thai: 'โซนสถาบันเข้า position',
-    desc: 'แท่งเทียนสุดท้ายก่อนวิ่ง\nโซนที่เทรดเดอร์ใหญ่เคยเข้า',
+    thai: 'โซนสถาบันEnter position',
+    desc: 'แท่งเทียนLastก่อนวิ่ง\nโซนAtTradingเดอร์ใหญ่เคยEnter',
     icon: '🧱',
     color: '#3B82F6',
     darkBg: '#0A1520',
@@ -71,8 +71,8 @@ const filters = [
   {
     name: 'FVG',
     fullName: 'Fair Value Gap',
-    thai: 'ช่องว่างราคา Imbalance',
-    desc: 'ราคาวิ่งผ่านเร็ว ทิ้งช่องว่าง\nมักกลับมาเติมก่อนไปต่อ',
+    thai: 'SpacePrice Imbalance',
+    desc: 'Priceวิ่งผ่านเร็ว ทิ้งSpace\nมักReturn/Reverseมาเติมก่อนไปต่อ',
     icon: '📐',
     color: '#8B5CF6',
     darkBg: '#150A20',
@@ -82,7 +82,7 @@ const filters = [
     name: 'Liquidity Sweep',
     fullName: 'Liquidity Sweep',
     thai: 'ล่าสภาพคล่อง / Stop Hunt',
-    desc: 'ราคาทะลุจุดสูง/ต่ำเพื่อกรอง SL\nก่อนจะกลับทิศที่แท้จริง',
+    desc: 'PriceBreak ThroughPointHigh/ต่ำtoFilter SL\nก่อนจะReturn/ReverseทิศAtแท้จริง',
     icon: '💧',
     color: '#06B6D4',
     darkBg: '#0A1A1F',
@@ -92,7 +92,7 @@ const filters = [
     name: 'S/D Zone',
     fullName: 'Supply & Demand Zone',
     thai: 'โซนอุปสงค์-อุปทาน',
-    desc: 'โซนที่ราคาเคยวิ่งออกแรงๆ\nจุดที่กลุ่มคำสั่งรวมกัน',
+    desc: 'โซนAtPriceเคยวิ่งออกแรงๆ\nPointAtGroupคำสั่งรวมTogether',
     icon: '📦',
     color: '#D4AF37',
     darkBg: '#1A1505',
@@ -140,7 +140,7 @@ function drawHeader() {
   fill(PALETTE.goldLight);
   textSize(22);
   textStyle(NORMAL);
-  text('6 ตัวกรอง PA/SMC — อ่านทรงสตรัคเจอร์อัตโนมัติ', W/2, 150);
+  text('6 ItemFilter PA/SMC — ReadStructureAutomated', W/2, 150);
   
   // Divider
   stroke(PALETTE.gold);
@@ -240,9 +240,9 @@ function drawHowItWorks() {
   
   // Step boxes
   let steps = [
-    { num: '1', text: 'EA เช็คสัญญาณเข้า\n(PA/SMC ทั้ง 6 filter)', icon: '🔍' },
-    { num: '2', text: 'Score ≥ 2 filter ชี้ข้ามเดียวกัน\n→ เพิ่มคะแนนความมั่นใจ', icon: '📊' },
-    { num: '3', text: 'คะแนนถึง threshold\n→ เปิดออเดอร์อัตโนมัติ', icon: '✅' },
+    { num: '1', text: 'EA เช็คSignalsEnter\n(PA/SMC All 6 filter)', icon: '🔍' },
+    { num: '2', text: 'Score ≥ 2 filter ชี้ข้ามSingleTogether\n→ Addคะแนนความมั่นใจ', icon: '📊' },
+    { num: '3', text: 'คะแนนถึง threshold\n→ Openออเดอร์Automated', icon: '✅' },
   ];
   
   let stepW = (W - 180) / 3;
@@ -310,15 +310,15 @@ function drawBonusNote() {
   fill(PALETTE.goldLight);
   textSize(22);
   textStyle(BOLD);
-  text('สำคัญ: Filters เป็น Bonus — ไม่บล็อกสัญญาณ!', W/2, y + 90);
+  text('สำคัญ: Filters เป็น Bonus — NoBlogSignals!', W/2, y + 90);
   
   // Detail
   fill(PALETTE.textLight);
   textSize(16);
   textStyle(NORMAL);
-  text('PA/SMC Filters ทำหน้าที่ "เพิ่มคะแนน" ไม่ใช่ "บล็อก"', W/2, y + 125);
-  text('สัญญาณเข้าที่ดีแล้ว → filter ชี้ข้ามเดียวกัน → คะแนนเพิ่ม', W/2, y + 150);
-  text('สัญญาณไม่ดี → filter ไม่ชี้ → คะแนนไม่เพิ่ม (แต่ไม่บล็อก)', W/2, y + 175);
+  text('PA/SMC Filters ทำPageAt "Addคะแนน" NoYes "Blog"', W/2, y + 125);
+  text('SignalsEnterAtดีAlready → filter ชี้ข้ามSingleTogether → คะแนนAdd', W/2, y + 150);
+  text('SignalsNoดี → filter Noชี้ → คะแนนNoAdd (แต่NoBlog)', W/2, y + 175);
 }
 
 function drawFooter() {

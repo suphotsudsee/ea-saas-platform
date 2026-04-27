@@ -84,8 +84,8 @@ export async function POST(request: NextRequest) {
       await redis.xadd(RedisKeys.notificationStream(), {
         userId: payment.userId,
         type: 'PAYMENT_CONFIRMED',
-        title: 'ชำระเงินสำเร็จ ✅',
-        message: `ได้รับ ${amountUSDT} USDT เรียบร้อย — License Key พร้อมใช้งาน`,
+        title: 'Payment Successful ✅',
+        message: `Received ${amountUSDT} USDT — License Key is ready to use`,
       });
     }
 

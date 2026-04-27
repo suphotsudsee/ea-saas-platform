@@ -105,7 +105,7 @@ const arg = process.argv[3];
 
 switch (command) {
   case 'broadcast':
-    sendTestBroadcast(arg || '🔧 ทดสอบระบบ — TradeCandle v12 Line OA ใช้งานได้แล้ว!');
+    sendTestBroadcast(arg || '🔧 Test system — TradeCandle v12 Line OA is now available!');
     break;
   case 'template':
     sendTemplateBroadcast(arg || 'teaser');
@@ -125,13 +125,13 @@ switch (command) {
 Usage: npx tsx scripts/line-manage.ts <command> [args]
 
 Commands:
-  broadcast <message>    ส่งข้อความ broadcast ทดสอบ
-  template <type>        ส่ง template (teaser|launch|urgency|monthly)
-  info                   ดูข้อมูล OA + จำนวนผู้ติดตาม
-  followers              ดูรายชื่อ follower IDs
+  broadcast <message>    Send a test broadcast message
+  template <type>        Send a template (teaser|launch|urgency|monthly)
+  info                   View OA info + follower count
+  followers              View follower IDs
 
-ตัวอย่าง:
-  npx tsx scripts/line-manage.ts broadcast "สวัสดีครับ!"
+Example:
+  npx tsx scripts/line-manage.ts broadcast "Hello!"
   npx tsx scripts/line-manage.ts template launch
   npx tsx scripts/line-manage.ts info
   npx tsx scripts/line-manage.ts followers

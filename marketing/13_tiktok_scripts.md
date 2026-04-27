@@ -2,104 +2,104 @@
 
 ---
 
-## 🎬 สคริปต์ TikTok/Reels 3 ตอน
+## 🎬 Script TikTok/Reels 3 Episode
 
-**รูปแบบ:** แนวตั้ง 9:16, 30 วินาทีต่อตอน
-**เสียง:** เสียงบรรยายไทย + เพลงประกอบ trendy
-**สีธีม:** ทอง/อำพัน + ดำ + เขียว (ห้ามฟ้า/น้ำเงิน)
-
----
-
-## 📱 สคริปต์ที่ 1: Hook + Problem (จุดปลุก + ปัญหา)
-
-**ชื่อ:** "เทรดทองขาดทุน 3 สาเหตุที่คุณไม่รู้"
-**วัตถุุประสงค์:** ดึงดึงความสนใจ + ระบุปัญหา
-**ระยะเวลา:** 30 วินาที
+**Format:** แนวตั้ง 9:16, 30 secondsต่อEpisode
+**Sound:** VoiceoverThai + Musicประกอบ trendy
+**สีธีม:** Gold/อำพัน + Black + เขียว (ห้ามฟ้า/น้ำเงิน)
 
 ---
 
-| วินาที | ภาพ (Visual) | เสียงบรรยาย (Voiceover) | ข้อความบนภาพ (Overlay) |
+## 📱 ScriptAt 1: Hook + Problem (Pointปลุก + Problem)
+
+**Name:** "Gold TradingLoss 3 สาเหตุAtYouNoรู้"
+**วัตถุุประสงค์:** ดึงดึงความสนใจ + ระบุProblem
+**DurationTime:** 30 seconds
+
+---
+
+| seconds | ภาพ (Visual) | Voiceover (Voiceover) | MessageOnภาพ (Overlay) |
 |---|---|---|---|
-| 0-3 | คนนั่งเครียดหน้าจอ MT5 มือกดแป้น หน้าผากย่น กราฟทองคำร่วง ↓ | เทรดทองคำขาดทุน? คุณไม่ได้อยู่คนเดียว | ❌ เทรดทองขาดทุน? |
-| 3-8 | ภาพ flash card ขึ้นทีละข้อ: ① เข้าผิดจุด ② กำไรน้อย ③ ไม่มีระบบ | 3 สาเหตุหลัก: เข้าจุดผิด ออกเร็วเกินไป และไม่มีระบบชัดเจน | ① เข้าผิดจุด ② กำไรน้อย ③ ไม่มีระบบ |
-| 8-15 | กราฟทองคำขึ้นลง มีลูกศรแดงชี้จุดเข้าผิด → มีลูกศรเขียวชี้จุดเข้าถูก → เปรียบเทียบ | เข้าจุดผิดก็โดน Stop Loss ก่อนจะไปทิศทางที่ถูก หรือเข้าจุดถูกแต่ออกเร็วเกินไป กำไรน้อยกว่าที่ควรได้ | ❌ เข้าผิด = SL โดนกวาด ❌ ออกเร็ว = กำไรน้อย |
-| 15-25 | ภาพ Dashboard TradeCandle เรืองแสงสีทอง แสดง 6 Filters ทำงาน มีลูกศรเขียวชี้จุดเข้า มีข้อความ "3-Wave Cashout" ปิดกำไร | แต่ถ้ามีระบบที่วิเคราะห์จุดเข้าให้ ปิดกำไรเป็น 3 คลื่น และควบคุมความเสี่ยงได้ คุณจะเป็นยังไง? | ✅ วิเคราะห์จุดเข้าให้ ✅ ปิดกำไร 3 คลื่น ✅ ควบคุมความเสี่ยง |
-| 25-30 | โลโก้ TradeCandle สีทองเรือง + ข้อความ CTA + ลูกศรชี้ลิงก์ใน Bio | ติดตามตอนต่อไป! หรือกดลิงก์ใน Bio เลย | 🚀 ติดตามตอนต่อไป! ⬇️ ลิงก์ใน Bio |
+| 0-3 | คนนั่งเครียดPageจอ MT5 มือกดแป้น Pageผากย่น ChartGoldร่วง ↓ | TradingGoldLoss? YouNoได้อยู่คนSingle | ❌ Gold TradingLoss? |
+| 3-8 | ภาพ flash card Upทีละข้อ: ① EnterผิดPoint ② Profitน้อย ③ NoHasระบบ | 3 สาเหตุหลัก: EnterPointผิด ออกเร็วเกินไป andNoHasระบบชัดเจน | ① EnterผิดPoint ② Profitน้อย ③ NoHasระบบ |
+| 8-15 | ChartGoldVolatility Hasลูกศรแดงชี้PointEnterผิด → Hasลูกศรเขียวชี้PointEnterถูก → Compare | EnterPointผิดก็โดน Stop Loss ก่อนจะไปทิศทางAtถูก OrEnterPointถูกแต่ออกเร็วเกินไป Profitน้อยกว่าAtควรได้ | ❌ Enterผิด = SL โดนกวาด ❌ ออกเร็ว = Profitน้อย |
+| 15-25 | ภาพ Dashboard TradeCandle เรืองแสงสีGold Show 6 Filters ทำงาน Hasลูกศรเขียวชี้PointEnter HasMessage "3-Wave Cashout" CloseProfit | แต่IfHasระบบAtAnalyzePointEnterให้ CloseProfitเป็น 3 คลื่น andControlความเสี่ยงได้ Youจะเป็นยังไง? | ✅ AnalyzePointEnterให้ ✅ CloseProfit 3 คลื่น ✅ Controlความเสี่ยง |
+| 25-30 | Logo TradeCandle สีGoldเรือง + Message CTA + ลูกศรชี้Linkใน Bio | MonitorEpisodeต่อไป! OrกดLinkใน Bio เลย | 🚀 MonitorEpisodeต่อไป! ⬇️ Linkใน Bio |
 
-**เสียงเพลง:** เพลงฮิปฮอปเร็ว จังหวะหนัก + เสียงเอฟเฟกต์ "swoosh" ทุกครั้งที่เปลี่ยนภาพ
+**SoundMusic:** Musicฮิปฮอปเร็ว จังหวะหนัก + Soundเอฟเฟกต์ "swoosh" Allครั้งAtเปลี่ยนภาพ
 
-**Hashtag:** #เทรดทองคำ #XAUUSD #SmartMoney #TradeCandle #EA #เทรดอัตโนมัติ
-
----
-
-## 📱 สคริปต์ที่ 2: Reveal + Demo (เผยคำตอบ + แสดงผลิตภัณฑ์)
-
-**ชื่อ:** "6 ฟิลเตอร์ Smart Money ที่ TradeCandle ใช้เทรดทอง"
-**วัตถุุประสงค์:** แสดงฟีเจอร์หลัก + สาธิตการทำงาน
-**ระยะเวลา:** 30 วินาที
+**Hashtag:** #TradingGold #XAUUSD #SmartMoney #TradeCandle #EA #Automated Trading
 
 ---
 
-| วินาที | ภาพ (Visual) | เสียงบรรยาย (Voiceover) | ข้อความบนภาพ (Overlay) |
+## 📱 ScriptAt 2: Reveal + Demo (เผยคำตอบ + ShowPerformanceิตภัณฑ์)
+
+**Name:** "6 Filter Smart Money At TradeCandle UseGold Trading"
+**วัตถุุประสงค์:** ShowKey Features + สาธิตการทำงาน
+**DurationTime:** 30 seconds
+
+---
+
+| seconds | ภาพ (Visual) | Voiceover (Voiceover) | MessageOnภาพ (Overlay) |
 |---|---|---|---|
-| 0-3 | โลโก้ TradeCandle ปรากฏพร้อมแสงสีทอง + ข้อความ "EA ทั่วไป vs TradeCandle" | EA ทั่วไปใช้ Indicator ธรรมดา TradeCandle ใช้สิ่งที่สถาบันใช้จริง | 🤖 EA ทั่วไป vs 🧠 TradeCandle |
-| 3-15 | Flash card ขึ้นทีละฟิลเตอร์ (1.5 วินาทีต่ออัน): ① Order Block → ภาพกราฟมีโซนสีทอง ② Fair Value Gap → ภาพกราฟมีช่องว่าง ③ Liquidity Sweep → ภาพกราฟมีเข็มกวาด ④ Break of Structure → ภาพกราฟทลายโครงสร้าง ⑤ Change of Character → ภาพกราฟเปลี่ยนเทรนด์ ⑥ Orderflow Bias → ภาพกราฟมีลูกศรทิศทาง | 6 ฟิลเตอร์ Smart Money ที่ TradeCandle ใช้: Order Block โซนที่สถาบันสะสม Fair Value Gap ช่องว่างราคา Liquidity Sweep กวาดจุดหยุด Break of Structure ทลายโครงสร้าง Change of Character เปลี่ยนเทรนด์ และ Orderflow Bias ทิศทางเงินฉลาด | ① Order Block ② Fair Value Gap ③ Liquidity Sweep ④ Break of Structure ⑤ Change of Character ⑥ Orderflow Bias |
-| 15-22 | ภาพกราฟทองคำแสดงทุกฟิลเตอร์ทำงานร่วมกัน → จุดเข้าเรืองแสงสีเขียว → สัญญาณ BUY → สถานะเปิด | ทั้ง 6 ต้องผ่านพร้อมกัน ถึงจะเปิดสถานะ ไม่ใช่เปิดทุกรอบ แต่เมื่อเปิด จุดเข้าแม่นย์มาก | ✅ ทั้ง 6 ผ่าน = เปิดสถานะ ไม่ใช่ทุกรอบ แต่แม่นย์มาก |
-| 22-27 | ภาพ 3-Wave Cashout ทำงาน: TP1 ✅ → TP2 ✅ → TP3 ✅ กำไรเพิ่มขึ้นทีละขั้น | แถมด้วย 3-Wave Cashout ปิดกำไร 3 คลื่น ล็อคกำไรทุกระดับ ไม่โลภจนเสียหมด | 🌊 3-Wave Cashout TP1 ✅ → TP2 ✅ → TP3 ✅ |
-| 27-30 | โลโก้ TradeCandle + ตัวเลข Backtest + CTA | 819 รอบ กำไร $4,858 ชนะ 74.75% ทดลองฟรี 14 วัน! | 📊 819 รอบ | $4,858 | 74.75% ⬇️ ลิงก์ใน Bio |
+| 0-3 | Logo TradeCandle ปรากฏReadyแสงสีGold + Message "EA General vs TradeCandle" | EA GeneralUse Indicator ธรรมดา TradeCandle Useสิ่งAtสถาบันUseจริง | 🤖 EA General vs 🧠 TradeCandle |
+| 3-15 | Flash card UpทีละFilter (1.5 secondsต่ออัน): ① Order Block → ภาพChartHasโซนสีGold ② Fair Value Gap → ภาพChartHasSpace ③ Liquidity Sweep → ภาพChartHasเข็มกวาด ④ Break of Structure → ภาพChartทลายโครงCreate ⑤ Change of Character → ภาพChartเปลี่ยนTrend ⑥ Orderflow Bias → ภาพChartHasลูกศรทิศทาง | 6 Filter Smart Money At TradeCandle Use: Order Block โซนAtสถาบันสะสม Fair Value Gap SpacePrice Liquidity Sweep กวาดPointหยุด Break of Structure ทลายโครงCreate Change of Character เปลี่ยนTrend and Orderflow Bias ทิศทางเงินฉลาด | ① Order Block ② Fair Value Gap ③ Liquidity Sweep ④ Break of Structure ⑤ Change of Character ⑥ Orderflow Bias |
+| 15-22 | ภาพChartGoldShowAllFilterทำงานร่วมTogether → PointEnterเรืองแสงสีเขียว → Signals BUY → StatusOpen | All 6 ต้องผ่านReadyTogether ถึงจะOpenStatus NoYesOpenAllRound แต่เมื่อOpen PointEnterแม่นย์มาก | ✅ All 6 ผ่าน = OpenStatus NoYesAllRound แต่แม่นย์มาก |
+| 22-27 | ภาพ 3-Wave Cashout ทำงาน: TP1 ✅ → TP2 ✅ → TP3 ✅ ProfitAddUpทีละขั้น | แถมด้วย 3-Wave Cashout CloseProfit 3 คลื่น LockProfitAllระดับ Noโลภจนเสียหมด | 🌊 3-Wave Cashout TP1 ✅ → TP2 ✅ → TP3 ✅ |
+| 27-30 | Logo TradeCandle + Itemเลข Backtest + CTA | 819 Round Profit $4,858 ชนะ 74.75% ทดลองFree 14 days! | 📊 819 Round | $4,858 | 74.75% ⬇️ Linkใน Bio |
 
-**เสียงเพลง:** เพลงทำนองเร่งจังหวะ + เสียง "ting" ทุกครั้งที่ขึ้นฟิลเตอร์ใหม่
+**SoundMusic:** Musicทำนองเร่งจังหวะ + Sound "ting" Allครั้งAtUpFilterใหม่
 
 **Hashtag:** #SmartMoney #TradeCandle #EA #XAUUSD #OrderBlock #SMC
 
 ---
 
-## 📱 สคริปต์ที่ 3: CTA + Urgency (กระตุ้นการตัดสินใจ + เร่งด่วน)
+## 📱 ScriptAt 3: CTA + Urgency (Triggerการตัดสินใจ + เร่งด่วน)
 
-**ชื่อ:** "ทองคำขึ้นได้ คุณเทรดตามไหม? เริ่ม 990฿"
-**วัตถุุประสงค์:** กระตุ้นให้ลงทะเบียนทดลองใช้
-**ระยะเวลา:** 30 วินาที
+**Name:** "GoldUpได้ YouTradingตามไหม? Beginner 990$"
+**วัตถุุประสงค์:** Triggerให้ลงทะเบียนTrial
+**DurationTime:** 30 seconds
 
 ---
 
-| วินาที | ภาพ (Visual) | เสียงบรรยาย (Voiceover) | ข้อความบนภาพ (Overlay) |
+| seconds | ภาพ (Visual) | Voiceover (Voiceover) | MessageOnภาพ (Overlay) |
 |---|---|---|---|
-| 0-3 | กราฟทองคำขึ้นเรื่อยๆ + ผู้คนมองตาม + ข้อความ "ทองคำขึ้น คุณได้กำไรไหม?" | ทองคำขึ้น คุณได้กำไรไหม? หรือนั่งดูอยู่? | 📈 ทองคำขึ้น คุณได้กำไรไหม? |
-| 3-8 | ภาพเปรียบเทียบ: ซ้าย = คนนั่งเฝ้าจอเหนื่อย ขวา = คนเปิด Dashboard บนมือถือสบาย | บางคนนั่งเฝ้าจอทั้งคืน บางคนเปิด Dashboard ดูวันละครั้ง แล้วก็ได้กำไร | 😫 เฝ้าจอทั้งคืน vs 😎 ดู Dashboard วันละครั้ง |
-| 8-16 | ภาพ Dashboard TradeCandle แสดง PnL สีเขียว + ตัวเลขกำไรเลื่อนขึ้น + ปุ่ม Kill Switch แดงเรือง | TradeCandle EA v12 เทรดทองคำให้คุณ 6 Smart Money Filters วิเคราะห์จุดเข้า 3-Wave Cashout ปิดกำไร และ Dashboard ควบคุมเรียลไทม์ | 🧠 6 Smart Money Filters 🌊 3-Wave Cashout 📊 Dashboard เรียลไทม์ |
-| 16-22 | ภาพตัวเลขระดับราคาขึ้นทีละขั้น: Starter 990฿ → Pro 2,490฿ (แนะนำ!) → Elite 4,990฿ | เริ่มต้นเพียง 990 บาทต่อเดือน เท่ากับกาแฟ 1 แก้วต่อวัน หรือเลือก Pro 2,490 ฟีเจอร์ครบ | 🥉 990฿/เดือน ⭐ 2,490฿/เดือน 💎 4,990฿/เดือน |
-| 22-27 | ภาพ Countdown Timer + ข้อความ "ทดลองฟรี 14 วัน" + ข้อความ "เหลือ XX ที่นั่ง" | ทดลองใช้ฟรี 14 วัน ไม่ต้องผูกบัตรเครดิต ยกเลิกได้ทุกเวลา เปิดรับจำนัดเดือนนี้เพียง 100 คน | 🆓 ฟรี 14 วัน 🚫 ไม่ต้องผูกบัตร 🔥 เหลือ XX ที่นั่ง |
-| 27-30 | โลโก้ TradeCandle + มือกดปุ่ม "เริ่มทดลองใช้" + ลูกศรชี้ลิงก์ใน Bio | กดลิงก์ใน Bio เริ่มทดลองใช้ฟรีวันนี้! | 🚀 กดลิงก์ใน Bio ⬇️ tradecandle.ai |
+| 0-3 | ChartGoldUpเรื่อยๆ + ผู้คนมองตาม + Message "GoldUp Youได้Profitไหม?" | GoldUp Youได้Profitไหม? Orนั่งViewอยู่? | 📈 GoldUp Youได้Profitไหม? |
+| 3-8 | ภาพCompare: Left = คนนั่งเฝ้าจอเหนื่อย Right = คนOpen Dashboard Onมือถือสบาย | บางคนนั่งเฝ้าจอAllคืน บางคนOpen Dashboard Viewdaysละครั้ง Alreadyก็ได้Profit | 😫 เฝ้าจอAllคืน vs 😎 View Dashboard daysละครั้ง |
+| 8-16 | ภาพ Dashboard TradeCandle Show PnL สีเขียว + ItemเลขProfitเลื่อนUp + Button Kill Switch แดงเรือง | TradeCandle EA v12 TradingGoldให้You 6 Smart Money Filters AnalyzePointEnter 3-Wave Cashout CloseProfit and Dashboard Controlเรียลไทม์ | 🧠 6 Smart Money Filters 🌊 3-Wave Cashout 📊 Dashboard เรียลไทม์ |
+| 16-22 | ภาพItemเลขระดับPriceUpทีละขั้น: Starter 990$ → Pro 2,490$ (แนะนำ!) → Elite 4,990$ | Get Startedเพียง 990 THB/month เท่ากับกาแฟ 1 แก้วต่อdays Orเลือก Pro 2,490 Featureครบ | 🥉 990$/month ⭐ 2,490$/month 💎 4,990$/month |
+| 22-27 | ภาพ Countdown Timer + Message "ทดลองFree 14 days" + Message "เหลือ XX Atนั่ง" | Free Trial 14 days Noต้องผูกCredit Card Cancelได้AllTime OpenรับจำนัดmonthThisเพียง 100 คน | 🆓 Free 14 days 🚫 Noต้องผูกบัตร 🔥 เหลือ XX Atนั่ง |
+| 27-30 | Logo TradeCandle + มือกดButton "BeginnerTrial" + ลูกศรชี้Linkใน Bio | กดLinkใน Bio BeginnerFree TrialdaysThis! | 🚀 กดLinkใน Bio ⬇️ tradecandle.ai |
 
-**เสียงเพลง:** เพลง upbeat ทำนองสร้างความตื่นเต้น + เสียงนาฬิกาเดินในช่วง 22-27 วินาที
+**SoundMusic:** Music upbeat ทำนองCreateความตื่นเต้น + SoundนาฬิกาเดินในPeriod 22-27 seconds
 
-**Hashtag:** #TradeCandle #ทองคำ #XAUUSD #EA #เทรดอัตโนมัติ #SmartMoney
+**Hashtag:** #TradeCandle #Gold #XAUUSD #EA #Automated Trading #SmartMoney
 
 ---
 
-## 📝 หมายเหตุการผลิต
+## 📝 NoteการPerformanceิต
 
 ### ข้อควรปฏิบัติ:
 
-1. **สี:** ใช้ทอง/อำพัน + ดำ + เขียว เท่านั้น ห้ามฟ้า/น้ำเงิน
-2. **ความยาว:** ไม่เกิน 30 วินาที (TikTok ชอบวิดีโอสั้น)
-3. **Hook:** 3 วินาทีแรกต้องดึงดึงความสนใจ (ไม่งั้นปิด)
-4. **ข้อความบนภาพ:** ตัวใหญ่ อ่านง่าย ตัดกับพื้นหลัง
-5. **เสียงบรรยาย:** ชัดเจน ไม่เร็วเกินไป หยุดตรงจุดสำคัญ
-6. **CTA:** ทุกตอนจบต้องมี Call-to-Action ชัดเจน
-7. **คำเตือน:** ใส่ "การเทรดมีความเสี่ยง" เป็น text overlay หรือ disclaimer
+1. **สี:** UseGold/อำพัน + Black + เขียว Only ห้ามฟ้า/น้ำเงิน
+2. **Length:** Noเกิน 30 seconds (TikTok ชอบShort Video)
+3. **Hook:** 3 secondsFirstต้องดึงดึงความสนใจ (Noงั้นClose)
+4. **MessageOnภาพ:** Itemใหญ่ Readง่าย ตัดกับBackground
+5. **Voiceover:** ชัดเจน Noเร็วเกินไป หยุดตรงPointสำคัญ
+6. **CTA:** AllEpisodeจบต้องHas Call-to-Action ชัดเจน
+7. **คำWarning:** ใส่ "การTradingHasความเสี่ยง" เป็น text overlay Or disclaimer
 
 ### ข้อควรหลีกเลี่ยง:
 
-- ❌ ห้ามสัญญากำไร ใช้คำว่า "ผลลัพธ์อาจแตกต่าง"
-- ❌ ห้ามใช้สีฟ้า/น้ำเงิน
-- ❌ ห้ามยาวเกิน 30 วินาที (ยกเว้น YouTube Shorts 45 วินาที)
-- ❌ ห้ามใช้ภาพ stock ทั่วไป ใช้ภาพจริงจาก MT5/Dashboard
-- ❌ ห้าม music ลิขสิทธิ์ ใช้เพลง Royalty-free หรือเพลง TikTok trending
+- ❌ ห้ามสัญญาProfit Useคำว่า "ResultอาจBreakต่าง"
+- ❌ Do Not Useสีฟ้า/น้ำเงิน
+- ❌ ห้ามยาวเกิน 30 seconds (ยกเว้น YouTube Shorts 45 seconds)
+- ❌ Do Not Useภาพ stock General Useภาพจริงfrom MT5/Dashboard
+- ❌ ห้าม music ลิขสิทธิ์ UseMusic Royalty-free OrMusic TikTok trending
 
-### รูปแบบไฟล์:
+### FormatFile:
 
 - **TikTok/Reels:** 1080x1920 px (9:16) MP4 H.264
 - **YouTube Shorts:** 1080x1920 px (9:16) MP4 H.264
-- **ความยาว:** 28-30 วินาที (เผื่อตัด)
-- **SRT Subtitle:** แยกไฟล์ .srt สำหรับทุกแพลตฟอร์ม
+- **Length:** 28-30 seconds (เผื่อตัด)
+- **SRT Subtitle:** แยกFile .srt ForAllแพลตฟอร์ม

@@ -68,9 +68,9 @@ export function AuthShell({
                   <Shield className="h-4 w-4" />
                 </div>
                 <div>
-                  <div className="text-sm font-semibold text-white">License key พร้อมใช้งานทันที</div>
+                  <div className="text-sm font-semibold text-white">License Key Ready to Use Immediately</div>
                   <div className="mt-1 text-sm leading-6 text-slate-400">
-                    ซื้อแพ็กเกจแล้วจัดการ EA, license, risk และบัญชี MT5 จาก dashboard เดียว.
+                    Purchase a plan, manage your EA, license, risk settings, and MT5 accounts from a single dashboard.
                   </div>
                 </div>
               </div>
@@ -82,7 +82,7 @@ export function AuthShell({
                 <div>
                   <div className="text-sm font-semibold text-white">3-Wave Cashout + Smart Filters</div>
                   <div className="mt-1 text-sm leading-6 text-slate-400">
-                    ออกแบบสำหรับ XAUUSD บน MT5 พร้อมระบบติดตามและหยุด EA ได้จากมือถือ.
+                    Designed for XAUUSD on MT5. Monitor and stop your EA from your mobile phone.
                   </div>
                 </div>
               </div>

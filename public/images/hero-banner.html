@@ -241,9 +241,9 @@ function drawWaveOverlay() {
   
   // Wave descriptions
   let waves = [
-    { label: 'Wave 1', desc: 'ปิด 25% — ล็อคกำไรแรก', color: PALETTE.green, icon: '✅' },
-    { label: 'Wave 2', desc: 'ปิด 50% — กำไรเพิ่มขึ้น', color: PALETTE.goldLight, icon: '✅' },
-    { label: 'Wave 3', desc: 'Trailing — ไล่เทรนด์ไม่จำกัด', color: PALETTE.amber, icon: '🔥' },
+    { label: 'Wave 1', desc: 'Close 25% — LockProfitFirst', color: PALETTE.green, icon: '✅' },
+    { label: 'Wave 2', desc: 'Close 50% — ProfitAddUp', color: PALETTE.goldLight, icon: '✅' },
+    { label: 'Wave 3', desc: 'Trailing — Follow TrendNoLimited', color: PALETTE.amber, icon: '🔥' },
   ];
   
   let y = boxY + 80;
@@ -273,7 +273,7 @@ function drawWaveOverlay() {
   fill(PALETTE.gray);
   textSize(12);
   textAlign(CENTER);
-  text('ยังไงก็ได้กำไร ไม่รอเต็ม 100%', boxX + boxW/2, boxY + boxH - 20);
+  text('ยังไงก็ได้Profit Noรอเต็ม 100%', boxX + boxW/2, boxY + boxH - 20);
 }
 
 function drawTextOverlays() {
@@ -285,7 +285,7 @@ function drawTextOverlays() {
   textFont('sans-serif');
   textStyle(BOLD);
   textSize(64);
-  text('AI เทรดทอง ปิดกำไรเป็น 3 คลื่น', W/2, 100);
+  text('AI Gold Trading CloseProfitเป็น 3 คลื่น', W/2, 100);
   
   // Subheadline
   textSize(28);
@@ -317,7 +317,7 @@ function drawTextOverlays() {
   textAlign(CENTER);
   textSize(20);
   textStyle(BOLD);
-  text('🔥 ทดลอง 7 วันฟรี — เริ่มต้น 990฿/เดือน', W/2, ctaY + 5);
+  text('🔥 ทดลอง 7 daysFree — Get Started 990$/month', W/2, ctaY + 5);
 }
 
 function updateParticles() {

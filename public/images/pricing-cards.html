@@ -34,60 +34,60 @@ const tiers = [
   {
     name: 'Starter',
     price: '990',
-    unit: '฿/เดือน',
+    unit: '$/month',
     color: '#9CA3AF',
     darkBg: '#0F1118',
     borderColor: '#374151',
-    accounts: '1 บัญชี',
+    accounts: '1 Accounts',
     features: [
       '3-Wave Cashout ✅',
-      'Smart Money Filters 6 ตัว',
-      'Dashboard พื้นฐาน',
+      'Smart Money Filters 6 Item',
+      'Dashboard Basic',
       'Kill Switch',
       'Email Support',
     ],
-    cta: 'เริ่มต้น',
+    cta: 'Get Started',
     badge: '',
     popular: false,
   },
   {
     name: 'Pro',
     price: '2,490',
-    unit: '฿/เดือน',
+    unit: '$/month',
     color: '#D4AF37',
     darkBg: '#151105',
     borderColor: '#D4AF37',
-    accounts: '3 บัญชี',
+    accounts: '3 Accounts',
     features: [
       '3-Wave Cashout ✅',
-      'Smart Money Filters 6 ตัว',
-      'Dashboard เต็มรูปแบบ',
+      'Smart Money Filters 6 Item',
+      'Dashboard เต็มFormat',
       'Kill Switch + Alerts',
       'Priority Support',
       'Config ละเอียด',
     ],
-    cta: 'ทดลอง 7 วันฟรี',
+    cta: 'ทดลอง 7 daysFree',
     badge: '⭐ ยอดนิยม',
     popular: true,
   },
   {
     name: 'Elite',
     price: '4,990',
-    unit: '฿/เดือน',
+    unit: '$/month',
     color: '#F59E0B',
     darkBg: '#1A1005',
     borderColor: '#F59E0B',
-    accounts: '5 บัญชี',
+    accounts: '5 Accounts',
     features: [
       '3-Wave Cashout ✅',
-      'Smart Money Filters 6 ตัว',
+      'Smart Money Filters 6 Item',
       'Dashboard VIP',
       'Kill Switch + Alerts + API',
       'Dedicated Support',
       'Custom Strategy',
       'Risk Manager 1-on-1',
     ],
-    cta: 'สมัคร Elite',
+    cta: 'Sign Up Elite',
     badge: '👑',
     popular: false,
   },
@@ -117,12 +117,12 @@ function draw() {
   textFont('sans-serif');
   textSize(42);
   textStyle(BOLD);
-  text('เลือกแพ็คเกจที่ใช่', W/2, 80);
+  text('Choose a PlanAtYes', W/2, 80);
   
   fill(PALETTE.textGray);
   textSize(18);
   textStyle(NORMAL);
-  text('ทดลอง 7 วันฟรี • ยกเลิกได้ทุกเมื่อ • ไม่ต้องใส่บัตร', W/2, 115);
+  text('ทดลอง 7 daysFree • Cancelได้Allเมื่อ • Noต้องใส่บัตร', W/2, 115);
   
   // Cards
   let cardW = 480;
@@ -142,7 +142,7 @@ function draw() {
   fill(PALETTE.textGray);
   textAlign(CENTER);
   textSize(14);
-  text('ทุกแพ็คเกจรวม MT5 EA + SaaS Dashboard + Kill Switch • รองรับ XAUUSD บน Exness', W/2, H - 30);
+  text('AllPackageรวม MT5 EA + SaaS Dashboard + Kill Switch • รองรับ XAUUSD On Exness', W/2, H - 30);
 }
 
 function drawPricingCard(x, y, w, h, tier) {
@@ -194,7 +194,7 @@ function drawPricingCard(x, y, w, h, tier) {
   fill(PALETTE.white);
   textSize(56);
   textStyle(BOLD);
-  text('฿' + tier.price, x + w/2, y + (tier.badge ? 140 : 120));
+  text('$' + tier.price, x + w/2, y + (tier.badge ? 140 : 120));
   
   fill(PALETTE.textGray);
   textSize(16);
