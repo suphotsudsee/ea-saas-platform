@@ -1,0 +1,23 @@
+RewriteEngine On
+RewriteBase /
+
+# ─── API Routes: rewrite /api/x to /api/x.php ──────────────────────────────
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^api/(.*)$ api/$1.php [L]
+
+# ─── Next.js Static Export: Serve HTML without extension ────────────────────
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/api/
+RewriteRule ^(.*)$ $1.html [L]
+
+# ─── Static assets (CSS, JS, images) ──────────────────────────────────────────
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule \.(css|js|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot)$ - [L]
+
+# ─── PHP proxy fallback (keep for reference) ────────────────────────────────────
+# If you need server-side rendering, uncomment below:
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule ^(.*)$ index.php [QSA,L]
