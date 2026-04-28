@@ -57,7 +57,7 @@ export async function GET() {
         name: '1-Month Free Trial',
         description: 'Trial TradeCandle Gold Scalper v12 Free 30 days — 1 MT5 Accounts + Dashboard + 3-Wave Cashout',
         priceCents: 0, // Free
-        currency: 'THB',
+        currency: 'USD',
         billingCycle: BillingCycle.MONTHLY,
         maxAccounts: 1,
         isTrial: true,
@@ -86,8 +86,8 @@ export async function GET() {
       data: {
         name: 'Starter',
         description: 'For Beginner Traders 1 MT5 Accounts — 3-Wave Cashout + Dashboard',
-        priceCents: 99000, // 990 THB
-        currency: 'THB',
+        priceCents: 990, // 9.90 USD
+        currency: 'USD',
         billingCycle: BillingCycle.MONTHLY,
         maxAccounts: 1,
         isTrial: false,
@@ -115,8 +115,8 @@ export async function GET() {
       data: {
         name: 'Pro',
         description: 'For Serious Traders 3 Accounts — Kill Switch + Risk Management + Line Support',
-        priceCents: 249000, // 2,490 THB
-        currency: 'THB',
+        priceCents: 2490, // 24.90 USD
+        currency: 'USD',
         billingCycle: BillingCycle.MONTHLY,
         maxAccounts: 3,
         isTrial: false,
@@ -144,8 +144,8 @@ export async function GET() {
       data: {
         name: 'Elite',
         description: 'For Professional Traders — 5 Accounts: Custom Config + VIP Line + 1-on-1 Setup Call',
-        priceCents: 499000, // 4,990 THB
-        currency: 'THB',
+        priceCents: 4990, // 4,990 USD
+        currency: 'USD',
         billingCycle: BillingCycle.MONTHLY,
         maxAccounts: 5,
         isTrial: false,

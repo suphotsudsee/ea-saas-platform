@@ -98,8 +98,8 @@ async function main() {
     data: {
       name: 'Starter',
       description: 'For Beginner Traders 1 MT5 Accounts — 3-Wave Cashout + Dashboard',
-      priceCents: 99000,
-      currency: 'THB',
+      priceCents: 990,
+      currency: 'USD',
       billingCycle: BillingCycle.MONTHLY,
       maxAccounts: 1,
       features: {
@@ -125,8 +125,8 @@ async function main() {
     data: {
       name: 'Pro',
       description: 'For Serious Traders 3 Accounts — Kill Switch + Risk Management + Line Support',
-      priceCents: 249000,
-      currency: 'THB',
+      priceCents: 2490,
+      currency: 'USD',
       billingCycle: BillingCycle.MONTHLY,
       maxAccounts: 3,
       features: {
@@ -152,8 +152,8 @@ async function main() {
     data: {
       name: 'Elite',
       description: 'For Professional Traders — 5 Accounts: Custom Config + VIP Line + 1-on-1 Setup Call',
-      priceCents: 499000,
-      currency: 'THB',
+      priceCents: 4990,
+      currency: 'USD',
       billingCycle: BillingCycle.MONTHLY,
       maxAccounts: 5,
       features: {
@@ -175,9 +175,9 @@ async function main() {
     },
   });
 
-  console.log(`  ✅ Starter: ${starterPkg.id} — 990 THB/mo`);
-  console.log(`  ✅ Pro:     ${proPkg.id} — 2,490 THB/mo`);
-  console.log(`  ✅ Elite:   ${elitePkg.id} — 4,990 THB/mo\n`);
+  console.log(`  ✅ Starter: ${starterPkg.id} — 990 USD/mo`);
+  console.log(`  ✅ Pro:     ${proPkg.id} — 2,490 USD/mo`);
+  console.log(`  ✅ Elite:   ${elitePkg.id} — 4,990 USD/mo\n`);
 
   // ─── 4. Create Demo Users with Subscriptions & Licenses ───────────────────
   console.log('👤 Creating demo users...\n');

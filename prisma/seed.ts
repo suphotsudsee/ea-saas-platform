@@ -204,8 +204,8 @@ async function main() {
     update: {
       name: 'Starter',
       description: 'For Beginner Traders 1 MT5 Accounts — 3-Wave Cashout + Dashboard',
-      priceCents: 99000, // 990 THB
-      currency: 'THB',
+      priceCents: 990, // 9.90 USD
+      currency: 'USD',
       billingCycle: 'MONTHLY',
       maxAccounts: 1,
       features: {
@@ -229,8 +229,8 @@ async function main() {
       id: 'pkg_starter',
       name: 'Starter',
       description: 'For Beginner Traders 1 MT5 Accounts — 3-Wave Cashout + Dashboard',
-      priceCents: 99000,
-      currency: 'THB',
+      priceCents: 990, // 9.90 USD
+      currency: 'USD',
       billingCycle: 'MONTHLY',
       maxAccounts: 1,
       features: {
@@ -257,8 +257,8 @@ async function main() {
     update: {
       name: 'Pro',
       description: 'For Serious Traders 3 Accounts — Kill Switch + Risk Management + Line Support',
-      priceCents: 249000, // 2,490 THB
-      currency: 'THB',
+      priceCents: 2490, // 24.90 USD
+      currency: 'USD',
       billingCycle: 'MONTHLY',
       maxAccounts: 3,
       features: {
@@ -282,8 +282,8 @@ async function main() {
       id: 'pkg_pro',
       name: 'Pro',
       description: 'For Serious Traders 3 Accounts — Kill Switch + Risk Management + Line Support',
-      priceCents: 249000,
-      currency: 'THB',
+      priceCents: 2490, // 24.90 USD
+      currency: 'USD',
       billingCycle: 'MONTHLY',
       maxAccounts: 3,
       features: {
@@ -310,8 +310,8 @@ async function main() {
     update: {
       name: 'Elite',
       description: 'For Professional Traders — 5 Accounts: Custom Config + VIP Line + 1-on-1 Setup Call',
-      priceCents: 499000, // 4,990 THB
-      currency: 'THB',
+      priceCents: 4990, // 49.90 USD
+      currency: 'USD',
       billingCycle: 'MONTHLY',
       maxAccounts: 5,
       features: {
@@ -335,8 +335,8 @@ async function main() {
       id: 'pkg_elite',
       name: 'Elite',
       description: 'For Professional Traders — 5 Accounts: Custom Config + VIP Line + 1-on-1 Setup Call',
-      priceCents: 499000,
-      currency: 'THB',
+      priceCents: 4990, // 49.90 USD
+      currency: 'USD',
       billingCycle: 'MONTHLY',
       maxAccounts: 5,
       features: {

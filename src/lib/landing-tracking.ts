@@ -38,8 +38,8 @@ export function useLandingTracking() {
     });
     trackEvent('begin_checkout', {
       plan: plan,
-      value: plan === 'starter' ? 990 : plan === 'pro' ? 2490 : 4990,
-      currency: 'THB',
+      value: plan === 'starter' ? 9.90 : plan === 'pro' ? 24.90 : 49.90,
+      currency: 'USD',
     });
   }, [canTrack, trackEvent]);
 
@@ -133,7 +133,7 @@ export function useConversionTracking() {
   const trackCheckoutStart = useCallback((plan: string) => {
     trackEvent('begin_checkout', {
       plan,
-      currency: 'THB',
+      currency: 'USD',
     });
   }, [trackEvent]);
 
@@ -146,14 +146,14 @@ export function useConversionTracking() {
   }) => {
     trackEvent('purchase', {
       value: data.amount,
-      currency: data.currency || 'THB',
+      currency: data.currency || 'USD',
       plan: data.plan,
       license_key: data.licenseKey,
     });
 
     trackEvent('subscribe', {
       value: data.amount,
-      currency: data.currency || 'THB',
+      currency: data.currency || 'USD',
       plan: data.plan,
     });
 
