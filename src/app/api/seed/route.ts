@@ -86,7 +86,7 @@ export async function GET() {
       data: {
         name: 'Starter',
         description: 'For Beginner Traders 1 MT5 Accounts — 3-Wave Cashout + Dashboard',
-        priceCents: 990, // 9.90 USD
+        priceCents: 999, // 9.99 USD
         currency: 'USD',
         billingCycle: BillingCycle.MONTHLY,
         maxAccounts: 1,
@@ -115,7 +115,7 @@ export async function GET() {
       data: {
         name: 'Pro',
         description: 'For Serious Traders 3 Accounts — Kill Switch + Risk Management + Line Support',
-        priceCents: 2490, // 24.90 USD
+        priceCents: 1999, // 19.99 USD
         currency: 'USD',
         billingCycle: BillingCycle.MONTHLY,
         maxAccounts: 3,
@@ -144,7 +144,7 @@ export async function GET() {
       data: {
         name: 'Elite',
         description: 'For Professional Traders — 5 Accounts: Custom Config + VIP Line + 1-on-1 Setup Call',
-        priceCents: 4990, // 4,990 USD
+        priceCents: 3999, // 39.99 USD
         currency: 'USD',
         billingCycle: BillingCycle.MONTHLY,
         maxAccounts: 5,
