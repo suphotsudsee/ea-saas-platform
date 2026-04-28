@@ -2,9 +2,11 @@
 const path = require('path');
 
 const nextConfig = {
-  output: 'standalone',
+  output: 'export',
+  distDir: 'dist',
   typescript: { ignoreBuildErrors: true },
   eslint: { ignoreDuringBuilds: true },
+  images: { unoptimized: true },
   webpack: (config) => {
     config.resolve.alias['@prisma/client'] = path.resolve(__dirname, 'src/types/prisma-stub.ts');
     return config;
