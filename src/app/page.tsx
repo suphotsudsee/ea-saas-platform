@@ -92,7 +92,7 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
 
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button onClick={() => navigateTo('pricing')} className="w-full rounded-xl px-14 py-3.5 text-base sm:w-auto">
-              Get Started 9.90$/month <ArrowRight size={18} className="ml-2" />
+              Get Started from $9.99/month <ArrowRight size={18} className="ml-2" />
             </Button>
             <Button
               onClick={() => navigateTo('features')}
@@ -385,7 +385,7 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
             🔥 Ready to let AI Gold Trading work for you?
           </h2>
           <p className="mx-auto mb-8 max-w-xl text-slate-400">
-            Get Started 9.90$/month — 1-month free trial, no upfront payment — cancel anytime
+            Get Started from $9.99/month — 1-month free trial, no upfront payment — cancel anytime
           </p>
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button onClick={() => navigateTo('register')} className="w-full rounded-xl px-14 py-3.5 text-base sm:w-auto">
@@ -423,7 +423,7 @@ function PricingPage({ embedded = false }: { embedded?: boolean }) {
         <h3 className="mb-2 text-xl font-bold text-white">Starter</h3>
         <p className="h-10 text-sm text-slate-400">For Beginner Traders — 1 Account</p>
         <div className="my-6">
-          <span className="text-4xl font-bold text-white">9.90$</span>
+          <span className="text-4xl font-bold text-white">$9.99</span>
           <span className="text-slate-500">/ month</span>
         </div>
         <ul className="mb-8 space-y-4 text-sm text-slate-300">
@@ -449,7 +449,7 @@ function PricingPage({ embedded = false }: { embedded?: boolean }) {
         <h3 className="mb-2 text-xl font-bold text-white">Pro ⭐</h3>
         <p className="h-10 text-sm text-slate-400">For Serious Traders — 3 Accounts</p>
         <div className="my-6">
-          <span className="text-4xl font-bold text-white">24.90$</span>
+          <span className="text-4xl font-bold text-white">$19.99</span>
           <span className="text-slate-500">/ month</span>
         </div>
         <ul className="mb-8 space-y-4 text-sm font-medium text-white">
@@ -468,7 +468,7 @@ function PricingPage({ embedded = false }: { embedded?: boolean }) {
         <h3 className="mb-2 text-xl font-bold text-white">Elite</h3>
         <p className="h-10 text-sm text-slate-400">For Professionals — 5 Accounts + VIP</p>
         <div className="my-6">
-          <span className="text-4xl font-bold text-white">49.90$</span>
+          <span className="text-4xl font-bold text-white">$39.99</span>
           <span className="text-slate-500">/ month</span>
         </div>
         <ul className="mb-8 space-y-4 text-sm text-slate-300">

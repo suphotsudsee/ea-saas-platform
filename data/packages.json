@@ -1,0 +1,74 @@
+[
+  {
+    "id": "pkg_trial",
+    "name": "1-Month Free Trial",
+    "description": "Full access to 1 trading account for 30 days.",
+    "priceCents": 0,
+    "currency": "USD",
+    "billingCycle": "MONTHLY",
+    "maxAccounts": 1,
+    "features": [
+      "1 trading account",
+      "Email support",
+      "30-day trial"
+    ],
+    "isActive": true,
+    "isTrial": true,
+    "trialDays": 30,
+    "sortOrder": 0
+  },
+  {
+    "id": "pkg_starter",
+    "name": "Starter",
+    "description": "Single account. Best for personal traders.",
+    "priceCents": 990,
+    "currency": "USD",
+    "billingCycle": "MONTHLY",
+    "maxAccounts": 1,
+    "features": [
+      "1 trading account",
+      "Email support",
+      "Kill switch"
+    ],
+    "isActive": true,
+    "isTrial": false,
+    "trialDays": 0,
+    "sortOrder": 1
+  },
+  {
+    "id": "pkg_pro",
+    "name": "Professional",
+    "description": "Multi-account with priority support.",
+    "priceCents": 2490,
+    "currency": "USD",
+    "billingCycle": "MONTHLY",
+    "maxAccounts": 3,
+    "features": [
+      "3 trading accounts",
+      "Priority support",
+      "Analytics"
+    ],
+    "isActive": true,
+    "isTrial": false,
+    "trialDays": 0,
+    "sortOrder": 2
+  },
+  {
+    "id": "pkg_elite",
+    "name": "Elite",
+    "description": "Unlimited accounts. For fund managers.",
+    "priceCents": 4990,
+    "currency": "USD",
+    "billingCycle": "MONTHLY",
+    "maxAccounts": 10,
+    "features": [
+      "10 trading accounts",
+      "Dedicated support",
+      "API access"
+    ],
+    "isActive": true,
+    "isTrial": false,
+    "trialDays": 0,
+    "sortOrder": 3
+  }
+]

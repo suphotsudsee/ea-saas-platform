@@ -1,0 +1,54 @@
+DirectorySlash Off
+RewriteEngine On
+RewriteBase /
+
+# ─── Cache control for HTML (no CDN caching for pages) ───
+<FilesMatch "\.(html)$">
+    Header set Cache-Control "max-age=0, no-cache, must-revalidate"
+</FilesMatch>
+
+# ─── 1. Static Next.js assets: serve directly from filesystem ───
+RewriteRule ^_next/static/(.*)$ .next/static/$1 [L]
+
+# ─── 2. PHP API endpoints: serve directly (NO rewrite to Node.js) ───
+# 2a. URLs that already have .php extension
+RewriteCond %{REQUEST_URI} \.php$
+RewriteRule ^ - [L]
+
+# 2b. API URLs without .php → try .php file first (for direct fetch() calls)
+RewriteCond %{REQUEST_URI} ^/api/
+RewriteCond %{DOCUMENT_ROOT}/$0.php -f
+RewriteRule ^api/(.*)$ api/$1.php [L]
+
+# 2c. /api/licenses/{id} → /api/licenses/by-id.php?id={id}
+RewriteCond %{REQUEST_URI} ^/api/licenses/([a-zA-Z0-9_-]+)\.php$
+RewriteCond %{DOCUMENT_ROOT}/api/licenses/by-id.php -f
+RewriteRule ^api/licenses/([a-zA-Z0-9_-]+)\.php$ api/licenses/by-id.php?id=$1 [L,QSA]
+
+# ─── 3. Public assets: serve directly ───
+RewriteRule ^images/(.*)$ images/$1 [L]
+RewriteRule ^favicon\.ico$ favicon.ico [L]
+RewriteRule ^manifest\.json$ manifest.json [L]
+RewriteRule ^robots\.txt$ robots.txt [L]
+
+# ─── 4. Trailing slash → redirect (with DirectorySlash Off, handle manually) ───
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^(.+)/$ $1 [R=301,L]
+
+# ─── 5. Directories that have matching .html → serve .html instead ───
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+RewriteRule ^(.+[^/])$ $1.html [L]
+
+# ─── 6. Non-directory URLs → add .html (for static export pages) ───
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+RewriteRule ^(.+[^/])$ $1.html [L]
+
+# ─── 7. Root → index.html ───
+RewriteRule ^$ index.html [L]
+
+# ─── 8. Everything else → PHP proxy to Node.js standalone ───
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]

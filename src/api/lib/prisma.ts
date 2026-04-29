@@ -3,6 +3,7 @@ import {
   findLicenseByKey, findLicensesByUserId, getAllLicenses, createLic, updateLicense,
   findSubscriptionByUserId, getAllSubscriptions, createSub, findSubscriptionById, updateSubscription,
   findUserByApiKey, createApiKey, revokeApiKey, getAllApiKeys,
+  findPackageById, getAllPackages, createPackage,
 } from '../../lib/db';
 
 // ─── Simple Prisma adapter for JSON DB ───────────────────────────────────────
@@ -133,7 +134,28 @@ export const prisma: any = {
   license: licModel,
   subscription: subModel,
   apiKey: apiKeyModel,
-  package: { findUnique:()=>null, findFirst:()=>null, findMany:()=>[], create:()=>null, update:()=>null },
+  package: {
+    findUnique: ({ where }: any): any => {
+      if (where?.id) return findPackageById(where.id);
+      return null;
+    },
+    findFirst: ({ where }: any): any => {
+      const pkgs = getAllPackages();
+      if (where?.isActive !== undefined) return pkgs.find((p: any) => p.isActive === where.isActive) || null;
+      return pkgs[0] || null;
+    },
+    findMany: ({ where, orderBy }: any): any[] => {
+      let results = getAllPackages();
+      if (where?.isActive !== undefined) results = results.filter((p: any) => p.isActive === where.isActive);
+      if (orderBy?.sortOrder) results = results.sort((a: any, b: any) =>
+        orderBy.sortOrder === 'asc' ? a.sortOrder - b.sortOrder : b.sortOrder - a.sortOrder
+      );
+      return results;
+    },
+    create: ({ data }: any): any => createPackage(data),
+    update: () => null,
+    deleteMany: () => ({ count: 0 }),
+  },
   strategy: { findUnique:()=>null, findFirst:()=>null, findMany:()=>[] },
   adminUser: { findUnique:({ where }: any) => where.email==='admin@tradecandle.net'?{id:'1',email:'admin@tradecandle.net',role:'SUPER_ADMIN',name:'Admin'}:null, findMany: ()=>[] },
   tradingAccount: { findUnique:()=>null, findFirst:()=>null, findMany:()=>[], count:()=>0 },

@@ -52,6 +52,17 @@ api.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+
+  // Append .php suffix for shared hosting PHP API endpoints
+  // Skip: external URLs, already has .php, or Next.js RSC routes
+  if (config.url && !config.url.startsWith('http') && !config.url.endsWith('.php') && !config.url.startsWith('/_next/')) {
+    if (config.url.includes('?')) {
+      config.url = config.url.replace('?', '.php?');
+    } else {
+      config.url += '.php';
+    }
+  }
+
   return config;
 });
 

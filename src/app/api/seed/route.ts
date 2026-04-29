@@ -86,7 +86,7 @@ export async function GET() {
       data: {
         name: 'Starter',
         description: 'For Beginner Traders 1 MT5 Accounts — 3-Wave Cashout + Dashboard',
-        priceCents: 990, // 9.90 USD
+        priceCents: 999, // $9.99 USD
         currency: 'USD',
         billingCycle: BillingCycle.MONTHLY,
         maxAccounts: 1,

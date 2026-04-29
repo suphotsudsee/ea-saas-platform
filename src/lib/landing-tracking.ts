@@ -38,7 +38,7 @@ export function useLandingTracking() {
     });
     trackEvent('begin_checkout', {
       plan: plan,
-      value: plan === 'starter' ? 9.90 : plan === 'pro' ? 24.90 : 49.90,
+      value: plan === 'starter' ? 9.99 : plan === 'pro' ? 19.99 : 39.99,
       currency: 'USD',
     });
   }, [canTrack, trackEvent]);
