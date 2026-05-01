@@ -52,11 +52,13 @@ async function mockUser(user: any) {
 
 function matchesWhere(row: any, where: any) {
   if (!where) return true;
-  if (where.status && row.status !== where.status) return false;
+  if (where.status?.not && row.status === where.status.not) return false;
+  if (where.status && typeof where.status !== 'object' && row.status !== where.status) return false;
   if (where.role && row.role !== where.role) return false;
   if (where.userId && row.userId !== where.userId) return false;
   if (where.id && row.id !== where.id) return false;
   if (where.key && row.key !== where.key) return false;
+  if (where.killSwitch !== undefined && Boolean(row.killSwitch) !== Boolean(where.killSwitch)) return false;
   if (where.email?.contains && !row.email?.includes(where.email.contains)) return false;
   if (where.id?.notIn?.includes(row.id)) return false;
   if (where.createdAt?.gte && new Date(row.createdAt) < new Date(where.createdAt.gte)) return false;
@@ -117,6 +119,7 @@ const licModel = {
     if (!where.id) return null;
     return updateLicense(where.id, data);
   },
+  count: async ({ where }: any = {}) => (await getAllLicenses()).filter((l: any) => matchesWhere(l, where)).length,
 };
 
 const subModel = {
@@ -128,7 +131,17 @@ const subModel = {
     if (where?.userId) return findSubscriptionByUserId(where.userId);
     return (await getAllSubscriptions()).find((s: any) => matchesWhere(s, where)) || null;
   },
-  findMany: async ({ where }: any = {}) => (await getAllSubscriptions()).filter((s: any) => matchesWhere(s, where)),
+  findMany: async ({ where, include }: any = {}) => {
+    const subs = (await getAllSubscriptions()).filter((s: any) => matchesWhere(s, where));
+    if (include?.package) {
+      const packages = await getAllPackages();
+      return subs.map((sub: any) => ({
+        ...sub,
+        package: packages.find((pkg: any) => pkg.id === sub.packageId) || null,
+      }));
+    }
+    return subs;
+  },
   create: async ({ data }: any) =>
     createSub({
       ...data,
@@ -139,6 +152,7 @@ const subModel = {
     if (!where.id) return null;
     return updateSubscription(where.id, data);
   },
+  count: async ({ where }: any = {}) => (await getAllSubscriptions()).filter((s: any) => matchesWhere(s, where)).length,
   deleteMany: async () => ({ count: 0 }),
 };
 
@@ -181,7 +195,14 @@ export const prisma: any = {
   tradingAccount: { findUnique: async () => null, findFirst: async () => null, findMany: async () => [], count: async () => 0 },
   notification: { findMany: async () => [], count: async () => 0, findFirst: async () => null },
   heartbeat: { findMany: async () => [], findFirst: async () => null, count: async () => 0, findUnique: async () => null },
-  payment: { findMany: async () => [], count: async () => 0, findUnique: async () => null, findFirst: async () => null, create: async () => null },
+  payment: {
+    findMany: async () => [],
+    count: async () => 0,
+    findUnique: async () => null,
+    findFirst: async () => null,
+    create: async () => null,
+    aggregate: async () => ({ _sum: { amountCents: 0 } }),
+  },
   metric: { findMany: async () => [] },
   riskRule: { findMany: async () => [], findFirst: async () => null, findUnique: async () => null },
   riskEvent: { findMany: async () => [], count: async () => 0, findFirst: async () => null, create: async () => null },

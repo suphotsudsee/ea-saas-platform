@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
-import { findUserById } from '../lib/db';
+import { findAdminByEmail, findUserById } from '../lib/db';
 
 const SECRET = new TextEncoder().encode(process.env.NEXTAUTH_SECRET||'fallback-secret');
 
@@ -18,7 +18,25 @@ export async function authMiddleware(req: NextRequest): Promise<{ user?: AuthUse
   try {
     const { payload } = await jwtVerify(token, SECRET);
     const id = typeof payload.id === 'string' ? payload.id : null;
+    const email = typeof payload.email === 'string' ? payload.email : null;
+    const actorType = payload.actorType === 'admin' ? 'admin' : 'user';
     if (!id) return { response: NextResponse.json({error:'Invalid session'},{status:401}) };
+
+    if (actorType === 'admin') {
+      if (!email) return { response: NextResponse.json({error:'Invalid session'},{status:401}) };
+      const admin = await findAdminByEmail(email);
+      if (!admin) return { response: NextResponse.json({error:'Admin not found'},{status:401}) };
+      return {
+        user: {
+          id: admin.id,
+          email: admin.email,
+          name: admin.name,
+          role: admin.role,
+          actorType: 'admin',
+        },
+      };
+    }
+
     const user = await findUserById(id);
     if (!user) return { response: NextResponse.json({error:'User not found'},{status:401}) };
     if (user.status === 'SUSPENDED' || user.status === 'BANNED') {

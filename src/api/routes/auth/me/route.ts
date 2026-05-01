@@ -8,8 +8,8 @@ import { authMiddleware } from '../../../middleware/auth';
 export async function GET(request: NextRequest) {
   const authResult = await authMiddleware(request);
 
-  if (authResult instanceof NextResponse) {
-    return authResult;
+  if (authResult.response) {
+    return authResult.response;
   }
 
   return NextResponse.json({
