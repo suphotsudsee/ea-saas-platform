@@ -8,7 +8,7 @@ const SECRET = new TextEncoder().encode(process.env.NEXTAUTH_SECRET || 'fallback
 export async function POST(req: NextRequest) {
   try {
     const { email, password } = await req.json();
-    const user = findUserByEmail(email);
+    const user = await findUserByEmail(email);
     if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
       return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
     }

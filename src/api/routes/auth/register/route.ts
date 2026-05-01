@@ -13,23 +13,23 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const v = schema.parse(body);
-    if (findUserByEmail(v.email)) {
+    if (await findUserByEmail(v.email)) {
       return NextResponse.json({ error: 'Email already registered' }, { status: 409 });
     }
     const now = new Date().toISOString();
     const trialEnd = new Date(Date.now()+30*86400000).toISOString();
-    const user = createUser({
+    const user = await createUser({
       email: v.email, name: v.name || null,
       passwordHash: await bcrypt.hash(v.password, 10),
       role: 'TRADER', status: 'ACTIVE',
       timezone: 'UTC', twoFactorEnabled: false,
       stripeCustomerId: null,
     });
-    const sub = createSub({
+    const sub = await createSub({
       userId: user.id, packageId: 'starter',
       status: 'TRIAL', currentPeriodEnd: trialEnd, trialEndsAt: trialEnd,
     });
-    const lic = createLic({
+    const lic = await createLic({
       userId: user.id, subscriptionId: sub.id,
       key: generateLicenseKey(), status: 'ACTIVE',
       maxAccounts: 1, expiresAt: trialEnd,

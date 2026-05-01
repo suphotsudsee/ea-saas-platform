@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { PrismaClient, BillingCycle } from '@prisma/client';
 import { execSync } from 'child_process';
 
+export const dynamic = 'force-dynamic';
+
 const prisma = new PrismaClient();
 
 export async function GET() {

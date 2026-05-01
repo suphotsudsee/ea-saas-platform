@@ -19,7 +19,7 @@ export async function authMiddleware(req: NextRequest): Promise<{ user?: AuthUse
     const { payload } = await jwtVerify(token, SECRET);
     const id = typeof payload.id === 'string' ? payload.id : null;
     if (!id) return { response: NextResponse.json({error:'Invalid session'},{status:401}) };
-    const user = findUserById(id);
+    const user = await findUserById(id);
     if (!user) return { response: NextResponse.json({error:'User not found'},{status:401}) };
     if (user.status === 'SUSPENDED' || user.status === 'BANNED') {
       return { response: NextResponse.json({error:'Account suspended'},{status:403}) };
