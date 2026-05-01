@@ -115,7 +115,7 @@ export async function GET() {
       data: {
         name: 'Pro',
         description: 'For Serious Traders 3 Accounts — Kill Switch + Risk Management + Line Support',
-        priceCents: 2490, // 24.90 USD
+        priceCents: 2499, // 24.90 USD
         currency: 'USD',
         billingCycle: BillingCycle.MONTHLY,
         maxAccounts: 3,
@@ -144,7 +144,7 @@ export async function GET() {
       data: {
         name: 'Elite',
         description: 'For Professional Traders — 5 Accounts: Custom Config + VIP Line + 1-on-1 Setup Call',
-        priceCents: 4990, // 4,990 USD
+        priceCents: 4999, // 4,990 USD
         currency: 'USD',
         billingCycle: BillingCycle.MONTHLY,
         maxAccounts: 5,

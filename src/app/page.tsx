@@ -449,7 +449,7 @@ function PricingPage({ embedded = false }: { embedded?: boolean }) {
         <h3 className="mb-2 text-xl font-bold text-white">Pro ⭐</h3>
         <p className="h-10 text-sm text-slate-400">For Serious Traders — 3 Accounts</p>
         <div className="my-6">
-          <span className="text-4xl font-bold text-white">$19.99</span>
+          <span className="text-4xl font-bold text-white">$24.99</span>
           <span className="text-slate-500">/ month</span>
         </div>
         <ul className="mb-8 space-y-4 text-sm font-medium text-white">
@@ -468,7 +468,7 @@ function PricingPage({ embedded = false }: { embedded?: boolean }) {
         <h3 className="mb-2 text-xl font-bold text-white">Elite</h3>
         <p className="h-10 text-sm text-slate-400">For Professionals — 5 Accounts + VIP</p>
         <div className="my-6">
-          <span className="text-4xl font-bold text-white">$39.99</span>
+          <span className="text-4xl font-bold text-white">$49.99</span>
           <span className="text-slate-500">/ month</span>
         </div>
         <ul className="mb-8 space-y-4 text-sm text-slate-300">
