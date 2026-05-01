@@ -5,12 +5,14 @@ import mysql from 'mysql2/promise';
 
 const DATA_DIR = path.join(process.cwd(), 'data');
 const DATABASE_URL = process.env.DATABASE_URL;
+let mysqlSchemaReady: Promise<void> | null = null;
 
 function useMysql() {
   return !!DATABASE_URL && DATABASE_URL.startsWith('mysql');
 }
 
 async function query<T = any>(sql: string, params: any[] = []): Promise<T[]> {
+  await ensureMysqlSchema();
   const connection = await mysql.createConnection(getConnectionConfig());
   try {
     const [rows] = await connection.execute(sql, params);
@@ -18,6 +20,177 @@ async function query<T = any>(sql: string, params: any[] = []): Promise<T[]> {
   } finally {
     await connection.end();
   }
+}
+
+async function ensureMysqlSchema() {
+  if (!useMysql()) return;
+  if (!mysqlSchemaReady) {
+    mysqlSchemaReady = bootstrapMysqlSchema().catch((error) => {
+      mysqlSchemaReady = null;
+      throw error;
+    });
+  }
+  await mysqlSchemaReady;
+}
+
+async function bootstrapMysqlSchema() {
+  const connection = await mysql.createConnection(getConnectionConfig());
+  const exec = async (sql: string, params: any[] = []) => {
+    await connection.execute(sql, params);
+  };
+  const ignore = async (sql: string) => {
+    try {
+      await exec(sql);
+    } catch {
+      // Existing Coolify databases may already have the Prisma migration schema.
+    }
+  };
+
+  try {
+    await exec(`
+      CREATE TABLE IF NOT EXISTS users (
+        id VARCHAR(191) NOT NULL PRIMARY KEY,
+        email VARCHAR(191) NOT NULL UNIQUE,
+        passwordHash VARCHAR(191) NULL,
+        name VARCHAR(191) NULL,
+        timezone VARCHAR(191) NOT NULL DEFAULT 'UTC',
+        emailVerified DATETIME(3) NULL,
+        twoFactorEnabled BOOLEAN NOT NULL DEFAULT false,
+        twoFactorSecret VARCHAR(191) NULL,
+        role VARCHAR(64) NOT NULL DEFAULT 'TRADER',
+        status VARCHAR(64) NOT NULL DEFAULT 'ACTIVE',
+        autoLinkAccounts BOOLEAN NOT NULL DEFAULT true,
+        createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+        updatedAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)
+      ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+    `);
+
+    await exec(`
+      CREATE TABLE IF NOT EXISTS packages (
+        id VARCHAR(191) NOT NULL PRIMARY KEY,
+        name VARCHAR(191) NOT NULL,
+        description VARCHAR(191) NULL,
+        priceCents INTEGER NOT NULL,
+        currency VARCHAR(191) NOT NULL DEFAULT 'USD',
+        billingCycle VARCHAR(64) NOT NULL DEFAULT 'MONTHLY',
+        maxAccounts INTEGER NOT NULL DEFAULT 1,
+        features JSON NULL,
+        isActive BOOLEAN NOT NULL DEFAULT true,
+        isTrial BOOLEAN NOT NULL DEFAULT false,
+        trialDays INTEGER NOT NULL DEFAULT 0,
+        sortOrder INTEGER NOT NULL DEFAULT 0,
+        stripePriceId VARCHAR(191) NULL,
+        createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+        updatedAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)
+      ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+    `);
+
+    await exec(`
+      CREATE TABLE IF NOT EXISTS strategies (
+        id VARCHAR(191) NOT NULL PRIMARY KEY,
+        name VARCHAR(191) NOT NULL UNIQUE,
+        description VARCHAR(191) NULL,
+        version VARCHAR(191) NOT NULL,
+        defaultConfig JSON NULL,
+        riskConfig JSON NULL,
+        isActive BOOLEAN NOT NULL DEFAULT true,
+        createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+        updatedAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)
+      ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+    `);
+
+    await exec(`
+      CREATE TABLE IF NOT EXISTS subscriptions (
+        id VARCHAR(191) NOT NULL PRIMARY KEY,
+        userId VARCHAR(191) NOT NULL,
+        packageId VARCHAR(191) NOT NULL,
+        status VARCHAR(64) NOT NULL DEFAULT 'ACTIVE',
+        currentPeriodStart DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+        currentPeriodEnd DATETIME(3) NOT NULL,
+        trialEndsAt DATETIME(3) NULL,
+        cancelAtPeriodEnd BOOLEAN NOT NULL DEFAULT false,
+        stripeSubscriptionId VARCHAR(191) NULL,
+        stripeCustomerId VARCHAR(191) NULL,
+        createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+        updatedAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)
+      ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+    `);
+
+    await exec(`
+      CREATE TABLE IF NOT EXISTS licenses (
+        id VARCHAR(191) NOT NULL PRIMARY KEY,
+        \`key\` VARCHAR(191) NOT NULL UNIQUE,
+        userId VARCHAR(191) NOT NULL,
+        subscriptionId VARCHAR(191) NULL,
+        strategyId VARCHAR(191) NULL,
+        status VARCHAR(64) NOT NULL DEFAULT 'ACTIVE',
+        expiresAt DATETIME(3) NULL,
+        maxAccounts INTEGER NOT NULL DEFAULT 1,
+        killSwitch BOOLEAN NOT NULL DEFAULT false,
+        killSwitchReason VARCHAR(191) NULL,
+        killSwitchAt DATETIME(3) NULL,
+        pausedAt DATETIME(3) NULL,
+        pausedReason VARCHAR(191) NULL,
+        createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+        updatedAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)
+      ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+    `);
+
+    await exec(`
+      CREATE TABLE IF NOT EXISTS api_keys (
+        id VARCHAR(191) NOT NULL PRIMARY KEY,
+        userId VARCHAR(191) NOT NULL,
+        keyHash VARCHAR(191) NOT NULL UNIQUE,
+        keyPrefix VARCHAR(191) NOT NULL,
+        name VARCHAR(191) NOT NULL,
+        lastUsedAt DATETIME(3) NULL,
+        expiresAt DATETIME(3) NULL,
+        status VARCHAR(64) NOT NULL DEFAULT 'ACTIVE',
+        createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)
+      ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+    `);
+
+    await ignore('ALTER TABLE subscriptions ADD COLUMN trialEndsAt DATETIME(3) NULL');
+    await ignore('ALTER TABLE packages ADD COLUMN isTrial BOOLEAN NOT NULL DEFAULT false');
+    await ignore('ALTER TABLE packages ADD COLUMN trialDays INTEGER NOT NULL DEFAULT 0');
+    await ignore('ALTER TABLE api_keys ADD COLUMN status VARCHAR(64) NOT NULL DEFAULT "ACTIVE"');
+
+    await seedMysqlDefaults(connection);
+  } finally {
+    await connection.end();
+  }
+}
+
+async function seedMysqlDefaults(connection: mysql.Connection) {
+  const now = new Date();
+  await connection.execute(
+    `INSERT IGNORE INTO strategies
+      (id, name, description, version, defaultConfig, riskConfig, isActive, createdAt, updatedAt)
+     VALUES (?, ?, ?, ?, ?, ?, 1, ?, ?)`,
+    [
+      'str_tradecandle_v12',
+      'TradeCandle Gold Scalper',
+      'XAUUSD M5 automated trading EA',
+      '12.0.0',
+      JSON.stringify({ symbol: 'XAUUSDm', timeframe: 'M5', lotSize: 0.03 }),
+      JSON.stringify({ maxDrawdownPct: 15, maxDailyLossPct: 3 }),
+      now,
+      now,
+    ],
+  );
+  await connection.execute(
+    `INSERT IGNORE INTO packages
+      (id, name, description, priceCents, currency, billingCycle, maxAccounts, features, isActive, isTrial, trialDays, sortOrder, createdAt, updatedAt)
+     VALUES (?, ?, ?, 0, 'USD', 'MONTHLY', 1, ?, 1, 1, 30, 0, ?, ?)`,
+    [
+      'starter',
+      '1-Month Free Trial',
+      'Trial TradeCandle Gold Scalper v12 Free 30 days',
+      JSON.stringify({ strategyIds: ['str_tradecandle_v12'], maxAccounts: 1 }),
+      now,
+      now,
+    ],
+  );
 }
 
 function getConnectionConfig() {
@@ -219,7 +392,7 @@ export async function createLic(data: Omit<DbLic, 'id' | 'createdAt'>): Promise<
       `INSERT INTO licenses
         (id, \`key\`, userId, subscriptionId, strategyId, status, maxAccounts, expiresAt, createdAt, updatedAt)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())`,
-      [lic.id, lic.key, lic.userId, lic.subscriptionId, null, lic.status, lic.maxAccounts, lic.expiresAt],
+      [lic.id, lic.key, lic.userId, lic.subscriptionId, 'str_tradecandle_v12', lic.status, lic.maxAccounts, lic.expiresAt],
     );
     return { ...lic, createdAt: new Date().toISOString() };
   }
