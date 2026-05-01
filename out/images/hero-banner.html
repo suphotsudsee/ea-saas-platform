@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TradeCandle v11 — Hero Banner</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0A0A0A; overflow: hidden; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+<script>
+// ─── TradeCandle Hero Banner Generator ────────────────────────────────
+// 1920x1080 hero banner with animated gold price chart + 3-Wave demo
+
+const W = 1920, H = 1080;
+let pg; // offscreen buffer for trails
+let frame = 0;
+let goldPrice = 2350;
+let waveTrades = [];
+let particles = [];
+
+const PALETTE = {
+  bg: '#0A0A0F',
+  gold: '#D4AF37',
+  goldLight: '#F5C842',
+  goldDark: '#B8860B',
+  green: '#10B981',
+  greenLight: '#34D399',
+  red: '#EF4444',
+  white: '#FFFFFF',
+  gray: '#6B7280',
+  darkGray: '#1F2937',
+  amber: '#F59E0B',
+};
+
+function setup() {
+  createCanvas(W, H);
+  pixelDensity(1);
+  pg = createGraphics(W, H);
+  pg.background(PALETTE.bg);
+  
+  // Initialize wave trades for demo
+  resetWaveTrades();
+}
+
+function resetWaveTrades() {
+  waveTrades = [];
+  // Wave 1: Close 25% at +15 pips
+  waveTrades.push({ startFrame: 60, pct: 25, pip: 15, color: PALETTE.green, label: 'W1: 25% ✅' });
+  // Wave 2: Close 50% at +35 pips
+  waveTrades.push({ startFrame: 180, pct: 50, pip: 35, color: PALETTE.goldLight, label: 'W2: 50% ✅' });
+  // Wave 3: Trail to +65 pips
+  waveTrades.push({ startFrame: 300, pct: 25, pip: 65, color: PALETTE.amber, label: 'W3: Trail 🔥' });
+}
+
+function draw() {
+  frame++;
+  
+  // Background
+  background(PALETTE.bg);
+  
+  // Grid
+  drawGrid();
+  
+  // Animated gold price chart
+  drawChart();
+  
+  // 3-Wave Cashout animation overlay
+  drawWaveOverlay();
+  
+  // Text overlays
+  drawTextOverlays();
+  
+  // Particles
+  updateParticles();
+  
+  // Vignette
+  drawVignette();
+}
+
+function drawGrid() {
+  stroke(255, 255, 255, 8);
+  strokeWeight(1);
+  // Horizontal lines
+  for (let y = 200; y < H - 100; y += 80) {
+    line(200, y, W - 200, y);
+  }
+  // Vertical lines
+  for (let x = 200; x < W - 200; x += 120) {
+    line(x, 200, x, H - 100);
+  }
+  // Price labels
+  noStroke();
+  fill(255, 255, 255, 60);
+  textFont('monospace');
+  textSize(14);
+  for (let y = 200; y < H - 100; y += 80) {
+    let price = 2380 - (y - 200) * 0.5;
+    text(price.toFixed(0), 60, y + 5);
+  }
+}
+
+function drawChart() {
+  // Draw animated candlestick chart
+  let startX = 220;
+  let endX = W - 220;
+  let midY = 480;
+  let amplitude = 120;
+  let t = frame * 0.008;
+  
+  // Main price line with 3-wave pattern
+  noFill();
+  
+  // Entry point
+  let entryY = midY + 20;
+  let peakY = midY - 160;
+  
+  strokeWeight(3);
+  
+  // Draw price path
+  beginShape();
+  stroke(PALETTE.gold);
+  for (let x = startX; x < endX; x += 3) {
+    let progress = (x - startX) / (endX - startX);
+    let baseY;
+    
+    if (progress < 0.15) {
+      // Flat entry zone
+      baseY = entryY + sin(progress * 40 + t) * 15;
+    } else if (progress < 0.4) {
+      // Rise to Wave 1 target
+      let p = (progress - 0.15) / 0.25;
+      baseY = lerp(entryY, entryY - 80, p) + sin(progress * 50 + t) * 10;
+    } else if (progress < 0.55) {
+      // Small pullback after W1
+      let p = (progress - 0.4) / 0.15;
+      baseY = entryY - 80 + sin(p * Math.PI) * 25 + sin(progress * 50 + t) * 8;
+    } else if (progress < 0.75) {
+      // Rise to Wave 2 target
+      let p = (progress - 0.55) / 0.2;
+      baseY = lerp(entryY - 55, entryY - 200, p) + sin(progress * 50 + t) * 12;
+    } else if (progress < 0.85) {
+      // Small pullback
+      let p = (progress - 0.75) / 0.1;
+      baseY = entryY - 200 + sin(p * Math.PI) * 20 + sin(progress * 50 + t) * 8;
+    } else {
+      // Wave 3 trail zone
+      let p = (progress - 0.85) / 0.15;
+      baseY = entryY - 180 - p * 40 + sin(progress * 40 + t) * 10;
+    }
+    
+    vertex(x, baseY);
+  }
+  endShape();
+  
+  // 3-Wave markers
+  let wavePositions = [
+    { x: lerp(startX, endX, 0.38), y: entryY - 80, pct: '25%', label: 'Wave 1', color: PALETTE.green },
+    { x: lerp(startX, endX, 0.68), y: entryY - 200, pct: '50%', label: 'Wave 2', color: PALETTE.goldLight },
+    { x: lerp(startX, endX, 0.92), y: entryY - 220, pct: 'Trail', label: 'Wave 3', color: PALETTE.amber },
+  ];
+  
+  for (let w of wavePositions) {
+    // Dashed line from entry to wave
+    stroke(w.color);
+    strokeWeight(1);
+    drawingContext.setLineDash([5, 5]);
+    line(w.x, entryY, w.x, w.y);
+    drawingContext.setLineDash([]);
+    
+    // Wave close marker
+    noStroke();
+    fill(w.color);
+    ellipse(w.x, w.y, 14, 14);
+    
+    // Glow
+    fill(w.color + '40');
+    ellipse(w.x, w.y, 30, 30);
+    
+    // Label
+    fill(w.color);
+    textAlign(CENTER);
+    textFont('sans-serif');
+    textSize(18);
+    textStyle(BOLD);
+    text(w.label + ' ' + w.pct, w.x, w.y - 25);
+  }
+  
+  // Entry line
+  stroke(PALETTE.gray);
+  strokeWeight(1);
+  drawingContext.setLineDash([3, 6]);
+  line(startX, entryY, endX, entryY);
+  drawingContext.setLineDash([]);
+  
+  fill(PALETTE.gray);
+  textAlign(LEFT);
+  textSize(14);
+  text('Entry', startX + 10, entryY - 8);
+  
+  // Profit zone shading
+  drawingContext.save();
+  drawingContext.beginPath();
+  drawingContext.rect(startX, peakY, endX - startX, entryY - peakY);
+  drawingContext.clip();
+  drawingContext.fillStyle = 'rgba(16, 185, 129, 0.05)';
+  drawingContext.fillRect(startX, peakY, endX - startX, entryY - peakY);
+  drawingContext.restore();
+}
+
+function drawWaveOverlay() {
+  let alpha = min(1, frame / 60); // Fade in
+  
+  // Right side: 3-Wave explanation box
+  let boxX = W - 480;
+  let boxY = 180;
+  let boxW = 380;
+  let boxH = 340;
+  
+  // Glass morphism box
+  drawingContext.save();
+  drawingContext.fillStyle = `rgba(15, 15, 25, 0.85)`;
+  drawingContext.beginPath();
+  drawingContext.roundRect(boxX, boxY, boxW, boxH, 16);
+  drawingContext.fill();
+  drawingContext.strokeStyle = `rgba(212, 175, 55, 0.3)`;
+  drawingContext.lineWidth = 1;
+  drawingContext.stroke();
+  drawingContext.restore();
+  
+  // Title
+  fill(PALETTE.gold);
+  textAlign(CENTER);
+  textFont('sans-serif');
+  textSize(22);
+  textStyle(BOLD);
+  text('3-Wave Cashout', boxX + boxW/2, boxY + 40);
+  
+  // Wave descriptions
+  let waves = [
+    { label: 'Wave 1', desc: 'Close 25% — LockProfitFirst', color: PALETTE.green, icon: '✅' },
+    { label: 'Wave 2', desc: 'Close 50% — ProfitAddUp', color: PALETTE.goldLight, icon: '✅' },
+    { label: 'Wave 3', desc: 'Trailing — Follow TrendNoLimited', color: PALETTE.amber, icon: '🔥' },
+  ];
+  
+  let y = boxY + 80;
+  for (let w of waves) {
+    // Wave indicator bar
+    fill(w.color + '30');
+    noStroke();
+    rect(boxX + 20, y - 10, boxW - 40, 55, 8);
+    
+    // Wave number
+    fill(w.color);
+    textAlign(LEFT);
+    textSize(18);
+    textStyle(BOLD);
+    text(w.icon + ' ' + w.label, boxX + 30, y + 10);
+    
+    // Description
+    fill(PALETTE.white);
+    textSize(14);
+    textStyle(NORMAL);
+    text(w.desc, boxX + 30, y + 35);
+    
+    y += 80;
+  }
+  
+  // Bottom note
+  fill(PALETTE.gray);
+  textSize(12);
+  textAlign(CENTER);
+  text('ยังไงก็ได้Profit Noรอเต็ม 100%', boxX + boxW/2, boxY + boxH - 20);
+}
+
+function drawTextOverlays() {
+  let alpha = min(1, frame / 40);
+  
+  // Main headline
+  fill(255, 255, 255, alpha * 255);
+  textAlign(CENTER);
+  textFont('sans-serif');
+  textStyle(BOLD);
+  textSize(64);
+  text('AI Gold Trading CloseProfitเป็น 3 คลื่น', W/2, 100);
+  
+  // Subheadline
+  textSize(28);
+  textStyle(NORMAL);
+  fill(212, 175, 55, alpha * 255);
+  text('XAUUSD • MT5 • Smart Money Filters • SaaS Dashboard', W/2, 145);
+  
+  // Bottom CTA
+  let ctaY = H - 80;
+  
+  // CTA button background
+  drawingContext.save();
+  drawingContext.fillStyle = `rgba(212, 175, 55, ${alpha * 0.9})`;
+  drawingContext.beginPath();
+  drawingContext.roundRect(W/2 - 180, ctaY - 25, 360, 50, 25);
+  drawingContext.fill();
+  drawingContext.restore();
+  
+  // Pulsing glow
+  let glowAlpha = (sin(frame * 0.05) + 1) * 0.15 * alpha;
+  drawingContext.save();
+  drawingContext.fillStyle = `rgba(212, 175, 55, ${glowAlpha})`;
+  drawingContext.beginPath();
+  drawingContext.roundRect(W/2 - 190, ctaY - 35, 380, 70, 35);
+  drawingContext.fill();
+  drawingContext.restore();
+  
+  fill('#0A0A0A');
+  textAlign(CENTER);
+  textSize(20);
+  textStyle(BOLD);
+  text('🔥 ทดลอง 7 daysFree — Get Started 990$/month', W/2, ctaY + 5);
+}
+
+function updateParticles() {
+  // Gold sparkle particles
+  if (frame % 3 === 0) {
+    particles.push({
+      x: random(200, W - 200),
+      y: random(200, H - 100),
+      vx: random(-0.5, 0.5),
+      vy: random(-0.3, -1),
+      life: 60,
+      maxLife: 60,
+      size: random(1, 3),
+    });
+  }
+  
+  for (let i = particles.length - 1; i >= 0; i--) {
+    let p = particles[i];
+    p.x += p.vx;
+    p.y += p.vy;
+    p.life--;
+    
+    let alpha = (p.life / p.maxLife) * 0.6;
+    fill(212, 175, 55, alpha * 255);
+    noStroke();
+    ellipse(p.x, p.y, p.size * (p.life / p.maxLife));
+    
+    if (p.life <= 0) particles.splice(i, 1);
+  }
+  
+  // Limit particles
+  if (particles.length > 80) particles.splice(0, particles.length - 80);
+}
+
+function drawVignette() {
+  // Edge vignette
+  drawingContext.save();
+  let gradient = drawingContext.createRadialGradient(W/2, H/2, H*0.3, W/2, H/2, H*0.9);
+  gradient.addColorStop(0, 'transparent');
+  gradient.addColorStop(1, 'rgba(10, 10, 15, 0.6)');
+  drawingContext.fillStyle = gradient;
+  drawingContext.fillRect(0, 0, W, H);
+  drawingContext.restore();
+}
+
+function keyPressed() {
+  if (key === 's' || key === 'S') {
+    saveCanvas('tradecandle-hero-banner', 'png');
+  }
+}
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/p5.min.js"></script>
+</body>
+</html>

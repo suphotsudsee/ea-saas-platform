@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>FB Post 5 - Urgency CTA</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/p5.min.js"></script>
+<style>body{margin:0;overflow:hidden;background:#0A0A0F;}</style>
+</head>
+<body>
+<script>
+const W = 1200, H = 1200;
+const GOLD = '#D4AF37';
+const BLACK = '#0A0A0F';
+const GREEN = '#10B981';
+const AMBER = '#F59E0B';
+
+function setup() {
+  createCanvas(W, H);
+  pixelDensity(1);
+  noLoop();
+}
+
+function draw() {
+  background(BLACK);
+
+  // Diagonal gold accent lines
+  for (let i = 0; i < 8; i++) {
+    stroke(color(GOLD).levels[0], color(GOLD).levels[1], color(GOLD).levels[2], 10);
+    strokeWeight(1);
+    line(i * 200 - 100, 0, i * 200 + 500, H);
+  }
+
+  // Gold top bar
+  noStroke();
+  fill(GOLD);
+  rect(0, 0, W, 8);
+
+  // Pulsing circle behind main text
+  noFill();
+  for (let r = 250; r > 0; r -= 10) {
+    stroke(color(GOLD).levels[0], color(GOLD).levels[1], color(GOLD).levels[2], 5);
+    strokeWeight(2);
+    ellipse(W / 2, 300, r * 2, r * 2);
+  }
+
+  // Main headline
+  fill(255);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  textSize(52);
+  text('Start Using TradeCandle', W / 2, 150);
+
+  fill(GOLD);
+  textSize(60);
+  text('daysThis', W / 2, 215);
+
+  // 3 key points
+  let pointY = 340;
+  const points = [
+    { num: '7', label: 'days', desc: 'Free Trial', sub: 'No Credit Card', color: GREEN },
+    { num: '990', label: '$/month', desc: 'Get Started Starter', sub: '• Pro 2,490$ • Elite 4,990$', color: GOLD },
+    { num: '⚡', label: 'Kill Switch', desc: 'หยุดทันที 1 คลิก', sub: 'Controlเต็ม 100%', color: '#EF4444' },
+  ];
+
+  for (let i = 0; i < points.length; i++) {
+    let p = points[i];
+    let bx = 80 + i * 380;
+    let bw = 340;
+    let bh = 200;
+
+    // Card
+    fill(16, 16, 26);
+    stroke(p.color);
+    strokeWeight(2);
+    rect(bx, pointY, bw, bh, 16);
+
+    // Number/icon
+    fill(p.color);
+    noStroke();
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    if (i < 2) {
+      textSize(56);
+      text(p.num, bx + bw / 2, pointY + 60);
+      textSize(22);
+      text(p.label, bx + bw / 2, pointY + 100);
+    } else {
+      textSize(56);
+      text(p.num, bx + bw / 2, pointY + 55);
+      fill(p.color);
+      textSize(20);
+      textStyle(BOLD);
+      text(p.label, bx + bw / 2, pointY + 95);
+    }
+
+    // Description
+    fill(255);
+    textSize(18);
+    textStyle(NORMAL);
+    text(p.desc, bx + bw / 2, pointY + 135);
+
+    fill(120);
+    textSize(14);
+    text(p.sub, bx + bw / 2, pointY + 165);
+  }
+
+  // === Features quick list ===
+  let featY = 580;
+  fill(255);
+  textAlign(CENTER, TOP);
+  textSize(24);
+  textStyle(BOLD);
+  text('ทำไมต้อง TradeCandle v11?', W / 2, featY);
+
+  let featItems = [
+    '✅ 3-Wave Cashout CloseProfit 3 Round Noปล่อยProfitหThis',
+    '✅ 6 Smart Money Filters Analyzeให้Automated',
+    '✅ SaaS Dashboard ViewPerformanceเรียลไทม์AllAtAllAt',
+    '✅ Kill Switch หยุด EA ทันที Controlเต็ม 100%',
+    '✅ ออกStyleมาExclusive XAUUSD On MT5',
+  ];
+
+  featY += 45;
+  for (let f of featItems) {
+    fill(20, 20, 30);
+    noStroke();
+    rect(180, featY - 5, W - 360, 38, 19);
+
+    fill(200);
+    textAlign(LEFT, CENTER);
+    textSize(17);
+    textStyle(NORMAL);
+    text(f, 210, featY + 12);
+
+    featY += 48;
+  }
+
+  // === Big CTA Button ===
+  // Glow effect
+  for (let g = 5; g >= 0; g--) {
+    fill(color(GOLD).levels[0], color(GOLD).levels[1], color(GOLD).levels[2], 8);
+    noStroke();
+    rect(W / 2 - 310 - g * 5, 870 - g * 3, 620 + g * 10, 90 + g * 6, 50);
+  }
+
+  fill(GOLD);
+  noStroke();
+  rect(W / 2 - 310, 870, 620, 90, 45);
+
+  fill(BLACK);
+  textAlign(CENTER, CENTER);
+  textStyle(BOLD);
+  textSize(32);
+  text('🚀 Beginnerทดลอง 7 daysFree', W / 2, 905);
+
+  fill(30);
+  textSize(16);
+  textStyle(NORMAL);
+  text('Noต้องใส่Credit Card', W / 2, 935);
+
+  // Pricing tiers
+  let tierY = 990;
+  const tiers = [
+    { name: 'Starter', price: '990$', features: '1 EA • Basic Filters', color: GREEN },
+    { name: 'Pro', price: '2,490$', features: 'All Filters • Dashboard', color: GOLD, popular: true },
+    { name: 'Elite', price: '4,990$', features: 'All Features • Priority', color: AMBER },
+  ];
+
+  let tierW = 300;
+  let tierGap = 30;
+  let tierStartX = (W - 3 * tierW - 2 * tierGap) / 2;
+
+  for (let i = 0; i < tiers.length; i++) {
+    let t = tiers[i];
+    let tx = tierStartX + i * (tierW + tierGap);
+
+    fill(16, 16, 26);
+    stroke(t.color);
+    strokeWeight(t.popular ? 3 : 1);
+    rect(tx, tierY, tierW, 140, 12);
+
+    if (t.popular) {
+      fill(t.color);
+      noStroke();
+      rect(tx + 10, tierY - 12, tierW - 20, 24, 12);
+      fill(BLACK);
+      textAlign(CENTER, CENTER);
+      textSize(12);
+      textStyle(BOLD);
+      text('⭐ ยอดนิยม', tx + tierW / 2, tierY);
+    }
+
+    fill(t.color);
+    noStroke();
+    textAlign(CENTER, TOP);
+    textStyle(BOLD);
+    textSize(18);
+    text(t.name, tx + tierW / 2, tierY + 20);
+
+    fill(255);
+    textSize(28);
+    text(t.price, tx + tierW / 2, tierY + 45);
+
+    fill(120);
+    textSize(13);
+    textStyle(NORMAL);
+    text('/month', tx + tierW / 2, tierY + 78);
+    text(t.features, tx + tierW / 2, tierY + 100);
+  }
+
+  // Bottom brand
+  fill(80);
+  textAlign(CENTER, BOTTOM);
+  textSize(13);
+  textStyle(NORMAL);
+  text('TradeCandle v11 • AI EA for XAUUSD/MT5', W / 2, H - 10);
+}
+
+function keyPressed() {
+  if (key === 's' || key === 'S') saveCanvas('fb-post-5', 'png');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>TikTok Cover 3 - Result Focus</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/p5.min.js"></script>
+<style>body{margin:0;overflow:hidden;background:#0A0A0F;}</style>
+</head>
+<body>
+<script>
+const W = 1080, H = 1920;
+const GOLD = '#D4AF37';
+const BLACK = '#0A0A0F';
+const GREEN = '#10B981';
+const AMBER = '#F59E0B';
+
+function setup() {
+  createCanvas(W, H);
+  pixelDensity(1);
+  noLoop();
+}
+
+function draw() {
+  background(BLACK);
+
+  // Subtle vertical lines
+  for (let i = 0; i < 15; i++) {
+    stroke(color(GOLD).levels[0], color(GOLD).levels[1], color(GOLD).levels[2], 4);
+    strokeWeight(1);
+    line(i * 120, 0, i * 120, H);
+  }
+
+  // Gold top bar
+  noStroke();
+  fill(GOLD);
+  rect(0, 0, W, 8);
+
+  // === Header - Big result ===
+  fill(GREEN);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  textSize(26);
+  text('━━━━━━━━━━━━━━━━━━', W / 2, 30);
+
+  fill(200);
+  textSize(30);
+  text('ตื่นเช้ามา...', W / 2, 70);
+
+  // Big profit number
+  fill(GOLD);
+  textSize(100);
+  text('+$340', W / 2, 120);
+
+  fill(200);
+  textSize(32);
+  textStyle(NORMAL);
+  text('NoWhat to Doเลย', W / 2, 240);
+
+  fill(255);
+  textSize(24);
+  text('━━━━━━━━━━━━━━━━━━', W / 2, 290);
+
+  // === Dashboard mock ===
+  let dashX = 40, dashY = 330, dashW = W - 80, dashH = 650;
+
+  // Outer frame
+  fill(12, 12, 22);
+  stroke(40, 40, 60);
+  strokeWeight(2);
+  rect(dashX, dashY, dashW, dashH, 16);
+
+  // Title bar
+  fill(18, 18, 28);
+  noStroke();
+  rect(dashX, dashY, dashW, 45, 16, 16, 0, 0);
+
+  // Dots
+  fill('#EF4444');
+  ellipse(dashX + 22, dashY + 22, 12, 12);
+  fill(AMBER);
+  ellipse(dashX + 42, dashY + 22, 12, 12);
+  fill(GREEN);
+  ellipse(dashX + 62, dashY + 22, 12, 12);
+
+  fill(160);
+  textAlign(LEFT, CENTER);
+  textSize(15);
+  textStyle(BOLD);
+  text('TradeCandle v11 Dashboard', dashX + 85, dashY + 22);
+
+  fill(80);
+  textAlign(RIGHT, CENTER);
+  textSize(13);
+  textStyle(NORMAL);
+  text('LIVE • XAUUSD', dashX + dashW - 15, dashY + 22);
+
+  // === Stats cards ===
+  let statY = dashY + 60;
+  let statW = (dashW - 50) / 4;
+  let statH = 100;
+
+  const stats = [
+    { label: 'ProfitdaysThis', value: '+$340', color: GREEN },
+    { label: 'Win Rate', value: '78%', color: GOLD },
+    { label: 'Floating', value: '+$45', color: GREEN },
+    { label: 'Max DD', value: '2.3%', color: AMBER },
+  ];
+
+  for (let i = 0; i < stats.length; i++) {
+    let sx = dashX + 10 + i * (statW + 10);
+    fill(18, 18, 28);
+    stroke(stats[i].color);
+    strokeWeight(1);
+    rect(sx, statY, statW, statH, 8);
+
+    fill(100);
+    noStroke();
+    textAlign(LEFT, TOP);
+    textSize(12);
+    textStyle(NORMAL);
+    text(stats[i].label, sx + 12, statY + 10);
+
+    fill(stats[i].color);
+    textStyle(BOLD);
+    textSize(32);
+    text(stats[i].value, sx + 12, statY + 38);
+  }
+
+  // === Equity chart ===
+  let eqY = statY + statH + 15;
+  let eqW = dashW - 20;
+  let eqH = 250;
+
+  fill(14, 14, 22);
+  stroke(35, 35, 50);
+  strokeWeight(1);
+  rect(dashX + 10, eqY, eqW, eqH, 8);
+
+  fill(160);
+  noStroke();
+  textAlign(LEFT, TOP);
+  textSize(12);
+  textStyle(BOLD);
+  text('Equity Curve — 7 Days', dashX + 25, eqY + 10);
+
+  // Grid
+  stroke(25, 25, 40);
+  strokeWeight(0.5);
+  for (let j = eqY + 35; j < eqY + eqH - 10; j += 30) {
+    line(dashX + 20, j, dashX + dashW - 15, j);
+  }
+
+  // Equity line going up
+  stroke(GOLD);
+  strokeWeight(2.5);
+  noFill();
+  beginShape();
+  let eqPts = [];
+  for (let i = 0; i <= 80; i++) {
+    let px = dashX + 30 + i * ((eqW - 40) / 80);
+    let py = eqY + eqH * 0.85 - i * 2.8 - Math.sin(i * 0.12) * 12;
+    vertex(px, py);
+    eqPts.push([px, py]);
+  }
+  endShape();
+
+  // Fill under curve
+  fill(color(GOLD).levels[0], color(GOLD).levels[1], color(GOLD).levels[2], 20);
+  noStroke();
+  beginShape();
+  vertex(eqPts[0][0], eqY + eqH * 0.85);
+  for (let p of eqPts) vertex(p[0], p[1]);
+  vertex(eqPts[eqPts.length - 1][0], eqY + eqH * 0.85);
+  endShape(CLOSE);
+
+  // === Trade list ===
+  let tradeY = eqY + eqH + 15;
+  let tradeH = dashY + dashH - tradeY - 10;
+
+  fill(18, 18, 28);
+  stroke(35, 35, 50);
+  strokeWeight(1);
+  rect(dashX + 10, tradeY, eqW, tradeH, 8);
+
+  fill(GOLD);
+  noStroke();
+  textAlign(LEFT, TOP);
+  textSize(14);
+  textStyle(BOLD);
+  text('Recent Trades', dashX + 25, tradeY + 10);
+
+  fill(80);
+  textAlign(RIGHT, TOP);
+  textSize(12);
+  text('6 trades today', dashX + dashW - 25, tradeY + 12);
+
+  // Table header
+  fill(22, 22, 34);
+  noStroke();
+  rect(dashX + 15, tradeY + 35, eqW - 10, 28, 4);
+
+  fill(120);
+  textAlign(LEFT, CENTER);
+  textSize(11);
+  textStyle(BOLD);
+  text('PAIR', dashX + 25, tradeY + 49);
+  text('TYPE', dashX + 140, tradeY + 49);
+  text('ENTRY', dashX + 260, tradeY + 49);
+  text('EXIT', dashX + 400, tradeY + 49);
+  text('P/L', dashX + 530, tradeY + 49);
+  text('FILTERS', dashX + 640, tradeY + 49);
+
+  const trades = [
+    { pair: 'XAUUSD', type: 'BUY', entry: '2024.50', exit: '2029.30', pl: '+$96', filters: 'BOS+OB', win: true },
+    { pair: 'XAUUSD', type: 'SELL', entry: '2031.80', exit: '2026.40', pl: '+$108', filters: 'CHoCH+FVG', win: true },
+    { pair: 'XAUUSD', type: 'BUY', entry: '2025.10', exit: '2028.70', pl: '+$72', filters: 'OB+S/D', win: true },
+    { pair: 'XAUUSD', type: 'SELL', entry: '2033.50', exit: '2035.10', pl: '-$32', filters: 'BOS', win: false },
+    { pair: 'XAUUSD', type: 'BUY', entry: '2023.00', exit: '2027.50', pl: '+$90', filters: 'FVG+OB', win: true },
+  ];
+
+  for (let r = 0; r < trades.length; r++) {
+    let t = trades[r];
+    let ry = tradeY + 70 + r * 42;
+
+    if (r % 2 === 0) {
+      fill(20, 20, 30);
+      noStroke();
+      rect(dashX + 15, ry - 5, eqW - 10, 38, 3);
+    }
+
+    fill(160);
+    textAlign(LEFT, CENTER);
+    textSize(13);
+    textStyle(NORMAL);
+    text(t.pair, dashX + 25, ry + 12);
+
+    fill(t.win ? color(GREEN) : color(RED));
+    textStyle(BOLD);
+    text(t.type, dashX + 140, ry + 12);
+
+    fill(160);
+    textStyle(NORMAL);
+    text(t.entry, dashX + 260, ry + 12);
+    text(t.exit, dashX + 400, ry + 12);
+
+    fill(t.win ? color(GREEN) : color(RED));
+    textStyle(BOLD);
+    text(t.pl, dashX + 530, ry + 12);
+
+    fill(GOLD);
+    textStyle(NORMAL);
+    text(t.filters, dashX + 640, ry + 12);
+  }
+
+  // Kill Switch status
+  let ksY = dashY + dashH + 20;
+  fill(20, 20, 30);
+  stroke(GREEN);
+  strokeWeight(2);
+  rect(dashX + 10, ksY, dashW / 2 - 20, 50, 10);
+
+  fill(GREEN);
+  noStroke();
+  ellipse(dashX + 40, ksY + 25, 14, 14);
+  fill(160);
+  textAlign(LEFT, CENTER);
+  textSize(16);
+  textStyle(NORMAL);
+  text('Kill Switch: OFF (Active)', dashX + 60, ksY + 25);
+
+  // Smart Money badge
+  fill(20, 20, 30);
+  stroke(GOLD);
+  strokeWeight(2);
+  rect(dashX + dashW / 2 + 10, ksY, dashW / 2 - 20, 50, 10);
+
+  fill(GOLD);
+  noStroke();
+  textAlign(LEFT, CENTER);
+  textSize(16);
+  text('🧠 6 Filters Active', dashX + dashW / 2 + 30, ksY + 25);
+
+  // === CTA ===
+  let ctaY = ksY + 80;
+
+  // CTA big text
+  fill(255);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  textSize(26);
+  text('อยากWake Up and SeeProfitStyleThis?', W / 2, ctaY);
+
+  // Button glow
+  for (let g = 4; g >= 0; g--) {
+    fill(color(GOLD).levels[0], color(GOLD).levels[1], color(GOLD).levels[2], 10);
+    noStroke();
+    rect(W / 2 - 280 - g * 5, ctaY + 50 - g * 3, 560 + g * 10, 90 + g * 6, 50);
+  }
+
+  fill(GOLD);
+  rect(W / 2 - 280, ctaY + 50, 560, 90, 45);
+  fill(BLACK);
+  textAlign(CENTER, CENTER);
+  textStyle(BOLD);
+  textSize(30);
+  text('🔥 Beginnerทดลอง 7 daysFree', W / 2, ctaY + 80);
+  textSize(16);
+  textStyle(NORMAL);
+  fill(30);
+  text('Get Started 990$/month • Noต้องใส่บัตร', W / 2, ctaY + 115);
+
+  // Pricing hint
+  fill(100);
+  textAlign(CENTER, TOP);
+  textSize(16);
+  text('Starter 990$ • Pro 2,490$ • Elite 4,990$', W / 2, ctaY + 165);
+
+  // Brand
+  fill(70);
+  textSize(14);
+  text('TradeCandle v11 • AI EA for XAUUSD/MT5', W / 2, H - 40);
+
+  // Bottom gold bar
+  fill(GOLD);
+  rect(0, H - 8, W, 8);
+}
+
+function keyPressed() {
+  if (key === 's' || key === 'S') saveCanvas('tiktok-cover-3', 'png');
+}
+</script>
+</body>
+</html>

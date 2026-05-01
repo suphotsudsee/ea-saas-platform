@@ -7,19 +7,25 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { CardContent, CardFooter } from '@/components/ui/card';
 import { useAuth } from '@/lib/auth';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 export default function LoginPage() {
   const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await login(email, password);
+      // Read from DOM refs to capture autofill/copy-paste values
+      // that React controlled inputs may miss
+      const emailValue = emailRef.current?.value ?? email;
+      const passwordValue = passwordRef.current?.value ?? password;
+      await login(emailValue, passwordValue);
     } catch (err) {
       alert('Invalid credentials');
     } finally {
@@ -48,6 +54,7 @@ export default function LoginPage() {
               type="email"
               placeholder="name@email.com"
               className="h-11 rounded-xl border-amber-900/30 bg-slate-950 text-white focus:ring-amber-500"
+              ref={emailRef}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -63,6 +70,7 @@ export default function LoginPage() {
             <Input
               type="password"
               className="h-11 rounded-xl border-amber-900/30 bg-slate-950 text-white focus:ring-amber-500"
+              ref={passwordRef}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required

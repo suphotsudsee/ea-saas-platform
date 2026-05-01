@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing Cards — TradeCandle v11</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0A0A0A; overflow: hidden; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/p5.min.js"></script>
+<script>
+// ─── Pricing Cards — 3 Tiers ────────────────────────────────
+// 1920x1080 landscape with 3 pricing cards
+
+const W = 1920, H = 1080;
+
+const PALETTE = {
+  bg: '#0A0A0F',
+  bgCard: '#111118',
+  gold: '#D4AF37',
+  goldLight: '#F5C842',
+  green: '#10B981',
+  white: '#FFFFFF',
+  textGray: '#9CA3AF',
+  textLight: '#E5E7EB',
+  amber: '#F59E0B',
+};
+
+const tiers = [
+  {
+    name: 'Starter',
+    price: '990',
+    unit: '$/month',
+    color: '#9CA3AF',
+    darkBg: '#0F1118',
+    borderColor: '#374151',
+    accounts: '1 Accounts',
+    features: [
+      '3-Wave Cashout ✅',
+      'Smart Money Filters 6 Item',
+      'Dashboard Basic',
+      'Kill Switch',
+      'Email Support',
+    ],
+    cta: 'Get Started',
+    badge: '',
+    popular: false,
+  },
+  {
+    name: 'Pro',
+    price: '2,490',
+    unit: '$/month',
+    color: '#D4AF37',
+    darkBg: '#151105',
+    borderColor: '#D4AF37',
+    accounts: '3 Accounts',
+    features: [
+      '3-Wave Cashout ✅',
+      'Smart Money Filters 6 Item',
+      'Dashboard เต็มFormat',
+      'Kill Switch + Alerts',
+      'Priority Support',
+      'Config ละเอียด',
+    ],
+    cta: 'ทดลอง 7 daysFree',
+    badge: '⭐ ยอดนิยม',
+    popular: true,
+  },
+  {
+    name: 'Elite',
+    price: '4,990',
+    unit: '$/month',
+    color: '#F59E0B',
+    darkBg: '#1A1005',
+    borderColor: '#F59E0B',
+    accounts: '5 Accounts',
+    features: [
+      '3-Wave Cashout ✅',
+      'Smart Money Filters 6 Item',
+      'Dashboard VIP',
+      'Kill Switch + Alerts + API',
+      'Dedicated Support',
+      'Custom Strategy',
+      'Risk Manager 1-on-1',
+    ],
+    cta: 'Sign Up Elite',
+    badge: '👑',
+    popular: false,
+  },
+];
+
+function setup() {
+  createCanvas(W, H);
+  pixelDensity(1);
+  noLoop();
+}
+
+function draw() {
+  background(PALETTE.bg);
+  
+  // Decorative grid dots
+  for (let x = 0; x < W; x += 60) {
+    for (let y = 0; y < H; y += 60) {
+      fill(255, 255, 255, 8);
+      noStroke();
+      ellipse(x, y, 1.5);
+    }
+  }
+  
+  // Title
+  fill(PALETTE.white);
+  textAlign(CENTER);
+  textFont('sans-serif');
+  textSize(42);
+  textStyle(BOLD);
+  text('Choose a PlanAtYes', W/2, 80);
+  
+  fill(PALETTE.textGray);
+  textSize(18);
+  textStyle(NORMAL);
+  text('ทดลอง 7 daysFree • Cancelได้Allเมื่อ • Noต้องใส่บัตร', W/2, 115);
+  
+  // Cards
+  let cardW = 480;
+  let cardH = 780;
+  let gap = 50;
+  let totalW = 3 * cardW + 2 * gap;
+  let startX = (W - totalW) / 2;
+  let cardY = 150;
+  
+  for (let i = 0; i < 3; i++) {
+    let tier = tiers[i];
+    let x = startX + i * (cardW + gap);
+    drawPricingCard(x, cardY, cardW, cardH, tier);
+  }
+  
+  // Bottom note
+  fill(PALETTE.textGray);
+  textAlign(CENTER);
+  textSize(14);
+  text('AllPackageรวม MT5 EA + SaaS Dashboard + Kill Switch • รองรับ XAUUSD On Exness', W/2, H - 30);
+}
+
+function drawPricingCard(x, y, w, h, tier) {
+  // Popular glow
+  if (tier.popular) {
+    drawingContext.save();
+    drawingContext.shadowColor = tier.color;
+    drawingContext.shadowBlur = 40;
+    drawingContext.shadowOffsetX = 0;
+    drawingContext.shadowOffsetY = 0;
+    drawingContext.fillStyle = 'rgba(212, 175, 55, 0.05)';
+    drawingContext.beginPath();
+    drawingContext.roundRect(x - 5, y - 5, w + 10, h + 10, 20);
+    drawingContext.fill();
+    drawingContext.restore();
+  }
+  
+  // Card background
+  fill(tier.darkBg);
+  stroke(tier.borderColor + (tier.popular ? 'CC' : '40'));
+  strokeWeight(tier.popular ? 2 : 1);
+  rect(x, y, w, h, 16);
+  
+  // Top accent line
+  noStroke();
+  fill(tier.color);
+  rect(x, y, w, 4, 16, 16, 0, 0);
+  
+  // Badge
+  if (tier.badge) {
+    let badgeW = 160;
+    fill(tier.color);
+    rect(x + w/2 - badgeW/2, y + 15, badgeW, 30, 15);
+    fill('#0A0A0A');
+    textAlign(CENTER);
+    textSize(13);
+    textStyle(BOLD);
+    text(tier.badge, x + w/2, y + 35);
+  }
+  
+  // Tier name
+  fill(tier.color);
+  textAlign(CENTER);
+  textSize(24);
+  textStyle(BOLD);
+  text(tier.name, x + w/2, y + (tier.badge ? 75 : 55));
+  
+  // Price
+  fill(PALETTE.white);
+  textSize(56);
+  textStyle(BOLD);
+  text('$' + tier.price, x + w/2, y + (tier.badge ? 140 : 120));
+  
+  fill(PALETTE.textGray);
+  textSize(16);
+  textStyle(NORMAL);
+  text(tier.unit, x + w/2, y + (tier.badge ? 165 : 145));
+  
+  // Accounts
+  fill(tier.color + '80');
+  textSize(14);
+  text(tier.accounts, x + w/2, y + (tier.badge ? 195 : 175));
+  
+  // Divider
+  stroke(tier.borderColor + '40');
+  strokeWeight(1);
+  line(x + 40, y + (tier.badge ? 215 : 195), x + w - 40, y + (tier.badge ? 215 : 195));
+  noStroke();
+  
+  // Features
+  let fy = y + (tier.badge ? 250 : 230);
+  textAlign(LEFT);
+  for (let f of tier.features) {
+    fill(PALETTE.textLight);
+    textSize(15);
+    text('✓  ' + f, x + 40, fy);
+    fy += 38;
+  }
+  
+  // CTA button
+  let btnY = y + h - 90;
+  let btnW = w - 80;
+  let btnH = 50;
+  let btnX = x + 40;
+  
+  if (tier.popular) {
+    // Filled button
+    fill(tier.color);
+    noStroke();
+    rect(btnX, btnY, btnW, btnH, 25);
+    fill('#0A0A0A');
+  } else {
+    // Outline button
+    noFill();
+    stroke(tier.color + '80');
+    strokeWeight(1.5);
+    rect(btnX, btnY, btnW, btnH, 25);
+    fill(tier.color);
+  }
+  
+  textAlign(CENTER);
+  textSize(16);
+  textStyle(BOLD);
+  noStroke();
+  text(tier.cta, btnX + btnW/2, btnY + 32);
+  textStyle(NORMAL);
+}
+
+function keyPressed() {
+  if (key === 's' || key === 'S') {
+    saveCanvas('pricing-cards', 'png');
+  }
+}
+</script>
+</body>
+</html>

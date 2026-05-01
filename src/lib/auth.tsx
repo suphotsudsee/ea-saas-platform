@@ -31,41 +31,62 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
 
   useEffect(() => {
-    const isProtectedPath =
-      pathname?.startsWith('/dashboard') ||
-      pathname?.startsWith('/admin') ||
-      pathname === '/login' ||
-      pathname === '/register';
-
-    if (!isProtectedPath) {
-      setIsLoading(false);
-      return;
-    }
-
+    // Check for existing token and validate
     const initAuth = async () => {
+      const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
+      if (!token) {
+        setIsLoading(false);
+        return;
+      }
+
       try {
         const { data } = await api.get('/auth/me');
         setUser(data.user ?? data);
       } catch (e) {
+        // Token expired or invalid
+        localStorage.removeItem('auth_token');
         setUser(null);
       } finally {
         setIsLoading(false);
       }
     };
     initAuth();
-  }, [pathname]);
+  }, []);
 
   const login = async (email: string, password: string) => {
-    await api.post('/auth/login', { email, password });
-    const { data } = await api.get('/auth/me');
-    setUser(data.user ?? data);
+    // Login via PHP API
+    const { data } = await api.post('/auth/login', { email, password });
+    
+    // Store token from PHP response
+    if (data.token) {
+      localStorage.setItem('auth_token', data.token);
+    }
+    
+    // Set user from response or fetch profile
+    if (data.user) {
+      setUser(data.user);
+    } else {
+      const { data: meData } = await api.get('/auth/me');
+      setUser(meData.user ?? meData);
+    }
+    
     router.push('/dashboard');
   };
 
   const adminLogin = async (email: string, password: string) => {
-    await api.post('/admin/auth/login', { email, password });
-    const { data } = await api.get('/auth/me');
-    setUser(data.user ?? data);
+    const { data } = await api.post('/admin/auth/login', { email, password });
+    
+    if (data.token) {
+      localStorage.setItem('auth_token', data.token);
+    }
+    
+    if (data.user) {
+      setUser(data.user);
+    } else {
+      const { data: meData } = await api.get('/auth/me');
+      setUser(meData.user ?? meData);
+    }
+    
     router.push('/dashboard/admin');
   };
 
@@ -73,7 +94,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       await api.post('/auth/logout');
     } catch (e) {}
-    localStorage.clear();
+    localStorage.removeItem('auth_token');
     setUser(null);
     router.push('/login');
   };

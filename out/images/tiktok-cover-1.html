@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>TikTok Cover 1 - Pain Hook</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/p5.min.js"></script>
+<style>body{margin:0;overflow:hidden;background:#0A0A0F;}</style>
+</head>
+<body>
+<script>
+const W = 1080, H = 1920;
+const GOLD = '#D4AF37';
+const BLACK = '#0A0A0F';
+const GREEN = '#10B981';
+const AMBER = '#F59E0B';
+const RED = '#EF4444';
+
+function setup() {
+  createCanvas(W, H);
+  pixelDensity(1);
+  noLoop();
+}
+
+function draw() {
+  background(BLACK);
+
+  // Diagonal accent stripes
+  noFill();
+  for (let i = 0; i < 12; i++) {
+    stroke(color(GOLD).levels[0], color(GOLD).levels[1], color(GOLD).levels[2], 6);
+    strokeWeight(1);
+    line(i * 200 - 300, 0, i * 200 + 600, H);
+  }
+
+  // Gold top bar
+  noStroke();
+  fill(GOLD);
+  rect(0, 0, W, 8);
+
+  // === Top section: Big question ===
+  fill(RED);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  textSize(28);
+  text('━━━━━━━━━━━━━━━━━━', W / 2, 40);
+
+  fill(255);
+  textSize(80);
+  text('Have You Ever?', W / 2, 80);
+
+  fill(GOLD);
+  textSize(36);
+  textStyle(NORMAL);
+  text('Gold Trading Up +$60', W / 2, 190);
+  fill(RED);
+  text('แต่รอ TP AlreadyPriceReturn/Reverse 💔', W / 2, 235);
+
+  fill(255);
+  textSize(28);
+  text('━━━━━━━━━━━━━━━━━━', W / 2, 290);
+
+  // === Chart section: Pain chart ===
+  let chartX = 80, chartY = 340, chartW = W - 160, chartH = 450;
+
+  // Chart container
+  fill(18, 10, 10);
+  stroke(RED);
+  strokeWeight(2);
+  rect(chartX, chartY, chartW, chartH, 16);
+
+  // Label
+  fill(RED);
+  noStroke();
+  textAlign(LEFT, TOP);
+  textSize(18);
+  textStyle(BOLD);
+  text('❌ Styleเดิม: รอ TP Noถึง PriceReturn/Reverse', chartX + 20, chartY + 15);
+
+  // Y-axis labels
+  fill(100);
+  textSize(14);
+  textStyle(NORMAL);
+  textAlign(RIGHT, CENTER);
+  text('+$80', chartX + 55, chartY + 60);
+  text('+$40', chartX + 55, chartY + 180);
+  text('$0', chartX + 55, chartY + 300);
+  text('-$40', chartX + 55, chartY + 400);
+
+  // Horizontal grid
+  stroke(40, 25, 25);
+  strokeWeight(0.5);
+  for (let j = chartY + 60; j < chartY + chartH - 20; j += 60) {
+    line(chartX + 65, j, chartX + chartW - 20, j);
+  }
+
+  // Price line going up then crashing
+  stroke(GREEN);
+  strokeWeight(3);
+  noFill();
+  beginShape();
+  let crashPts = [];
+  for (let i = 0; i <= 60; i++) {
+    let px = chartX + 80 + i * ((chartW - 100) / 60);
+    let py;
+    if (i <= 35) {
+      py = chartY + 380 - i * 8 + Math.sin(i * 0.3) * 8;
+    } else {
+      py = chartY + 380 - 35 * 8 + (i - 35) * 20 - Math.sin((i - 35) * 0.5) * 10;
+    }
+    if (py > chartY + chartH - 30) py = chartY + chartH - 30;
+    vertex(px, py);
+    crashPts.push([px, py]);
+  }
+  endShape();
+
+  // TP dashed line
+  stroke(GREEN, 150);
+  strokeWeight(1);
+  drawingContext.setLineDash([8, 6]);
+  line(chartX + 65, chartY + 100, chartX + chartW - 20, chartY + 100);
+  drawingContext.setLineDash([]);
+
+  fill(GREEN);
+  noStroke();
+  textAlign(LEFT, CENTER);
+  textSize(14);
+  text('TP ← Noถึง!', chartX + chartW - 170, chartY + 95);
+
+  // Crash annotation
+  fill(RED);
+  textAlign(CENTER, CENTER);
+  textSize(20);
+  textStyle(BOLD);
+  text('💥 PriceReturn/Reverse!', chartX + chartW - 120, chartY + chartH - 60);
+
+  // === 3-Wave Cashout section ===
+  let waveY = chartY + chartH + 60;
+
+  fill(GOLD);
+  noStroke();
+  rect(chartX, waveY, chartW, 6);
+
+  fill(GREEN);
+  textAlign(CENTER, TOP);
+  textStyle(BOLD);
+  textSize(24);
+  text('✅ แก้ด้วย 3-Wave Cashout', W / 2, waveY + 20);
+
+  // 3 wave cards
+  const waves = [
+    { label: 'Wave 1', pct: '25%', desc: 'CloseProfitFirst\nLockProfitไว้', color: GREEN },
+    { label: 'Wave 2', pct: '50%', desc: 'CloseAddอีก\nปลอดภัยUp', color: AMBER },
+    { label: 'Wave 3', pct: 'Trail', desc: 'ตามPrice\nMax Profit', color: GOLD },
+  ];
+
+  let wCardW = (chartW - 60) / 3;
+  let wCardH = 260;
+
+  for (let i = 0; i < 3; i++) {
+    let w = waves[i];
+    let wx = chartX + i * (wCardW + 30);
+    let wy = waveY + 60;
+
+    fill(14, 14, 24);
+    stroke(w.color);
+    strokeWeight(2);
+    rect(wx, wy, wCardW, wCardH, 12);
+
+    // Circle badge
+    fill(color(w.color).levels[0], color(w.color).levels[1], color(w.color).levels[2], 25);
+    noStroke();
+    ellipse(wx + wCardW / 2, wy + 55, 70, 70);
+
+    fill(w.color);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    textSize(30);
+    text(w.pct, wx + wCardW / 2, wy + 55);
+
+    textSize(16);
+    text(w.label, wx + wCardW / 2, wy + 100);
+
+    fill(180);
+    textSize(15);
+    textStyle(NORMAL);
+    let lines = w.desc.split('\n');
+    for (let l = 0; l < lines.length; l++) {
+      text(lines[l], wx + wCardW / 2, wy + 145 + l * 22);
+    }
+  }
+
+  // === CTA Section ===
+  let ctaY = waveY + 60 + wCardH + 80;
+
+  // Glow
+  for (let g = 4; g >= 0; g--) {
+    fill(color(GOLD).levels[0], color(GOLD).levels[1], color(GOLD).levels[2], 8);
+    noStroke();
+    rect(W / 2 - 280 - g * 4, ctaY - g * 2, 560 + g * 8, 90 + g * 4, 45);
+  }
+
+  fill(GOLD);
+  rect(W / 2 - 280, ctaY, 560, 90, 45);
+  fill(BLACK);
+  textAlign(CENTER, CENTER);
+  textStyle(BOLD);
+  textSize(30);
+  text('ทดลอง 7 daysFree', W / 2, ctaY + 30);
+  textSize(18);
+  textStyle(NORMAL);
+  text('Noต้องใส่Credit Card', W / 2, ctaY + 60);
+
+  // Brand
+  fill(100);
+  textSize(16);
+  text('TradeCandle v11 • AI EA for XAUUSD/MT5', W / 2, ctaY + 140);
+
+  // Pricing quick
+  fill(70);
+  textSize(14);
+  text('Starter 990$ • Pro 2,490$ • Elite 4,990$', W / 2, ctaY + 165);
+
+  // Bottom gold bar
+  fill(GOLD);
+  rect(0, H - 8, W, 8);
+}
+
+function keyPressed() {
+  if (key === 's' || key === 'S') saveCanvas('tiktok-cover-1', 'png');
+}
+</script>
+</body>
+</html>

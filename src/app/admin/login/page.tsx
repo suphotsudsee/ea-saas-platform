@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Link from 'next/link';
 import { ShieldCheck } from 'lucide-react';
 import { AuthShell } from '@/components/auth/auth-shell';
@@ -14,13 +14,18 @@ export default function AdminLoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      await adminLogin(email, password);
+      // Read from DOM refs to capture autofill/copy-paste values
+      const emailValue = emailRef.current?.value ?? email;
+      const passwordValue = passwordRef.current?.value ?? password;
+      await adminLogin(emailValue, passwordValue);
     } catch {
       alert('Invalid admin credentials');
     } finally {
@@ -49,6 +54,7 @@ export default function AdminLoginPage() {
               type="email"
               placeholder="admin@ea-saas.com"
               className="h-11 rounded-xl border-slate-800 bg-slate-950 text-white"
+              ref={emailRef}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -59,6 +65,7 @@ export default function AdminLoginPage() {
             <Input
               type="password"
               className="h-11 rounded-xl border-slate-800 bg-slate-950 text-white"
+              ref={passwordRef}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
