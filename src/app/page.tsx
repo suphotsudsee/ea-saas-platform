@@ -1020,6 +1020,14 @@ export default function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navigateTo = (page: PageId) => {
+    if (page === 'login') {
+      window.location.href = '/login';
+      return;
+    }
+    if (page === 'register') {
+      window.location.href = '/register';
+      return;
+    }
     setCurrentPage(page);
     setIsMobileMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
