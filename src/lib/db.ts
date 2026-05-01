@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
 import mysql from 'mysql2/promise';
+import bcrypt from 'bcryptjs';
 
 const DATA_DIR = path.join(process.cwd(), 'data');
 const DATABASE_URL = process.env.DATABASE_URL;
@@ -150,6 +151,20 @@ async function bootstrapMysqlSchema() {
       ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
     `);
 
+    await exec(`
+      CREATE TABLE IF NOT EXISTS admin_users (
+        id VARCHAR(191) NOT NULL PRIMARY KEY,
+        email VARCHAR(191) NOT NULL UNIQUE,
+        passwordHash VARCHAR(191) NOT NULL,
+        name VARCHAR(191) NOT NULL,
+        role VARCHAR(64) NOT NULL DEFAULT 'SUPER_ADMIN',
+        twoFactorEnabled BOOLEAN NOT NULL DEFAULT false,
+        twoFactorSecret VARCHAR(191) NULL,
+        createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+        updatedAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)
+      ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+    `);
+
     await ignore('ALTER TABLE subscriptions ADD COLUMN trialEndsAt DATETIME(3) NULL');
     await ignore('ALTER TABLE packages ADD COLUMN isTrial BOOLEAN NOT NULL DEFAULT false');
     await ignore('ALTER TABLE packages ADD COLUMN trialDays INTEGER NOT NULL DEFAULT 0');
@@ -190,6 +205,20 @@ async function seedMysqlDefaults(connection: mysql.Connection) {
       now,
       now,
     ],
+  );
+
+  const adminEmail = process.env.ADMIN_EMAIL || 'admin@ea-saas.com';
+  const adminPassword = process.env.ADMIN_PASSWORD || 'Admin@2026!Secure';
+  const adminHash = await bcrypt.hash(adminPassword, 12);
+  await connection.execute(
+    `INSERT INTO admin_users
+      (id, email, passwordHash, name, role, twoFactorEnabled, createdAt, updatedAt)
+     VALUES (?, ?, ?, ?, 'SUPER_ADMIN', 0, ?, ?)
+     ON DUPLICATE KEY UPDATE
+      passwordHash = VALUES(passwordHash),
+      role = 'SUPER_ADMIN',
+      updatedAt = VALUES(updatedAt)`,
+    ['adm_bootstrap', adminEmail, adminHash, 'Platform Admin', now, now],
   );
 }
 
@@ -549,6 +578,19 @@ export interface DbAdmin {
 }
 
 export async function findAdminByEmail(email: string): Promise<DbAdmin | null> {
+  if (useMysql()) {
+    const rows = await query('SELECT * FROM admin_users WHERE LOWER(email) = LOWER(?) LIMIT 1', [email]);
+    if (rows[0]) {
+      const admin = rows[0] as any;
+      return {
+        ...admin,
+        twoFactorEnabled: !!admin.twoFactorEnabled,
+        createdAt: admin.createdAt instanceof Date ? admin.createdAt.toISOString() : admin.createdAt,
+        updatedAt: admin.updatedAt instanceof Date ? admin.updatedAt.toISOString() : admin.updatedAt,
+      };
+    }
+  }
+
   const user = await findUserByEmail(email);
   if (user && ['ADMIN', 'SUPER_ADMIN', 'BILLING_ADMIN', 'RISK_ADMIN', 'SUPPORT'].includes(user.role)) {
     return { ...user, twoFactorEnabled: !!user.twoFactorEnabled };
