@@ -44,26 +44,6 @@ export async function GET() {
       });
     }
 
-
-    // Step 2.5: Create admin user if not exists
-    const adminEmail = 'admin@tradecandle.net';
-    let adminUser = await prisma.user.findUnique({ where: { email: adminEmail } });
-    if (!adminUser) {
-      const bcrypt = await import('bcryptjs');
-      const adminHash = bcrypt.default.hashSync('Admin@2026!', 10);
-      adminUser = await prisma.user.create({
-        data: {
-          email: adminEmail,
-          name: 'Platform Admin',
-          passwordHash: adminHash,
-          role: 'SUPER_ADMIN',
-          status: 'ACTIVE',
-          emailVerified: new Date().toISOString(),
-        },
-      });
-      console.log('✅ Admin user created:', adminEmail);
-    }
-
     // Step 3: Delete existing packages (cascade subscriptions first)
     const existing = await prisma.package.findMany();
     for (const pkg of existing) {
