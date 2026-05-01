@@ -255,6 +255,18 @@ function parseMysqlUrl(raw: string) {
   };
 }
 
+function toMysqlDate(value: any) {
+  if (!value) return value;
+  const date = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  return date.toISOString().slice(0, 19).replace('T', ' ');
+}
+
+function normalizeMysqlValues(entries: [string, any][]) {
+  const dateFields = new Set(['currentPeriodEnd', 'trialEndsAt', 'expiresAt', 'revokedAt', 'lastHeartbeatAt']);
+  return entries.map(([key, value]) => (dateFields.has(key) ? toMysqlDate(value) : value));
+}
+
 function ensureDir() {
   if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
 }
@@ -392,7 +404,7 @@ export async function createSub(data: Omit<DbSub, 'id' | 'createdAt'>): Promise<
       `INSERT INTO subscriptions
         (id, userId, packageId, status, currentPeriodStart, currentPeriodEnd, trialEndsAt, cancelAtPeriodEnd, createdAt, updatedAt)
        VALUES (?, ?, ?, ?, NOW(), ?, ?, 0, NOW(), NOW())`,
-      [sub.id, sub.userId, sub.packageId, sub.status, sub.currentPeriodEnd, sub.trialEndsAt],
+      [sub.id, sub.userId, sub.packageId, sub.status, toMysqlDate(sub.currentPeriodEnd), toMysqlDate(sub.trialEndsAt)],
     );
     return { ...sub, createdAt: new Date().toISOString() };
   }
@@ -421,7 +433,7 @@ export async function createLic(data: Omit<DbLic, 'id' | 'createdAt'>): Promise<
       `INSERT INTO licenses
         (id, \`key\`, userId, subscriptionId, strategyId, status, maxAccounts, expiresAt, createdAt, updatedAt)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())`,
-      [lic.id, lic.key, lic.userId, lic.subscriptionId, 'str_tradecandle_v12', lic.status, lic.maxAccounts, lic.expiresAt],
+      [lic.id, lic.key, lic.userId, lic.subscriptionId, 'str_tradecandle_v12', lic.status, lic.maxAccounts, toMysqlDate(lic.expiresAt)],
     );
     return { ...lic, createdAt: new Date().toISOString() };
   }
@@ -456,7 +468,7 @@ export async function updateLicense(id: string, data: Partial<DbLic>): Promise<D
     const entries = Object.entries(data).filter(([key]) => allowed.includes(key));
     if (!entries.length) return null;
     const setSql = entries.map(([key]) => `\`${key}\` = ?`).join(', ');
-    await query(`UPDATE licenses SET ${setSql}, updatedAt = NOW() WHERE id = ?`, [...entries.map(([, value]) => value), id]);
+    await query(`UPDATE licenses SET ${setSql}, updatedAt = NOW() WHERE id = ?`, [...normalizeMysqlValues(entries), id]);
     const rows = await query('SELECT * FROM licenses WHERE id = ? LIMIT 1', [id]);
     return (rows[0] as any) || null;
   }
@@ -499,7 +511,7 @@ export async function updateSubscription(id: string, data: any): Promise<any | n
     const entries = Object.entries(data).filter(([key]) => allowed.includes(key));
     if (!entries.length) return findSubscriptionById(id);
     const setSql = entries.map(([key]) => `\`${key}\` = ?`).join(', ');
-    await query(`UPDATE subscriptions SET ${setSql}, updatedAt = NOW() WHERE id = ?`, [...entries.map(([, value]) => value), id]);
+    await query(`UPDATE subscriptions SET ${setSql}, updatedAt = NOW() WHERE id = ?`, [...normalizeMysqlValues(entries), id]);
     return findSubscriptionById(id);
   }
   const subs = readJson(SUBS);
