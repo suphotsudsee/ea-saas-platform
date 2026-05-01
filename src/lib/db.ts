@@ -59,10 +59,7 @@ function ensureDir() {
 
 function readJson(file: string): any[] {
   ensureDir();
-  if (!fs.existsSync(file)) {
-    fs.writeFileSync(file, '[]');
-    return [];
-  }
+  if (!fs.existsSync(file)) return [];
   try {
     return JSON.parse(fs.readFileSync(file, 'utf-8'));
   } catch {
