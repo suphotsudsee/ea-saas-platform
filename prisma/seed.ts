@@ -204,7 +204,7 @@ async function main() {
     update: {
       name: 'Starter',
       description: 'For Beginner Traders 1 MT5 Accounts — 3-Wave Cashout + Dashboard',
-      priceCents: 990, // 9.90 USD
+      priceCents: 999, // 9.99 USD
       currency: 'USD',
       billingCycle: 'MONTHLY',
       maxAccounts: 1,
@@ -229,7 +229,7 @@ async function main() {
       id: 'pkg_starter',
       name: 'Starter',
       description: 'For Beginner Traders 1 MT5 Accounts — 3-Wave Cashout + Dashboard',
-      priceCents: 990, // 9.90 USD
+      priceCents: 999, // 9.99 USD
       currency: 'USD',
       billingCycle: 'MONTHLY',
       maxAccounts: 1,
@@ -257,7 +257,7 @@ async function main() {
     update: {
       name: 'Pro',
       description: 'For Serious Traders 3 Accounts — Kill Switch + Risk Management + Line Support',
-      priceCents: 2490, // 24.90 USD
+      priceCents: 1999, // 19.99 USD
       currency: 'USD',
       billingCycle: 'MONTHLY',
       maxAccounts: 3,
@@ -282,7 +282,7 @@ async function main() {
       id: 'pkg_pro',
       name: 'Pro',
       description: 'For Serious Traders 3 Accounts — Kill Switch + Risk Management + Line Support',
-      priceCents: 2490, // 24.90 USD
+      priceCents: 1999, // 19.99 USD
       currency: 'USD',
       billingCycle: 'MONTHLY',
       maxAccounts: 3,
@@ -310,7 +310,7 @@ async function main() {
     update: {
       name: 'Elite',
       description: 'For Professional Traders — 5 Accounts: Custom Config + VIP Line + 1-on-1 Setup Call',
-      priceCents: 4990, // 49.90 USD
+      priceCents: 3999, // 39.99 USD
       currency: 'USD',
       billingCycle: 'MONTHLY',
       maxAccounts: 5,
@@ -335,7 +335,7 @@ async function main() {
       id: 'pkg_elite',
       name: 'Elite',
       description: 'For Professional Traders — 5 Accounts: Custom Config + VIP Line + 1-on-1 Setup Call',
-      priceCents: 4990, // 49.90 USD
+      priceCents: 3999, // 39.99 USD
       currency: 'USD',
       billingCycle: 'MONTHLY',
       maxAccounts: 5,

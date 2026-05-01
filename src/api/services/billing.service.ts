@@ -5,6 +5,7 @@
 import { prisma } from '../lib/prisma';
 import { createLicense } from './license.service';
 import { redis, RedisKeys } from '../utils/redis';
+import { STATIC_PACKAGES } from '../../lib/packages-data';
 import Stripe from 'stripe';
 
 // ─── Stripe Client ────────────────────────────────────────────────────────────
@@ -20,10 +21,22 @@ function getStripeClient(): Stripe {
 // ─── List Packages ────────────────────────────────────────────────────────────
 
 export async function listActivePackages() {
-  return prisma.package.findMany({
-    where: { isActive: true },
-    orderBy: { sortOrder: 'asc' },
-  });
+  try {
+    const packages = await prisma.package.findMany({
+      where: { isActive: true },
+      orderBy: { sortOrder: 'asc' },
+    });
+    // Fallback to static packages if database is empty (shared hosting new deploy)
+    if (packages.length === 0) {
+      console.log('[billing] DB packages empty, using static fallback');
+      return STATIC_PACKAGES;
+    }
+    return packages;
+  } catch (e) {
+    console.error('[billing] Failed to read packages from DB:', e);
+    console.log('[billing] Using static fallback packages');
+    return STATIC_PACKAGES;
+  }
 }
 
 // ─── Create Checkout Session ─────────────────────────────────────────────────
