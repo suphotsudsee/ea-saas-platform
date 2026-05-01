@@ -12,15 +12,19 @@ function useMysql() {
   return !!DATABASE_URL && DATABASE_URL.startsWith('mysql');
 }
 
+let pool: any = null;
+
+function getPool() {
+  if (!pool) {
+    pool = mysql.createPool(getConnectionConfig());
+  }
+  return pool;
+}
+
 async function query<T = any>(sql: string, params: any[] = []): Promise<T[]> {
   await ensureMysqlSchema();
-  const connection = await mysql.createConnection(getConnectionConfig());
-  try {
-    const [rows] = await connection.execute(sql, params);
-    return rows as T[];
-  } finally {
-    await connection.end();
-  }
+  const [rows] = await getPool().execute(sql, params);
+  return rows as T[];
 }
 
 async function ensureMysqlSchema() {
@@ -35,7 +39,7 @@ async function ensureMysqlSchema() {
 }
 
 async function bootstrapMysqlSchema() {
-  const connection = await mysql.createConnection(getConnectionConfig());
+  const connection = await getPool().getConnection();
   const exec = async (sql: string, params: any[] = []) => {
     await connection.execute(sql, params);
   };

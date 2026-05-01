@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import api from '@/lib/api';
 
@@ -24,15 +25,45 @@ interface SubscriptionItem {
 function statusClass(status: string) {
   if (status === 'ACTIVE') return 'border-emerald-500/20 bg-emerald-500/10 text-emerald-300';
   if (status === 'CANCELED') return 'border-rose-500/20 bg-rose-500/10 text-rose-300';
-  return 'border-amber-500/20 bg-amber-500/10 text-amber-300';
+  if (status === 'SUSPENDED') return 'border-amber-500/20 bg-amber-500/10 text-amber-300';
+  return 'border-slate-700 bg-slate-800 text-slate-300';
 }
 
 export default function AdminSubscriptionsPage() {
   const [subscriptions, setSubscriptions] = useState<SubscriptionItem[]>([]);
+  const [pendingId, setPendingId] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
 
-  useEffect(() => {
-    api.get('/admin/subscriptions').then((res) => setSubscriptions(res.data.subscriptions ?? [])).catch(() => setSubscriptions([]));
-  }, []);
+  const loadSubs = async () => {
+    try {
+      const res = await api.get('/admin/subscriptions');
+      const normalized = (res.data.subscriptions ?? []).map((s: any) => ({
+        ...s,
+        user: s.user ?? { email: 'unknown', name: null },
+        package: s.package ?? { name: 'Unknown', billingCycle: 'N/A', maxAccounts: 0 },
+        licenses: s.licenses ?? [],
+      }));
+      setSubscriptions(normalized);
+    } catch {
+      setSubscriptions([]);
+    }
+  };
+
+  useEffect(() => { loadSubs(); }, []);
+
+  const handleAction = async (action: string, subscriptionId: string) => {
+    setPendingId(subscriptionId);
+    setMessage(null);
+    try {
+      await api.patch('/admin/subscriptions', { action, subscriptionId });
+      setMessage(`Subscription ${action} successful`);
+      await loadSubs();
+    } catch {
+      setMessage(`Failed to ${action} subscription`);
+    } finally {
+      setPendingId(null);
+    }
+  };
 
   return (
     <div className="space-y-6 lg:space-y-8">
@@ -40,9 +71,15 @@ export default function AdminSubscriptionsPage() {
         <Badge className="border-[#8cc9c2]/20 bg-[#112129] text-[#8cc9c2] hover:bg-[#112129]">Billing operations</Badge>
         <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white">Review active subscriptions and account capacity across customers.</h2>
         <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-400 sm:text-base">
-          This view reflects real subscription records from the database. If there are no results yet, the billing side has not been populated.
+          Manage subscription status: cancel, suspend, or reactivate. This view reflects real subscription records from the database.
         </p>
       </section>
+
+      {message && (
+        <Card className="rounded-[24px] border-emerald-500/20 bg-emerald-500/5">
+          <CardContent className="p-4 text-sm text-emerald-300">{message}</CardContent>
+        </Card>
+      )}
 
       <Card className="rounded-[32px] border-white/8 bg-white/[0.03]">
         <CardHeader>
@@ -52,7 +89,7 @@ export default function AdminSubscriptionsPage() {
           {subscriptions.length === 0 && <div className="rounded-[28px] border border-white/8 bg-[#0c1720] p-6 text-sm text-slate-400">No subscription records found.</div>}
 
           {subscriptions.map((subscription) => (
-            <div key={subscription.id} className="grid gap-4 rounded-[28px] border border-white/8 bg-[#0c1720] p-5 lg:grid-cols-[1.2fr_0.9fr_0.8fr_0.8fr]">
+            <div key={subscription.id} className="grid gap-4 rounded-[28px] border border-white/8 bg-[#0c1720] p-5 lg:grid-cols-[1.2fr_0.9fr_0.7fr_0.7fr_auto] lg:items-center">
               <div>
                 <div className="text-sm font-semibold text-white">{subscription.user.name || 'Unnamed customer'}</div>
                 <div className="mt-1 text-xs text-slate-500">{subscription.user.email}</div>
@@ -74,6 +111,29 @@ export default function AdminSubscriptionsPage() {
                   {new Date(subscription.currentPeriodEnd).toLocaleDateString('en-US')}
                 </div>
                 <div className="mt-1 text-xs text-slate-500">{subscription.licenses.length} linked licenses</div>
+              </div>
+              <div className="flex gap-1 justify-end flex-wrap">
+                {subscription.status === 'ACTIVE' ? (
+                  <>
+                    <Button variant="ghost" size="sm"
+                      className="rounded-full border border-amber-500/20 bg-amber-500/10 text-amber-300 hover:bg-amber-500/20 text-xs"
+                      onClick={() => handleAction('suspend', subscription.id)}
+                      disabled={pendingId === subscription.id}
+                    >{pendingId === subscription.id ? '...' : 'Suspend'}</Button>
+                    <Button variant="ghost" size="sm"
+                      className="rounded-full border border-rose-500/20 bg-rose-500/10 text-rose-300 hover:bg-rose-500/20 text-xs"
+                      onClick={() => handleAction('cancel', subscription.id)}
+                      disabled={pendingId === subscription.id}
+                    >{pendingId === subscription.id ? '...' : 'Cancel'}</Button>
+                  </>
+                ) : null}
+                {subscription.status === 'CANCELED' || subscription.status === 'SUSPENDED' ? (
+                  <Button variant="ghost" size="sm"
+                    className="rounded-full border border-emerald-500/20 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 text-xs"
+                    onClick={() => handleAction('activate', subscription.id)}
+                    disabled={pendingId === subscription.id}
+                  >{pendingId === subscription.id ? '...' : 'Activate'}</Button>
+                ) : null}
               </div>
             </div>
           ))}

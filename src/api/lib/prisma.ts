@@ -86,10 +86,55 @@ const userModel = {
     const users = await getAllUsers();
     return users.find((u: any) => matchesWhere(u, where)) || null;
   },
-  findMany: async ({ where, orderBy, take }: any = {}) => {
+  findMany: async ({ where, select, include, orderBy, skip, take }: any = {}) => {
     let results = (await getAllUsers()).filter((u: any) => matchesWhere(u, where));
-    results = sortRows(results, orderBy);
-    return take ? results.slice(0, take) : results;
+    results = sortRows(results, orderBy || { createdAt: 'desc' });
+
+    // Pre-fetch shared data
+    const [allSubs, allLicenses, allPackages] = await Promise.all([
+      getAllSubscriptions(),
+      getAllLicenses(),
+      getAllPackages(),
+    ]);
+
+    const enriched = results.map((u: any) => {
+      const result: any = {};
+
+      // Handle select fields
+      if (select) {
+        for (const [key, val] of Object.entries(select)) {
+          if (['id', 'email', 'name', 'role', 'status', 'emailVerified', 'twoFactorEnabled', 'createdAt'].includes(key)) {
+            result[key] = u[key];
+          } else if (key === 'subscriptions') {
+            const fields = (val as any).select;
+            const subs = (val as any).take
+              ? allSubs.filter((s: any) => s.userId === u.id).slice(0, (val as any).take)
+              : allSubs.filter((s: any) => s.userId === u.id);
+            result.subscriptions = fields
+              ? subs.map((s: any) => ({
+                  ...Object.fromEntries(Object.entries(fields).map(([kk, vv]) => [kk, (s as any)[kk]])),
+                  ...(fields.package ? { package: { name: allPackages.find((p: any) => p.id === s.packageId)?.name || '' } } : {}),
+                }))
+              : subs;
+          } else if (key === 'tradingAccounts') {
+            result.tradingAccounts = (val as any).take ? [] : [];
+          } else if (key === '_count') {
+            const countFields = (val as any).select;
+            result._count = {};
+            if (countFields.subscriptions) result._count.subscriptions = allSubs.filter((s: any) => s.userId === u.id).length;
+            if (countFields.licenses) result._count.licenses = allLicenses.filter((l: any) => l.userId === u.id).length;
+            if (countFields.tradingAccounts) result._count.tradingAccounts = 0;
+          }
+        }
+      } else {
+        Object.assign(result, u);
+      }
+
+      return result;
+    });
+
+    const sliced = skip ? enriched.slice(skip) : enriched;
+    return take ? sliced.slice(0, take) : sliced;
   },
   create: async ({ data }: any) =>
     createUser({
@@ -113,7 +158,56 @@ const licModel = {
     return null;
   },
   findFirst: async ({ where }: any = {}) => (await getAllLicenses()).find((l: any) => matchesWhere(l, where)) || null,
-  findMany: async ({ where }: any = {}) => (await getAllLicenses()).filter((l: any) => matchesWhere(l, where)),
+  findMany: async ({ where, include, orderBy, skip, take }: any = {}) => {
+    let licenses = (await getAllLicenses()).filter((l: any) => matchesWhere(l, where));
+    licenses = sortRows(licenses, orderBy || { createdAt: 'desc' });
+
+    const enriched = await Promise.all(
+      licenses.map(async (l: any) => {
+        const result = { ...l };
+
+        if (include?.user) {
+          const users = await getAllUsers();
+          const fields = include.user.select;
+          const raw = users.find((u: any) => u.id === l.userId);
+          result.user = raw && fields
+            ? Object.fromEntries(Object.entries(fields).map(([k, v]) => [k, (raw as any)[k]]))
+            : raw ?? null;
+        }
+
+        if (include?.strategy) {
+          const strategies = await getAllStrategies();
+          const fields = include.strategy.select;
+          const raw = strategies.find((s: any) => s.id === l.strategyId);
+          result.strategy = raw && fields
+            ? Object.fromEntries(Object.entries(fields).map(([k, v]) => [k, (raw as any)[k]]))
+            : raw ?? null;
+        }
+
+        if (include?.subscription) {
+          const subs = await getAllSubscriptions();
+          const fields = include.subscription.select;
+          const raw = subs.find((s: any) => s.id === l.subscriptionId);
+          result.subscription = raw && fields
+            ? { ...Object.fromEntries(Object.entries(fields).map(([k, v]) => [k, (raw as any)[k]])), package: (await getAllPackages()).find((p: any) => p.id === raw.packageId) || null }
+            : raw ?? null;
+        }
+
+        if (include?._count) {
+          const countFields = include._count.select;
+          result._count = {};
+          if (countFields.tradingAccounts) {
+            result._count.tradingAccounts = 0;
+          }
+        }
+
+        return result;
+      })
+    );
+
+    const sliced = skip ? enriched.slice(skip) : enriched;
+    return take ? sliced.slice(0, take) : sliced;
+  },
   create: async ({ data }: any) => createLic({ ...data, maxAccounts: data.maxAccounts || 1, expiresAt: data.expiresAt || null }),
   update: async ({ where, data }: any) => {
     if (!where.id) return null;
@@ -131,16 +225,42 @@ const subModel = {
     if (where?.userId) return findSubscriptionByUserId(where.userId);
     return (await getAllSubscriptions()).find((s: any) => matchesWhere(s, where)) || null;
   },
-  findMany: async ({ where, include }: any = {}) => {
+  findMany: async ({ where, include, orderBy }: any = {}) => {
     const subs = (await getAllSubscriptions()).filter((s: any) => matchesWhere(s, where));
-    if (include?.package) {
-      const packages = await getAllPackages();
-      return subs.map((sub: any) => ({
-        ...sub,
-        package: packages.find((pkg: any) => pkg.id === sub.packageId) || null,
-      }));
-    }
-    return subs;
+    const sorted = sortRows(subs, orderBy || { createdAt: 'desc' });
+
+    const enriched = await Promise.all(
+      sorted.map(async (sub: any) => {
+        const result = { ...sub };
+
+        if (include?.user) {
+          const users = await getAllUsers();
+          const fields = include.user.select;
+          const raw = users.find((u: any) => u.id === sub.userId);
+          result.user = raw && fields
+            ? Object.fromEntries(Object.entries(fields).map(([k, v]) => [k, (raw as any)[k]]))
+            : raw ?? null;
+        }
+
+        if (include?.package) {
+          const packages = await getAllPackages();
+          result.package = packages.find((pkg: any) => pkg.id === sub.packageId) || null;
+        }
+
+        if (include?.licenses) {
+          const licenses = await getAllLicenses();
+          const fields = include.licenses.select;
+          const raw = licenses.filter((l: any) => l.subscriptionId === sub.id);
+          result.licenses = fields
+            ? raw.map((l: any) => Object.fromEntries(Object.entries(fields).map(([k, v]) => [k, (l as any)[k]])))
+            : raw;
+        }
+
+        return result;
+      })
+    );
+
+    return enriched;
   },
   create: async ({ data }: any) =>
     createSub({

@@ -96,3 +96,30 @@ export async function GET(request: NextRequest) {
     );
   }
 }
+
+// ─── PATCH: Update user status ────────────────────────────────────────────
+
+export async function PATCH(request: NextRequest) {
+  const authResult = await adminOnlyMiddleware(request);
+  if (authResult.response) return authResult.response;
+
+  try {
+    const body = await request.json();
+    const { userId, status } = body;
+
+    if (!userId || !['ACTIVE', 'SUSPENDED', 'BANNED'].includes(status)) {
+      return NextResponse.json({ error: 'Invalid userId or status' }, { status: 400 });
+    }
+
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: { status },
+      select: { id: true, email: true, name: true, status: true },
+    });
+
+    return NextResponse.json({ user, message: `User status updated to ${status}` });
+  } catch (error) {
+    console.error('Admin update user error:', error);
+    return NextResponse.json({ error: 'Failed to update user' }, { status: 500 });
+  }
+}
