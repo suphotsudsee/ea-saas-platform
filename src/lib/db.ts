@@ -197,19 +197,8 @@ async function seedMysqlDefaults(connection: mysql.Connection) {
       now,
     ],
   );
-  await connection.execute(
-    `INSERT IGNORE INTO packages
-      (id, name, description, priceCents, currency, billingCycle, maxAccounts, features, isActive, isTrial, trialDays, sortOrder, createdAt, updatedAt)
-     VALUES (?, ?, ?, 0, 'USD', 'MONTHLY', 1, ?, 1, 1, 30, 0, ?, ?)`,
-    [
-      'starter',
-      '1-Month Free Trial',
-      'Trial TradeCandle Gold Scalper v12 Free 30 days',
-      JSON.stringify({ strategyIds: ['str_tradecandle_v12'], maxAccounts: 1 }),
-      now,
-      now,
-    ],
-  );
+  // Packages are seeded via /api/seed (clean mysql2-based seed)
+  // No packages inserted here to avoid duplicates.
 
   const adminEmail = process.env.ADMIN_EMAIL || 'admin@ea-saas.com';
   const adminPassword = process.env.ADMIN_PASSWORD || 'Admin@2026!Secure';
