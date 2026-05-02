@@ -89,7 +89,9 @@ export async function GET() {
     ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`);
 
     // --- CLEANUP STALE DATA (from old db.ts seed) ---
+    await conn.execute('DELETE FROM subscriptions WHERE packageId = ?', ['starter']);
     await conn.execute('DELETE FROM packages WHERE id = ?', ['starter']);
+    await conn.execute('DELETE FROM subscriptions WHERE packageId = ?', ['pkg_starter']);
     await conn.execute('DELETE FROM packages WHERE id = ?', ['pkg_starter']);
 
     // --- SEED DATA ---
