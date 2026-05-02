@@ -642,7 +642,7 @@ export async function findPackageById(id: string): Promise<DbPackage | null> {
 }
 
 export async function getAllPackages(): Promise<DbPackage[]> {
-  if (useMysql()) return query('SELECT * FROM packages ORDER BY sortOrder ASC');
+  if (useMysql()) return query('SELECT * FROM packages WHERE isActive = 1 ORDER BY sortOrder ASC');
   return readJson(PKGS);
 }
 
