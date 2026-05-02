@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { CardContent, CardFooter } from '@/components/ui/card';
 import { useEffect, useMemo, useState } from 'react';
 import api, { getApiErrorMessage } from '@/lib/api';
+import { STATIC_PACKAGES } from '@/lib/packages-data';
 
 type TrialPackage = {
   id: string;
@@ -44,14 +45,27 @@ export default function RegisterPage() {
           .sort((a, b) => a.sortOrder - b.sortOrder);
         const packageFromUrl = new URLSearchParams(window.location.search).get('packageId');
 
-        setPackages(activePackages);
-        setSelectedPackageId(
-          activePackages.some((pkg) => pkg.id === packageFromUrl)
-            ? packageFromUrl!
-            : activePackages[0]?.id ?? ''
-        );
+        if (activePackages.length > 0) {
+          setPackages(activePackages);
+          setSelectedPackageId(
+            activePackages.some((pkg) => pkg.id === packageFromUrl)
+              ? packageFromUrl!
+              : activePackages[0]?.id ?? ''
+          );
+        } else {
+          // Fallback to static packages when API returns empty (Docker fresh deploy)
+          const fallback = STATIC_PACKAGES.filter(p => p.billingCycle === 'MONTHLY');
+          setPackages(fallback as TrialPackage[]);
+          setSelectedPackageId(fallback[0]?.id ?? 'pkg_trial');
+        }
       } catch (err) {
-        if (mounted) setError(getApiErrorMessage(err, 'Failed to load trial packages'));
+        if (mounted) {
+          // API error — fallback to static packages so user can still register
+          console.warn('Failed to load packages from API, using static fallback:', err);
+          const fallback = STATIC_PACKAGES.filter(p => p.billingCycle === 'MONTHLY');
+          setPackages(fallback as TrialPackage[]);
+          setSelectedPackageId(fallback[0]?.id ?? 'pkg_trial');
+        }
       } finally {
         if (mounted) setIsLoadingPackages(false);
       }
@@ -213,7 +227,7 @@ export default function RegisterPage() {
           {success ? <div className="text-sm text-emerald-300">{success}</div> : null}
         </CardContent>
         <CardFooter className="flex flex-col gap-4 p-6 pt-0">
-          <Button disabled={isLoading || isLoadingPackages || !selectedPackageId} className="h-11 w-full rounded-xl bg-gradient-to-r from-amber-500 to-yellow-600 font-bold text-black shadow-lg shadow-amber-900/30 hover:from-amber-400 hover:to-yellow-500">
+          <Button disabled={isLoading} className="h-11 w-full rounded-xl bg-gradient-to-r from-amber-500 to-yellow-600 font-bold text-black shadow-lg shadow-amber-900/30 hover:from-amber-400 hover:to-yellow-500">
             {isLoading ? 'Creating account...' : 'Create Account'}
           </Button>
           <div className="text-center text-sm text-slate-400">
