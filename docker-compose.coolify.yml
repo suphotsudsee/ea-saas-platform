@@ -16,6 +16,7 @@ services:
       redis:
         condition: service_started
     environment:
+      - DATABASE_URL=mysql://mysql:QvDnbrWZ1F8xo05ax9RlMIHLNTGpQWuSWoZS68FeBk4Llg18Y0O2WWI5QU9tlpFS@nh0992vyh996he1svo5ikxmp:3306/default
       - REDIS_URL=redis://redis:6379/0
 
   redis:
