@@ -20,10 +20,17 @@ function getStripeClient(): Stripe {
 // ─── List Packages ────────────────────────────────────────────────────────────
 
 export async function listActivePackages() {
-  return prisma.package.findMany({
-    where: { isActive: true },
-    orderBy: { sortOrder: 'asc' },
-  });
+  try {
+    return await prisma.package.findMany({
+      where: { isActive: true },
+      orderBy: { sortOrder: 'asc' },
+    });
+  } catch {
+    // Fallback to JSON file (local dev without MySQL)
+    const { getAllPackages } = await import('../../lib/db');
+    const all = await getAllPackages();
+    return all.filter((p: any) => p.isActive === 1 || p.isActive === true);
+  }
 }
 
 // ─── Create Checkout Session ─────────────────────────────────────────────────
@@ -409,6 +416,23 @@ export async function getUserSubscription(userId: string) {
     },
     orderBy: { createdAt: 'desc' },
   });
+
+  // If package wasn't included by fake Prisma, enrich it manually
+  if (subscription && !subscription.package) {
+    const { getAllPackages, getAllLicenses, getAllStrategies } = await import('../../lib/db');
+    const packages = await getAllPackages();
+    const licenses = await getAllLicenses();
+    const strategies = await getAllStrategies();
+    
+    subscription.package = packages.find((p: any) => p.id === subscription.packageId) || null;
+    subscription.licenses = licenses
+      .filter((l: any) => l.subscriptionId === subscription.id)
+      .map((l: any) => ({
+        ...l,
+        strategy: strategies.find((s: any) => s.id === l.strategyId) || null,
+        tradingAccounts: [],
+      }));
+  }
 
   return subscription;
 }

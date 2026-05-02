@@ -131,6 +131,20 @@ export default function AdminUsersPage() {
     }
   };
 
+  const handleDeleteUser = async (userId: string) => {
+    if (!confirm('Are you sure you want to delete this user? This will revoke all licenses and cancel subscriptions.')) return;
+    setPendingUserId(userId);
+    try {
+      await fetch(`/api/admin/users?userId=${userId}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      });
+      await loadUsers();
+    } finally {
+      setPendingUserId(null);
+    }
+  };
+
   const summary = useMemo(() => {
     return users.reduce(
       (acc, user) => {
@@ -315,6 +329,15 @@ export default function AdminUsersPage() {
                           {pendingUserId === user.id ? '...' : 'Activate'}
                         </Button>
                       ) : null}
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="rounded-full border border-rose-500/20 bg-transparent text-rose-400 hover:bg-rose-500/10 text-xs"
+                        onClick={() => handleDeleteUser(user.id)}
+                        disabled={pendingUserId === user.id}
+                      >
+                        Delete
+                      </Button>
                       <Button asChild variant="ghost" size="sm" className="rounded-full border border-white/10 bg-white/[0.03] text-slate-300 hover:bg-white/[0.06] text-xs">
                         <Link href="/dashboard/admin/licenses">Licenses</Link>
                       </Button>

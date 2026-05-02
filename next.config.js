@@ -5,8 +5,12 @@ const nextConfig = {
   output: 'standalone',
   typescript: { ignoreBuildErrors: true },
   eslint: { ignoreDuringBuilds: true },
-  webpack: (config) => {
-    config.resolve.alias['@prisma/client'] = path.resolve(__dirname, 'src/types/prisma-stub.ts');
+  webpack: (config, { isServer, dev }) => {
+    // Only alias @prisma/client to stub in local dev with JSON fallback.
+    // In production Docker, use the real Prisma client (installed via npm ci).
+    if (dev && process.env.USE_PRISMA_STUB !== 'false') {
+      config.resolve.alias['@prisma/client'] = path.resolve(__dirname, 'src/types/prisma-stub.ts');
+    }
     return config;
   },
   experimental: {

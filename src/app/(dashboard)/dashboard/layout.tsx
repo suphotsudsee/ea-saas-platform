@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
 import {
   Activity,
+  ArrowDownToLine,
   BarChart3,
   CreditCard,
   Key,
@@ -36,6 +37,7 @@ const menuItems: NavItem[] = [
   { name: 'Licenses', href: '/dashboard/licenses', icon: Key },
   { name: 'Trading Accounts', href: '/dashboard/trading-accounts', icon: WalletCards },
   { name: 'Trade History', href: '/dashboard/trade-history', icon: BarChart3 },
+  { name: 'Download EA', href: '/dashboard/download', icon: ArrowDownToLine },
   { name: 'Subscription', href: '/dashboard/subscription', icon: CreditCard },
   { name: 'Settings', href: '/dashboard/settings', icon: Settings },
 ];

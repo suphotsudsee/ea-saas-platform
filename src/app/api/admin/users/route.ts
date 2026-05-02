@@ -1,1 +1,1 @@
-export { GET, PATCH } from '../../../../api/routes/admin/users/route';
+export { GET, PATCH, DELETE } from '../../../../api/routes/admin/users/route';

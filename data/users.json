@@ -1,0 +1,1 @@
+[{"id": "usr_demo_001", "email": "demo@tradecandle.com", "passwordHash": "$2a$10$NLsjQCIjc47uPHBiSMqQ0eeQpqTFAMkSDMTlv2rQ3DYiRuBa/6TiW", "name": "Demo User", "role": "TRADER", "status": "ACTIVE", "timezone": "UTC", "twoFactorEnabled": false, "createdAt": "2026-05-01T00:00:00.000Z", "updatedAt": "2026-05-01T00:00:00.000Z"}]

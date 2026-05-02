@@ -56,9 +56,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, [pathname]);
 
   const login = async (email: string, password: string) => {
-    await api.post('/auth/login', { email, password });
-    const { data } = await api.get('/auth/me');
-    setUser(data.user ?? data);
+    const { data } = await api.post('/auth/login', { email, password });
+    // Store token for axios interceptor
+    if (data.token) {
+      localStorage.setItem('auth_token', data.token);
+    }
+    setUser(data.user);
     router.push('/dashboard');
   };
 

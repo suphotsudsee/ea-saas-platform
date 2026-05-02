@@ -20,8 +20,9 @@ export async function POST(req: NextRequest) {
     const resp = NextResponse.json({
       message: 'Login successful',
       user: { id: user.id, email: user.email, name: user.name, role: user.role, actorType: 'user' },
+      token,  // for axios interceptor to store in localStorage
     });
-    resp.cookies.set('session-token', token, { httpOnly: true, secure: true, sameSite: 'lax', maxAge: 86400, path: '/' });
+    resp.cookies.set('session-token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'lax', maxAge: 86400, path: '/' });
     return resp;
   } catch (e) {
     console.error('Login error:', e);

@@ -1,0 +1,1 @@
+[{"id": "strat_v12_default", "name": "TradeCandle v12 \u2014 XAUUSD 3-Wave", "version": "12.00", "description": "3-Wave Cashout + 6 PA/SMC Filters + Time Filter for XAUUSD M5", "defaultConfig": "symbol=XAUUSDm|timeframe=M5|lotSize=0.03", "status": "ACTIVE", "createdAt": "2026-01-01T00:00:00.000Z"}]

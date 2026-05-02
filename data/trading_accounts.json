@@ -1,0 +1,1 @@
+[{"id": "acct_001", "userId": "usr_demo_001", "licenseId": "lic_demo_001", "accountNumber": "415609557", "brokerName": "Exness", "platform": "MT5", "status": "ACTIVE", "lastHeartbeatAt": "2026-05-02T01:34:36.000Z", "heartbeatTimeoutMinutes": 15, "createdAt": "2026-05-01T00:00:00.000Z", "updatedAt": "2026-05-02T08:35:06.000Z"}]
