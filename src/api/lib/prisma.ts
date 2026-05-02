@@ -193,6 +193,10 @@ const licModel = {
             : raw ?? null;
         }
 
+        if (include?.tradingAccounts) {
+          result.tradingAccounts = [];
+        }
+
         if (include?._count) {
           const countFields = include._count.select;
           result._count = {};
