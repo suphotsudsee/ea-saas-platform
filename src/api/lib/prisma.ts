@@ -221,9 +221,34 @@ const subModel = {
     if (where?.id) return findSubscriptionById(where.id);
     return null;
   },
-  findFirst: async ({ where }: any = {}) => {
-    if (where?.userId) return findSubscriptionByUserId(where.userId);
-    return (await getAllSubscriptions()).find((s: any) => matchesWhere(s, where)) || null;
+  findFirst: async ({ where, include }: any = {}) => {
+    let sub;
+    if (where?.userId) {
+      sub = await findSubscriptionByUserId(where.userId);
+    } else {
+      sub = (await getAllSubscriptions()).find((s: any) => matchesWhere(s, where)) || null;
+    }
+
+    if (!sub) return null;
+
+    // Enrich with includes (same as findMany)
+    if (include?.package) {
+      const packages = await getAllPackages();
+      sub.package = packages.find((pkg: any) => pkg.id === sub.packageId) || null;
+    }
+    if (include?.licenses) {
+      const licenses = await getAllLicenses();
+      const strategies = await getAllStrategies();
+      sub.licenses = licenses
+        .filter((l: any) => l.subscriptionId === sub.id)
+        .map((l: any) => ({
+          ...l,
+          strategy: strategies.find((s: any) => s.id === l.strategyId) || null,
+          tradingAccounts: [],
+        }));
+    }
+
+    return sub;
   },
   findMany: async ({ where, include, orderBy }: any = {}) => {
     const subs = (await getAllSubscriptions()).filter((s: any) => matchesWhere(s, where));
