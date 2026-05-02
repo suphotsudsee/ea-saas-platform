@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic';
 
 function getConnectionConfig() {
   const raw = process.env.DATABASE_URL!;
-  try { new URL(raw); return raw; } catch { /* parse */ }
+  try { new URL(raw); return raw; } catch { /* parse manual */ }
   const value = raw.replace(/^mysql:\/\//, '');
   const at = value.lastIndexOf('@');
   const auth = at >= 0 ? value.slice(0, at) : '';
@@ -25,13 +25,22 @@ export async function GET() {
   try {
     conn = await mysql.createConnection(getConnectionConfig() as any);
     
-    // Only disable the stale db.ts seed duplicate (id='starter', isTrial=1)
+    // 1. Migrate subscriptions from stale 'starter' → 'pkg_starter'
+    const [migrateResult] = await conn.execute(
+      "UPDATE subscriptions SET packageId = 'pkg_starter' WHERE packageId = 'starter'"
+    );
+    
+    // 2. Disable the stale package
     await conn.execute("UPDATE packages SET isActive = 0 WHERE id = 'starter' AND isTrial = 1");
     
-    // Ensure all proper packages are active
+    // 3. Ensure all real packages are active
     await conn.execute("UPDATE packages SET isActive = 1 WHERE id IN ('pkg_trial_30d','pkg_starter','pkg_pro','pkg_elite')");
     
-    return NextResponse.json({ ok: true, message: 'Cleaned — only stale "starter" trial duplicate disabled' });
+    return NextResponse.json({
+      ok: true,
+      message: `Migrated subscriptions from stale 'starter' → 'pkg_starter' and disabled duplicate`,
+      migrated: (migrateResult as any).affectedRows || 0,
+    });
   } catch (error) {
     return NextResponse.json({ ok: false, error: String(error) }, { status: 500 });
   } finally {
