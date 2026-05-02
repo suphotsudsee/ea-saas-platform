@@ -19,7 +19,7 @@ services:
       - PORT=3004
       - HOSTNAME=0.0.0.0
       - DATABASE_URL=${DATABASE_URL:?}
-      - REDIS_URL=${REDIS_URL:?}
+      - REDIS_URL=${REDIS_URL:-redis://default:ZRVlKpKLegBiXdGbX2smhzNzXNBPiHLj830ftWOKjOdhfpQ3dAh5uAPBA2ETi8m7@umffn7cgvg6qnfi96jmblhmd:6379/0}
       - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:?}
       - NEXTAUTH_URL=${NEXTAUTH_URL:?}
       - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@ea-saas.com}
