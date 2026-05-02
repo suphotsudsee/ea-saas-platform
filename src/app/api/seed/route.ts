@@ -88,11 +88,9 @@ export async function GET() {
       updatedAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)
     ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`);
 
-    // --- CLEANUP STALE DATA (from old db.ts seed) ---
-    await conn.execute('DELETE FROM subscriptions WHERE packageId = ?', ['starter']);
-    await conn.execute('DELETE FROM packages WHERE id = ?', ['starter']);
-    await conn.execute('DELETE FROM subscriptions WHERE packageId = ?', ['pkg_starter']);
-    await conn.execute('DELETE FROM packages WHERE id = ?', ['pkg_starter']);
+    // --- CLEANUP STALE DATA (from old db.ts seed) — disable instead of delete to avoid FK issues ---
+    await conn.execute("UPDATE packages SET isActive = 0 WHERE id = 'starter'");
+    await conn.execute("UPDATE packages SET isActive = 0 WHERE id = 'pkg_starter'");
 
     // --- SEED DATA ---
     const now = new Date();
