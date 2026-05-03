@@ -3,8 +3,8 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server';
-import { authMiddleware } from '../../../middleware/auth';
-import { getPaymentHistory } from '../../../services/usdt-payment.service';
+import { authMiddleware } from '@/api/middleware/auth';
+import { getPaymentHistory } from '@/api/services/usdt-payment.service';
 
 export async function GET(request: NextRequest) {
   const authResult = await authMiddleware(request);

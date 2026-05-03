@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { authMiddleware } from '../../../middleware/auth';
+import { authMiddleware } from '@/api/middleware/auth';
 import { prisma } from '../../../lib/prisma';
 
 export async function GET(request: NextRequest) {

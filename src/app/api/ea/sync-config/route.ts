@@ -3,8 +3,8 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server';
-import { validateLicenseMiddleware } from '../../../middleware/validateLicense';
-import { getEAConfig } from '../../../services/ea-contract.service';
+import { validateLicenseMiddleware } from '@/api/middleware/validateLicense';
+import { getEAConfig } from '@/api/services/ea-contract.service';
 import { eaRateLimiter } from '../../../middleware/rateLimit';
 
 export async function GET(request: NextRequest) {

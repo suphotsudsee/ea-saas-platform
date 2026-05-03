@@ -4,9 +4,9 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '../../../../lib/prisma';
-import { verifyDeposit } from '../../../../services/usdt-payment.service';
-import { redis, RedisKeys } from '../../../../utils/redis';
+import { prisma } from '@/api/lib/prisma';
+import { verifyDeposit } from '@/api/services/usdt-payment.service';
+import { redis, RedisKeys } from '@/api/utils/redis';
 
 interface TronGridEvent {
   event: string;

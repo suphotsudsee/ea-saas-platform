@@ -4,8 +4,8 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server';
-import { authMiddleware } from '../../../middleware/auth';
-import { createDeposit } from '../../../services/usdt-payment.service';
+import { authMiddleware } from '@/api/middleware/auth';
+import { createDeposit } from '@/api/services/usdt-payment.service';
 import { z } from 'zod';
 
 const createDepositSchema = z.object({

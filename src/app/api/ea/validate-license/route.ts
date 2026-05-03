@@ -3,7 +3,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server';
-import { validateLicenseMiddleware } from '../../../middleware/validateLicense';
+import { validateLicenseMiddleware } from '@/api/middleware/validateLicense';
 import { validateLicense } from '../../../services/license.service';
 import { eaRateLimiter } from '../../../middleware/rateLimit';
 

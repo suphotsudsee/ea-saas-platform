@@ -3,7 +3,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextResponse } from 'next/server';
-import { listActivePackages } from '../../../services/billing.service';
+import { listActivePackages } from '@/api/services/billing.service';
 
 export async function GET() {
   try {

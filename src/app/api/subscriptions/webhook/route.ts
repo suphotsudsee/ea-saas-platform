@@ -3,7 +3,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server';
-import { handleStripeWebhook } from '../../../services/billing.service';
+import { handleStripeWebhook } from '@/api/services/billing.service';
 import Stripe from 'stripe';
 
 export async function POST(request: NextRequest) {

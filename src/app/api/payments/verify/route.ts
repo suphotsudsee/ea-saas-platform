@@ -4,7 +4,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server';
-import { verifyDeposit, adminVerifyPayment } from '../../../services/usdt-payment.service';
+import { verifyDeposit, adminVerifyPayment } from '@/api/services/usdt-payment.service';
 import { z } from 'zod';
 
 const verifySchema = z.object({

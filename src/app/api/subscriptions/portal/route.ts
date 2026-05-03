@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { authMiddleware } from '../../../middleware/auth';
-import { createCustomerPortalSession } from '../../../services/billing.service';
+import { authMiddleware } from '@/api/middleware/auth';
+import { createCustomerPortalSession } from '@/api/services/billing.service';
 import { z } from 'zod';
 
 const portalSchema = z.object({

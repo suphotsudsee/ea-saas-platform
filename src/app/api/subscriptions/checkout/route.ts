@@ -3,8 +3,8 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server';
-import { authMiddleware } from '../../../middleware/auth';
-import { createCheckoutSession } from '../../../services/billing.service';
+import { authMiddleware } from '@/api/middleware/auth';
+import { createCheckoutSession } from '@/api/services/billing.service';
 import { z } from 'zod';
 
 const checkoutSchema = z.object({

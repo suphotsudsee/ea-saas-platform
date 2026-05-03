@@ -4,9 +4,9 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server';
-import { validateLicenseMiddleware } from '../../../middleware/validateLicense';
-import { processHeartbeat } from '../../../services/ea-contract.service';
-import { eaRateLimiter } from '../../../middleware/rateLimit';
+import { validateLicenseMiddleware } from '@/api/middleware/validateLicense';
+import { processHeartbeat } from '@/api/services/ea-contract.service';
+import { eaRateLimiter } from '@/api/middleware/rateLimit';
 import { z } from 'zod';
 
 const heartbeatSchema = z.object({

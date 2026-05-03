@@ -3,9 +3,9 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server';
-import { validateLicenseMiddleware } from '../../../middleware/validateLicense';
-import { processTradeEvent } from '../../../services/ea-contract.service';
-import { eaRateLimiter } from '../../../middleware/rateLimit';
+import { validateLicenseMiddleware } from '@/api/middleware/validateLicense';
+import { processTradeEvent } from '@/api/services/ea-contract.service';
+import { eaRateLimiter } from '@/api/middleware/rateLimit';
 import { z } from 'zod';
 
 const tradeEventSchema = z.object({
