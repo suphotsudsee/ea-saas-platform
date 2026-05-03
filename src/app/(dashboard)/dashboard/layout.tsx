@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
 import {
   Activity,
+  ArrowDownToLine,
   BarChart3,
   CreditCard,
   Key,
@@ -36,6 +37,7 @@ const menuItems: NavItem[] = [
   { name: 'Licenses', href: '/dashboard/licenses', icon: Key },
   { name: 'Trading Accounts', href: '/dashboard/trading-accounts', icon: WalletCards },
   { name: 'Trade History', href: '/dashboard/trade-history', icon: BarChart3 },
+  { name: 'Download EA', href: '/dashboard/download', icon: ArrowDownToLine },
   { name: 'Subscription', href: '/dashboard/subscription', icon: CreditCard },
   { name: 'Settings', href: '/dashboard/settings', icon: Settings },
 ];
@@ -103,17 +105,9 @@ function SidebarSection({
 }
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
-  const { user, isLoading, logout } = useAuth();
+  const { user, logout } = useAuth();
   const pathname = usePathname();
-  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
-
-  // Client-side auth guard (replaces middleware in static export)
-  useEffect(() => {
-    if (!isLoading && !user) {
-      router.push('/login');
-    }
-  }, [isLoading, user, router]);
 
   const pageTitle = useMemo(() => {
     const allItems = [...menuItems, ...adminItems];
@@ -126,18 +120,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     ['ADMIN', 'SUPER_ADMIN', 'BILLING_ADMIN', 'RISK_ADMIN', 'SUPPORT'].includes(user?.role || '');
 
   const showTraderMenu = user?.actorType !== 'admin';
-
-  if (isLoading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-950">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-amber-500 border-t-transparent" />
-      </div>
-    );
-  }
-
-  if (!user) {
-    return null; // Will redirect via useEffect
-  }
 
   return (
     <div className="min-h-screen bg-slate-950 text-white">

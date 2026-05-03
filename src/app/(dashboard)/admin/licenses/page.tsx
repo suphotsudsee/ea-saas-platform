@@ -75,6 +75,7 @@ export default function AdminLicensesPage() {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [pendingLicenseId, setPendingLicenseId] = useState<string | null>(null);
   const [form, setForm] = useState({
     userId: '',
     subscriptionId: '',
@@ -97,7 +98,14 @@ export default function AdminLicensesPage() {
 
     const [licensesResult, usersResult, strategiesResult, subscriptionsResult] = results;
 
-    setLicenses(licensesResult.status === 'fulfilled' ? licensesResult.value.data.licenses ?? [] : []);
+    setLicenses(licensesResult.status === 'fulfilled'
+      ? (licensesResult.value.data.licenses ?? []).map((l: any) => ({
+          ...l,
+          strategy: l.strategy ?? { id: '', name: 'Unknown', version: '' },
+          user: l.user ?? { id: '', email: 'unknown', name: null },
+          _count: l._count ?? { tradingAccounts: 0 },
+        }))
+      : []);
     setUsers(usersResult.status === 'fulfilled' ? usersResult.value.data.users ?? [] : []);
     setStrategies(strategiesResult.status === 'fulfilled' ? strategiesResult.value.data.strategies ?? [] : []);
     setSubscriptions(subscriptionsResult.status === 'fulfilled' ? subscriptionsResult.value.data.subscriptions ?? [] : []);
@@ -149,6 +157,19 @@ export default function AdminLicensesPage() {
       setError(getApiErrorMessage(err, 'Failed to create license'));
     } finally {
       setSaving(false);
+    }
+  }
+
+  async function handleLicenseAction(action: string, licenseId: string, extra?: Record<string, any>) {
+    setPendingLicenseId(licenseId);
+    try {
+      await api.patch('/admin/licenses', { action, licenseId, ...extra });
+      setMessage(`License ${action} successful`);
+      await loadData();
+    } catch (err) {
+      setError(getApiErrorMessage(err, `Failed to ${action} license`));
+    } finally {
+      setPendingLicenseId(null);
     }
   }
 
@@ -303,7 +324,7 @@ export default function AdminLicensesPage() {
 
         {licenses.map((lic) => (
           <Card key={lic.id} className="rounded-[30px] border-white/8 bg-white/[0.03]">
-            <CardContent className="grid gap-5 p-6 lg:grid-cols-[1.1fr_0.9fr_0.8fr_0.8fr] lg:items-center">
+            <CardContent className="grid gap-5 p-6 lg:grid-cols-[1.1fr_0.9fr_0.7fr_0.7fr_auto] lg:items-center">
               <div>
                 <div className="text-sm font-semibold text-white">{lic.strategy.name}</div>
                 <div className="mt-2 font-mono text-xs text-slate-500">{lic.key}</div>
@@ -319,6 +340,36 @@ export default function AdminLicensesPage() {
               <div>
                 <div className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Status</div>
                 <Badge className={`mt-2 ${statusClass(lic.status)}`}>{lic.status}</Badge>
+              </div>
+              <div className="flex gap-1 justify-end flex-wrap">
+                {lic.status === 'ACTIVE' ? (
+                  <Button variant="ghost" size="sm"
+                    className="rounded-full border border-amber-500/20 bg-amber-500/10 text-amber-300 hover:bg-amber-500/20 text-xs"
+                    onClick={() => handleLicenseAction('pause', lic.id, { reason: 'Admin pause' })}
+                    disabled={pendingLicenseId === lic.id}
+                  >{pendingLicenseId === lic.id ? '...' : 'Pause'}</Button>
+                ) : null}
+                {lic.status === 'PAUSED' ? (
+                  <Button variant="ghost" size="sm"
+                    className="rounded-full border border-emerald-500/20 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 text-xs"
+                    onClick={() => handleLicenseAction('resume', lic.id)}
+                    disabled={pendingLicenseId === lic.id}
+                  >{pendingLicenseId === lic.id ? '...' : 'Resume'}</Button>
+                ) : null}
+                {lic.status !== 'REVOKED' ? (
+                  <Button variant="ghost" size="sm"
+                    className="rounded-full border border-rose-500/20 bg-rose-500/10 text-rose-300 hover:bg-rose-500/20 text-xs"
+                    onClick={() => handleLicenseAction('revoke', lic.id, { reason: 'Admin revoke' })}
+                    disabled={pendingLicenseId === lic.id}
+                  >{pendingLicenseId === lic.id ? '...' : 'Revoke'}</Button>
+                ) : null}
+                {lic.status === 'ACTIVE' ? (
+                  <Button variant="ghost" size="sm"
+                    className="rounded-full border border-rose-500/20 bg-rose-500/5 text-rose-200 hover:bg-rose-500/10 text-xs"
+                    onClick={() => handleLicenseAction('kill', lic.id, { activate: true, reason: 'Admin kill switch' })}
+                    disabled={pendingLicenseId === lic.id}
+                  >{pendingLicenseId === lic.id ? '...' : 'Kill'}</Button>
+                ) : null}
               </div>
             </CardContent>
           </Card>

@@ -159,9 +159,9 @@ TradeCandle v12
 Get 20% off all plans
 Use code: ${promoCode}
 
-Starter  $9.99 → $7.99/month
-Pro      $19.99 → $15.99/month
-Elite    $39.99 → $31.99/month
+Starter  $9.90 → $7.92/month
+Pro      $24.90 → $19.92/month
+Elite    $49.90 → $39.92/month
 
 Try 1 month free + 20% discount
 Cancel anytime 🔓`,
@@ -246,9 +246,9 @@ export async function handleLineWebhook(request: NextRequest) {
       if (userMessage.includes('price') || userMessage.includes('package')) {
         replyText = `💰 TradeCandle v12 Pricing
 
-Starter: $9.99/month (1 Account)
-Pro:     $19.99/month (3 Accounts) ⭐
-Elite:   $39.99/month (5 Accounts)
+Starter: $9.90/month (1 Account)
+Pro:     $24.90/month (3 Accounts) ⭐
+Elite:   $49.90/month (5 Accounts)
 
 ⭐ Try 1 month free!
 👉 https://tradecandle.ai/register`;

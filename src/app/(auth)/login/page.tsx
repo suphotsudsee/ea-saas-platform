@@ -1,34 +1,47 @@
 'use client';
 
 import Link from 'next/link';
-import { ShieldAlert } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Eye, EyeOff, ShieldAlert } from 'lucide-react';
 import { AuthShell } from '@/components/auth/auth-shell';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { CardContent, CardFooter } from '@/components/ui/card';
-import { useAuth } from '@/lib/auth';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 export default function LoginPage() {
-  const { login } = useAuth();
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const emailRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
     setIsLoading(true);
     try {
-      // Read from DOM refs to capture autofill/copy-paste values
-      // that React controlled inputs may miss
-      const emailValue = emailRef.current?.value ?? email;
-      const passwordValue = passwordRef.current?.value ?? password;
-      await login(emailValue, passwordValue);
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || data.message || 'Invalid credentials');
+        setIsLoading(false);
+        return;
+      }
+
+      // Store token and redirect
+      if (data.token) {
+        localStorage.setItem('auth_token', data.token);
+      }
+      router.push('/dashboard');
     } catch (err) {
-      alert('Invalid credentials');
-    } finally {
+      setError('Network error — please try again');
       setIsLoading(false);
     }
   };
@@ -48,13 +61,17 @@ export default function LoginPage() {
     >
       <form onSubmit={handleSubmit}>
         <CardContent className="space-y-5 p-6">
+          {error && (
+            <div className="rounded-lg border border-red-500/20 bg-red-500/10 p-3 text-sm text-red-400">
+              {error}
+            </div>
+          )}
           <div className="space-y-2">
             <label className="text-sm font-medium text-slate-300">Email</label>
             <Input
               type="email"
               placeholder="name@email.com"
               className="h-11 rounded-xl border-amber-900/30 bg-slate-950 text-white focus:ring-amber-500"
-              ref={emailRef}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -67,18 +84,27 @@ export default function LoginPage() {
                 Forgot Password?
               </Link>
             </div>
-            <Input
-              type="password"
-              className="h-11 rounded-xl border-amber-900/30 bg-slate-950 text-white focus:ring-amber-500"
-              ref={passwordRef}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div className="relative">
+              <Input
+                type={showPassword ? 'text' : 'password'}
+                className="h-11 rounded-xl border-amber-900/30 bg-slate-950 pr-11 text-white focus:ring-amber-500"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <button
+                type="button"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                className="absolute right-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-amber-500/10 hover:text-amber-300"
+                onClick={() => setShowPassword((value) => !value)}
+              >
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
+            </div>
           </div>
         </CardContent>
         <CardFooter className="flex flex-col gap-4 p-6 pt-0">
-          <Button disabled={isLoading} className="h-11 w-full rounded-xl bg-gradient-to-r from-amber-500 to-yellow-600 font-bold text-black shadow-lg shadow-amber-900/30 hover:from-amber-400 hover:to-yellow-500">
+          <Button type="submit" disabled={isLoading} className="h-11 w-full rounded-xl bg-gradient-to-r from-amber-500 to-yellow-600 font-bold text-black shadow-lg shadow-amber-900/30 hover:from-amber-400 hover:to-yellow-500">
             {isLoading ? 'Logging in...' : 'Log In'}
           </Button>
           <Link

@@ -26,7 +26,9 @@ interface TradeStatsResponse {
 interface SubscriptionResponse {
   subscription: {
     currentPeriodEnd: string;
-    package: {
+    packageId: string;
+    status: string;
+    package?: {
       name: string;
       maxAccounts: number;
     };
@@ -169,11 +171,16 @@ export default function DashboardPage() {
     [trades]
   );
 
-  const renewalText = subscription
+  const renewalText = subscription?.package
     ? `Renewal due ${new Date(subscription.currentPeriodEnd).toLocaleDateString('en-US', {
         month: 'short',
         day: 'numeric',
       })} with ${subscription.package.maxAccounts} linked account slots.`
+    : subscription
+    ? `Renewal due ${new Date(subscription.currentPeriodEnd).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+      })} — ${subscription.packageId} plan.`
     : 'No active subscription found.';
 
   return (
@@ -238,7 +245,7 @@ export default function DashboardPage() {
             <div className="text-xs uppercase tracking-[0.24em] text-amber-500/60">Subscriptions</div>
             <div className="mt-3 flex items-center gap-2 text-lg font-semibold text-white">
               <WalletCards className="h-4 w-4 text-amber-400" />
-              {subscription?.package.name || 'No active plan'}
+              {subscription?.subscription?.package?.name || subscription?.subscription?.packageId || 'No active plan'}
             </div>
             <p className="mt-2 text-sm text-slate-400">{renewalText}</p>
           </div>

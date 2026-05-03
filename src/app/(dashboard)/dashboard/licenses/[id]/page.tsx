@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Download, KeyRound, ShieldCheck, WalletCards } from 'lucide-react';
+import { ArrowLeft, KeyRound, ShieldCheck, WalletCards } from 'lucide-react';
 import api from '@/lib/api';
 
 interface LicenseDetail {
@@ -116,49 +116,6 @@ export default function LicenseDetailPage() {
           </CardContent>
         </Card>
       </section>
-
-      {/* ─── Download EA ─── */}
-      <Card className="rounded-[30px] border border-emerald-500/20 bg-emerald-500/[0.03]">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-xl text-white">
-            <Download className="h-5 w-5 text-emerald-400" />
-            Download EA
-          </CardTitle>
-          <p className="text-sm text-slate-400">Download the {license.strategy.name} v{license.strategy.version} Expert Advisor for MetaTrader 5.</p>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <a
-            href="/downloads/TradeCandle-EA-v12.ex5"
-            download
-            className="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-6 py-3 text-sm font-semibold text-white hover:bg-emerald-500 transition-colors"
-          >
-            <Download className="h-4 w-4" />
-            Download TradeCandle EA v12 (.ex5)
-          </a>
-          <div className="rounded-[20px] border border-white/8 bg-[#0c1720] p-5 text-sm text-slate-400 space-y-3">
-            <p className="font-semibold text-white">Installation Steps:</p>
-            <ol className="list-decimal pl-5 space-y-2">
-              <li>Open <strong>MetaTrader 5</strong> → File → Open Data Folder</li>
-              <li>Navigate to <code className="rounded bg-slate-800 px-1.5 py-0.5 text-xs text-emerald-300">MQL5/Experts/</code></li>
-              <li>Copy the downloaded <code className="rounded bg-slate-800 px-1.5 py-0.5 text-xs text-emerald-300">TradeCandle-EA-v12.ex5</code> into that folder</li>
-              <li>Restart MT5 or right-click Navigator → Refresh</li>
-              <li>Drag <strong>TradeCandle EA v12</strong> onto a XAUUSD chart</li>
-              <li>In <strong>Common</strong> tab → check &quot;Allow Automated Trading&quot;</li>
-              <li>In <strong>Inputs</strong> tab → paste your license key:</li>
-            </ol>
-            <div className="flex items-center justify-between rounded-xl bg-slate-950 border border-slate-800 p-3 font-mono text-xs text-slate-300">
-              <span className="break-all">{license.key}</span>
-              <button
-                onClick={() => { navigator.clipboard.writeText(license.key); }}
-                className="ml-3 shrink-0 rounded-lg bg-slate-800 px-3 py-1.5 text-[11px] text-slate-400 hover:bg-slate-700 hover:text-white transition-colors"
-              >
-                Copy
-              </button>
-            </div>
-            <p className="text-xs text-slate-500">⚠️ Make sure to add <code className="rounded bg-slate-800 px-1 py-0.5 text-[11px]">https://tradecandle.net</code> to MT5 Tools → Options → Expert Advisors → Allow WebRequest URLs.</p>
-          </div>
-        </CardContent>
-      </Card>
 
       <Card className="rounded-[30px] border-white/8 bg-white/[0.03]">
         <CardHeader>

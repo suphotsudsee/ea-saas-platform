@@ -46,23 +46,12 @@ export function getApiErrorMessage(error: unknown, fallback = 'Something went wr
   return payload?.error || payload?.message || error.message || fallback;
 }
 
-// Auth Interceptor
+// Auth Interceptor — only attach token when it exists
 api.interceptors.request.use((config) => {
   const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
-  if (token) {
+  if (token && token !== 'null' && token !== 'undefined') {
     config.headers.Authorization = `Bearer ${token}`;
   }
-
-  // Append .php suffix for shared hosting PHP API endpoints
-  // Skip: external URLs, already has .php, or Next.js RSC routes
-  if (config.url && !config.url.startsWith('http') && !config.url.endsWith('.php') && !config.url.startsWith('/_next/')) {
-    if (config.url.includes('?')) {
-      config.url = config.url.replace('?', '.php?');
-    } else {
-      config.url += '.php';
-    }
-  }
-
   return config;
 });
 

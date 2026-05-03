@@ -8,7 +8,7 @@ const SECRET = new TextEncoder().encode(process.env.NEXTAUTH_SECRET || 'fallback
 export async function POST(req: NextRequest) {
   try {
     const { email, password } = await req.json();
-    const user = findUserByEmail(email);
+    const user = await findUserByEmail(email);
     if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
       return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
     }
@@ -20,8 +20,9 @@ export async function POST(req: NextRequest) {
     const resp = NextResponse.json({
       message: 'Login successful',
       user: { id: user.id, email: user.email, name: user.name, role: user.role, actorType: 'user' },
+      token,  // for axios interceptor to store in localStorage
     });
-    resp.cookies.set('session-token', token, { httpOnly: true, secure: true, sameSite: 'lax', maxAge: 86400, path: '/' });
+    resp.cookies.set('session-token', token, { httpOnly: true, secure: false, sameSite: 'lax', maxAge: 86400, path: '/' });
     return resp;
   } catch (e) {
     console.error('Login error:', e);

@@ -1,8 +1,8 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-import { ShieldCheck } from 'lucide-react';
+import { Eye, EyeOff, ShieldCheck } from 'lucide-react';
 import { AuthShell } from '@/components/auth/auth-shell';
 import { Button } from '@/components/ui/button';
 import { CardContent, CardFooter } from '@/components/ui/card';
@@ -14,18 +14,14 @@ export default function AdminLoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const emailRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      // Read from DOM refs to capture autofill/copy-paste values
-      const emailValue = emailRef.current?.value ?? email;
-      const passwordValue = passwordRef.current?.value ?? password;
-      await adminLogin(emailValue, passwordValue);
+      await adminLogin(email, password);
     } catch {
       alert('Invalid admin credentials');
     } finally {
@@ -54,7 +50,6 @@ export default function AdminLoginPage() {
               type="email"
               placeholder="admin@ea-saas.com"
               className="h-11 rounded-xl border-slate-800 bg-slate-950 text-white"
-              ref={emailRef}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -62,14 +57,23 @@ export default function AdminLoginPage() {
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium text-slate-300">Password</label>
-            <Input
-              type="password"
-              className="h-11 rounded-xl border-slate-800 bg-slate-950 text-white"
-              ref={passwordRef}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div className="relative">
+              <Input
+                type={showPassword ? 'text' : 'password'}
+                className="h-11 rounded-xl border-slate-800 bg-slate-950 pr-11 text-white"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <button
+                type="button"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                className="absolute right-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-blue-500/10 hover:text-blue-300"
+                onClick={() => setShowPassword((value) => !value)}
+              >
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
+            </div>
           </div>
         </CardContent>
         <CardFooter className="flex flex-col gap-4 p-6 pt-0">

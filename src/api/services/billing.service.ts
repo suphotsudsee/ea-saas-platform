@@ -5,7 +5,6 @@
 import { prisma } from '../lib/prisma';
 import { createLicense } from './license.service';
 import { redis, RedisKeys } from '../utils/redis';
-import { STATIC_PACKAGES } from '../../lib/packages-data';
 import Stripe from 'stripe';
 
 // ─── Stripe Client ────────────────────────────────────────────────────────────
@@ -22,20 +21,15 @@ function getStripeClient(): Stripe {
 
 export async function listActivePackages() {
   try {
-    const packages = await prisma.package.findMany({
+    return await prisma.package.findMany({
       where: { isActive: true },
       orderBy: { sortOrder: 'asc' },
     });
-    // Fallback to static packages if database is empty (shared hosting new deploy)
-    if (packages.length === 0) {
-      console.log('[billing] DB packages empty, using static fallback');
-      return STATIC_PACKAGES;
-    }
-    return packages;
-  } catch (e) {
-    console.error('[billing] Failed to read packages from DB:', e);
-    console.log('[billing] Using static fallback packages');
-    return STATIC_PACKAGES;
+  } catch {
+    // Fallback to JSON file (local dev without MySQL)
+    const { getAllPackages } = await import('../../lib/db');
+    const all = await getAllPackages();
+    return all.filter((p: any) => p.isActive === 1 || p.isActive === true);
   }
 }
 
@@ -422,6 +416,23 @@ export async function getUserSubscription(userId: string) {
     },
     orderBy: { createdAt: 'desc' },
   });
+
+  // If package wasn't included by fake Prisma, enrich it manually
+  if (subscription && !subscription.package) {
+    const { getAllPackages, getAllLicenses, getAllStrategies } = await import('../../lib/db');
+    const packages = await getAllPackages();
+    const licenses = await getAllLicenses();
+    const strategies = await getAllStrategies();
+    
+    subscription.package = packages.find((p: any) => p.id === subscription.packageId) || null;
+    subscription.licenses = licenses
+      .filter((l: any) => l.subscriptionId === subscription.id)
+      .map((l: any) => ({
+        ...l,
+        strategy: strategies.find((s: any) => s.id === l.strategyId) || null,
+        tradingAccounts: [],
+      }));
+  }
 
   return subscription;
 }

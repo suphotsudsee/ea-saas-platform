@@ -1,19 +1,3 @@
-// ─── GET /api/subscriptions/packages ──────────────────────────────────────────
-// List all active subscription packages
-// ─────────────────────────────────────────────────────────────────────────────
+export const dynamic = 'force-dynamic';
 
-import { NextResponse } from 'next/server';
-import { listActivePackages } from '@/api/services/billing.service';
-
-export async function GET() {
-  try {
-    const packages = await listActivePackages();
-    return NextResponse.json({ packages });
-  } catch (error) {
-    console.error('List packages error:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch packages' },
-      { status: 500 }
-    );
-  }
-}
+export { GET } from '../../../../api/routes/subscriptions/list/route';

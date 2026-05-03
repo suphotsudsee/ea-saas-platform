@@ -1,0 +1,115 @@
+[
+  {
+    "id": "sub_demo_001",
+    "userId": "usr_demo_001",
+    "packageId": "pkg_starter",
+    "status": "TRIAL",
+    "currentPeriodStart": "2026-05-02T08:27:34.000Z",
+    "currentPeriodEnd": "2026-06-01T01:27:34.000Z",
+    "trialEndsAt": "2026-06-01T01:27:34.000Z",
+    "cancelAtPeriodEnd": false,
+    "createdAt": "2026-05-02T08:27:34.000Z",
+    "updatedAt": "2026-05-02T08:27:34.000Z"
+  },
+  {
+    "userId": "usr_a4fbbd8aaff9dc3ad3c822c1",
+    "packageId": "starter",
+    "status": "TRIAL",
+    "currentPeriodEnd": "2026-06-02T01:53:01.888Z",
+    "trialEndsAt": "2026-06-02T01:53:01.888Z",
+    "id": "sub_dbe0e71b8080468c87370b63",
+    "createdAt": "2026-05-03T01:53:01.950Z"
+  },
+  {
+    "userId": "usr_5353d4f598f0f8e93a356609",
+    "packageId": "starter",
+    "status": "TRIAL",
+    "currentPeriodEnd": "2026-06-02T03:34:34.717Z",
+    "trialEndsAt": "2026-06-02T03:34:34.717Z",
+    "id": "sub_0cb67f4b49689733a6541166",
+    "createdAt": "2026-05-03T03:34:34.849Z"
+  },
+  {
+    "userId": "usr_0103191f58a587f6decc0576",
+    "packageId": "starter",
+    "status": "TRIAL",
+    "currentPeriodEnd": "2026-06-02T04:56:50.333Z",
+    "trialEndsAt": "2026-06-02T04:56:50.333Z",
+    "id": "sub_3653da46308f0a6fee516b50",
+    "createdAt": "2026-05-03T04:56:50.379Z"
+  },
+  {
+    "userId": "usr_0103191f58a587f6decc0576",
+    "packageId": "pkg_pro",
+    "status": "PENDING_PAYMENT",
+    "currentPeriodStart": "2026-05-03T06:15:28.939Z",
+    "currentPeriodEnd": "2026-06-02T06:15:28.939Z",
+    "trialEndsAt": null,
+    "id": "sub_ddbb6b7c214a61afe11a4dc6",
+    "createdAt": "2026-05-03T06:15:28.939Z"
+  },
+  {
+    "userId": "usr_0103191f58a587f6decc0576",
+    "packageId": "pkg_elite",
+    "status": "PENDING_PAYMENT",
+    "currentPeriodStart": "2026-05-03T06:15:37.203Z",
+    "currentPeriodEnd": "2026-06-02T06:15:37.203Z",
+    "trialEndsAt": null,
+    "id": "sub_fbf31c08a82c6dd97076f1ed",
+    "createdAt": "2026-05-03T06:15:37.203Z"
+  },
+  {
+    "userId": "usr_5f8035d28f703e68de6366af",
+    "packageId": "starter",
+    "status": "TRIAL",
+    "currentPeriodEnd": "2026-06-02T06:35:50.499Z",
+    "trialEndsAt": "2026-06-02T06:35:50.499Z",
+    "id": "sub_d45e2fdfc1da2b1a30b23e49",
+    "createdAt": "2026-05-03T06:35:50.544Z"
+  },
+  {
+    "userId": "usr_a0abaffcd091ed0ff0764786",
+    "packageId": "starter",
+    "status": "TRIAL",
+    "currentPeriodEnd": "2026-06-02T10:01:34.697Z",
+    "trialEndsAt": "2026-06-02T10:01:34.697Z",
+    "id": "sub_0ee7297d38ab0dccf80a1fd8",
+    "createdAt": "2026-05-03T10:01:34.745Z"
+  },
+  {
+    "userId": "usr_bd2b055e03a133741c131399",
+    "packageId": "starter",
+    "status": "TRIAL",
+    "currentPeriodEnd": "2026-06-02T10:17:52.394Z",
+    "trialEndsAt": "2026-06-02T10:17:52.394Z",
+    "id": "sub_9441e13a6d989969303144cb",
+    "createdAt": "2026-05-03T10:17:52.442Z"
+  },
+  {
+    "userId": "usr_5c0150d0daf3088c89a7dcc8",
+    "packageId": "starter",
+    "status": "TRIAL",
+    "currentPeriodEnd": "2026-06-02T10:20:16.483Z",
+    "trialEndsAt": "2026-06-02T10:20:16.483Z",
+    "id": "sub_b42a2cbe490f073f9a840e45",
+    "createdAt": "2026-05-03T10:20:16.531Z"
+  },
+  {
+    "userId": "usr_59482912d17ad73c002c779a",
+    "packageId": "starter",
+    "status": "TRIAL",
+    "currentPeriodEnd": "2026-06-02T10:49:24.683Z",
+    "trialEndsAt": "2026-06-02T10:49:24.683Z",
+    "id": "sub_e648708e9d905db7734cfc12",
+    "createdAt": "2026-05-03T10:49:24.730Z"
+  },
+  {
+    "userId": "usr_b1d3ac300107eeb083e85499",
+    "packageId": "starter",
+    "status": "TRIAL",
+    "currentPeriodEnd": "2026-06-02T11:04:12.214Z",
+    "trialEndsAt": "2026-06-02T11:04:12.214Z",
+    "id": "sub_1c6930038cc0ec2152c51326",
+    "createdAt": "2026-05-03T11:04:12.269Z"
+  }
+]

@@ -190,6 +190,14 @@ export default function AdminDashboardPage() {
             </Button>
             <Button
               variant="outline"
+              className="justify-start rounded-2xl border-white/10 bg-white/[0.02] text-slate-200 hover:bg-white/[0.06]"
+              onClick={() => router.push('/dashboard/admin/payments')}
+            >
+              <CreditCard className="mr-2 h-4 w-4" />
+              Track payments
+            </Button>
+            <Button
+              variant="outline"
               className="justify-start rounded-2xl border-rose-500/20 bg-rose-500/5 text-rose-300 hover:bg-rose-500/10"
               onClick={() => router.push('/dashboard/admin/risk-rules')}
             >

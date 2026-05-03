@@ -77,50 +77,81 @@ export default function AdminUsersPage() {
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<'ALL' | 'ACTIVE' | 'SUSPENDED' | 'BANNED'>('ALL');
+  const [pendingUserId, setPendingUserId] = useState<string | null>(null);
+
+  const loadUsers = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const params = new URLSearchParams();
+      if (search.trim()) params.set('search', search.trim());
+      if (statusFilter !== 'ALL') params.set('status', statusFilter);
+
+      const response = await fetch(`/api/admin/users?${params.toString()}`, {
+        credentials: 'include',
+      });
+
+      if (!response.ok) throw new Error('Failed to load customer records');
+
+      const data = await response.json();
+      const normalized = Array.isArray(data.users)
+        ? data.users.map((u: any) => ({
+            ...u,
+            _count: u._count ?? { subscriptions: 0, licenses: 0, tradingAccounts: 0 },
+            subscriptions: u.subscriptions ?? [],
+            tradingAccounts: u.tradingAccounts ?? [],
+          }))
+        : [];
+      setUsers(normalized);
+    } catch (fetchError) {
+      setError(fetchError instanceof Error ? fetchError.message : 'Failed to load customer records');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const controller = new AbortController();
-    const timer = setTimeout(async () => {
-      setLoading(true);
-      setError(null);
-
-      try {
-        const params = new URLSearchParams();
-        if (search.trim()) params.set('search', search.trim());
-        if (statusFilter !== 'ALL') params.set('status', statusFilter);
-
-        const response = await fetch(`/api/admin/users?${params.toString()}`, {
-          signal: controller.signal,
-          credentials: 'include',
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to load customer records');
-        }
-
-        const data = await response.json();
-        setUsers(Array.isArray(data.users) ? data.users : []);
-      } catch (fetchError) {
-        if ((fetchError as Error).name === 'AbortError') return;
-        setError(fetchError instanceof Error ? fetchError.message : 'Failed to load customer records');
-      } finally {
-        setLoading(false);
-      }
-    }, 250);
-
-    return () => {
-      controller.abort();
-      clearTimeout(timer);
-    };
+    const timer = setTimeout(loadUsers, 250);
+    return () => clearTimeout(timer);
   }, [search, statusFilter]);
+
+  const handleStatusChange = async (userId: string, newStatus: string) => {
+    setPendingUserId(userId);
+    try {
+      await fetch('/api/admin/users', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId, status: newStatus }),
+        credentials: 'include',
+      });
+      await loadUsers();
+    } finally {
+      setPendingUserId(null);
+    }
+  };
+
+  const handleDeleteUser = async (userId: string) => {
+    if (!confirm('Are you sure you want to delete this user? This will revoke all licenses and cancel subscriptions.')) return;
+    setPendingUserId(userId);
+    try {
+      await fetch(`/api/admin/users?userId=${userId}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      });
+      await loadUsers();
+    } finally {
+      setPendingUserId(null);
+    }
+  };
 
   const summary = useMemo(() => {
     return users.reduce(
       (acc, user) => {
         acc.total += 1;
         if (user.status === 'ACTIVE') acc.active += 1;
-        if (user._count.licenses > 0) acc.withLicenses += 1;
-        if (user._count.tradingAccounts > 0) acc.withAccounts += 1;
+        if ((user._count?.licenses ?? 0) > 0) acc.withLicenses += 1;
+        if ((user._count?.tradingAccounts ?? 0) > 0) acc.withAccounts += 1;
         return acc;
       },
       { total: 0, active: 0, withLicenses: 0, withAccounts: 0 }
@@ -228,9 +259,9 @@ export default function AdminUsersPage() {
 
           {!loading && !error
             ? users.map((user) => {
-                const latestSubscription = user.subscriptions[0];
+                const latestSubscription = user.subscriptions?.[0];
                 const tier = latestSubscription?.package?.name ?? 'No plan';
-                const lastActive = user.tradingAccounts[0]?.updatedAt;
+                const lastActive = user.tradingAccounts?.[0]?.updatedAt;
 
                 return (
                   <div
@@ -257,20 +288,62 @@ export default function AdminUsersPage() {
                     <div>
                       <div className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Coverage</div>
                       <div className="mt-2 text-sm font-medium text-white">
-                        {user._count.licenses} licenses / {user._count.tradingAccounts} accounts
+                        {user._count?.licenses ?? 0} licenses / {user._count?.tradingAccounts ?? 0} accounts
                       </div>
                     </div>
                     <div>
                       <div className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Last active</div>
                       <div className="mt-2 text-sm font-medium text-white">{formatRelative(lastActive)}</div>
                     </div>
-                    <div className="flex gap-2 justify-end">
-                      <Button asChild variant="ghost" className="rounded-full border border-white/10 bg-white/[0.03] text-slate-300 hover:bg-white/[0.06] hover:text-white">
+                    <div className="flex gap-2 justify-end items-center">
+                      {user.status === 'ACTIVE' ? (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="rounded-full border border-amber-500/20 bg-amber-500/10 text-amber-300 hover:bg-amber-500/20 text-xs"
+                          onClick={() => handleStatusChange(user.id, 'SUSPENDED')}
+                          disabled={pendingUserId === user.id}
+                        >
+                          {pendingUserId === user.id ? '...' : 'Suspend'}
+                        </Button>
+                      ) : null}
+                      {user.status === 'ACTIVE' || user.status === 'SUSPENDED' ? (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="rounded-full border border-rose-500/20 bg-rose-500/10 text-rose-300 hover:bg-rose-500/20 text-xs"
+                          onClick={() => handleStatusChange(user.id, 'BANNED')}
+                          disabled={pendingUserId === user.id}
+                        >
+                          {pendingUserId === user.id ? '...' : 'Ban'}
+                        </Button>
+                      ) : null}
+                      {user.status === 'SUSPENDED' || user.status === 'BANNED' ? (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="rounded-full border border-emerald-500/20 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 text-xs"
+                          onClick={() => handleStatusChange(user.id, 'ACTIVE')}
+                          disabled={pendingUserId === user.id}
+                        >
+                          {pendingUserId === user.id ? '...' : 'Activate'}
+                        </Button>
+                      ) : null}
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="rounded-full border border-rose-500/20 bg-transparent text-rose-400 hover:bg-rose-500/10 text-xs"
+                        onClick={() => handleDeleteUser(user.id)}
+                        disabled={pendingUserId === user.id}
+                      >
+                        Delete
+                      </Button>
+                      <Button asChild variant="ghost" size="sm" className="rounded-full border border-white/10 bg-white/[0.03] text-slate-300 hover:bg-white/[0.06] text-xs">
                         <Link href="/dashboard/admin/licenses">Licenses</Link>
                       </Button>
-                      <Button asChild variant="ghost" className="rounded-full border border-white/10 bg-white/[0.03] text-slate-300 hover:bg-white/[0.06] hover:text-white">
+                      <Button asChild variant="ghost" size="sm" className="rounded-full border border-white/10 bg-white/[0.03] text-slate-300 hover:bg-white/[0.06] text-xs">
                         <Link href="/dashboard/admin/subscriptions">
-                          <Shield className="mr-2 h-4 w-4" />
+                          <Shield className="mr-1 h-3 w-3" />
                           Billing
                         </Link>
                       </Button>

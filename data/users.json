@@ -1,0 +1,122 @@
+[
+  {
+    "id": "usr_demo_001",
+    "email": "demo@tradecandle.com",
+    "passwordHash": "$2a$10$NLsjQCIjc47uPHBiSMqQ0eeQpqTFAMkSDMTlv2rQ3DYiRuBa/6TiW",
+    "name": "Demo User",
+    "role": "TRADER",
+    "status": "ACTIVE",
+    "timezone": "UTC",
+    "twoFactorEnabled": false,
+    "createdAt": "2026-05-01T00:00:00.000Z",
+    "updatedAt": "2026-05-01T00:00:00.000Z"
+  },
+  {
+    "id": "usr_a4fbbd8aaff9dc3ad3c822c1",
+    "email": "test@tradecandle.com",
+    "passwordHash": "$2a$10$kxdHSs55q42sxQKTEW6v2O1v59z02XK82Tg562xG4Lj2sqZ0gh0dC",
+    "name": "Test User",
+    "timezone": "UTC",
+    "role": "TRADER",
+    "status": "ACTIVE",
+    "twoFactorEnabled": false,
+    "createdAt": "2026-05-03T01:53:01.942Z",
+    "updatedAt": "2026-05-03T01:53:01.942Z"
+  },
+  {
+    "id": "usr_5353d4f598f0f8e93a356609",
+    "email": "test@tradecandle.ai",
+    "passwordHash": "$2a$10$RnlCvHry1efoal7s/4OotuICRgS29klRtRnzWr6lbp3MXXHX87Cm.",
+    "name": "Test User",
+    "timezone": "UTC",
+    "role": "TRADER",
+    "status": "ACTIVE",
+    "twoFactorEnabled": false,
+    "createdAt": "2026-05-03T03:34:34.802Z",
+    "updatedAt": "2026-05-03T03:34:34.802Z"
+  },
+  {
+    "id": "usr_0103191f58a587f6decc0576",
+    "email": "somchai@test.com",
+    "passwordHash": "$2a$10$bUyTbqc16XMqYSpQt/ArQ.DWIi9UHiDj6NxOBACTAr5JepLl3YqWW",
+    "name": "Somchai Trader",
+    "timezone": "UTC",
+    "role": "TRADER",
+    "status": "ACTIVE",
+    "twoFactorEnabled": false,
+    "createdAt": "2026-05-03T04:56:50.377Z",
+    "updatedAt": "2026-05-03T04:56:50.377Z"
+  },
+  {
+    "id": "usr_5f8035d28f703e68de6366af",
+    "email": "ea_test_098f6b@test.com",
+    "passwordHash": "$2a$10$UmUSj1yQJMwEos1v.gQGr.k4vPB8aV42xZsMVdGNCSmaV.3W6u3cm",
+    "name": "EA Tester",
+    "timezone": "UTC",
+    "role": "TRADER",
+    "status": "ACTIVE",
+    "twoFactorEnabled": false,
+    "createdAt": "2026-05-03T06:35:50.543Z",
+    "updatedAt": "2026-05-03T06:35:50.543Z"
+  },
+  {
+    "id": "usr_a0abaffcd091ed0ff0764786",
+    "email": "test405@test.com",
+    "passwordHash": "$2a$10$EkMizyQYM2FkDkBL6lHxa.cc3jPARDz.0ZOrc7uAEtYE86Z472C7C",
+    "name": "Test",
+    "timezone": "UTC",
+    "role": "TRADER",
+    "status": "ACTIVE",
+    "twoFactorEnabled": false,
+    "createdAt": "2026-05-03T10:01:34.745Z",
+    "updatedAt": "2026-05-03T10:01:34.745Z"
+  },
+  {
+    "id": "usr_bd2b055e03a133741c131399",
+    "email": "testfix@test.com",
+    "passwordHash": "$2a$10$fFwsDZjsxohEO1jTq9fzrOtmQhKEK7bB/s39tknUk.6mHUjMYXhmG",
+    "name": "Test Fix",
+    "timezone": "UTC",
+    "role": "TRADER",
+    "status": "ACTIVE",
+    "twoFactorEnabled": false,
+    "createdAt": "2026-05-03T10:17:52.441Z",
+    "updatedAt": "2026-05-03T10:17:52.441Z"
+  },
+  {
+    "id": "usr_5c0150d0daf3088c89a7dcc8",
+    "email": "browsertest2@test.com",
+    "passwordHash": "$2a$10$XeoU6Tn6hQ4M0pJAw/0W1eOtTyMZsflf1T82dm9c6t/eQTU1ypQtS",
+    "name": "Browser Test",
+    "timezone": "UTC",
+    "role": "TRADER",
+    "status": "ACTIVE",
+    "twoFactorEnabled": false,
+    "createdAt": "2026-05-03T10:20:16.531Z",
+    "updatedAt": "2026-05-03T10:20:16.531Z"
+  },
+  {
+    "id": "usr_59482912d17ad73c002c779a",
+    "email": "testdebug@test.com",
+    "passwordHash": "$2a$10$BryX66hhJn7KKPdo46X7MuFiXf3LyPYQGcF4nQoZsZMQ/.yBqMCQS",
+    "name": "Test Debug",
+    "timezone": "UTC",
+    "role": "TRADER",
+    "status": "ACTIVE",
+    "twoFactorEnabled": false,
+    "createdAt": "2026-05-03T10:49:24.730Z",
+    "updatedAt": "2026-05-03T10:49:24.730Z"
+  },
+  {
+    "id": "usr_b1d3ac300107eeb083e85499",
+    "email": "browsertest3@test.com",
+    "passwordHash": "$2a$10$Db6DP6Nfz.DjIscJYKJi3uCT79JhF8bCAB1YBvGYMHPdlPhmZdT26",
+    "name": "Browser Test",
+    "timezone": "UTC",
+    "role": "TRADER",
+    "status": "ACTIVE",
+    "twoFactorEnabled": false,
+    "createdAt": "2026-05-03T11:04:12.268Z",
+    "updatedAt": "2026-05-03T11:04:12.268Z"
+  }
+]

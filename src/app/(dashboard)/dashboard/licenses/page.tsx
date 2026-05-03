@@ -138,7 +138,7 @@ export default function LicensesPage() {
                 </div>
                 <Badge className={statusClass(lic.status)}>{lic.status}</Badge>
               </div>
-              <CardTitle className="pt-4 text-xl text-white">{lic.strategy.name}</CardTitle>
+              <CardTitle className="pt-4 text-xl text-white">{lic.strategy?.name || 'TradeCandle v12'}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-5">
               <div className="rounded-2xl border border-white/8 bg-[#0c1720] p-4">
