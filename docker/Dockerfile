@@ -1,6 +1,5 @@
 # ─── EA SaaS Platform — Dockerfile (Next.js App) ──────────────────────────────
 # Multi-stage build for production
-# FORCE REBUILD: 2026-05-03T01:00:00Z
 # ─────────────────────────────────────────────────────────────────────────────
 
 # ─── Stage 1: Dependencies ────────────────────────────────────────────────────
@@ -55,9 +54,6 @@ COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 
-# Copy data directory (JSON DB — packages, strategies, tokens, etc.)
-COPY --from=builder /app/data ./data
-
 # Copy Redis config
 COPY --from=builder /app/redis ./redis
 
@@ -66,6 +62,9 @@ COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 COPY --from=builder /app/docker/start.sh ./start.sh
+
+# Copy data directory (JSON fallback DB: packages.json, users.json, etc.)
+COPY --from=builder /app/data ./data
 RUN chmod +x ./start.sh
 
 USER nextjs
