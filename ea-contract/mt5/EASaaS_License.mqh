@@ -4,6 +4,10 @@
 //| Version: 1.0.0                                                    |
 //+------------------------------------------------------------------+
 #property strict
+
+#ifndef EASAAS_LICENSE_MQH
+#define EASAAS_LICENSE_MQH
+
 #include "EASaaS_Http.mqh"
 
 // ─── License States ───────────────────────────────────────────────────────────
@@ -252,3 +256,6 @@ bool LicenseNeedsRevalidation()
    long elapsed = (long)(TimeCurrent() - g_license.lastValidatedAt);
    return (elapsed >= g_license_cache_ttl_sec);
 }
+
+
+#endif // EASAAS_LICENSE_MQH

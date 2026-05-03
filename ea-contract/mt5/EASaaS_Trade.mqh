@@ -8,9 +8,14 @@
 //| MQL5-compatible trade operations                                   |
 //+------------------------------------------------------------------+
 #property strict
+
+#ifndef EASAAS_TRADE_MQH
+#define EASAAS_TRADE_MQH
+
 #include "EASaaS_Utils.mqh"
 #include "EASaaS_License.mqh"
 #include "EASaaS_Risk.mqh"
+#include "EASaaS_TradeSync.mqh"
 
 struct TradeResult
 {
@@ -26,6 +31,7 @@ int g_trade_magic_number = 12345;
 int g_trade_max_slippage = 10;
 int g_trade_retry_count = 3;
 int g_trade_retry_delay = 1000;
+string g_trade_server_url = "";
 
 ENUM_ORDER_TYPE_FILLING GetSymbolFillingMode(string symbol)
 {
@@ -139,6 +145,13 @@ TradeResult OpenBuy(string symbol, double lots, int slPips, int tpPips, int magi
             result.lots = lots;
             LogTrade("BUY", symbol, lots, ask,
                StringFormat("ticket=%I64u sl=%.5f tp=%.5f", tradeResult.order, slPrice, tpPrice));
+            
+            // Report trade OPEN to SaaS platform
+            if(g_trade_server_url != "")
+               ReportTradeOpen(g_trade_server_url, tradeResult.order, symbol, "BUY", 
+                              lots, ask, slPrice, tpPrice, magicNumber, orderComment,
+                              POSITION_TYPE_BUY);
+            
             return result;
          }
       }
@@ -238,6 +251,13 @@ TradeResult OpenSell(string symbol, double lots, int slPips, int tpPips, int mag
             result.lots = lots;
             LogTrade("SELL", symbol, lots, bid,
                StringFormat("ticket=%I64u sl=%.5f tp=%.5f", tradeResult.order, slPrice, tpPrice));
+            
+            // Report trade OPEN to SaaS platform
+            if(g_trade_server_url != "")
+               ReportTradeOpen(g_trade_server_url, tradeResult.order, symbol, "SELL",
+                              lots, bid, slPrice, tpPrice, magicNumber, orderComment,
+                              POSITION_TYPE_SELL);
+            
             return result;
          }
       }
@@ -261,6 +281,28 @@ TradeResult OpenSell(string symbol, double lots, int slPips, int tpPips, int mag
 /// Close a position by ticket
 bool ClosePosition(ulong ticket)
 {
+   // Capture position data BEFORE closing (for trade sync)
+   string closeSym = "";
+   double closeLots = 0;
+   long closePosType = 0;
+   double closeOpenPrice = 0;
+   double closeSwap = 0;
+   double closeCommission = 0;
+   datetime closeOpenTime = 0;
+   bool hasPreData = false;
+   
+   if(g_trade_server_url != "" && PositionSelectByTicket(ticket))
+   {
+      closeSym        = PositionGetString(POSITION_SYMBOL);
+      closeLots       = PositionGetDouble(POSITION_VOLUME);
+      closePosType    = PositionGetInteger(POSITION_TYPE);
+      closeOpenPrice  = PositionGetDouble(POSITION_PRICE_OPEN);
+      closeSwap       = PositionGetDouble(POSITION_SWAP);
+      closeCommission = PositionGetDouble(POSITION_COMMISSION);
+      closeOpenTime   = (datetime)PositionGetInteger(POSITION_TIME);
+      hasPreData      = true;
+   }
+   
    for(int attempt = 0; attempt <= g_trade_retry_count; attempt++)
    {
       if(attempt > 0)
@@ -312,6 +354,26 @@ bool ClosePosition(ulong ticket)
          if(tradeResult.retcode == TRADE_RETCODE_DONE)
          {
             LogTrade("CLOSE", sym, lots, closePrice, StringFormat("ticket=%I64u", ticket));
+            
+            // Report CLOSE to SaaS platform using pre-captured data
+            if(g_trade_server_url != "" && hasPreData)
+            {
+               string dir = (closePosType == POSITION_TYPE_BUY) ? "BUY" : "SELL";
+               double profit = 0;
+               // Calculate profit from open/close prices for accuracy
+               double point = SymbolInfoDouble(closeSym, SYMBOL_POINT);
+               if(dir == "BUY")
+                  profit = (closePrice - closeOpenPrice) * closeLots * SymbolInfoDouble(closeSym, SYMBOL_TRADE_CONTRACT_SIZE);
+               else
+                  profit = (closeOpenPrice - closePrice) * closeLots * SymbolInfoDouble(closeSym, SYMBOL_TRADE_CONTRACT_SIZE);
+               
+               string closeReason = "MANUAL";
+               ReportTradeClose(g_trade_server_url, ticket, closeSym, dir,
+                                closeLots, closeOpenPrice, closePrice,
+                                profit, closeCommission, closeSwap,
+                                g_trade_magic_number, closeOpenTime, closeReason);
+            }
+            
             return true;
          }
       }
@@ -507,3 +569,8 @@ void SetTradeMagicNumber(int magic) { g_trade_magic_number = magic; }
 void SetTradeMaxSlippage(int slip) { g_trade_max_slippage = slip; }
 void SetTradeRetryCount(int retries) { g_trade_retry_count = retries; }
 void SetTradeRetryDelay(int delayMs) { g_trade_retry_delay = delayMs; }
+void SetTradeServerUrl(string url) { g_trade_server_url = url; }
+string GetTradeServerUrl() { return g_trade_server_url; }
+
+
+#endif // EASAAS_TRADE_MQH

@@ -4,6 +4,10 @@
 //| Version: 1.0.0                                                    |
 //+------------------------------------------------------------------+
 #property strict
+
+#ifndef EASAAS_CONFIG_MQH
+#define EASAAS_CONFIG_MQH
+
 #include "EASaaS_Http.mqh"
 #include "EASaaS_Utils.mqh"
 
@@ -184,3 +188,6 @@ string GetConfigSummary()
       g_config.lotSize, g_config.riskPercent, g_config.stopLossPips,
       g_config.takeProfitPips, g_config.configHash);
 }
+
+
+#endif // EASAAS_CONFIG_MQH

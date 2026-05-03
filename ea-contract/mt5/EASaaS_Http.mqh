@@ -7,6 +7,10 @@
 //| retry logic, exponential backoff, and timeout handling            |
 //+------------------------------------------------------------------+
 #property strict
+
+#ifndef EASAAS_HTTP_MQH
+#define EASAAS_HTTP_MQH
+
 #include "EASaaS_Utils.mqh"
 
 // ─── HTTP Response Structure ──────────────────────────────────────────────────
@@ -298,3 +302,6 @@ void HttpSetHmacSecret(string secret) { g_hmac_secret = secret; }
 void HttpSetTimeout(int timeoutMs) { g_http_timeout_ms = timeoutMs; }
 void HttpSetMaxRetries(int retries) { g_http_max_retries = retries; }
 void HttpSetBaseDelay(int delayMs) { g_http_base_delay_ms = delayMs; }
+
+
+#endif // EASAAS_HTTP_MQH
