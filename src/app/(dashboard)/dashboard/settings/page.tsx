@@ -5,12 +5,15 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { BadgeCheck, Bell, Lock, Save, UserCircle2 } from 'lucide-react';
+import { BadgeCheck, Bell, Eye, EyeOff, Lock, Save, UserCircle2 } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 
 export default function SettingsPage() {
   const { user } = useAuth();
   const [isSaving, setIsSaving] = useState(false);
+  const [showCurrentPw, setShowCurrentPw] = useState(false);
+  const [showNewPw, setShowNewPw] = useState(false);
+  const [showConfirmPw, setShowConfirmPw] = useState(false);
   const [profile, setProfile] = useState({
     name: '',
     email: '',
@@ -102,15 +105,57 @@ export default function SettingsPage() {
             <CardContent className="grid gap-4 md:grid-cols-3">
               <div className="space-y-2">
                 <Label className="text-slate-400">Current password</Label>
-                <Input type="password" placeholder="********" className="rounded-2xl border-white/10 bg-[#0c1720] text-white" />
+                <div className="relative">
+                  <Input
+                    type={showCurrentPw ? 'text' : 'password'}
+                    placeholder="********"
+                    className="rounded-2xl border-white/10 bg-[#0c1720] pr-11 text-white"
+                  />
+                  <button
+                    type="button"
+                    aria-label={showCurrentPw ? 'Hide password' : 'Show password'}
+                    className="absolute right-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-amber-500/10 hover:text-amber-300"
+                    onClick={() => setShowCurrentPw((v) => !v)}
+                  >
+                    {showCurrentPw ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
               </div>
               <div className="space-y-2">
                 <Label className="text-slate-400">New password</Label>
-                <Input type="password" placeholder="********" className="rounded-2xl border-white/10 bg-[#0c1720] text-white" />
+                <div className="relative">
+                  <Input
+                    type={showNewPw ? 'text' : 'password'}
+                    placeholder="********"
+                    className="rounded-2xl border-white/10 bg-[#0c1720] pr-11 text-white"
+                  />
+                  <button
+                    type="button"
+                    aria-label={showNewPw ? 'Hide password' : 'Show password'}
+                    className="absolute right-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-amber-500/10 hover:text-amber-300"
+                    onClick={() => setShowNewPw((v) => !v)}
+                  >
+                    {showNewPw ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
               </div>
               <div className="space-y-2">
                 <Label className="text-slate-400">Confirm password</Label>
-                <Input type="password" placeholder="********" className="rounded-2xl border-white/10 bg-[#0c1720] text-white" />
+                <div className="relative">
+                  <Input
+                    type={showConfirmPw ? 'text' : 'password'}
+                    placeholder="********"
+                    className="rounded-2xl border-white/10 bg-[#0c1720] pr-11 text-white"
+                  />
+                  <button
+                    type="button"
+                    aria-label={showConfirmPw ? 'Hide password' : 'Show password'}
+                    className="absolute right-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-amber-500/10 hover:text-amber-300"
+                    onClick={() => setShowConfirmPw((v) => !v)}
+                  >
+                    {showConfirmPw ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
               </div>
             </CardContent>
           </Card>

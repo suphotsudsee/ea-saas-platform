@@ -24,6 +24,8 @@ import {
   TrendingUp,
   Smartphone,
   MessageCircle,
+  Eye,
+  EyeOff,
 } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 
@@ -92,7 +94,7 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
 
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button onClick={() => navigateTo('pricing')} className="w-full rounded-xl px-14 py-3.5 text-base sm:w-auto">
-              Get Started from $9.99/month <ArrowRight size={18} className="ml-2" />
+              Get Started 9.90$/month <ArrowRight size={18} className="ml-2" />
             </Button>
             <Button
               onClick={() => navigateTo('features')}
@@ -385,7 +387,7 @@ function HomePage({ navigateTo }: { navigateTo: (page: PageId) => void }) {
             🔥 Ready to let AI Gold Trading work for you?
           </h2>
           <p className="mx-auto mb-8 max-w-xl text-slate-400">
-            Get Started from $9.99/month — 1-month free trial, no upfront payment — cancel anytime
+            Get Started 9.90$/month — 1-month free trial, no upfront payment — cancel anytime
           </p>
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button onClick={() => navigateTo('register')} className="w-full rounded-xl px-14 py-3.5 text-base sm:w-auto">
@@ -423,7 +425,7 @@ function PricingPage({ embedded = false }: { embedded?: boolean }) {
         <h3 className="mb-2 text-xl font-bold text-white">Starter</h3>
         <p className="h-10 text-sm text-slate-400">For Beginner Traders — 1 Account</p>
         <div className="my-6">
-          <span className="text-4xl font-bold text-white">$9.99</span>
+          <span className="text-4xl font-bold text-white">9.90$</span>
           <span className="text-slate-500">/ month</span>
         </div>
         <ul className="mb-8 space-y-4 text-sm text-slate-300">
@@ -449,7 +451,7 @@ function PricingPage({ embedded = false }: { embedded?: boolean }) {
         <h3 className="mb-2 text-xl font-bold text-white">Pro ⭐</h3>
         <p className="h-10 text-sm text-slate-400">For Serious Traders — 3 Accounts</p>
         <div className="my-6">
-          <span className="text-4xl font-bold text-white">$24.99</span>
+          <span className="text-4xl font-bold text-white">24.90$</span>
           <span className="text-slate-500">/ month</span>
         </div>
         <ul className="mb-8 space-y-4 text-sm font-medium text-white">
@@ -468,7 +470,7 @@ function PricingPage({ embedded = false }: { embedded?: boolean }) {
         <h3 className="mb-2 text-xl font-bold text-white">Elite</h3>
         <p className="h-10 text-sm text-slate-400">For Professionals — 5 Accounts + VIP</p>
         <div className="my-6">
-          <span className="text-4xl font-bold text-white">$49.99</span>
+          <span className="text-4xl font-bold text-white">49.90$</span>
           <span className="text-slate-500">/ month</span>
         </div>
         <ul className="mb-8 space-y-4 text-sm text-slate-300">
@@ -744,6 +746,7 @@ function AuthPage({
   const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
 
@@ -796,13 +799,23 @@ function AuthPage({
           </div>
           <div>
             <label className="mb-1 block text-sm font-medium text-slate-300">Password</label>
-            <input
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-lg border border-amber-900/30 bg-slate-950 px-4 py-2.5 text-white transition-colors focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full rounded-lg border border-amber-900/30 bg-slate-950 px-4 py-2.5 pr-11 text-white transition-colors focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+              />
+              <button
+                type="button"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                className="absolute right-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-amber-500/10 hover:text-amber-300"
+                onClick={() => setShowPassword((v) => !v)}
+              >
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
+            </div>
           </div>
 
           {mode === 'login' && (
@@ -1020,6 +1033,14 @@ export default function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navigateTo = (page: PageId) => {
+    if (page === 'login') {
+      window.location.href = '/login';
+      return;
+    }
+    if (page === 'register') {
+      window.location.href = '/register';
+      return;
+    }
     setCurrentPage(page);
     setIsMobileMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
