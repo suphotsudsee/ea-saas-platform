@@ -70,7 +70,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const { getPendingPayment } = await import('../../../services/usdt-payment.service');
+    const { getPendingPayment } = await import('@/api/services/usdt-payment.service');
     const payment = await getPendingPayment(authResult.user.id);
 
     if (!payment) {

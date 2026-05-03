@@ -3,9 +3,9 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server';
-import { authMiddleware } from '../../../middleware/auth';
-import { prisma } from '../../../lib/prisma';
-import { redis, RedisKeys } from '../../../utils/redis';
+import { authMiddleware } from '@/api/middleware/auth';
+import { prisma } from '@/api/lib/prisma';
+import { redis, RedisKeys } from '@/api/utils/redis';
 
 export async function GET(request: NextRequest) {
   const authResult = await authMiddleware(request);

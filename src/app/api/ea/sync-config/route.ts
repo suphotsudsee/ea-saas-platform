@@ -5,7 +5,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { validateLicenseMiddleware } from '@/api/middleware/validateLicense';
 import { getEAConfig } from '@/api/services/ea-contract.service';
-import { eaRateLimiter } from '../../../middleware/rateLimit';
+import { eaRateLimiter } from '@/api/middleware/rateLimit';
 
 export async function GET(request: NextRequest) {
   // Rate limit
@@ -64,6 +64,6 @@ export async function POST(request: NextRequest) {
 }
 
 async function acknowledgeConfigEA(licenseId: string, configHash: string) {
-  const { acknowledgeConfig } = await import('../../../services/ea-contract.service');
+  const { acknowledgeConfig } = await import('@/api/services/ea-contract.service');
   return acknowledgeConfig(licenseId, configHash);
 }

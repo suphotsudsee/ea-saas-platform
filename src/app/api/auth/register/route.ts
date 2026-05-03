@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { findUserByEmail, createUser, createSub, createLic, generateLicenseKey } from '../../../../lib/db';
+import { findUserByEmail, createUser, createSub, createLic, generateLicenseKey } from '@/lib/db';
 import bcrypt from 'bcryptjs';
 import { z } from 'zod';
 

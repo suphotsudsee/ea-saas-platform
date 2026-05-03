@@ -5,7 +5,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { validateLicenseMiddleware } from '@/api/middleware/validateLicense';
 import { acknowledgeKillSwitch } from '@/api/services/ea-contract.service';
-import { eaRateLimiter } from '../../../middleware/rateLimit';
+import { eaRateLimiter } from '@/api/middleware/rateLimit';
 
 export async function POST(request: NextRequest) {
   // Rate limit
@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
     const { accountNumber } = body;
 
     // Find trading account for this license
-    const { prisma } = await import('../../../lib/prisma');
+    const { prisma } = await import('@/api/lib/prisma');
     const tradingAccount = await prisma.tradingAccount.findFirst({
       where: {
         accountNumber: accountNumber || '',

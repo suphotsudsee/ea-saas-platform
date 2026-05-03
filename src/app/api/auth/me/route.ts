@@ -3,7 +3,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { NextRequest, NextResponse } from 'next/server';
-import { authMiddleware } from '../../../middleware/auth';
+import { authMiddleware } from '@/api/middleware/auth';
 
 export async function GET(request: NextRequest) {
   const authResult = await authMiddleware(request);

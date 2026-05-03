@@ -4,8 +4,8 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { validateLicenseMiddleware } from '@/api/middleware/validateLicense';
-import { validateLicense } from '../../../services/license.service';
-import { eaRateLimiter } from '../../../middleware/rateLimit';
+import { validateLicense } from '@/api/services/license.service';
+import { eaRateLimiter } from '@/api/middleware/rateLimit';
 
 export async function POST(request: NextRequest) {
   // Rate limit check
