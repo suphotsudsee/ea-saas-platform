@@ -33,6 +33,8 @@ services:
       - HOSTNAME=0.0.0.0
     expose:
       - "3004"
+    ports:
+      - "3004:3004"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3004/api/health"]
       interval: 30s
