@@ -1,5 +1,6 @@
 # ─── EA SaaS Platform — Dockerfile (Next.js App) ──────────────────────────────
 # Multi-stage build for production
+# FORCE REBUILD: 2026-05-03T01:00:00Z
 # ─────────────────────────────────────────────────────────────────────────────
 
 # ─── Stage 1: Dependencies ────────────────────────────────────────────────────

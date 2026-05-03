@@ -24,7 +24,6 @@ export async function POST(req: NextRequest) {
       passwordHash: await bcrypt.hash(v.password, 10),
       role: 'TRADER', status: 'ACTIVE',
       timezone: 'UTC', twoFactorEnabled: false,
-      stripeCustomerId: null,
     });
     const sub = createSub({
       userId: user.id, packageId: v.packageId,
