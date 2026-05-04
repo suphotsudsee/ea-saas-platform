@@ -29,10 +29,17 @@ export async function listActivePackages() {
     // Fallback to JSON if DB table is empty
     throw new Error('Empty DB — falling back to JSON');
   } catch {
-    // Fallback to JSON file (local dev without MySQL or empty DB)
-    const { getAllPackages } = await import('../../lib/db');
-    const all = await getAllPackages();
-    return all.filter((p: any) => p.isActive === 1 || p.isActive === true);
+    // Fallback to JSON file — read directly (no dynamic import; works in production build)
+    try {
+      const fs = await import('fs');
+      const path = await import('path');
+      const dataPath = path.join(process.cwd(), 'data', 'packages.json');
+      if (fs.existsSync(dataPath)) {
+        const packages = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
+        return packages.filter((p: any) => p.isActive === 1 || p.isActive === true);
+      }
+    } catch { /* ignore JSON read errors */ }
+    return [];
   }
 }
 
