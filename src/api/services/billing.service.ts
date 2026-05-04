@@ -19,6 +19,14 @@ function getStripeClient(): Stripe {
 
 // ─── List Packages ────────────────────────────────────────────────────────────
 
+// ─── Static fallback packages (works even when DB + JSON file both unavailable) ───
+const STATIC_PACKAGES = [
+  { id: 'pkg_trial', name: '1-Month Free Trial', description: 'Free 30-day access — 1 live, 1 demo', priceCents: 0, currency: 'USD', billingCycle: 'trial', maxAccounts: 1, isActive: true, isTrial: true, trialDays: 30, sortOrder: 0 },
+  { id: 'pkg_starter', name: 'Starter', description: '1 Live Account', priceCents: 990, currency: 'USD', billingCycle: 'monthly', maxAccounts: 1, isActive: true, isTrial: false, trialDays: 0, sortOrder: 1 },
+  { id: 'pkg_pro', name: 'Pro', description: '3 Live Accounts', priceCents: 2490, currency: 'USD', billingCycle: 'monthly', maxAccounts: 3, isActive: true, isTrial: false, trialDays: 0, sortOrder: 2 },
+  { id: 'pkg_elite', name: 'Elite', description: '10 Live Accounts', priceCents: 4990, currency: 'USD', billingCycle: 'monthly', maxAccounts: 10, isActive: true, isTrial: false, trialDays: 0, sortOrder: 3 },
+];
+
 export async function listActivePackages() {
   try {
     const result = await prisma.package.findMany({
@@ -26,20 +34,11 @@ export async function listActivePackages() {
       orderBy: { sortOrder: 'asc' },
     });
     if (result.length > 0) return result;
-    // Fallback to JSON if DB table is empty
-    throw new Error('Empty DB — falling back to JSON');
+    // Prisma returned empty — fall back to static
+    return STATIC_PACKAGES;
   } catch {
-    // Fallback to JSON file — read directly (no dynamic import; works in production build)
-    try {
-      const fs = await import('fs');
-      const path = await import('path');
-      const dataPath = path.join(process.cwd(), 'data', 'packages.json');
-      if (fs.existsSync(dataPath)) {
-        const packages = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
-        return packages.filter((p: any) => p.isActive === 1 || p.isActive === true);
-      }
-    } catch { /* ignore JSON read errors */ }
-    return [];
+    // DB error or connection failed — fall back to static packages
+    return STATIC_PACKAGES;
   }
 }
 
