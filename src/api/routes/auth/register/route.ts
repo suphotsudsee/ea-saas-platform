@@ -7,6 +7,7 @@ const schema = z.object({
   email: z.string().email(),
   password: z.string().min(6),
   name: z.string().optional(),
+  packageId: z.string().optional().default('pkg_trial'),
 });
 
 export async function POST(req: NextRequest) {
@@ -26,7 +27,7 @@ export async function POST(req: NextRequest) {
       stripeCustomerId: null,
     });
     const sub = await createSub({
-      userId: user.id, packageId: 'starter',
+      userId: user.id, packageId: v.packageId,
       status: 'TRIAL', currentPeriodEnd: trialEnd, trialEndsAt: trialEnd,
     });
     const lic = await createLic({
