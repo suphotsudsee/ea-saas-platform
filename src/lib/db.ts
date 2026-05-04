@@ -242,8 +242,14 @@ async function seedMysqlDefaults(connection: mysql.Connection) {
 function getConnectionConfig() {
   const raw = DATABASE_URL!;
   try {
-    new URL(raw);
-    return raw;
+    // Coolify auto-injects hostname like "mysql-database-nh0992vyh996he1svo5ikxmp"
+    // but Docker DNS only resolves the short form "nh0992vyh996he1svo5ikxmp"
+    let url = raw;
+    if (url.includes('mysql-database-')) {
+      url = url.replace('mysql-database-', '');
+    }
+    new URL(url);
+    return url;
   } catch {
     return parseMysqlUrl(raw);
   }
