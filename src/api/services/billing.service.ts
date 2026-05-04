@@ -21,12 +21,15 @@ function getStripeClient(): Stripe {
 
 export async function listActivePackages() {
   try {
-    return await prisma.package.findMany({
+    const result = await prisma.package.findMany({
       where: { isActive: true },
       orderBy: { sortOrder: 'asc' },
     });
+    if (result.length > 0) return result;
+    // Fallback to JSON if DB table is empty
+    throw new Error('Empty DB — falling back to JSON');
   } catch {
-    // Fallback to JSON file (local dev without MySQL)
+    // Fallback to JSON file (local dev without MySQL or empty DB)
     const { getAllPackages } = await import('../../lib/db');
     const all = await getAllPackages();
     return all.filter((p: any) => p.isActive === 1 || p.isActive === true);
