@@ -15,7 +15,7 @@ import {
   Info,
   KeyRound,
   Monitor,
-  MousePointerClick,
+  MousePointer,
   Settings,
   Shield,
   Wrench,
@@ -278,7 +278,7 @@ export default function DownloadPage() {
           <div className="rounded-[28px] border border-white/8 bg-[#0c1720] p-6">
             <div className="flex items-start gap-5">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#112129] text-[#8cc9c2]">
-                <MousePointerClick className="h-5 w-5" />
+                <MousePointer className="h-5 w-5" />
               </div>
               <div className="min-w-0 flex-1">
                 <h3 className="text-lg font-semibold text-white">5. Attach the EA to the chart</h3>
