@@ -240,7 +240,7 @@ export default function DownloadPage() {
                 <Globe className="h-5 w-5" />
               </div>
               <div className="min-w-0 flex-1">
-                <h3 className="text-lg font-semibold text-white">3. Configure WebRequest ⚠️ Critical!</h3>
+                <h3 className="text-lg font-semibold text-white">3. Configure WebRequest ⚠️ Required — EA won't work without this</h3>
                 <div className="mt-2 space-y-2 text-sm leading-7 text-slate-400">
                   <p><strong>Tools → Options → Expert Advisors</strong> tab</p>
                   <p>✅ Check <strong>"Allow WebRequest for listed URL"</strong> → Add:</p>
