@@ -31,7 +31,7 @@ services:
       - NEXT_TELEMETRY_DISABLED=1
       - PORT=3004
       - HOSTNAME=0.0.0.0
-      - DATABASE_URL=mysql://mysql:QvDnbrWZ1F8xo05ax9RlMIHLNTGpQWuSWoZS68FeBk4Llg18Y0O2WWI5QU9tlpFS@mysql-database-nh0992vyh996he1svo5ikxmp:3306/default
+      - DATABASE_URL=mysql://mysql:QvDnbrWZ1F8xo05ax9RlMIHLNTGpQWuSWoZS68FeBk4Llg18Y0O2WWI5QU9tlpFS@nh0992vyh996he1svo5ikxmp:3306/default
     expose:
       - "3004"
     ports:
