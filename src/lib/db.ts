@@ -801,8 +801,8 @@ export async function createPayment(data: Omit<DbPayment, 'id' | 'createdAt' | '
   };
   if (useMysql()) {
     await query(
-      'INSERT INTO payments (id, userId, subscriptionId, packageId, amountCents, currency, status, paymentMethod, depositAddress, depositNetwork, txHash, verifiedAt, description, expiresAt, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [payment.id, payment.userId, payment.subscriptionId, payment.packageId, payment.amountCents, payment.currency, payment.status, payment.paymentMethod, payment.depositAddress, payment.depositNetwork, payment.txHash, payment.verifiedAt, payment.description, payment.expiresAt, payment.createdAt, payment.updatedAt]
+      'INSERT INTO payments (id, userId, subscriptionId, amountCents, currency, status, paymentMethod, depositAddress, depositNetwork, txHash, verifiedAt, description, expiresAt, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [payment.id, payment.userId, payment.subscriptionId, payment.amountCents, payment.currency, payment.status, payment.paymentMethod, payment.depositAddress, payment.depositNetwork, payment.txHash, payment.verifiedAt, payment.description, payment.expiresAt, payment.createdAt, payment.updatedAt]
     );
     return payment;
   }
