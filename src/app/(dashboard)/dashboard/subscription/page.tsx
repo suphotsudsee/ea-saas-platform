@@ -84,6 +84,7 @@ export default function SubscriptionPage() {
   const [payments, setPayments] = useState<BillingPayment[]>([]);
   const [pendingDeposit, setPendingDeposit] = useState<PendingDeposit | null>(null);
   const [selectedNetwork, setSelectedNetwork] = useState<'ERC-20' | 'TRC-20' | 'BEP-20'>('ERC-20');
+  const [selectedPackageId, setSelectedPackageId] = useState<string | null>(null);
   const [creatingDeposit, setCreatingDeposit] = useState(false);
   const [depositError, setDepositError] = useState<string | null>(null);
   const [paymentMethodMessage, setPaymentMethodMessage] = useState<string | null>(null);
@@ -114,12 +115,16 @@ export default function SubscriptionPage() {
   }, []);
 
   const currentPackage = subscription?.package ?? null;
-  const upgradePackage = useMemo(() => {
-    if (!packages.length) return null;
-    if (!currentPackage) return packages[0] ?? null;
+  const upgradePackages = useMemo(() => {
+    if (!packages.length) return [];
+    // Filter out trial packages (isTrial or free)
+    const purchasable = packages.filter(p => 
+      !((p as any).isTrial) && p.priceCents > 0
+    );
+    if (!currentPackage) return purchasable;
 
-    const sorted = [...packages].sort((a, b) => a.sortOrder - b.sortOrder);
-    return sorted.find((pkg) => pkg.sortOrder > currentPackage.sortOrder) ?? null;
+    const sorted = [...purchasable].sort((a, b) => a.sortOrder - b.sortOrder);
+    return sorted.filter((pkg) => pkg.sortOrder > currentPackage.sortOrder);
   }, [packages, currentPackage]);
 
   const currentPrice = currentPackage ? formatMoney(currentPackage.priceCents, currentPackage.currency) : '$0';
@@ -133,7 +138,8 @@ export default function SubscriptionPage() {
     : 'No active renewal';
 
   async function handleCreateDeposit() {
-    if (!upgradePackage) {
+    const targetId = selectedPackageId || upgradePackages[0]?.id;
+    if (!targetId) {
       setDepositError('No higher package is available for this account.');
       return;
     }
@@ -144,7 +150,7 @@ export default function SubscriptionPage() {
       setPaymentMethodMessage(null);
 
       const response = await api.post('/payments/create-deposit', {
-        packageId: upgradePackage.id,
+        packageId: targetId,
         network: selectedNetwork,
       });
 
@@ -226,9 +232,42 @@ export default function SubscriptionPage() {
                 <span className="text-slate-400">Seats included</span>
                 <span className="font-medium text-white">{currentPackage?.maxAccounts ?? 0} accounts</span>
               </div>
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-slate-400">Next upgrade</span>
-                <span className="font-medium text-amber-300">{upgradePackage?.name || 'Already highest plan'}</span>
+              <div className="space-y-2">
+                <span className="text-sm text-slate-400">Available upgrades</span>
+                {upgradePackages.length > 0 ? (
+                  <div className="space-y-2">
+                    {upgradePackages.map((pkg) => (
+                      <label
+                        key={pkg.id}
+                        className={`flex cursor-pointer items-center gap-3 rounded-xl border px-3 py-2.5 transition-all ${
+                          (selectedPackageId || upgradePackages[0]?.id) === pkg.id
+                            ? 'border-amber-500/40 bg-amber-500/10'
+                            : 'border-white/8 bg-white/[0.02] hover:border-white/15'
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="upgradePackage"
+                          value={pkg.id}
+                          checked={(selectedPackageId || upgradePackages[0]?.id) === pkg.id}
+                          onChange={() => setSelectedPackageId(pkg.id)}
+                          className="h-4 w-4 accent-amber-500"
+                        />
+                        <div className="flex-1">
+                          <div className="text-sm font-semibold text-white">{pkg.name}</div>
+                          <div className="text-xs text-slate-400">
+                            {pkg.description || `${pkg.maxAccounts} accounts • ${formatMoney(pkg.priceCents, pkg.currency)}${formatCycle(pkg.billingCycle)}`}
+                          </div>
+                        </div>
+                        <span className="text-sm font-semibold text-amber-300">
+                          {formatMoney(pkg.priceCents, pkg.currency)}{formatCycle(pkg.billingCycle)}
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                ) : (
+                  <span className="text-sm font-medium text-slate-500">Already at highest plan</span>
+                )}
               </div>
             </div>
 
@@ -246,9 +285,13 @@ export default function SubscriptionPage() {
                 variant="outline"
                 className="rounded-2xl border-amber-500/30 bg-amber-500/10 text-amber-200 hover:bg-amber-500/20"
                 onClick={handleCreateDeposit}
-                disabled={creatingDeposit || !upgradePackage}
+                disabled={creatingDeposit || upgradePackages.length === 0}
               >
-                {creatingDeposit ? 'Creating deposit...' : upgradePackage ? `Pay ${upgradePackage.name} with USDT` : 'No higher plan'}
+                {creatingDeposit
+                  ? 'Creating deposit...'
+                  : upgradePackages.length > 0
+                  ? `Pay with USDT → ${upgradePackages.find(p => p.id === (selectedPackageId || upgradePackages[0]?.id))?.name || upgradePackages[0]?.name}`
+                  : 'No higher plan'}
               </Button>
             </div>
             {depositError ? <div className="text-sm text-rose-300">{depositError}</div> : null}

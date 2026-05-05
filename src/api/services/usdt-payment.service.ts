@@ -14,11 +14,11 @@ const DEPOSIT_TIMEOUT_MINUTES = 30; // Payment window
 const MIN_CONFIRMATIONS = 12;       // ERC-20: 12 confirmations ≈ 3 min
 const USDT_DECIMALS = 6;            // ERC-20 USDT has 6 decimal places
 
-// Company wallet addresses (configure in .env)
+// Company wallet addresses (hardcoded for Docker compatibility)
 const COMPANY_WALLETS: Record<string, string> = {
-  'ERC-20': process.env.USDT_ERC20_ADDRESS || '',
-  'TRC-20': process.env.USDT_TRC20_ADDRESS || '',
-  'BEP-20': process.env.USDT_BEP20_ADDRESS || '',
+  'ERC-20': '0x7b0bCf03c2f622bcb4e5e1B0f4A243a66A3f9b90',
+  'TRC-20': 'TMMA5qJ6By4PFHaNhy2qDtm3v5tp6Skhee',
+  'BEP-20': '0x7b0bCf03c2f622bcb4e5e1B0f4A243a66A3f9b90',
 };
 
 function normalizeNetwork(network?: string): 'ERC-20' | 'TRC-20' | 'BEP-20' {

@@ -22,13 +22,16 @@ export async function GET(request: NextRequest) {
 
     const where: any = {};
 
-    if (search) {
-      where.OR = [
-        { name: { contains: search } },
-        { email: { contains: search } },
-      ];
+    // Default: hide BANNED users ("deleted" users)
+    if (!status) {
+      where.status = { not: 'BANNED' };
+    } else {
+      where.status = status;
     }
-    if (status) where.status = status;
+
+    if (search) {
+      where.email = { contains: search };
+    }
     if (role) where.role = role;
 
     const [users, total] = await Promise.all([
@@ -138,24 +141,19 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'userId required' }, { status: 400 });
     }
 
-    // Delete related records first (cascade manually since fake prisma doesn't)
-    const [licenses, subscriptions, tradingAccounts, apiKeys] = await Promise.all([
-      prisma.license.findMany({ where: { userId } }),
-      prisma.subscription.findMany({ where: { userId } }),
-      prisma.tradingAccount.findMany({ where: { userId } }),
-      prisma.apiKey.findMany({ where: { userId } }),
-    ]);
-
-    // Delete all related records
+    // Revoke licenses
+    const licenses = await prisma.license.findMany({ where: { userId } });
     for (const lic of licenses) {
       await prisma.license.update({ where: { id: lic.id }, data: { status: 'REVOKED' } });
     }
+
+    // Cancel subscriptions
+    const subscriptions = await prisma.subscription.findMany({ where: { userId } });
     for (const sub of subscriptions) {
       await prisma.subscription.update({ where: { id: sub.id }, data: { status: 'CANCELED' } });
     }
 
-    // Try to delete the user
-    // Fake prisma doesn't have delete, so we ban them instead
+    // Ban user (fake prisma has no real delete)
     const user = await prisma.user.update({
       where: { id: userId },
       data: { status: 'BANNED', name: `[DELETED] ${new Date().toISOString()}` },

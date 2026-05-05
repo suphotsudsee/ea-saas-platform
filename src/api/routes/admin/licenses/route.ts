@@ -30,7 +30,14 @@ export async function GET(request: NextRequest) {
     const strategyId = searchParams.get('strategyId');
 
     const where: any = {};
-    if (status) where.status = status;
+    
+    // Default: hide REVOKED/EXPIRED licenses (includes licenses from deleted users)
+    // If explicit status filter is provided, use it instead
+    if (status) {
+      where.status = status;
+    } else {
+      where.status = { not: 'REVOKED' };
+    }
     if (userId) where.userId = userId;
     if (strategyId) where.strategyId = strategyId;
 
