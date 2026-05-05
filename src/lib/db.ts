@@ -427,7 +427,7 @@ export async function createSub(data: Omit<DbSub, 'id' | 'createdAt'>): Promise<
       `INSERT INTO subscriptions
         (id, userId, packageId, status, currentPeriodStart, currentPeriodEnd, trialEndsAt, cancelAtPeriodEnd, createdAt, updatedAt)
        VALUES (?, ?, ?, ?, NOW(), ?, ?, 0, NOW(), NOW())`,
-      [sub.id, sub.userId, sub.packageId, sub.status, toMysqlDate(sub.currentPeriodEnd), toMysqlDate(sub.trialEndsAt)],
+      [sub.id, sub.userId, sub.packageId, sub.status, toMysqlDate(sub.currentPeriodEnd ?? new Date()), toMysqlDate(sub.trialEndsAt ?? null)],
     );
     return { ...sub, createdAt: new Date().toISOString() };
   }
@@ -456,7 +456,7 @@ export async function createLic(data: Omit<DbLic, 'id' | 'createdAt'>): Promise<
       `INSERT INTO licenses
         (id, \`key\`, userId, subscriptionId, strategyId, status, maxAccounts, expiresAt, createdAt, updatedAt)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())`,
-      [lic.id, lic.key, lic.userId, lic.subscriptionId, 'str_tradecandle_v12', lic.status, lic.maxAccounts, toMysqlDate(lic.expiresAt)],
+      [lic.id, lic.key, lic.userId, lic.subscriptionId ?? null, 'str_tradecandle_v12', lic.status, lic.maxAccounts ?? 1, toMysqlDate(lic.expiresAt ?? null)],
     );
     return { ...lic, createdAt: new Date().toISOString() };
   }
@@ -786,6 +786,16 @@ export async function createPayment(data: Omit<DbPayment, 'id' | 'createdAt' | '
   const payment = {
     ...data,
     id: `pay_${crypto.randomBytes(12).toString('hex')}`,
+    subscriptionId: data.subscriptionId ?? null,
+    packageId: data.packageId ?? null,
+    depositAddress: data.depositAddress ?? null,
+    depositNetwork: data.depositNetwork ?? null,
+    txHash: data.txHash ?? null,
+    fromAddress: (data as any).fromAddress ?? null,
+    confirmations: (data as any).confirmations ?? 0,
+    verifiedAt: data.verifiedAt ?? null,
+    description: data.description ?? null,
+    expiresAt: data.expiresAt ?? null,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   };
@@ -804,7 +814,7 @@ export async function createPayment(data: Omit<DbPayment, 'id' | 'createdAt' | '
 
 export async function updatePayment(id: string, data: Partial<DbPayment>): Promise<DbPayment | null> {
   if (useMysql()) {
-    const entries = Object.entries(data).filter(([key]) => ['status', 'txHash', 'verifiedAt', 'description', 'expiresAt', 'depositAddress', 'depositNetwork', 'amountCents'].includes(key));
+    const entries = Object.entries(data).filter(([key]) => ['status', 'txHash', 'fromAddress', 'confirmations', 'verifiedAt', 'description', 'expiresAt', 'depositAddress', 'depositNetwork', 'amountCents'].includes(key));
     if (!entries.length) return findPaymentById(id);
     const setSql = entries.map(([key]) => `\`${key}\` = ?`).join(', ');
     const values = entries.map(([_, v]) => v);
