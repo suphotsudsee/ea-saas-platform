@@ -88,6 +88,14 @@ export async function GET() {
       updatedAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)
     ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`);
 
+    await conn.execute(`CREATE TABLE IF NOT EXISTS admin_users (
+      id VARCHAR(191) NOT NULL PRIMARY KEY, email VARCHAR(191) NOT NULL UNIQUE,
+      passwordHash VARCHAR(191) NOT NULL, name VARCHAR(191) NOT NULL,
+      role VARCHAR(64) NOT NULL DEFAULT 'ADMIN', twoFactorEnabled BOOLEAN NOT NULL DEFAULT false,
+      createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+      updatedAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)
+    ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`);
+
     // --- CLEANUP STALE DATA (from old db.ts seed) — only the stale 'starter' id ---
     await conn.execute("UPDATE packages SET isActive = 0 WHERE id = 'starter' AND name = '1-Month Free Trial'");
 
