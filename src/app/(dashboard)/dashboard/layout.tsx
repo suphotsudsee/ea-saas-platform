@@ -48,6 +48,7 @@ const adminItems: NavItem[] = [
   { name: 'Subscriptions', href: '/dashboard/admin/subscriptions', icon: CreditCard },
   { name: 'Licenses', href: '/dashboard/admin/licenses', icon: Key },
   { name: 'Strategies', href: '/dashboard/admin/strategies', icon: Layers },
+  { name: 'Payments', href: '/dashboard/admin/payments', icon: CreditCard },
   { name: 'Risk Rules', href: '/dashboard/admin/risk-rules', icon: ShieldAlert },
 ];
 
