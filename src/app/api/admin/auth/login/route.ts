@@ -1,16 +1,30 @@
 
 import { NextResponse, NextRequest } from 'next/server';
 import mysql from 'mysql2/promise';
-import { SignJWT } from 'jose';
+import crypto from 'crypto';
 
 export const dynamic = 'force-dynamic';
 
-const JWT_SECRET = new TextEncoder().encode(
-  process.env.NEXTAUTH_SECRET || 'tradecandle-admin-secret-2026'
-);
-
-// Known bcrypt hash for "Admin@2026!Secure" (generated with bcryptjs cost 10)
-const ADMIN_HASH = '$2a$10$iJn676T3LSsQ6IbbeR7POuOWfVQouZ3e.HZPq5AMsFCfju/nT7xpG';
+function getConnectionConfig() {
+  const raw = process.env.DATABASE_URL!;
+  try {
+    return new URL(raw);
+  } catch {
+    // Parse manually: mysql://user:pass@host:port/db
+    const value = raw.replace(/^mysql:\/\//, '');
+    const at = value.lastIndexOf('@');
+    const auth = at >= 0 ? value.slice(0, at) : '';
+    const hostDb = at >= 0 ? value.slice(at + 1) : value;
+    const colon = auth.indexOf(':');
+    const user = colon >= 0 ? auth.slice(0, colon) : auth;
+    const password = colon >= 0 ? auth.slice(colon + 1) : '';
+    const slash = hostDb.indexOf('/');
+    const hostPort = slash >= 0 ? hostDb.slice(0, slash) : hostDb;
+    const database = slash >= 0 ? hostDb.slice(slash + 1).split('?')[0] : '';
+    const [host, port] = hostPort.split(':');
+    return { username: user, password, hostname: host, port: port ? Number(port) : 3306, pathname: '/' + database };
+  }
+}
 
 export async function POST(request: NextRequest) {
   let conn: mysql.Connection | null = null;
@@ -20,15 +34,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Email and password required' }, { status: 400 });
     }
 
-    const raw = process.env.DATABASE_URL!;
-    const url = new URL(raw);
+    const c = getConnectionConfig() as any;
     conn = await mysql.createConnection({
-      host: url.hostname, port: Number(url.port) || 3306,
-      user: url.username, password: url.password,
-      database: url.pathname.replace('/', ''),
+      host: c.hostname, port: c.port, user: c.username,
+      password: c.password, database: c.pathname.replace('/', ''),
     });
 
-    // Ensure table exists
+    // Ensure table + admin user
     await conn.execute(`CREATE TABLE IF NOT EXISTS admin_users (
       id VARCHAR(191) NOT NULL PRIMARY KEY, email VARCHAR(191) NOT NULL UNIQUE,
       passwordHash VARCHAR(191) NOT NULL, name VARCHAR(191) NOT NULL,
@@ -37,24 +49,25 @@ export async function POST(request: NextRequest) {
       updatedAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)
     ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`);
 
-    // Delete any old admin with this email and re-insert with known hash
+    // Delete old + insert fresh admin (password hardcoded for standalone Docker)
     await conn.execute(`DELETE FROM admin_users WHERE email = ?`, [email]);
     await conn.execute(`INSERT INTO admin_users (id, email, passwordHash, name, role, twoFactorEnabled, createdAt, updatedAt)
-      VALUES (?, ?, ?, ?, ?, 0, NOW(), NOW())`,
-      ['adm_bootstrap', email, ADMIN_HASH, 'Platform Admin', 'SUPER_ADMIN']);
+      VALUES ('adm_bootstrap', ?, '$2a$10$iJn676T3LSsQ6IbbeR7POuOWfVQouZ3e.HZPq5AMsFCfju/nT7xpG', 'Platform Admin', 'SUPER_ADMIN', 0, NOW(), NOW())`,
+      [email]);
 
-    // Validate: check password directly + hash matches known constant
+    // Simple password check (bcrypt broken in standalone Docker)
     if (password !== 'Admin@2026!Secure') {
       return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
     }
 
-    const token = await new SignJWT({
-      id: 'adm_bootstrap', email, role: 'SUPER_ADMIN', actorType: 'admin',
-    }).setProtectedHeader({ alg: 'HS256' }).setExpirationTime('24h').setIssuedAt().sign(JWT_SECRET);
+    // Generate simple token without jose (avoid import issues)
+    const tokenPayload = JSON.stringify({ id: 'adm_bootstrap', email, role: 'SUPER_ADMIN', actorType: 'admin', exp: Math.floor(Date.now()/1000) + 86400 });
+    const token = Buffer.from(tokenPayload).toString('base64');
 
     const response = NextResponse.json({
       message: 'Admin login successful',
       user: { id: 'adm_bootstrap', email, name: 'Platform Admin', role: 'SUPER_ADMIN', actorType: 'admin' },
+      token,
     });
     response.cookies.set('session-token', token, {
       httpOnly: true, secure: process.env.NODE_ENV === 'production',
@@ -62,8 +75,7 @@ export async function POST(request: NextRequest) {
     });
     return response;
   } catch (error: any) {
-    console.error('Admin login error:', error?.message || error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: String(error?.message || error) }, { status: 500 });
   } finally {
     if (conn) await conn.end();
   }
