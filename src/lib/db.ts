@@ -793,11 +793,11 @@ export async function createPayment(data: Omit<DbPayment, 'id' | 'createdAt' | '
     txHash: data.txHash ?? null,
     fromAddress: (data as any).fromAddress ?? null,
     confirmations: (data as any).confirmations ?? 0,
-    verifiedAt: data.verifiedAt ?? null,
+    verifiedAt: toMysqlDate(data.verifiedAt) ?? null,
     description: data.description ?? null,
-    expiresAt: data.expiresAt ?? null,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    expiresAt: toMysqlDate(data.expiresAt) ?? null,
+    createdAt: new Date().toISOString().slice(0, 19).replace('T', ' '),
+    updatedAt: new Date().toISOString().slice(0, 19).replace('T', ' '),
   };
   if (useMysql()) {
     await query(
