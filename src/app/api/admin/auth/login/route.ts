@@ -49,10 +49,10 @@ export async function POST(request: NextRequest) {
       updatedAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)
     ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`);
 
-    // Delete old + insert fresh admin (password hardcoded for standalone Docker)
-    await conn.execute(`DELETE FROM admin_users WHERE email = ?`, [email]);
+    // Upsert admin (atomic — no race conditions)
     await conn.execute(`INSERT INTO admin_users (id, email, passwordHash, name, role, twoFactorEnabled, createdAt, updatedAt)
-      VALUES ('adm_bootstrap', ?, '$2a$10$iJn676T3LSsQ6IbbeR7POuOWfVQouZ3e.HZPq5AMsFCfju/nT7xpG', 'Platform Admin', 'SUPER_ADMIN', 0, NOW(), NOW())`,
+      VALUES ('adm_bootstrap', ?, '$2a$10$iJn676T3LSsQ6IbbeR7POuOWfVQouZ3e.HZPq5AMsFCfju/nT7xpG', 'Platform Admin', 'SUPER_ADMIN', 0, NOW(), NOW())
+      ON DUPLICATE KEY UPDATE email = VALUES(email), passwordHash = VALUES(passwordHash), updatedAt = NOW()`,
       [email]);
 
     // Simple password check (bcrypt broken in standalone Docker)
