@@ -4,6 +4,10 @@
 //+------------------------------------------------------------------+
 #property strict
 
+#ifndef EASAAS_UTILS_MQH
+#define EASAAS_UTILS_MQH
+
+
 enum LOG_LEVEL
 {
    LOG_TRACE = 0,
@@ -497,3 +501,6 @@ void LogApi(string method, string endpoint, int statusCode, string response = ""
    }
    LogDebug(msg);
 }
+
+
+#endif // EASAAS_UTILS_MQH

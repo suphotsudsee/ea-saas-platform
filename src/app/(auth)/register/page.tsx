@@ -1,12 +1,12 @@
 'use client';
 
 import Link from 'next/link';
+import { Eye, EyeOff } from 'lucide-react';
 import { AuthShell } from '@/components/auth/auth-shell';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { CardContent, CardFooter } from '@/components/ui/card';
 import { useEffect, useMemo, useState } from 'react';
-import api, { getApiErrorMessage } from '@/lib/api';
 
 type TrialPackage = {
   id: string;
@@ -28,6 +28,8 @@ export default function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
@@ -36,10 +38,12 @@ export default function RegisterPage() {
 
     async function loadPackages() {
       try {
-        const response = await api.get('/subscriptions/list');
+        // Use raw fetch to avoid axios auth interceptor issues on unauthenticated pages
+        const res = await fetch('/api/subscriptions/list');
         if (!mounted) return;
+        const data = await res.json();
 
-        const activePackages = ((response.data.packages ?? []) as TrialPackage[])
+        const activePackages = ((data.packages ?? []) as TrialPackage[])
           .filter((pkg) => pkg.billingCycle === 'MONTHLY')
           .sort((a, b) => a.sortOrder - b.sortOrder);
         const packageFromUrl = new URLSearchParams(window.location.search).get('packageId');
@@ -85,18 +89,29 @@ export default function RegisterPage() {
 
     setIsLoading(true);
     try {
-      await api.post('/auth/register', {
-        name,
-        email,
-        password,
-        packageId: selectedPackageId,
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          packageId: selectedPackageId,
+        }),
       });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || data.message || 'Registration failed');
+        setIsLoading(false);
+        return;
+      }
 
       setSuccess('Registration successful! Your trial license has been created.');
       window.location.href = '/login';
     } catch (err) {
-      setError(getApiErrorMessage(err, 'Failed to create account'));
-    } finally {
+      setError(err instanceof Error ? err.message : 'Network error — please try again');
       setIsLoading(false);
     }
   };
@@ -191,23 +206,43 @@ export default function RegisterPage() {
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium text-slate-300">Password</label>
-            <Input
-              type="password"
-              className="h-11 rounded-xl border-amber-900/30 bg-slate-950 text-white focus:ring-amber-500"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div className="relative">
+              <Input
+                type={showPassword ? 'text' : 'password'}
+                className="h-11 rounded-xl border-amber-900/30 bg-slate-950 pr-11 text-white focus:ring-amber-500"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <button
+                type="button"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                className="absolute right-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-amber-500/10 hover:text-amber-300"
+                onClick={() => setShowPassword((value) => !value)}
+              >
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
+            </div>
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium text-slate-300">Confirm Password</label>
-            <Input
-              type="password"
-              className="h-11 rounded-xl border-amber-900/30 bg-slate-950 text-white focus:ring-amber-500"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
+            <div className="relative">
+              <Input
+                type={showConfirmPassword ? 'text' : 'password'}
+                className="h-11 rounded-xl border-amber-900/30 bg-slate-950 pr-11 text-white focus:ring-amber-500"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+              <button
+                type="button"
+                aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
+                className="absolute right-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-amber-500/10 hover:text-amber-300"
+                onClick={() => setShowConfirmPassword((value) => !value)}
+              >
+                {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
+            </div>
           </div>
           {error ? <div className="text-sm text-rose-300">{error}</div> : null}
           {success ? <div className="text-sm text-emerald-300">{success}</div> : null}

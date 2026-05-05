@@ -6,7 +6,7 @@ import { StatsCard } from '@/components/dashboard/stats-card';
 import { PnLChart } from '@/components/dashboard/pnl-chart';
 import { RecentTrades } from '@/components/dashboard/recent-trades';
 import { Badge } from '@/components/ui/badge';
-import { Activity, ArrowUpRight, Shield, TrendingUp, WalletCards, Zap } from 'lucide-react';
+import { Activity, ArrowDownToLine, ArrowUpRight, Key, Shield, TrendingUp, WalletCards, Zap } from 'lucide-react';
 import api from '@/lib/api';
 
 interface TradeStatsResponse {
@@ -26,7 +26,9 @@ interface TradeStatsResponse {
 interface SubscriptionResponse {
   subscription: {
     currentPeriodEnd: string;
-    package: {
+    packageId: string;
+    status: string;
+    package?: {
       name: string;
       maxAccounts: number;
     };
@@ -169,11 +171,16 @@ export default function DashboardPage() {
     [trades]
   );
 
-  const renewalText = subscription
+  const renewalText = subscription?.package
     ? `Renewal due ${new Date(subscription.currentPeriodEnd).toLocaleDateString('en-US', {
         month: 'short',
         day: 'numeric',
       })} with ${subscription.package.maxAccounts} linked account slots.`
+    : subscription
+    ? `Renewal due ${new Date(subscription.currentPeriodEnd).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+      })} — ${subscription.packageId} plan.`
     : 'No active subscription found.';
 
   return (
@@ -238,7 +245,7 @@ export default function DashboardPage() {
             <div className="text-xs uppercase tracking-[0.24em] text-amber-500/60">Subscriptions</div>
             <div className="mt-3 flex items-center gap-2 text-lg font-semibold text-white">
               <WalletCards className="h-4 w-4 text-amber-400" />
-              {subscription?.package.name || 'No active plan'}
+              {subscription?.subscription?.package?.name || subscription?.subscription?.packageId || 'No active plan'}
             </div>
             <p className="mt-2 text-sm text-slate-400">{renewalText}</p>
           </div>
@@ -255,6 +262,51 @@ export default function DashboardPage() {
           </div>
         </div>
       </section>
+
+      {/* ───── Quick Actions ───── */}
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <a
+          href="/dashboard/download"
+          className="group flex items-center gap-4 rounded-[28px] border border-emerald-500/30 bg-emerald-500/10 p-5 transition-all hover:bg-emerald-500/15 hover:border-emerald-400/40"
+        >
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-500/20 text-emerald-300 group-hover:scale-105 transition-transform">
+            <ArrowDownToLine className="h-5 w-5" />
+          </div>
+          <div className="min-w-0">
+            <div className="text-sm font-semibold text-white">Download EA v12</div>
+            <p className="mt-1 text-xs text-slate-400">Get the TradeCandle EA .ex5 for MT5</p>
+          </div>
+          <ArrowUpRight className="ml-auto h-4 w-4 shrink-0 text-emerald-400 opacity-60 group-hover:opacity-100 transition-opacity" />
+        </a>
+
+        <a
+          href="/dashboard/licenses"
+          className="group flex items-center gap-4 rounded-[28px] border border-amber-500/30 bg-amber-500/10 p-5 transition-all hover:bg-amber-500/15 hover:border-amber-400/40"
+        >
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-amber-500/20 text-amber-300 group-hover:scale-105 transition-transform">
+            <Key className="h-5 w-5" />
+          </div>
+          <div className="min-w-0">
+            <div className="text-sm font-semibold text-white">License Keys</div>
+            <p className="mt-1 text-xs text-slate-400">{activeLicenses.length} active · view &amp; manage</p>
+          </div>
+          <ArrowUpRight className="ml-auto h-4 w-4 shrink-0 text-amber-400 opacity-60 group-hover:opacity-100 transition-opacity" />
+        </a>
+
+        <a
+          href="/dashboard/trading-accounts"
+          className="group flex items-center gap-4 rounded-[28px] border border-sky-500/30 bg-sky-500/10 p-5 transition-all hover:bg-sky-500/15 hover:border-sky-400/40"
+        >
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-sky-500/20 text-sky-300 group-hover:scale-105 transition-transform">
+            <WalletCards className="h-5 w-5" />
+          </div>
+          <div className="min-w-0">
+            <div className="text-sm font-semibold text-white">Trading Accounts</div>
+            <p className="mt-1 text-xs text-slate-400">{activeAccounts.length} active of {accounts.length} linked</p>
+          </div>
+          <ArrowUpRight className="ml-auto h-4 w-4 shrink-0 text-sky-400 opacity-60 group-hover:opacity-100 transition-opacity" />
+        </a>
+      </div>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
         <StatsCard

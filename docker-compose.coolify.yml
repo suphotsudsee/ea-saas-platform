@@ -1,5 +1,10 @@
 # EA SaaS Platform - Coolify Docker Compose
+<<<<<<< HEAD
 # MySQL managed as separate Coolify resource. Redis included here for simplicity.
+=======
+# All secrets/credentials are managed by Coolify Environment Variables UI.
+# This file contains only structural Docker config.
+>>>>>>> cba4206f46728294b317464c4728579d35ff872d
 
 services:
   redis:
@@ -30,6 +35,7 @@ services:
       - NEXT_TELEMETRY_DISABLED=1
       - PORT=3004
       - HOSTNAME=0.0.0.0
+<<<<<<< HEAD
       - DATABASE_URL=${DATABASE_URL:?}
       - REDIS_URL=redis://redis:6379/0
       - NEXTAUTH_SECRET=${NEXT...T:?}
@@ -50,6 +56,13 @@ services:
       - LICENSE_CACHE_TTL_SEC=${LICENSE_CACHE_TTL_SEC:-300}
     expose:
       - "3004"
+=======
+      - DATABASE_URL=mysql://mysql:QvDnbrWZ1F8xo05ax9RlMIHLNTGpQWuSWoZS68FeBk4Llg18Y0O2WWI5QU9tlpFS@nh0992vyh996he1svo5ikxmp:3306/default
+    expose:
+      - "3004"
+    ports:
+      - "3004:3004"
+>>>>>>> cba4206f46728294b317464c4728579d35ff872d
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3004/api/health"]
       interval: 30s

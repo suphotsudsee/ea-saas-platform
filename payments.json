@@ -1,0 +1,32 @@
+[
+  {
+    "userId": "usr_0103191f58a587f6decc0576",
+    "subscriptionId": "sub_ddbb6b7c214a61afe11a4dc6",
+    "amountCents": 2499,
+    "currency": "USDT",
+    "status": "AWAITING_DEPOSIT",
+    "paymentMethod": "USDT_ERC20",
+    "depositAddress": "0x7b0bCf03c2f622bcb4e5e1B0f4A243a66A3f9b90",
+    "depositNetwork": "ERC-20",
+    "expiresAt": "2026-05-03T06:45:28.939Z",
+    "description": "Pro ⭐ subscription - 24.99 USDT via ERC-20 - Ref: TC59C933C6B913",
+    "id": "pay_2d1a761155e9c224c69a8a37",
+    "createdAt": "2026-05-03T06:15:28.940Z",
+    "updatedAt": "2026-05-03T06:15:28.940Z"
+  },
+  {
+    "userId": "usr_0103191f58a587f6decc0576",
+    "subscriptionId": "sub_fbf31c08a82c6dd97076f1ed",
+    "amountCents": 4999,
+    "currency": "USDT",
+    "status": "AWAITING_DEPOSIT",
+    "paymentMethod": "USDT_BEP20",
+    "depositAddress": "0x7b0bCf03c2f622bcb4e5e1B0f4A243a66A3f9b90",
+    "depositNetwork": "BEP-20",
+    "expiresAt": "2026-05-03T06:45:37.203Z",
+    "description": "Elite subscription - 49.99 USDT via BEP-20 - Ref: TC1823B63A99A0",
+    "id": "pay_c21f41edb1859282b7e01dda",
+    "createdAt": "2026-05-03T06:15:37.203Z",
+    "updatedAt": "2026-05-03T06:15:37.203Z"
+  }
+]

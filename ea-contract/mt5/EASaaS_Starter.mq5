@@ -19,6 +19,7 @@
 #include "EASaaS_Heartbeat.mqh"
 #include "EASaaS_Risk.mqh"
 #include "EASaaS_Config.mqh"
+#include "EASaaS_TradeSync.mqh"
 #include "EASaaS_Trade.mqh"
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -211,11 +212,16 @@ int OnInit()
    SetTradeMaxSlippage(g_max_slippage);
    SetTradeRetryCount(3);
    SetTradeRetryDelay(1000);
+   SetTradeServerUrl(InpServerUrl);  // Enable trade event reporting
 
-   // 9. Start Heartbeat
+   // 9. Initialize Trade Sync
+   TradeSyncInit();
+   LogInfo("Trade sync enabled — all trades will be reported to platform.");
+
+   // 10. Start Heartbeat
    StartHeartbeat(InpHeartbeatSec);
 
-   // 10. Send Initial Heartbeat
+   // 11. Send Initial Heartbeat
    HeartbeatResult hbResult = SendHeartbeat(InpServerUrl, accountNumber);
    if(hbResult.success)
    {
@@ -227,7 +233,7 @@ int OnInit()
       LogWarn("Initial heartbeat failed (will retry on next tick)");
    }
 
-   // 11. Mark Complete
+   // 12. Mark Complete
    g_ea_initialized = true;
    g_ea_killed = false;
    g_last_bar_time = 0;
@@ -359,7 +365,10 @@ void OnTick()
       }
    }
 
-   // 6. New Bar Check
+   // 6. Detect TP/SL Auto-Close → Report to Platform
+   DetectAndReportClosedPositions(InpServerUrl, InpMagicNumber);
+
+   // 7. New Bar Check
    if(InpTradeOnNewBar)
    {
       int currentBarTime = (int)iTime(_Symbol, PERIOD_CURRENT, 0);
@@ -368,10 +377,10 @@ void OnTick()
       g_last_bar_time = currentBarTime;
    }
 
-   // 7. Trading Logic
+   // 8. Trading Logic
    ExecuteStrategy();
 
-   // 8. Trailing Stop Management
+   // 9. Trailing Stop Management
    ManageTrailingStops();
 }
 

@@ -38,7 +38,7 @@
     "node_modules",
     ".next",
     "ea-contract",
-    "scripts",
-    "prisma"
+    "scripts/**",
+    "prisma/**"
   ]
 }

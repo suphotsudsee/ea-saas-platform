@@ -54,6 +54,11 @@ function matchesWhere(row: any, where: any) {
   if (!where) return true;
   if (where.status?.not && row.status === where.status.not) return false;
   if (where.status && typeof where.status !== 'object' && row.status !== where.status) return false;
+<<<<<<< HEAD
+=======
+  if (where.status?.in && !where.status.in.includes(row.status)) return false;
+  if (where.packageId && row.packageId !== where.packageId) return false;
+>>>>>>> cba4206f46728294b317464c4728579d35ff872d
   if (where.role && row.role !== where.role) return false;
   if (where.userId && row.userId !== where.userId) return false;
   if (where.id && row.id !== where.id) return false;
@@ -228,7 +233,19 @@ const subModel = {
   findFirst: async ({ where, include }: any = {}) => {
     let sub;
     if (where?.userId) {
+<<<<<<< HEAD
       sub = await findSubscriptionByUserId(where.userId);
+=======
+      // Check all subscriptions for the user and apply remaining filters
+      const allSubs = await getAllSubscriptions();
+      const userSubs = allSubs.filter((s: any) => s.userId === where.userId);
+      sub = userSubs.find((s: any) => {
+        // Apply remaining where conditions (packageId, status, etc.)
+        const remaining = { ...where };
+        delete remaining.userId;
+        return matchesWhere(s, remaining);
+      }) || null;
+>>>>>>> cba4206f46728294b317464c4728579d35ff872d
     } else {
       sub = (await getAllSubscriptions()).find((s: any) => matchesWhere(s, where)) || null;
     }
@@ -345,11 +362,40 @@ export const prisma: any = {
   notification: { findMany: async () => [], count: async () => 0, findFirst: async () => null },
   heartbeat: { findMany: async () => [], findFirst: async () => null, count: async () => 0, findUnique: async () => null },
   payment: {
+<<<<<<< HEAD
     findMany: async () => [],
     count: async () => 0,
     findUnique: async () => null,
     findFirst: async () => null,
     create: async () => null,
+=======
+    findMany: async ({ where, orderBy }: any = {}) => {
+      const { getAllPayments } = await import('../../lib/db');
+      const rows = await getAllPayments(where);
+      if (orderBy?.createdAt === 'asc') rows.reverse();
+      return rows;
+    },
+    count: async ({ where }: any = {}) => {
+      const { getAllPayments } = await import('../../lib/db');
+      return (await getAllPayments(where)).length;
+    },
+    findUnique: async ({ where }: any) => {
+      const { findPaymentById } = await import('../../lib/db');
+      return where?.id ? findPaymentById(where.id) : null;
+    },
+    findFirst: async ({ where }: any = {}) => {
+      const { findPaymentFirst } = await import('../../lib/db');
+      return findPaymentFirst(where);
+    },
+    create: async ({ data }: any) => {
+      const { createPayment } = await import('../../lib/db');
+      return createPayment(data);
+    },
+    update: async ({ where, data }: any) => {
+      const { updatePayment } = await import('../../lib/db');
+      return where?.id ? updatePayment(where.id, data) : null;
+    },
+>>>>>>> cba4206f46728294b317464c4728579d35ff872d
     aggregate: async () => ({ _sum: { amountCents: 0 } }),
   },
   metric: { findMany: async () => [] },

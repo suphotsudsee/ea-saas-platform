@@ -62,6 +62,9 @@ COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 COPY --from=builder /app/docker/start.sh ./start.sh
+
+# Copy data directory (JSON fallback DB: packages.json, users.json, etc.)
+COPY --from=builder /app/data ./data
 RUN chmod +x ./start.sh
 
 USER nextjs

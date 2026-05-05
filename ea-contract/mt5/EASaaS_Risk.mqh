@@ -4,6 +4,10 @@
 //| Version: 1.0.0                                                    |
 //+------------------------------------------------------------------+
 #property strict
+
+#ifndef EASAAS_RISK_MQH
+#define EASAAS_RISK_MQH
+
 #include "EASaaS_Http.mqh"
 #include "EASaaS_Utils.mqh"
 
@@ -312,3 +316,6 @@ string GetRiskSummary()
       g_risk_config.sessionEndHour, g_risk_config.maxConsecutiveLosses,
       g_risk_config.maxDailyLossPct);
 }
+
+
+#endif // EASAAS_RISK_MQH

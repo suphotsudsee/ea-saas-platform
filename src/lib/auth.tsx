@@ -30,6 +30,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const pathname = usePathname();
 
+<<<<<<< HEAD
   useEffect(() => {
     const isProtectedPath =
       pathname?.startsWith('/dashboard') ||
@@ -41,6 +42,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setIsLoading(false);
       return;
     }
+=======
+  useEffect(() => {
+    const isProtectedPath =
+      pathname?.startsWith('/dashboard') ||
+      pathname?.startsWith('/admin');
+
+    if (!isProtectedPath) {
+      setIsLoading(false);
+      return;
+    }
+>>>>>>> cba4206f46728294b317464c4728579d35ff872d
 
     const initAuth = async () => {
       try {

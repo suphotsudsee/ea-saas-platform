@@ -174,6 +174,33 @@ async function bootstrapMysqlSchema() {
     await ignore('ALTER TABLE packages ADD COLUMN trialDays INTEGER NOT NULL DEFAULT 0');
     await ignore('ALTER TABLE api_keys ADD COLUMN status VARCHAR(64) NOT NULL DEFAULT "ACTIVE"');
 
+<<<<<<< HEAD
+=======
+    await exec(`
+      CREATE TABLE IF NOT EXISTS payments (
+        id VARCHAR(191) NOT NULL PRIMARY KEY,
+        userId VARCHAR(191) NOT NULL,
+        subscriptionId VARCHAR(191) NULL,
+        packageId VARCHAR(191) NULL,
+        amountCents INTEGER NOT NULL DEFAULT 0,
+        currency VARCHAR(191) NOT NULL DEFAULT 'USD',
+        status VARCHAR(64) NOT NULL DEFAULT 'PENDING',
+        paymentMethod VARCHAR(64) NOT NULL DEFAULT 'USDT',
+        depositAddress VARCHAR(191) NULL,
+        depositNetwork VARCHAR(64) NULL,
+        txHash VARCHAR(191) NULL,
+        verifiedAt DATETIME(3) NULL,
+        description VARCHAR(191) NULL,
+        expiresAt DATETIME(3) NULL,
+        createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+        updatedAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+        INDEX idx_userId (userId),
+        INDEX idx_status (status),
+        INDEX idx_subscriptionId (subscriptionId)
+      ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+    `);
+
+>>>>>>> cba4206f46728294b317464c4728579d35ff872d
     await seedMysqlDefaults(connection);
   } finally {
     await connection.end();
@@ -218,8 +245,19 @@ async function seedMysqlDefaults(connection: mysql.Connection) {
 function getConnectionConfig() {
   const raw = DATABASE_URL!;
   try {
+<<<<<<< HEAD
     new URL(raw);
     return raw;
+=======
+    // Coolify auto-injects hostname like "mysql-database-nh0992vyh996he1svo5ikxmp"
+    // but Docker DNS only resolves the short form "nh0992vyh996he1svo5ikxmp"
+    let url = raw;
+    if (url.includes('mysql-database-')) {
+      url = url.replace('mysql-database-', '');
+    }
+    new URL(url);
+    return url;
+>>>>>>> cba4206f46728294b317464c4728579d35ff872d
   } catch {
     return parseMysqlUrl(raw);
   }
@@ -678,6 +716,7 @@ export async function getAllStrategies(): Promise<DbStrategy[]> {
   if (useMysql()) return query('SELECT * FROM strategies ORDER BY createdAt DESC');
   return readJson(STRATS);
 }
+<<<<<<< HEAD
 
 export async function createStrategy(data: Omit<DbStrategy, 'id' | 'createdAt' | 'updatedAt'>): Promise<DbStrategy> {
   const strategy = { ...data, id: `str_${crypto.randomBytes(12).toString('hex')}`, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
@@ -685,4 +724,116 @@ export async function createStrategy(data: Omit<DbStrategy, 'id' | 'createdAt' |
   strategies.push(strategy);
   writeJson(STRATS, strategies);
   return strategy;
+=======
+
+export async function createStrategy(data: Omit<DbStrategy, 'id' | 'createdAt' | 'updatedAt'>): Promise<DbStrategy> {
+  const strategy = { ...data, id: `str_${crypto.randomBytes(12).toString('hex')}`, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
+  const strategies = readJson(STRATS);
+  strategies.push(strategy);
+  writeJson(STRATS, strategies);
+  return strategy;
+}
+
+// ─── Payments ───────────────────────────────────────────────────────────────
+
+export interface DbPayment {
+  id: string;
+  userId: string;
+  subscriptionId: string | null;
+  packageId: string | null;
+  amountCents: number;
+  currency: string;
+  status: string;
+  paymentMethod: string;
+  depositAddress: string | null;
+  depositNetwork: string | null;
+  txHash: string | null;
+  verifiedAt: string | null;
+  description: string | null;
+  expiresAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+const PAYS = 'payments.json';
+
+export async function getAllPayments(where?: Record<string, any>): Promise<DbPayment[]> {
+  if (useMysql()) {
+    const clauses: string[] = [];
+    const params: any[] = [];
+    if (where?.userId) { clauses.push('userId = ?'); params.push(where.userId); }
+    if (where?.status) { clauses.push('status = ?'); params.push(where.status); }
+    if (where?.subscriptionId) { clauses.push('subscriptionId = ?'); params.push(where.subscriptionId); }
+    const sql = clauses.length ? `SELECT * FROM payments WHERE ${clauses.join(' AND ')} ORDER BY createdAt DESC` : 'SELECT * FROM payments ORDER BY createdAt DESC';
+    return query(sql, params);
+  }
+  let rows = readJson(PAYS);
+  if (where) {
+    if (where.userId) rows = rows.filter((p: any) => p.userId === where.userId);
+    if (where.status) rows = rows.filter((p: any) => p.status === where.status);
+    if (where.subscriptionId) rows = rows.filter((p: any) => p.subscriptionId === where.subscriptionId);
+  }
+  return rows;
+}
+
+export async function findPaymentById(id: string): Promise<DbPayment | null> {
+  if (useMysql()) {
+    const rows = await query('SELECT * FROM payments WHERE id = ? LIMIT 1', [id]);
+    return (rows[0] as any) || null;
+  }
+  return readJson(PAYS).find((p: any) => p.id === id) || null;
+}
+
+export async function findPaymentFirst(where: Record<string, any>): Promise<DbPayment | null> {
+  if (useMysql()) {
+    const clauses: string[] = [];
+    const params: any[] = [];
+    if (where.userId) { clauses.push('userId = ?'); params.push(where.userId); }
+    if (where.status) { clauses.push('status = ?  OR status = ?'); params.push(where.status, where.status === 'PENDING' ? 'AWAITING_DEPOSIT' : where.status); }
+    if (where.subscriptionId) { clauses.push('subscriptionId = ?'); params.push(where.subscriptionId); }
+    if (!clauses.length) return null;
+    const rows = await query(`SELECT * FROM payments WHERE ${clauses.join(' AND ')} ORDER BY createdAt DESC LIMIT 1`, params);
+    return (rows[0] as any) || null;
+  }
+  const rows = await getAllPayments(where);
+  return rows[0] || null;
+}
+
+export async function createPayment(data: Omit<DbPayment, 'id' | 'createdAt' | 'updatedAt'>): Promise<DbPayment> {
+  const payment = {
+    ...data,
+    id: `pay_${crypto.randomBytes(12).toString('hex')}`,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+  if (useMysql()) {
+    await query(
+      'INSERT INTO payments (id, userId, subscriptionId, packageId, amountCents, currency, status, paymentMethod, depositAddress, depositNetwork, txHash, verifiedAt, description, expiresAt, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [payment.id, payment.userId, payment.subscriptionId, payment.packageId, payment.amountCents, payment.currency, payment.status, payment.paymentMethod, payment.depositAddress, payment.depositNetwork, payment.txHash, payment.verifiedAt, payment.description, payment.expiresAt, payment.createdAt, payment.updatedAt]
+    );
+    return payment;
+  }
+  const payments = readJson(PAYS);
+  payments.push(payment);
+  writeJson(PAYS, payments);
+  return payment;
+}
+
+export async function updatePayment(id: string, data: Partial<DbPayment>): Promise<DbPayment | null> {
+  if (useMysql()) {
+    const entries = Object.entries(data).filter(([key]) => ['status', 'txHash', 'verifiedAt', 'description', 'expiresAt', 'depositAddress', 'depositNetwork', 'amountCents'].includes(key));
+    if (!entries.length) return findPaymentById(id);
+    const setSql = entries.map(([key]) => `\`${key}\` = ?`).join(', ');
+    const values = entries.map(([_, v]) => v);
+    values.push(id);
+    await query(`UPDATE payments SET ${setSql}, updatedAt = NOW() WHERE id = ?`, values);
+    return findPaymentById(id);
+  }
+  const payments = readJson(PAYS);
+  const idx = payments.findIndex((p: any) => p.id === id);
+  if (idx === -1) return null;
+  payments[idx] = { ...payments[idx], ...data, updatedAt: new Date().toISOString() };
+  writeJson(PAYS, payments);
+  return payments[idx];
+>>>>>>> cba4206f46728294b317464c4728579d35ff872d
 }

@@ -1,0 +1,164 @@
+-- TradeCandle MySQL Schema
+
+CREATE TABLE IF NOT EXISTS users (
+  id VARCHAR(64) PRIMARY KEY,
+  email VARCHAR(255) NULL,
+  passwordHash VARCHAR(255) NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  timezone VARCHAR(255) NULL DEFAULT 'UTC',
+  emailVerified DATETIME NOT NULL,
+  twoFactorEnabled TINYINT(1) NULL DEFAULT 0,
+  twoFactorSecret VARCHAR(255) NOT NULL,
+  role VARCHAR(255) NULL DEFAULT 'TRADER',
+  status VARCHAR(255) NULL DEFAULT 'ACTIVE',
+  autoLinkAccounts TINYINT(1) NULL DEFAULT 1,
+  createdAt DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS subscriptions (
+  id VARCHAR(64) PRIMARY KEY,
+  userId VARCHAR(255) NULL,
+  packageId VARCHAR(255) NULL,
+  status VARCHAR(255) NULL DEFAULT 'ACTIVE',
+  currentPeriodStart DATETIME NULL,
+  currentPeriodEnd DATETIME NULL,
+  cancelAtPeriodEnd TINYINT(1) NULL DEFAULT 0,
+  stripeSubscriptionId VARCHAR(255) NOT NULL,
+  stripeCustomerId VARCHAR(255) NOT NULL,
+  createdAt DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS licenses (
+  id VARCHAR(64) PRIMARY KEY,
+  key VARCHAR(255) NULL,
+  userId VARCHAR(255) NULL,
+  subscriptionId VARCHAR(255) NULL,
+  strategyId VARCHAR(255) NULL,
+  status VARCHAR(255) NULL DEFAULT 'ACTIVE',
+  expiresAt DATETIME NULL,
+  maxAccounts INT NULL DEFAULT '1',
+  killSwitch TINYINT(1) NULL DEFAULT 0,
+  killSwitchReason VARCHAR(255) NOT NULL,
+  killSwitchAt DATETIME NOT NULL,
+  pausedAt DATETIME NOT NULL,
+  pausedReason VARCHAR(255) NOT NULL,
+  createdAt DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS packages (
+  id VARCHAR(64) PRIMARY KEY,
+  name VARCHAR(255) NULL,
+  description VARCHAR(255) NOT NULL,
+  priceCents INT NULL,
+  currency VARCHAR(255) NULL DEFAULT 'USD',
+  billingCycle VARCHAR(255) NULL,
+  maxAccounts INT NULL DEFAULT '1',
+  features VARCHAR(255) NULL,
+  isActive TINYINT(1) NULL DEFAULT 1,
+  isTrial TINYINT(1) NULL DEFAULT 0,
+  trialDays INT NULL DEFAULT '0',
+  sortOrder INT NULL DEFAULT '0',
+  stripePriceId VARCHAR(255) NOT NULL,
+  createdAt DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS strategies (
+  id VARCHAR(64) PRIMARY KEY,
+  name VARCHAR(255) NULL,
+  description VARCHAR(255) NOT NULL,
+  version VARCHAR(255) NULL,
+  defaultConfig VARCHAR(255) NULL,
+  riskConfig VARCHAR(255) NULL,
+  isActive TINYINT(1) NULL DEFAULT 1,
+  createdAt DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS trading_accounts (
+  id VARCHAR(64) PRIMARY KEY,
+  userId VARCHAR(255) NULL,
+  licenseId VARCHAR(255) NULL,
+  accountNumber VARCHAR(255) NULL,
+  brokerName VARCHAR(255) NULL,
+  platform VARCHAR(255) NULL,
+  status VARCHAR(255) NULL DEFAULT 'ACTIVE',
+  lastHeartbeatAt DATETIME NOT NULL,
+  lastKnownIp VARCHAR(255) NOT NULL,
+  createdAt DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS trade_events (
+  id VARCHAR(64) PRIMARY KEY,
+  licenseId VARCHAR(255) NULL,
+  tradingAccountId VARCHAR(255) NULL,
+  ticket VARCHAR(255) NULL,
+  symbol VARCHAR(255) NULL,
+  direction VARCHAR(255) NULL,
+  eventType VARCHAR(255) NULL,
+  openPrice REAL NOT NULL,
+  closePrice REAL NOT NULL,
+  volume REAL NULL,
+  openTime DATETIME NOT NULL,
+  closeTime DATETIME NOT NULL,
+  profit REAL NOT NULL,
+  commission REAL NOT NULL DEFAULT '0',
+  swap REAL NOT NULL DEFAULT '0',
+  magicNumber INT NOT NULL,
+  comment VARCHAR(255) NOT NULL,
+  createdAt DATETIME NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS payments (
+  id VARCHAR(64) PRIMARY KEY,
+  userId VARCHAR(255) NULL,
+  subscriptionId VARCHAR(255) NOT NULL,
+  amountCents INT NULL,
+  currency VARCHAR(255) NULL DEFAULT 'USDT',
+  status VARCHAR(255) NULL DEFAULT 'PENDING',
+  paymentMethod VARCHAR(255) NULL DEFAULT 'USDT_ERC20',
+  stripePaymentId VARCHAR(255) NOT NULL,
+  depositAddress VARCHAR(255) NOT NULL,
+  depositNetwork VARCHAR(255) NOT NULL DEFAULT 'ERC-20',
+  txHash VARCHAR(255) NOT NULL,
+  fromAddress VARCHAR(255) NOT NULL,
+  confirmations INT NOT NULL DEFAULT '0',
+  verifiedAt DATETIME NOT NULL,
+  expiresAt DATETIME NOT NULL,
+  description VARCHAR(255) NOT NULL,
+  createdAt DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS risk_rules (
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS api_keys (
+  id VARCHAR(64) PRIMARY KEY,
+  userId VARCHAR(255) NULL,
+  keyHash VARCHAR(255) NULL,
+  keyPrefix VARCHAR(255) NULL,
+  name VARCHAR(255) NULL,
+  lastUsedAt DATETIME NOT NULL,
+  expiresAt DATETIME NOT NULL,
+  createdAt DATETIME NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS auth_tokens (
+  token VARCHAR(128) PRIMARY KEY,
+  userId VARCHAR(64) NOT NULL,
+  expiresAt DATETIME NOT NULL,
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_auth_tokens_user (userId),
+  INDEX idx_auth_tokens_expires (expiresAt)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Indexes
+CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
+CREATE INDEX IF NOT EXISTS idx_licenses_user ON licenses(userId);
+CREATE INDEX IF NOT EXISTS idx_licenses_key ON licenses(`key`);
+CREATE INDEX IF NOT EXISTS idx_subscriptions_user ON subscriptions(userId);

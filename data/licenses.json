@@ -1,1 +1,111 @@
+<<<<<<< HEAD
 [{"id": "lic_demo_001", "userId": "usr_demo_001", "subscriptionId": "sub_demo_001", "key": "TC-DEMO-XXXX-XXXX-XXXX-XXXX", "strategyId": "strat_v12_default", "status": "ACTIVE", "maxAccounts": 1, "expiresAt": "2026-06-01T01:27:34.000Z", "killSwitch": false, "killSwitchReason": null, "hmacSecret": "demo_secret_12345", "createdAt": "2026-05-02T08:27:34.000Z", "updatedAt": "2026-05-02T08:27:34.000Z"}]
+=======
+[
+  {
+    "id": "lic_demo_001",
+    "userId": "usr_demo_001",
+    "subscriptionId": "sub_demo_001",
+    "key": "TC-DEMO-XXXX-XXXX-XXXX-XXXX",
+    "strategyId": "strat_v12_default",
+    "status": "ACTIVE",
+    "maxAccounts": 1,
+    "expiresAt": "2026-06-01T01:27:34.000Z",
+    "killSwitch": false,
+    "killSwitchReason": null,
+    "hmacSecret": "demo_secret_12345",
+    "createdAt": "2026-05-02T08:27:34.000Z",
+    "updatedAt": "2026-05-02T08:27:34.000Z"
+  },
+  {
+    "userId": "usr_a4fbbd8aaff9dc3ad3c822c1",
+    "subscriptionId": "sub_dbe0e71b8080468c87370b63",
+    "key": "W2IS-KQR5-WNGI-3PQC",
+    "status": "ACTIVE",
+    "maxAccounts": 1,
+    "expiresAt": "2026-06-02T01:53:01.888Z",
+    "id": "lic_cff7f243709617994eb0dd17",
+    "createdAt": "2026-05-03T01:53:01.960Z"
+  },
+  {
+    "userId": "usr_5353d4f598f0f8e93a356609",
+    "subscriptionId": "sub_0cb67f4b49689733a6541166",
+    "key": "76B1-FXIK-17CZ-URTL",
+    "status": "ACTIVE",
+    "maxAccounts": 1,
+    "expiresAt": "2026-06-02T03:34:34.717Z",
+    "id": "lic_30ff661fd9a37a9d6d65bdcc",
+    "createdAt": "2026-05-03T03:34:34.885Z"
+  },
+  {
+    "userId": "usr_0103191f58a587f6decc0576",
+    "subscriptionId": "sub_3653da46308f0a6fee516b50",
+    "key": "0X5S-63C4-I1TL-KBGN",
+    "status": "ACTIVE",
+    "maxAccounts": 1,
+    "expiresAt": "2026-06-02T04:56:50.333Z",
+    "id": "lic_d7627598c7591d575f46d9d1",
+    "createdAt": "2026-05-03T04:56:50.379Z"
+  },
+  {
+    "userId": "usr_5f8035d28f703e68de6366af",
+    "subscriptionId": "sub_d45e2fdfc1da2b1a30b23e49",
+    "key": "VFE2-2LNT-CU14-EL0S",
+    "status": "ACTIVE",
+    "maxAccounts": 1,
+    "expiresAt": "2026-06-02T06:35:50.499Z",
+    "id": "lic_3391d92ab6f68b4227961a41",
+    "createdAt": "2026-05-03T06:35:50.544Z"
+  },
+  {
+    "userId": "usr_a0abaffcd091ed0ff0764786",
+    "subscriptionId": "sub_0ee7297d38ab0dccf80a1fd8",
+    "key": "RI2A-4OY0-T6TN-57DU",
+    "status": "ACTIVE",
+    "maxAccounts": 1,
+    "expiresAt": "2026-06-02T10:01:34.697Z",
+    "id": "lic_deb3f38ae68692e60a244387",
+    "createdAt": "2026-05-03T10:01:34.745Z"
+  },
+  {
+    "userId": "usr_bd2b055e03a133741c131399",
+    "subscriptionId": "sub_9441e13a6d989969303144cb",
+    "key": "70Y1-2AKS-YZTQ-P4K1",
+    "status": "ACTIVE",
+    "maxAccounts": 1,
+    "expiresAt": "2026-06-02T10:17:52.394Z",
+    "id": "lic_2f831267e883c0b7a7f95fce",
+    "createdAt": "2026-05-03T10:17:52.442Z"
+  },
+  {
+    "userId": "usr_5c0150d0daf3088c89a7dcc8",
+    "subscriptionId": "sub_b42a2cbe490f073f9a840e45",
+    "key": "WSLJ-5UYW-RAQY-NYSU",
+    "status": "ACTIVE",
+    "maxAccounts": 1,
+    "expiresAt": "2026-06-02T10:20:16.483Z",
+    "id": "lic_c3d4d1f18b10b2bd9fa9496c",
+    "createdAt": "2026-05-03T10:20:16.531Z"
+  },
+  {
+    "userId": "usr_59482912d17ad73c002c779a",
+    "subscriptionId": "sub_e648708e9d905db7734cfc12",
+    "key": "TGAE-BRZ7-Y84A-PLSP",
+    "status": "ACTIVE",
+    "maxAccounts": 1,
+    "expiresAt": "2026-06-02T10:49:24.683Z",
+    "id": "lic_e2a18a542a0a62614b5a7fe7",
+    "createdAt": "2026-05-03T10:49:24.730Z"
+  },
+  {
+    "userId": "usr_b1d3ac300107eeb083e85499",
+    "subscriptionId": "sub_1c6930038cc0ec2152c51326",
+    "key": "XERM-1RTV-C6UR-UHEM",
+    "status": "ACTIVE",
+    "maxAccounts": 1,
+    "expiresAt": "2026-06-02T11:04:12.214Z",
+    "id": "lic_73d94d3607b3ca63b3fdc31d",
+    "createdAt": "2026-05-03T11:04:12.270Z"
+  }
+]
+>>>>>>> cba4206f46728294b317464c4728579d35ff872d

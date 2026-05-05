@@ -1,7 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { findUserByEmail } from '../../../lib/db';
-import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 import { SignJWT } from 'jose';
+
+function verifyPassword(password: string, stored: string): boolean {
+  const [salt, hash] = stored.split(':');
+  if (!salt || !hash) return false;
+  const attempt = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
+  return attempt === hash;
+}
 
 const SECRET = new TextEncoder().encode(process.env.NEXTAUTH_SECRET || 'fallback-secret');
 
@@ -9,7 +16,11 @@ export async function POST(req: NextRequest) {
   try {
     const { email, password } = await req.json();
     const user = await findUserByEmail(email);
+<<<<<<< HEAD
     if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
+=======
+    if (!user || !verifyPassword(password, user.passwordHash)) {
+>>>>>>> cba4206f46728294b317464c4728579d35ff872d
       return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
     }
     if (user.status === 'SUSPENDED' || user.status === 'BANNED') {

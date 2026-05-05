@@ -4,6 +4,10 @@
 //| Version: 1.0.0                                                    |
 //+------------------------------------------------------------------+
 #property strict
+
+#ifndef EASAAS_HEARTBEAT_MQH
+#define EASAAS_HEARTBEAT_MQH
+
 #include "EASaaS_Http.mqh"
 #include "EASaaS_License.mqh"
 
@@ -192,3 +196,6 @@ long GetSecondsSinceLastHeartbeat()
    return (long)(TimeCurrent() - g_heartbeat_last_sent);
 }
 bool IsHeartbeatHealthy() { return g_heartbeat_fail_count < g_heartbeat_max_fail; }
+
+
+#endif // EASAAS_HEARTBEAT_MQH

@@ -48,8 +48,14 @@ const adminItems: NavItem[] = [
   { name: 'Subscriptions', href: '/dashboard/admin/subscriptions', icon: CreditCard },
   { name: 'Licenses', href: '/dashboard/admin/licenses', icon: Key },
   { name: 'Strategies', href: '/dashboard/admin/strategies', icon: Layers },
+<<<<<<< HEAD
   { name: 'Risk Rules', href: '/dashboard/admin/risk-rules', icon: ShieldAlert },
 ];
+=======
+  { name: 'Payments', href: '/dashboard/admin/payments', icon: CreditCard },
+  { name: 'Risk Rules', href: '/dashboard/admin/risk-rules', icon: ShieldAlert },
+];
+>>>>>>> cba4206f46728294b317464c4728579d35ff872d
 
 function isActiveRoute(pathname: string, href: string) {
   if (pathname === href) return true;
