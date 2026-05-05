@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-export const dynamic = 'force-dynamic';
-
-export { GET } from '../../../../api/routes/subscriptions/list/route';
-=======
 // ─── GET /api/subscriptions/list ────────────────────────────────────────────────
 // Direct MySQL query — bypasses billing service entirely
 // ─────────────────────────────────────────────────────────────────────────────
@@ -61,4 +56,3 @@ export async function GET() {
     );
   }
 }
->>>>>>> cba4206f46728294b317464c4728579d35ff872d

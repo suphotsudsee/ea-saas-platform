@@ -26,20 +26,14 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const v = schema.parse(body);
-<<<<<<< HEAD
-=======
     
->>>>>>> cba4206f46728294b317464c4728579d35ff872d
     if (await findUserByEmail(v.email)) {
       return NextResponse.json({ error: 'Email already registered' }, { status: 409 });
     }
     
     const now = new Date().toISOString();
     const trialEnd = new Date(Date.now()+30*86400000).toISOString();
-<<<<<<< HEAD
-=======
     
->>>>>>> cba4206f46728294b317464c4728579d35ff872d
     const user = await createUser({
       email: v.email, name: v.name || null,
       passwordHash: hashPassword(v.password),
@@ -47,19 +41,12 @@ export async function POST(req: NextRequest) {
       timezone: 'UTC', twoFactorEnabled: false,
       stripeCustomerId: null,
     });
-<<<<<<< HEAD
-    const sub = await createSub({
-      userId: user.id, packageId: 'starter',
-      status: 'TRIAL', currentPeriodEnd: trialEnd, trialEndsAt: trialEnd,
-    });
-=======
     
     const sub = await createSub({
       userId: user.id, packageId: v.packageId,
       status: 'TRIAL', currentPeriodEnd: trialEnd, trialEndsAt: trialEnd,
     });
     
->>>>>>> cba4206f46728294b317464c4728579d35ff872d
     const lic = await createLic({
       userId: user.id, subscriptionId: sub.id,
       key: generateLicenseKey(), status: 'ACTIVE',

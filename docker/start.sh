@@ -2,13 +2,6 @@
 # ⚠️ Do NOT use `set -e` — prisma db push may return non-zero for harmless warnings
 
 echo "📊 Pushing Prisma schema to database..."
-<<<<<<< HEAD
-
-# Try multiple prisma paths — in standalone builds, .bin symlinks may not survive COPY
-node ./node_modules/.bin/prisma db push --skip-generate --accept-data-loss 2>&1 \
-  || node ./node_modules/prisma/build/index.js db push --skip-generate --accept-data-loss 2>&1 \
-  || echo "⚠️ Prisma db push warning (tables may already exist)"
-=======
 node ./node_modules/.bin/prisma db push --skip-generate --accept-data-loss 2>&1 \
   || node ./node_modules/prisma/build/index.js db push --skip-generate --accept-data-loss 2>&1 \
   || echo "⚠️ Prisma db push warning (tables may already exist)"
@@ -35,7 +28,6 @@ const p = new PrismaClient();
   await p.\$disconnect();
 })().catch(e => console.error('Seed error:', e.message));
 " 2>&1 || echo "⚠️ Seed skipped (non-critical)"
->>>>>>> cba4206f46728294b317464c4728579d35ff872d
 
 echo "🚀 Starting Next.js server..."
 exec node server.js

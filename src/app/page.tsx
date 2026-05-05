@@ -1,32 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-<<<<<<< HEAD
-import {
-  Activity,
-  Shield,
-  Zap,
-  BarChart3,
-  Layers,
-  Terminal,
-  CheckCircle,
-  Server,
-  Globe,
-  ArrowRight,
-  Menu,
-  X,
-  Settings,
-  AlertTriangle,
-  Lock,
-  RefreshCw,
-  Cpu,
-  ChevronDown,
-  Waves,
-  TrendingUp,
-  Smartphone,
-  MessageCircle,
-} from 'lucide-react';
-=======
 import {
   Activity,
   Shield,
@@ -53,7 +27,6 @@ import {
   Eye,
   EyeOff,
 } from 'lucide-react';
->>>>>>> cba4206f46728294b317464c4728579d35ff872d
 import { useAuth } from '@/lib/auth';
 
 type PageId = 'home' | 'features' | 'workflow' | 'pricing' | 'login' | 'register';
@@ -770,20 +743,12 @@ function AuthPage({
   mode: 'login' | 'register';
   navigateTo: (page: PageId) => void;
 }) {
-<<<<<<< HEAD
-  const { login } = useAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState('');
-=======
   const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
->>>>>>> cba4206f46728294b317464c4728579d35ff872d
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -832,18 +797,6 @@ function AuthPage({
               className="w-full rounded-lg border border-amber-900/30 bg-slate-950 px-4 py-2.5 text-white transition-colors focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
             />
           </div>
-<<<<<<< HEAD
-          <div>
-            <label className="mb-1 block text-sm font-medium text-slate-300">Password</label>
-            <input
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-lg border border-amber-900/30 bg-slate-950 px-4 py-2.5 text-white transition-colors focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
-            />
-          </div>
-=======
           <div>
             <label className="mb-1 block text-sm font-medium text-slate-300">Password</label>
             <div className="relative">
@@ -864,7 +817,6 @@ function AuthPage({
               </button>
             </div>
           </div>
->>>>>>> cba4206f46728294b317464c4728579d35ff872d
 
           {mode === 'login' && (
             <div className="flex justify-end">

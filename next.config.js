@@ -16,8 +16,6 @@ const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ['bcryptjs'],
   },
-<<<<<<< HEAD
-=======
   async redirects() {
     return [
       {
@@ -27,7 +25,6 @@ const nextConfig = {
       },
     ];
   },
->>>>>>> cba4206f46728294b317464c4728579d35ff872d
   async headers() {
     return [
       {

@@ -174,8 +174,6 @@ async function bootstrapMysqlSchema() {
     await ignore('ALTER TABLE packages ADD COLUMN trialDays INTEGER NOT NULL DEFAULT 0');
     await ignore('ALTER TABLE api_keys ADD COLUMN status VARCHAR(64) NOT NULL DEFAULT "ACTIVE"');
 
-<<<<<<< HEAD
-=======
     await exec(`
       CREATE TABLE IF NOT EXISTS payments (
         id VARCHAR(191) NOT NULL PRIMARY KEY,
@@ -200,7 +198,6 @@ async function bootstrapMysqlSchema() {
       ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
     `);
 
->>>>>>> cba4206f46728294b317464c4728579d35ff872d
     await seedMysqlDefaults(connection);
   } finally {
     await connection.end();
@@ -245,10 +242,6 @@ async function seedMysqlDefaults(connection: mysql.Connection) {
 function getConnectionConfig() {
   const raw = DATABASE_URL!;
   try {
-<<<<<<< HEAD
-    new URL(raw);
-    return raw;
-=======
     // Coolify auto-injects hostname like "mysql-database-nh0992vyh996he1svo5ikxmp"
     // but Docker DNS only resolves the short form "nh0992vyh996he1svo5ikxmp"
     let url = raw;
@@ -257,7 +250,6 @@ function getConnectionConfig() {
     }
     new URL(url);
     return url;
->>>>>>> cba4206f46728294b317464c4728579d35ff872d
   } catch {
     return parseMysqlUrl(raw);
   }
@@ -716,15 +708,6 @@ export async function getAllStrategies(): Promise<DbStrategy[]> {
   if (useMysql()) return query('SELECT * FROM strategies ORDER BY createdAt DESC');
   return readJson(STRATS);
 }
-<<<<<<< HEAD
-
-export async function createStrategy(data: Omit<DbStrategy, 'id' | 'createdAt' | 'updatedAt'>): Promise<DbStrategy> {
-  const strategy = { ...data, id: `str_${crypto.randomBytes(12).toString('hex')}`, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
-  const strategies = readJson(STRATS);
-  strategies.push(strategy);
-  writeJson(STRATS, strategies);
-  return strategy;
-=======
 
 export async function createStrategy(data: Omit<DbStrategy, 'id' | 'createdAt' | 'updatedAt'>): Promise<DbStrategy> {
   const strategy = { ...data, id: `str_${crypto.randomBytes(12).toString('hex')}`, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
@@ -845,5 +828,4 @@ export async function updatePayment(id: string, data: Partial<DbPayment>): Promi
   payments[idx] = { ...payments[idx], ...data, updatedAt: new Date().toISOString() };
   writeJson(PAYS, payments);
   return payments[idx];
->>>>>>> cba4206f46728294b317464c4728579d35ff872d
 }

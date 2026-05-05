@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-[{"id": "lic_demo_001", "userId": "usr_demo_001", "subscriptionId": "sub_demo_001", "key": "TC-DEMO-XXXX-XXXX-XXXX-XXXX", "strategyId": "strat_v12_default", "status": "ACTIVE", "maxAccounts": 1, "expiresAt": "2026-06-01T01:27:34.000Z", "killSwitch": false, "killSwitchReason": null, "hmacSecret": "demo_secret_12345", "createdAt": "2026-05-02T08:27:34.000Z", "updatedAt": "2026-05-02T08:27:34.000Z"}]
-=======
 [
   {
     "id": "lic_demo_001",
@@ -108,4 +105,3 @@
     "createdAt": "2026-05-03T11:04:12.270Z"
   }
 ]
->>>>>>> cba4206f46728294b317464c4728579d35ff872d

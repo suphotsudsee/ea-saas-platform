@@ -46,16 +46,6 @@ export function getApiErrorMessage(error: unknown, fallback = 'Something went wr
   return payload?.error || payload?.message || error.message || fallback;
 }
 
-<<<<<<< HEAD
-// Auth Interceptor
-api.interceptors.request.use((config) => {
-  const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
-=======
 // Auth Interceptor — only attach token when it exists
 api.interceptors.request.use((config) => {
   const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
@@ -64,7 +54,6 @@ api.interceptors.request.use((config) => {
   }
   return config;
 });
->>>>>>> cba4206f46728294b317464c4728579d35ff872d
 
 // Error Interceptor
 api.interceptors.response.use(

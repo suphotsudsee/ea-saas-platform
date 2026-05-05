@@ -19,19 +19,6 @@ function getStripeClient(): Stripe {
 
 // ─── List Packages ────────────────────────────────────────────────────────────
 
-<<<<<<< HEAD
-export async function listActivePackages() {
-  try {
-    return await prisma.package.findMany({
-      where: { isActive: true },
-      orderBy: { sortOrder: 'asc' },
-    });
-  } catch {
-    // Fallback to JSON file (local dev without MySQL)
-    const { getAllPackages } = await import('../../lib/db');
-    const all = await getAllPackages();
-    return all.filter((p: any) => p.isActive === 1 || p.isActive === true);
-=======
 // ─── Static fallback packages (works even when DB + JSON file both unavailable) ───
 const STATIC_PACKAGES = [
   { id: 'pkg_trial', name: '1-Month Free Trial', description: 'Free 30-day access — 1 live, 1 demo', priceCents: 0, currency: 'USD', billingCycle: 'trial', maxAccounts: 1, isActive: true, isTrial: true, trialDays: 30, sortOrder: 0 },
@@ -52,7 +39,6 @@ export async function listActivePackages() {
   } catch {
     // DB error or connection failed — fall back to static packages
     return STATIC_PACKAGES;
->>>>>>> cba4206f46728294b317464c4728579d35ff872d
   }
 }
 

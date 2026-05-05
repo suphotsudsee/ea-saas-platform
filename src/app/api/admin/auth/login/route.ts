@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-export { POST } from '../../../../../api/routes/admin/auth/login/route';
-=======
 
 import { NextResponse, NextRequest } from 'next/server';
 import mysql from 'mysql2/promise';
@@ -87,4 +84,3 @@ export async function POST(request: NextRequest) {
     if (conn) await conn.end();
   }
 }
->>>>>>> cba4206f46728294b317464c4728579d35ff872d

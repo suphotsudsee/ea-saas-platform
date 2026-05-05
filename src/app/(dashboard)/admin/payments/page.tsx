@@ -25,7 +25,7 @@ interface PaymentRow {
     id: string;
     email: string;
     name: string | null;
-  };
+  } | null;
 }
 
 function statusClass(status: string) {
@@ -49,6 +49,14 @@ function formatDate(value: string) {
 function truncateHash(hash: string | null) {
   if (!hash) return '—';
   return hash.substring(0, 10) + '...' + hash.substring(hash.length - 6);
+}
+
+function getCustomerLabel(pay: PaymentRow) {
+  return pay.user?.name || pay.user?.email || `User ${pay.userId || 'unknown'}`;
+}
+
+function getCustomerEmail(pay: PaymentRow) {
+  return pay.user?.email || 'No user record';
 }
 
 export default function AdminPaymentsPage() {
@@ -116,8 +124,8 @@ export default function AdminPaymentsPage() {
             <div key={pay.id} className="grid gap-4 rounded-[28px] border border-white/8 bg-[#0c1720] p-5 lg:grid-cols-[1.2fr_0.8fr_0.8fr_0.7fr_0.7fr] lg:items-center">
               {/* Customer */}
               <div>
-                <div className="text-sm font-semibold text-white">{pay.user.name || pay.user.email}</div>
-                <div className="mt-1 text-xs text-slate-500">{pay.user.email}</div>
+                <div className="text-sm font-semibold text-white">{getCustomerLabel(pay)}</div>
+                <div className="mt-1 text-xs text-slate-500">{getCustomerEmail(pay)}</div>
               </div>
               {/* Amount & Currency */}
               <div>

@@ -1,10 +1,6 @@
 # EA SaaS Platform - Coolify Docker Compose
-<<<<<<< HEAD
-# MySQL managed as separate Coolify resource. Redis included here for simplicity.
-=======
 # All secrets/credentials are managed by Coolify Environment Variables UI.
 # This file contains only structural Docker config.
->>>>>>> cba4206f46728294b317464c4728579d35ff872d
 
 services:
   redis:
@@ -35,34 +31,11 @@ services:
       - NEXT_TELEMETRY_DISABLED=1
       - PORT=3004
       - HOSTNAME=0.0.0.0
-<<<<<<< HEAD
-      - DATABASE_URL=${DATABASE_URL:?}
-      - REDIS_URL=redis://redis:6379/0
-      - NEXTAUTH_SECRET=${NEXT...T:?}
-      - NEXTAUTH_URL=***
-      - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@ea-saas.com}
-      - ADMIN_PASSWORD=${ADMI...ure}
-      - APP_URL=${APP_URL:-}
-      - API_URL=${API_URL:-}
-      - STRIPE_PUBLIC_KEY=${STRIPE_PUBLIC_KEY:-pk_test_placeholder}
-      - STRIPE_SECRET_KEY=${STRI...der}
-      - STRIPE_WEBHOOK_SECRET=${STRI...der}
-      - RESEND_API_KEY=${RESE...der}
-      - EMAIL_FROM=${EMAIL_FROM:-noreply@ea-saas.local}
-      - RATE_LIMIT_EA_RPM=${RATE_LIMIT_EA_RPM:-60}
-      - RATE_LIMIT_WEB_RPM=${RATE_LIMIT_WEB_RPM:-120}
-      - HEARTBEAT_INTERVAL_SEC=${HEARTBEAT_INTERVAL_SEC:-60}
-      - HEARTBEAT_STALE_FACTOR=${HEARTBEAT_STALE_FACTOR:-3}
-      - LICENSE_CACHE_TTL_SEC=${LICENSE_CACHE_TTL_SEC:-300}
-    expose:
-      - "3004"
-=======
       - DATABASE_URL=mysql://mysql:QvDnbrWZ1F8xo05ax9RlMIHLNTGpQWuSWoZS68FeBk4Llg18Y0O2WWI5QU9tlpFS@nh0992vyh996he1svo5ikxmp:3306/default
     expose:
       - "3004"
     ports:
       - "3004:3004"
->>>>>>> cba4206f46728294b317464c4728579d35ff872d
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3004/api/health"]
       interval: 30s
