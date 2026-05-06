@@ -41,23 +41,6 @@ export async function GET(request: Request) {
 
     return NextResponse.json({ found: keys.length, keys });
   } catch (error: any) {
-    // Try SQLite fallback
-    try {
-      const fs = await import('fs');
-      const path = await import('path');
-      const dbPath = path.join(process.cwd(), 'data', 'prod.db');
-      if (fs.existsSync(dbPath)) {
-        const Database = (await import('better-sqlite3')).default;
-        const db = new Database(dbPath);
-        const rows = db.prepare("SELECT key FROM licenses WHERE key LIKE ? LIMIT 3").all(`%${partial}%`);
-        db.close();
-        return NextResponse.json({
-          found: rows.length,
-          keys: (rows as any[]).map(r => (r as any).key),
-        });
-      }
-    } catch (e2: any) {}
-    
     return NextResponse.json({ error: error.message || 'DB error' }, { status: 500 });
   }
 }
