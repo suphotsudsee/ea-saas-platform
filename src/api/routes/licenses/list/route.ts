@@ -16,13 +16,7 @@ export async function GET(request: NextRequest) {
   try {
     const licenses = await listUserLicenses(authResult.user.id);
     
-    // Mask license keys for security (show only first 8 chars)
-    const maskedLicenses = licenses.map((lic) => ({
-      ...lic,
-      key: lic.key.substring(0, 8) + '****',
-    }));
-
-    return NextResponse.json({ licenses: maskedLicenses });
+    return NextResponse.json({ licenses });
   } catch (error) {
     console.error('List licenses error:', error);
     return NextResponse.json(
