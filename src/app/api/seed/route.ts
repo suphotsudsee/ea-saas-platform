@@ -4,7 +4,11 @@ import mysql from 'mysql2/promise';
 export const dynamic = 'force-dynamic';
 
 function getConnectionConfig() {
-  const raw = process.env.DATABASE_URL!;
+  let raw = process.env.DATABASE_URL!;
+  // Strip Coolify's mysql-database- prefix (Docker DNS resolves bare UUID only)
+  if (raw.includes('mysql-database-')) {
+    raw = raw.replace('mysql-database-', '');
+  }
   try {
     new URL(raw);
     return raw;
