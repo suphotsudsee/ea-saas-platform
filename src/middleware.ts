@@ -8,12 +8,19 @@ const JWT_SECRET = new TextEncoder().encode(
 
 export const config = {
   matcher: [
-    '/dashboard/:path*',
+    '/api/ea/:path*.php',
+    '/dashboard/:path*', 
     '/dashboard/admin/:path*',
   ],
 };
 
 export default async function middleware(request: NextRequest) {
+  // ─── Rewrite .php EA endpoints (EA calls .php but Next.js has no .php routes) ───
+  if (request.nextUrl.pathname.endsWith('.php') && request.nextUrl.pathname.startsWith('/api/ea/')) {
+    const newPath = request.nextUrl.pathname.replace(/\.php$/, '');
+    return NextResponse.rewrite(new URL(newPath + request.nextUrl.search, request.url));
+  }
+
   const token = request.cookies.get('session-token');
   const isAdminRoute = request.nextUrl.pathname.startsWith('/dashboard/admin');
 
