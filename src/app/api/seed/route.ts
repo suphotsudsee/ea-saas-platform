@@ -66,10 +66,15 @@ export async function GET() {
       id VARCHAR(191) NOT NULL PRIMARY KEY, name VARCHAR(191) NOT NULL UNIQUE,
       description VARCHAR(191) NULL, version VARCHAR(191) NOT NULL,
       defaultConfig JSON NULL, riskConfig JSON NULL,
+      configJson JSON NULL, configHash VARCHAR(191) NULL,
       isActive BOOLEAN NOT NULL DEFAULT true,
       createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
       updatedAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)
     ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`);
+
+    // Add new columns to existing strategies table (safe if already exist)
+    try { await conn.execute(`ALTER TABLE strategies ADD COLUMN configJson JSON NULL`); } catch {}
+    try { await conn.execute(`ALTER TABLE strategies ADD COLUMN configHash VARCHAR(191) NULL`); } catch {}
 
     await conn.execute(`CREATE TABLE IF NOT EXISTS subscriptions (
       id VARCHAR(191) NOT NULL PRIMARY KEY, userId VARCHAR(191) NOT NULL,
