@@ -41,8 +41,11 @@ function getDbConfig() {
 export async function POST(request: NextRequest) {
   let body: any;
   try {
-    body = await request.json();
-  } catch {
+    // MQL5 WebRequest adds null terminator \0 to body — strip before parse
+    const rawText = await request.text();
+    const cleaned = rawText.replace(/\0/g, '');
+    body = JSON.parse(cleaned);
+  } catch (e) {
     return NextResponse.json(
       { valid: false, error: 'PARSE_ERROR', message: 'Invalid JSON body' },
       { status: 400 }
