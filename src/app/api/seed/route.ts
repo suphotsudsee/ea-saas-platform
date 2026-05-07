@@ -87,9 +87,52 @@ export async function GET() {
       userId VARCHAR(191) NOT NULL, subscriptionId VARCHAR(191) NULL,
       strategyId VARCHAR(191) NULL, status VARCHAR(64) NOT NULL DEFAULT 'ACTIVE',
       expiresAt DATETIME(3) NULL, maxAccounts INTEGER NOT NULL DEFAULT 1,
-      killSwitch BOOLEAN NOT NULL DEFAULT false,
+      killSwitch BOOLEAN NOT NULL DEFAULT false, killSwitchReason VARCHAR(500) NULL,
       createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
       updatedAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)
+    ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`);
+
+    await conn.execute(`CREATE TABLE IF NOT EXISTS trading_accounts (
+      id VARCHAR(191) NOT NULL PRIMARY KEY, accountNumber VARCHAR(191) NOT NULL,
+      brokerName VARCHAR(191) NULL DEFAULT 'Exness', platform VARCHAR(64) NULL DEFAULT 'MT5',
+      licenseId VARCHAR(191) NOT NULL, userId VARCHAR(191) NULL,
+      status VARCHAR(64) NOT NULL DEFAULT 'LINKED',
+      createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+      updatedAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+      INDEX idx_licenseId (licenseId), INDEX idx_accountNumber (accountNumber)
+    ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`);
+
+    await conn.execute(`CREATE TABLE IF NOT EXISTS heartbeat_events (
+      id VARCHAR(191) NOT NULL PRIMARY KEY,
+      licenseId VARCHAR(191) NOT NULL, accountNumber VARCHAR(191) NOT NULL,
+      platform VARCHAR(64) NULL DEFAULT 'MT5', eaVersion VARCHAR(64) NULL,
+      equity DOUBLE NULL, balance DOUBLE NULL, 
+      openPositions INT NULL DEFAULT 0, marginLevel DOUBLE NULL,
+      status VARCHAR(64) NULL DEFAULT 'ALIVE',
+      lastHeartbeatAt DATETIME(3) NULL,
+      createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+      updatedAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+      INDEX idx_licenseId (licenseId),
+      INDEX idx_lastHeartbeatAt (lastHeartbeatAt),
+      UNIQUE KEY uk_license_account (licenseId, accountNumber)
+    ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`);
+
+    await conn.execute(`CREATE TABLE IF NOT EXISTS trade_events (
+      id VARCHAR(191) NOT NULL PRIMARY KEY,
+      licenseId VARCHAR(191) NOT NULL, accountNumber VARCHAR(191) NULL,
+      platform VARCHAR(64) NULL DEFAULT 'MT5',
+      ticket VARCHAR(191) NOT NULL, symbol VARCHAR(64) NULL,
+      direction VARCHAR(16) NULL, eventType VARCHAR(64) NULL,
+      openPrice DOUBLE NULL, closePrice DOUBLE NULL, volume DOUBLE NULL,
+      openTime VARCHAR(64) NULL, closeTime VARCHAR(64) NULL,
+      profit DOUBLE NULL, commission DOUBLE NULL DEFAULT 0, swap DOUBLE NULL DEFAULT 0,
+      magicNumber INT NULL, comment VARCHAR(500) NULL,
+      status VARCHAR(64) NULL DEFAULT 'RECORDED',
+      createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+      updatedAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+      INDEX idx_licenseId (licenseId),
+      INDEX idx_ticket (ticket),
+      INDEX idx_createdAt (createdAt)
     ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`);
 
     await conn.execute(`CREATE TABLE IF NOT EXISTS admin_users (
