@@ -29,7 +29,7 @@
 // SaaS Platform Connection
 input string   InpLicenseKey     = "";               // License Key (from SaaS dashboard)
 input string   InpApiKey         = "";               // API Key (from SaaS dashboard)
-input string   InpServerUrl     = "https://api.yourdomain.com"; // API Server URL
+input string   InpServerUrl     = "https://tradecandle.net"; // API Server URL
 input string   InpHmacSecret    = "";               // HMAC Signing Secret (optional)
 
 // Strategy Parameters

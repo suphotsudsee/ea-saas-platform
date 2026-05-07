@@ -16,6 +16,15 @@ const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ['bcryptjs'],
   },
+  // Rewrite legacy .php endpoints to Next.js routes (EA calls .php but server is Next.js)
+  async rewrites() {
+    return [
+      {
+        source: '/api/ea/:path.php',
+        destination: '/api/ea/:path',
+      },
+    ];
+  },
   async redirects() {
     return [
       {
