@@ -239,7 +239,7 @@ async function seedMysqlDefaults(connection: mysql.Connection) {
   );
 }
 
-function getConnectionConfig() {
+export function getConnectionConfig() {
   const raw = DATABASE_URL!;
   try {
     // Coolify auto-injects hostname like "mysql-database-nh0992vyh996he1svo5ikxmp"
