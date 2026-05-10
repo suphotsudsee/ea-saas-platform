@@ -1,9 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { findUserByEmail } from '../../../lib/db';
 import crypto from 'crypto';
+import bcrypt from 'bcryptjs';
 import { SignJWT } from 'jose';
 
-function verifyPassword(password: string, stored: string): boolean {
+async function verifyPassword(password: string, stored: string): Promise<boolean> {
+  // Detect hash format: bcrypt starts with $2a$ or $2b$
+  if (stored.startsWith('$2a$') || stored.startsWith('$2b$')) {
+    return bcrypt.compare(password, stored);
+  }
+  // pbkdf2 format: salt:hash
   const [salt, hash] = stored.split(':');
   if (!salt || !hash) return false;
   const attempt = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
@@ -16,7 +22,7 @@ export async function POST(req: NextRequest) {
   try {
     const { email, password } = await req.json();
     const user = await findUserByEmail(email);
-    if (!user || !verifyPassword(password, user.passwordHash)) {
+    if (!user || !(await verifyPassword(password, user.passwordHash))) {
       return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
     }
     if (user.status === 'SUSPENDED' || user.status === 'BANNED') {
