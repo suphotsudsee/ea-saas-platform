@@ -55,7 +55,6 @@ export async function GET(request: NextRequest) {
     if (direction) { conditions.push('te.direction = ?'); params.push(direction); }
     if (eventType) { conditions.push('te.eventType = ?'); params.push(eventType); }
     if (licenseId) { conditions.push('te.licenseId = ?'); params.push(licenseId); }
-    if (accountNumber) { conditions.push('te.accountNumber = ?'); params.push(accountNumber); }
     if (startDate) { conditions.push('te.createdAt >= ?'); params.push(startDate); }
     if (endDate) { conditions.push('te.createdAt <= ?'); params.push(endDate); }
 
@@ -67,11 +66,10 @@ export async function GET(request: NextRequest) {
     const offset = (page - 1) * pageSize;
 
     const [rows] = await conn.execute(
-      `SELECT te.*, ta.brokerName, ta.platform as accountPlatform,
+      `SELECT te.*,
               st.name as strategyName, st.version as strategyVersion
        FROM trade_events te
        INNER JOIN licenses l ON l.id = te.licenseId
-       LEFT JOIN trading_accounts ta ON ta.accountNumber = te.accountNumber AND ta.licenseId = te.licenseId
        LEFT JOIN strategies st ON st.id = l.strategyId
        WHERE ${where}
        ORDER BY ${sortCol} ${sortDir}
