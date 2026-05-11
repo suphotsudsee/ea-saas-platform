@@ -45,7 +45,6 @@ export async function GET(request: NextRequest) {
     const params: any[] = [authResult.user.id];
 
     if (licenseId) { conditions.push('te.licenseId = ?'); params.push(licenseId); }
-    if (accountNumber) { conditions.push('te.accountNumber = ?'); params.push(accountNumber); }
     if (startDate) { conditions.push('te.createdAt >= ?'); params.push(startDate); }
     if (endDate) { conditions.push('te.createdAt <= ?'); params.push(endDate); }
 
