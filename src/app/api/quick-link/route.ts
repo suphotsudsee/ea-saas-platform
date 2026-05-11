@@ -26,24 +26,23 @@ export async function GET() {
   try {
     conn = await mysql.createConnection(getDbConfig());
 
-    // Remove demo account 12345678
+    // Fix: update existing UNLINKED record to LINKED, or insert if missing
+    const result = await conn.execute(
+      `INSERT INTO trading_accounts (id, accountNumber, brokerName, platform, licenseId, status, userId, createdAt, updatedAt)
+       VALUES ('ta_415609557', '415609557', 'Exness', 'MT5', 'lic_30247197871f06f483943e0e', 'LINKED', 'usr_db75c85fa5e51fd640b71843', NOW(), NOW())
+       ON DUPLICATE KEY UPDATE status = 'LINKED', licenseId = VALUES(licenseId), userId = VALUES(userId), updatedAt = NOW()`
+    );
+    
+    // Also delete the demo account
     await conn.execute(
       `DELETE FROM trading_accounts WHERE accountNumber = '12345678' AND licenseId = 'lic_30247197871f06f483943e0e'`
     );
 
-    // Link REAL account 415609557
-    await conn.execute(
-      `INSERT INTO trading_accounts (id, accountNumber, brokerName, platform, licenseId, status, userId, createdAt, updatedAt)
-       VALUES ('ta_415609557', '415609557', 'Exness', 'MT5', 'lic_30247197871f06f483943e0e', 'LINKED', 'usr_db75c85fa5e51fd640b71843', NOW(), NOW())
-       ON DUPLICATE KEY UPDATE status = 'LINKED', updatedAt = NOW()` 
-    );
-
-    // Verify
     const [rows] = await conn.execute(
       `SELECT * FROM trading_accounts WHERE licenseId = 'lic_30247197871f06f483943e0e'`
     );
 
-    return NextResponse.json({ ok: true, accounts: rows, message: 'Swapped demo account for real 415609557' });
+    return NextResponse.json({ ok: true, accounts: rows });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   } finally {
