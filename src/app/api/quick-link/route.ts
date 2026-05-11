@@ -26,16 +26,16 @@ export async function GET() {
   try {
     conn = await mysql.createConnection(getDbConfig());
 
-    // Link account for the test license
+    // Remove demo account 12345678
     await conn.execute(
-      `INSERT IGNORE INTO trading_accounts (id, accountNumber, brokerName, platform, licenseId, status, userId, createdAt, updatedAt)
-       VALUES ('ta_415609557', '415609557', 'Exness', 'MT5', 'lic_30247197871f06f483943e0e', 'LINKED', 'usr_db75c85fa5e51fd640b71843', NOW(), NOW())`
+      `DELETE FROM trading_accounts WHERE accountNumber = '12345678' AND licenseId = 'lic_30247197871f06f483943e0e'`
     );
 
-    // Also link second account (demo?)
+    // Link REAL account 415609557
     await conn.execute(
-      `INSERT IGNORE INTO trading_accounts (id, accountNumber, brokerName, platform, licenseId, status, userId, createdAt, updatedAt)
-       VALUES ('ta_12345678', '12345678', 'Exness', 'MT5', 'lic_30247197871f06f483943e0e', 'LINKED', 'usr_db75c85fa5e51fd640b71843', NOW(), NOW())`
+      `INSERT INTO trading_accounts (id, accountNumber, brokerName, platform, licenseId, status, userId, createdAt, updatedAt)
+       VALUES ('ta_415609557', '415609557', 'Exness', 'MT5', 'lic_30247197871f06f483943e0e', 'LINKED', 'usr_db75c85fa5e51fd640b71843', NOW(), NOW())
+       ON DUPLICATE KEY UPDATE status = 'LINKED', updatedAt = NOW()` 
     );
 
     // Verify
@@ -43,9 +43,9 @@ export async function GET() {
       `SELECT * FROM trading_accounts WHERE licenseId = 'lic_30247197871f06f483943e0e'`
     );
 
-    return NextResponse.json({ ok: true, accounts: rows });
+    return NextResponse.json({ ok: true, accounts: rows, message: 'Swapped demo account for real 415609557' });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message, stack: error.stack }, { status: 500 });
+    return NextResponse.json({ error: error.message }, { status: 500 });
   } finally {
     if (conn) await conn.end();
   }
