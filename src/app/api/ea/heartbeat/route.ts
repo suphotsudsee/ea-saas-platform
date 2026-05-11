@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
 
     // ─── Verify license ───
     const [licRows] = await conn.execute(
-      `SELECT id, status, expiresAt, killSwitch, killSwitchReason, strategyId
+      `SELECT id, userId, status, expiresAt, killSwitch, killSwitchReason, strategyId
        FROM licenses WHERE \`key\` = ?`,
       [licenseKey]
     ) as any[];
