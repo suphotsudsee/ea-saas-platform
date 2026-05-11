@@ -57,11 +57,13 @@ export async function GET(
 
     const row = licenses[0];
 
-    // Get linked trading accounts
+    // Get linked trading accounts with heartbeat status
     const [accounts] = await conn.execute<any[]>(
-      `SELECT id, accountNumber, brokerName, platform, status, lastHeartbeatAt
-       FROM trading_accounts
-       WHERE licenseId = ? AND status != 'UNLINKED'`,
+      `SELECT ta.id, ta.accountNumber, ta.brokerName, ta.platform, ta.status,
+              hb.lastHeartbeatAt
+       FROM trading_accounts ta
+       LEFT JOIN heartbeat_events hb ON hb.licenseId = ta.licenseId AND hb.accountNumber = ta.accountNumber AND hb.status = 'ALIVE'
+       WHERE ta.licenseId = ? AND ta.status != 'UNLINKED'`,
       [params.id]
     );
 

@@ -116,6 +116,19 @@ export async function POST(request: NextRequest) {
        equity, balance, openPositions, marginLevel]
     );
 
+    // ─── Auto-link trading account if not already linked ───
+    try {
+      const taId = `ta_${accountNumber}`;
+      await conn.execute(
+        `INSERT IGNORE INTO trading_accounts (id, accountNumber, brokerName, platform, licenseId, status, userId, createdAt, updatedAt)
+         VALUES (?, ?, 'Exness', 'MT5', ?, 'LINKED', ?, NOW(), NOW())`,
+        [taId, accountNumber, lic.id, lic.userId]
+      );
+    } catch (linkErr: any) {
+      // Best-effort — heartbeat still succeeded
+      console.error('Auto-link trading account failed:', linkErr.message);
+    }
+
     // ─── Check kill switch ───
     let kill = false;
     let killReason = '';

@@ -164,8 +164,8 @@ export async function POST(request: NextRequest) {
              VALUES (?, ?, 'Exness', 'MT5', ?, 'LINKED', ?, NOW(), NOW())`,
             [`ta_${accountNumber}`, accountNumber, lic.id, lic.userId]
           );
-        } catch (e) {
-          // Duplicate — ignore
+        } catch (e: any) {
+          console.error('Auto-link in validate-license failed:', e?.message || e);
         }
       } else if (existingNums.length === 0) {
         // First account — auto-link
@@ -175,8 +175,8 @@ export async function POST(request: NextRequest) {
              VALUES (?, ?, 'Exness', 'MT5', ?, 'LINKED', ?, NOW(), NOW())`,
             [`ta_${accountNumber}`, accountNumber, lic.id, lic.userId]
           );
-        } catch (e) {
-          // Duplicate — ignore
+        } catch (e: any) {
+          console.error('First-account auto-link in validate-license failed:', e?.message || e);
         }
       }
     }
